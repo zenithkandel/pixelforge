@@ -1,5 +1,7 @@
 import { CANVAS_HEIGHT, CANVAS_WIDTH, GROUND_Y_OFFSET } from './engine.js';
 
+const getAerialYOffset = (offset) => CANVAS_HEIGHT - GROUND_Y_OFFSET - offset;
+
 const OBSTACLES = {
     ground: [
         { type: 'glitch_block', width: 16, height: 16, weight: 40 },
@@ -10,9 +12,9 @@ const OBSTACLES = {
         { type: 'combo_block', width: 16, height: 16, weight: 5 }
     ],
     aerial: [
-        { type: 'beam', width: 60, height: 4, yOffset: CANVAS_HEIGHT - GROUND_Y_OFFSET - 30, weight: 35 },
-        { type: 'high_beam', width: 60, height: 4, yOffset: CANVAS_HEIGHT - GROUND_Y_OFFSET - 50, weight: 25 },
-        { type: 'double_beam', width: 30, height: 4, yOffset: CANVAS_HEIGHT - GROUND_Y_OFFSET - 35, weight: 20 }
+        { type: 'beam', width: 60, height: 4, yOffsetBase: 30, weight: 35 },
+        { type: 'high_beam', width: 60, height: 4, yOffsetBase: 50, weight: 25 },
+        { type: 'double_beam', width: 30, height: 4, yOffsetBase: 35, weight: 20 }
     ],
     special: [
         { type: 'glitch_zone', width: 100, height: CANVAS_HEIGHT, weight: 10 },
@@ -79,7 +81,7 @@ export class ObstacleManager {
         let y = CANVAS_HEIGHT - GROUND_Y_OFFSET - obstacle.height;
 
         if (category === 'aerial') {
-            y = obstacle.yOffset || y;
+            y = getAerialYOffset(obstacle.yOffsetBase || 30);
         }
 
         return {

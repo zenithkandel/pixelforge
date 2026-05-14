@@ -1,4 +1,4 @@
-import { CANVAS_HEIGHT, GROUND_Y_OFFSET } from './engine.js';
+import { CANVAS_HEIGHT, CANVAS_WIDTH, GROUND_Y_OFFSET } from './engine.js';
 
 const SHARDS = [
     { subtype: 'gray', value: 1, weight: 50, color: '#888888' },
