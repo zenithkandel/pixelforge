@@ -92,6 +92,8 @@ $games_played = (int)($stmt->fetch()['games_played'] ?? 0);
 
                     <button class="btn btn-primary btn-lg play-button" id="playBtn">PLAY</button>
 
+                    <button class="btn btn-secondary btn-lg tutorial-button" id="tutorialBtn">TUTORIAL</button>
+
                     <div class="instructions">
                         <div class="instructions-title">How to Play</div                        >
                         <div class="instructions-content">
@@ -113,6 +115,167 @@ $games_played = (int)($stmt->fetch()['games_played'] ?? 0);
                                 <tr><td colspan="3">Loading...</td></tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <!-- Tutorial Modal -->
+                <div class="tutorial-modal" id="tutorialModal">
+                    <div class="tutorial-overlay"></div>
+                    <div class="tutorial-content">
+                        <button class="tutorial-close" id="tutorialClose">&times;</button>
+                        <h2 class="tutorial-title">PIXEL DASH Tutorial</h2>
+                        
+                        <div class="tutorial-section">
+                            <h3>🎮 Controls</h3>
+                            <div class="tutorial-grid">
+                                <div class="tutorial-item">
+                                    <span class="tutorial-key">Space / W / ↑</span>
+                                    <span class="tutorial-desc">Jump</span>
+                                </div>
+                                <div class="tutorial-item">
+                                    <span class="tutorial-key">Space (in air)</span>
+                                    <span class="tutorial-desc">Double Jump</span>
+                                </div>
+                                <div class="tutorial-item">
+                                    <span class="tutorial-key">S / ↓</span>
+                                    <span class="tutorial-desc">Slide</span>
+                                </div>
+                                <div class="tutorial-item">
+                                    <span class="tutorial-key">P / Esc</span>
+                                    <span class="tutorial-desc">Pause</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tutorial-section">
+                            <h3>💎 Collectibles - GET THESE!</h3>
+                            <div class="tutorial-items">
+                                <div class="tutorial-item-row good">
+                                    <span class="tutorial-icon">⚪</span>
+                                    <span class="tutorial-name">Gray Shard</span>
+                                    <span class="tutorial-value">+1 Point</span>
+                                </div>
+                                <div class="tutorial-item-row good">
+                                    <span class="tutorial-icon">🔴</span>
+                                    <span class="tutorial-name">Red Shard</span>
+                                    <span class="tutorial-value">+5 Points</span>
+                                </div>
+                                <div class="tutorial-item-row good">
+                                    <span class="tutorial-icon">🔵</span>
+                                    <span class="tutorial-name">Blue Shard</span>
+                                    <span class="tutorial-value">+5 Points</span>
+                                </div>
+                                <div class="tutorial-item-row good">
+                                    <span class="tutorial-icon">🟢</span>
+                                    <span class="tutorial-name">Green Shard</span>
+                                    <span class="tutorial-value">+10 Points</span>
+                                </div>
+                                <div class="tutorial-item-row good">
+                                    <span class="tutorial-icon">🌈</span>
+                                    <span class="tutorial-name">Rainbow Shard</span>
+                                    <span class="tutorial-value">+50 Points (Rare!)</span>
+                                </div>
+                                <div class="tutorial-item-row good">
+                                    <span class="tutorial-icon">🔋</span>
+                                    <span class="tutorial-name">Power Cell</span>
+                                    <span class="tutorial-value">Gives Powerups</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tutorial-section">
+                            <h3>⚡ Powerups - COLLECT FROM POWER CELLS</h3>
+                            <div class="tutorial-items">
+                                <div class="tutorial-item-row power">
+                                    <span class="tutorial-icon">🛡️</span>
+                                    <span class="tutorial-name">Shield</span>
+                                    <span class="tutorial-desc">Invincible for 5 seconds</span>
+                                </div>
+                                <div class="tutorial-item-row power">
+                                    <span class="tutorial-icon">🧲</span>
+                                    <span class="tutorial-name">Magnet</span>
+                                    <span class="tutorial-desc">Auto-collects nearby shards</span>
+                                </div>
+                                <div class="tutorial-item-row power">
+                                    <span class="tutorial-icon">⏱️</span>
+                                    <span class="tutorial-name">Timewarp</span>
+                                    <span class="tutorial-desc">Slows down time</span>
+                                </div>
+                                <div class="tutorial-item-row power">
+                                    <span class="tutorial-icon">⚡</span>
+                                    <span class="tutorial-name">Score Surge</span>
+                                    <span class="tutorial-desc">2x points for 10 seconds</span>
+                                </div>
+                                <div class="tutorial-item-row power">
+                                    <span class="tutorial-icon">❤️</span>
+                                    <span class="tutorial-name">Extra Life</span>
+                                    <span class="tutorial-desc">+1 Life</span>
+                                </div>
+                                <div class="tutorial-item-row power">
+                                    <span class="tutorial-icon">💣</span>
+                                    <span class="tutorial-name">Pixel Bomb</span>
+                                    <span class="tutorial-desc">Destroys all obstacles</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tutorial-section">
+                            <h3>🚫 Obstacles - AVOID THESE!</h3>
+                            <div class="tutorial-items">
+                                <div class="tutorial-item-row bad">
+                                    <span class="tutorial-icon">▣</span>
+                                    <span class="tutorial-name">Glitch Block</span>
+                                    <span class="tutorial-desc">Standard obstacle - jump over</span>
+                                </div>
+                                <div class="tutorial-item-row bad">
+                                    <span class="tutorial-icon">▲</span>
+                                    <span class="tutorial-name">Spike</span>
+                                    <span class="tutorial-desc">Dangerous - don't touch!</span>
+                                </div>
+                                <div class="tutorial-item-row bad">
+                                    <span class="tutorial-icon">═</span>
+                                    <span class="tutorial-name">Beam (Aerial)</span>
+                                    <span class="tutorial-desc">High obstacle - slide under</span>
+                                </div>
+                                <div class="tutorial-item-row bad">
+                                    <span class="tutorial-icon">▇</span>
+                                    <span class="tutorial-name">Crawl Barrier</span>
+                                    <span class="tutorial-desc">Low obstacle - slide under</span>
+                                </div>
+                                <div class="tutorial-item-row bad">
+                                    <span class="tutorial-icon">💀</span>
+                                    <span class="tutorial-name">Glitch Zone</span>
+                                    <span class="tutorial-desc">Death zone - avoid!</span>
+                                </div>
+                                <div class="tutorial-item-row bad">
+                                    <span class="tutorial-icon">❓</span>
+                                    <span class="tutorial-name">Quantum Block</span>
+                                    <span class="tutorial-desc">Unpredictable - stay away</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tutorial-section">
+                            <h3>🎯 Scoring</h3>
+                            <div class="tutorial-scoring">
+                                <p>• Each shard collected adds to your score</p>
+                                <p>• Higher tiers = faster speed = more points</p>
+                                <p>• Combo multiplier increases with consecutive collections</p>
+                                <p>• Game ends when you lose all 3 lives</p>
+                                <p>• <strong>PXL Earned = Score ÷ 10 (min 1 PXL)</strong></p>
+                            </div>
+                        </div>
+
+                        <div class="tutorial-section">
+                            <h3>💡 Pro Tips</h3>
+                            <div class="tutorial-tips">
+                                <p>🔹 Chain jumps to reach high shards</p>
+                                <p>🔹 Slide under beams, jump over blocks</p>
+                                <p>🔹 Collect power cells for advantages</p>
+                                <p>🔹 Build combos for bonus points</p>
+                                <p>🔹 Quit mid-game to save your score!</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

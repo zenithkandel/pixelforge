@@ -37,6 +37,19 @@ document.getElementById('muteBtn').addEventListener('click', () => {
     btn.textContent = enabled ? '🔊' : '🔇';
 });
 
+// Tutorial Modal
+document.getElementById('tutorialBtn')?.addEventListener('click', () => {
+    document.getElementById('tutorialModal').classList.add('active');
+});
+
+document.getElementById('tutorialClose')?.addEventListener('click', () => {
+    document.getElementById('tutorialModal').classList.remove('active');
+});
+
+document.querySelector('.tutorial-overlay')?.addEventListener('click', () => {
+    document.getElementById('tutorialModal').classList.remove('active');
+});
+
 function updateHUD() {
     if (!engine) return;
 
