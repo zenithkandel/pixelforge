@@ -7,12 +7,14 @@ if (empty($token)) {
 }
 ?><!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify Email - PixelForge</title>
     <link rel="stylesheet" href="/assets/css/main.css">
 </head>
+
 <body>
     <div class="verify-container">
         <div class="verify-card">
@@ -24,7 +26,7 @@ if (empty($token)) {
 
     <script type="module">
         import { ApiClient } from '/assets/js/api.js';
-        
+
         const token = new URLSearchParams(window.location.search).get('token');
         const statusEl = document.getElementById('status');
         const api = new ApiClient();
@@ -50,4 +52,5 @@ if (empty($token)) {
         verify();
     </script>
 </body>
+
 </html>

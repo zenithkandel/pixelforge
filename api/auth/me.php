@@ -18,9 +18,9 @@ respond_success([
     'id' => $user['id'],
     'username' => $user['username'],
     'email' => $user['email'],
-    'pxl_balance' => (int)$user['pxl_balance'],
-    'is_email_verified' => (int)$user['is_email_verified'],
-    'login_streak' => (int)$user['login_streak'],
+    'pxl_balance' => (int) $user['pxl_balance'],
+    'is_email_verified' => (int) $user['is_email_verified'],
+    'login_streak' => (int) $user['login_streak'],
     'created_at' => $user['created_at']
 ], 'User data retrieved successfully');
 

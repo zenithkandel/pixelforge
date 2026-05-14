@@ -1,11 +1,13 @@
 <?php session_start(); ?><!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PixelForge - Pixel Canvas & Arcade Game</title>
     <link rel="stylesheet" href="/assets/css/main.css">
 </head>
+
 <body>
     <div class="app-container">
         <nav class="sidebar">
@@ -41,7 +43,8 @@
                                 <input type="password" id="login-password" placeholder="Password" required>
                                 <button type="submit" class="btn btn-primary">Login</button>
                             </form>
-                            <p class="text-center"><a href="#" id="toggle-register">Don't have an account? Register</a></p>
+                            <p class="text-center"><a href="#" id="toggle-register">Don't have an account? Register</a>
+                            </p>
                         </div>
 
                         <div class="auth-panel register-panel" style="display:none;">
@@ -49,8 +52,10 @@
                             <form id="register-form">
                                 <input type="text" id="register-username" placeholder="Username (3-20 chars)" required>
                                 <input type="email" id="register-email" placeholder="Email" required>
-                                <input type="password" id="register-password" placeholder="Password (min 8, 1 letter, 1 number)" required>
-                                <input type="password" id="register-password-confirm" placeholder="Confirm Password" required>
+                                <input type="password" id="register-password"
+                                    placeholder="Password (min 8, 1 letter, 1 number)" required>
+                                <input type="password" id="register-password-confirm" placeholder="Confirm Password"
+                                    required>
                                 <button type="submit" class="btn btn-primary">Register</button>
                             </form>
                             <p class="text-center"><a href="#" id="toggle-login">Already have an account? Login</a></p>
@@ -74,4 +79,5 @@
     <script type="module" src="/assets/js/api.js"></script>
     <script type="module" src="/assets/js/index.js"></script>
 </body>
+
 </html>
