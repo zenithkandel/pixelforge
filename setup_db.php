@@ -1,12 +1,28 @@
 <?php
 
-require_once dirname(__DIR__) . '/includes/config.php';
+// Load .env file directly
+$env_file = __DIR__ . '/.env';
+if (!file_exists($env_file)) {
+    die('ERROR: .env file not found');
+}
+
+$env_vars = parse_ini_file($env_file);
+foreach ($env_vars as $key => $value) {
+    putenv("$key=$value");
+}
+
+// Get vars
+$DB_HOST = getenv('DB_HOST');
+$DB_PORT = getenv('DB_PORT');
+$DB_NAME = getenv('DB_NAME');
+$DB_USER = getenv('DB_USER');
+$DB_PASS = getenv('DB_PASS');
 
 try {
     $pdo = new PDO(
-        'mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';charset=utf8mb4',
-        DB_USER,
-        DB_PASS,
+        'mysql:host=' . $DB_HOST . ';port=' . $DB_PORT . ';charset=utf8mb4',
+        $DB_USER,
+        $DB_PASS,
         [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4'
@@ -15,6 +31,7 @@ try {
 
     // Create database
     echo "Creating database '{$DB_NAME}'...\n";
+    $pdo->exec("DROP DATABASE IF EXISTS `{$DB_NAME}`");
     $pdo->exec("CREATE DATABASE IF NOT EXISTS `{$DB_NAME}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
     $pdo->exec("USE `{$DB_NAME}`");
 
@@ -39,8 +56,8 @@ try {
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS users (
             id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            username VARCHAR(20) UNIQUE NOT NULL,
-            email VARCHAR(254) UNIQUE NOT NULL,
+            username VARCHAR(20) NOT NULL UNIQUE COLLATE utf8mb4_general_ci,
+            email VARCHAR(254) NOT NULL UNIQUE COLLATE utf8mb4_general_ci,
             password_hash VARCHAR(255) NOT NULL,
             pxl_balance BIGINT UNSIGNED DEFAULT 0,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -54,8 +71,6 @@ try {
             is_banned TINYINT(1) DEFAULT 0,
             ban_reason VARCHAR(255) NULL,
             banned_at DATETIME NULL,
-            UNIQUE KEY unique_username_lower (LOWER(username)),
-            UNIQUE KEY unique_email_lower (LOWER(email)),
             INDEX idx_created_at (created_at),
             INDEX idx_last_login_at (last_login_at),
             INDEX idx_is_banned (is_banned)
