@@ -86,19 +86,12 @@ try {
 
     $pdo->commit();
 
-    $redis->del("chunk:{$chunk_x}:{$chunk_y}");
-    $new_version = $redis->incr("chunk_v:{$chunk_x}:{$chunk_y}");
-
-    $redis->publish('sse_channel', json_encode([
-        'type' => 'pixel',
-        'x' => $x,
-        'y' => $y,
-        'color' => $color,
-        'username' => $user['username'],
-        'cx' => $chunk_x,
-        'cy' => $chunk_y,
-        'chunk_version' => $new_version,
-    ]));
+    if ($redis) {
+        $redis->del("chunk:{$chunk_x}:{$chunk_y}");
+        $new_version = $redis->incr("chunk_v:{$chunk_x}:{$chunk_y}");
+    } else {
+        $new_version = 0;
+    }
 
     check_and_grant_achievements($pdo, $user['id'], 'pixel_buy');
 
@@ -114,8 +107,10 @@ try {
     log_error($e);
     respond_error('server_error', 'An error occurred while purchasing the pixel', 500);
 } finally {
-    $current = $redis->get($lock_key);
-    if ($current === $lock_token) {
-        $redis->del($lock_key);
+    if ($redis) {
+        $current = $redis->get($lock_key);
+        if ($current === $lock_token) {
+            $redis->del($lock_key);
+        }
     }
 }
