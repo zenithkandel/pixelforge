@@ -1,7 +1,11 @@
 <?php
 require_once dirname(__DIR__) . '/includes/bootstrap.php';
 
-$user = require_auth();
+if (!is_authenticated()) {
+    header('Location: /index.php?redirect=profile');
+    exit;
+}
+$user = pf_get_current_user();
 $csrf_token = $_SESSION['csrf_token'] ?? '';
 ?>
 <!DOCTYPE html>
