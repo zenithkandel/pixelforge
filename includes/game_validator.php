@@ -16,12 +16,14 @@ function validate_game_session(PDO $pdo, string $session_id, int $user_id): ?arr
 }
 
 function verify_game_hmac(string $session_id, int $score, int $elapsed_ms, string $provided_hmac): bool {
-    $expected = hash_hmac('sha256', "{$session_id}:{$score}:{$elapsed_ms}", GAME_HMAC_KEY);
+    $client_key = derive_client_key($session_id);
+    $expected = hash_hmac('sha256', "{$session_id}:{$score}:{$elapsed_ms}", $client_key);
     return hash_equals($expected, $provided_hmac);
 }
 
 function verify_checkpoint_hmac(string $session_id, int $score, int $elapsed_ms, string $provided_hmac): bool {
-    $expected = hash_hmac('sha256', "{$session_id}:{$score}:{$elapsed_ms}", GAME_HMAC_KEY);
+    $client_key = derive_client_key($session_id);
+    $expected = hash_hmac('sha256', "{$session_id}:{$score}:{$elapsed_ms}", $client_key);
     return hash_equals($expected, $provided_hmac);
 }
 

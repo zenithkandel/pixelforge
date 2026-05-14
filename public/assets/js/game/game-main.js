@@ -127,8 +127,11 @@ function showAchievement(ach) {
     setTimeout(() => popup.remove(), 4000);
 }
 
-function quitToLobby() {
+async function quitToLobby() {
     gameState = 'lobby';
+    if (engine && engine.state.score > 0) {
+        await engine.submitScore();
+    }
     engine?.quit();
     engine = null;
 
