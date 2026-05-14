@@ -98,7 +98,7 @@ function require_auth(): array {
         echo json_encode(['ok' => false, 'error' => 'unauthenticated', 'message' => 'Login required']);
         exit;
     }
-    return get_current_user();
+    return pf_get_current_user();
 }
 
 function require_verified(): array {
@@ -185,7 +185,7 @@ function get_redis(): ?Redis {
     return $redis;
 }
 
-function get_current_user(): ?array {
+function pf_get_current_user(): ?array {
     if (empty($_SESSION['user_id'])) {
         return null;
     }

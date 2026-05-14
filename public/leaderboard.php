@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__DIR__) . '/includes/bootstrap.php';
 
-$user = get_current_user();
+$user = pf_get_current_user();
 $csrf_token = $_SESSION['csrf_token'] ?? '';
 $is_logged_in = is_authenticated();
 $user_balance = $user ? $user['pxl_balance'] : 0;
