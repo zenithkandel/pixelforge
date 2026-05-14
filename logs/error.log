@@ -1,5 +1,0 @@
-[14-May-2026 05:02:27 UTC] PHP Warning:  Undefined variable $DB_NAME in C:\xampp\htdocs\codes\pixelforge\setup_db.php on line 17
-[14-May-2026 05:02:27 UTC] PHP Warning:  Undefined variable $DB_NAME in C:\xampp\htdocs\codes\pixelforge\setup_db.php on line 18
-[14-May-2026 05:07:06 UTC] PHP Fatal error:  Cannot declare class SessionHandler, because the name is already in use in C:\xampp\htdocs\codes\pixelforge\includes\session.php on line 3
-[14-May-2026 05:10:23 UTC] PHP Fatal error:  Cannot declare class SessionHandler, because the name is already in use in C:\xampp\htdocs\codes\pixelforge\includes\session.php on line 3
-[14-May-2026 05:10:24 UTC] PHP Fatal error:  Cannot declare class SessionHandler, because the name is already in use in C:\xampp\htdocs\codes\pixelforge\includes\session.php on line 3
