@@ -21,22 +21,8 @@ if (function_exists('apache_setenv')) {
 }
 
 $last_heartbeat = time();
-$redis = get_redis();
-if (!$redis) {
-    http_response_code(503);
-    echo "data: " . json_encode(['error' => 'Cache unavailable']) . "\n\n";
-    exit;
-}
 
 while (!connection_aborted()) {
-    $msg = $redis->getMessage();
-    if ($msg) {
-        echo "data: {$msg}\n\n";
-        if (function_exists('flush')) {
-            flush();
-        }
-    }
-
     if ((time() - $last_heartbeat) >= 25) {
         $last_heartbeat = time();
         echo ": heartbeat\n\n";
