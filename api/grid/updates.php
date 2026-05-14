@@ -9,7 +9,8 @@ header('Connection: keep-alive');
 header('Access-Control-Allow-Origin: *');
 
 // Disable buffering
-if (ob_get_level()) ob_end_clean();
+if (ob_get_level())
+    ob_end_clean();
 ob_implicit_flush(true);
 
 // Rate limit SSE connections
@@ -29,12 +30,12 @@ $heartbeat_interval = 25;
 try {
     $redis = Redis::getInstance()->getConnection();
     $redis->setOption(\Redis::OPT_READ_TIMEOUT, -1);
-    
+
     // Send initial connection message
     echo "event: connected\n";
     echo "data: " . json_encode(['timestamp' => time()]) . "\n\n";
     flush();
-    
+
     // Simple polling for Redis pub/sub (since stream reading can be complex)
     // In production, use a proper message queue or dedicated SSE server
     while (true) {
@@ -45,7 +46,7 @@ try {
             flush();
             $last_heartbeat = time();
         }
-        
+
         // Check for updates in Redis (simplified approach)
         $update = Redis::get('grid_update_buffer');
         if ($update) {
@@ -54,12 +55,12 @@ try {
             flush();
             Redis::del('grid_update_buffer');
         }
-        
+
         // Check for client disconnect
         if (connection_aborted()) {
             break;
         }
-        
+
         usleep(100000); // 100ms
     }
 } catch (Exception $e) {

@@ -50,7 +50,7 @@ function setupEventListeners() {
 
 async function handleLogin(e) {
     e.preventDefault();
-    
+
     const username_or_email = document.getElementById('login-username').value;
     const password = document.getElementById('login-password').value;
 

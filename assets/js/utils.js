@@ -1,7 +1,7 @@
 // HTML helper
 export function h(tag, attrs = {}, ...children) {
     const el = document.createElement(tag);
-    
+
     for (const [key, value] of Object.entries(attrs)) {
         if (key === 'class') {
             el.className = value;
@@ -14,7 +14,7 @@ export function h(tag, attrs = {}, ...children) {
             el.setAttribute(key, value);
         }
     }
-    
+
     for (const child of children) {
         if (typeof child === 'string') {
             el.appendChild(document.createTextNode(child));
@@ -22,7 +22,7 @@ export function h(tag, attrs = {}, ...children) {
             el.appendChild(child);
         }
     }
-    
+
     return el;
 }
 
@@ -53,7 +53,7 @@ export function formatTime(seconds) {
 // Debounce
 export function debounce(fn, delay) {
     let timeoutId;
-    return function(...args) {
+    return function (...args) {
         clearTimeout(timeoutId);
         timeoutId = setTimeout(() => fn.apply(this, args), delay);
     };
@@ -62,7 +62,7 @@ export function debounce(fn, delay) {
 // Throttle
 export function throttle(fn, delay) {
     let lastCall = 0;
-    return function(...args) {
+    return function (...args) {
         const now = Date.now();
         if (now - lastCall >= delay) {
             lastCall = now;

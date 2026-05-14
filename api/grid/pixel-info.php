@@ -30,11 +30,11 @@ try {
         'SELECT p.color, p.user_id, p.created_at, u.username FROM pixels p LEFT JOIN users u ON p.user_id = u.id WHERE p.grid_session_id = ? AND p.x = ? AND p.y = ?',
         [$grid_session['id'], $x, $y]
     );
-    
+
     if (!$pixel) {
         respond_success(['color' => '#FFFFFF', 'owner' => null], 'Pixel is empty');
     }
-    
+
     respond_success([
         'color' => $pixel['color'],
         'owner' => $pixel['username'],

@@ -4,9 +4,9 @@ export function showToast(message, type = 'info', duration = 3000) {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     toast.textContent = message;
-    
+
     container.appendChild(toast);
-    
+
     setTimeout(() => {
         toast.style.animation = 'slideOut 0.3s ease-in';
         setTimeout(() => toast.remove(), 300);
@@ -32,7 +32,7 @@ export function showModal(title, content, buttons = []) {
             <div class="modal-buttons"></div>
         </div>
     `;
-    
+
     const buttonsDiv = modal.querySelector('.modal-buttons');
     for (const btn of buttons) {
         const button = document.createElement('button');
@@ -44,7 +44,7 @@ export function showModal(title, content, buttons = []) {
         };
         buttonsDiv.appendChild(button);
     }
-    
+
     document.body.appendChild(modal);
     return modal;
 }
