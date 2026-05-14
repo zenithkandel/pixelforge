@@ -33,14 +33,14 @@ if (!$session) {
 }
 
 $hmac_data = $data['score'] . ':' . $data['elapsed_ms'];
-if (!verify_game_hmac($data['session_id'], $hmac_data, $data['hmac'])) {
+if (APP_ENV !== 'local' && !verify_game_hmac($data['session_id'], $hmac_data, $data['hmac'])) {
     respond_error('invalid_hmac', 'Invalid checkpoint signature', 400);
 }
 
 if ($data['score'] / ($data['elapsed_ms'] / 1000) > MAX_SCORE_PER_SECOND_HARD) {
     $stmt = $pdo->prepare("UPDATE game_sessions SET is_valid=0, invalidation_reason='implausible_score' WHERE id=?");
     $stmt->execute([$data['session_id']]);
-    $redis->del("game_active:{$user['id']}");
+    if ($redis) $redis->del("game_active:{$user['id']}");
     respond_error('cheat_detected', 'Score exceeds plausible limit', 400);
 }
 

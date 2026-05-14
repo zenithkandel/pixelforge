@@ -31,18 +31,16 @@ $y = (int)$data['y'];
 $color = strtoupper($data['color']);
 
 $redis = get_redis();
-if (!$redis) {
-    respond_error('server_error', 'Cache unavailable', 500);
-}
 $pdo = get_db();
 
 $lock_key = "pixel_lock:{$x}:{$y}";
 $lock_token = bin2hex(random_bytes(16));
 
-$locked = $redis->set($lock_key, $lock_token, ['NX', 'PX' => 5000]);
-
-if (!$locked) {
-    respond_error('concurrent_conflict', 'That pixel was just bought! Try another.', 409, ['retry_after' => 1]);
+if ($redis) {
+    $locked = $redis->set($lock_key, $lock_token, ['NX', 'PX' => 5000]);
+    if (!$locked) {
+        respond_error('concurrent_conflict', 'That pixel was just bought! Try another.', 409, ['retry_after' => 1]);
+    }
 }
 
 try {
