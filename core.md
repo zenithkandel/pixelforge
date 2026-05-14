@@ -37,7 +37,7 @@
 **PixelForge** is a browser-based platform combining two experiences:
 
 1. **PIXEL DASH** — A fast-paced, skill-based arcade game where players earn **PXL** (the in-platform currency).
-2. **The Forge** — A massive 2048×2048 communal pixel canvas where players spend PXL to paint individual pixels, collaboratively creating art. The canvas resets every 7 days, starting fresh for the next cycle.
+2. **The Forge** — A massive 800×800 communal pixel canvas where players spend PXL to paint individual pixels, collaboratively creating art. The canvas resets every 7 days, starting fresh for the next cycle.
 
 ### Core Loop
 
@@ -376,7 +376,7 @@ The economy is designed so that:
 
 ### 5.1 The Grid
 
-- **Size:** 2048 × 2048 pixels
+- **Size:** 800 × 800 pixels
 - **Total Pixels:** 4,194,304
 - **Reset Cycle:** Every 7 days (cron-triggered)
 - **Default Color:** White (#FFFFFF) — all pixels start white on reset
@@ -410,7 +410,7 @@ The grid viewer is a full-page canvas application.
 
 | Zoom | Pixels per Screen Pixel | Canvas Display Size      | View Area  |
 | ---- | ----------------------- | ------------------------ | ---------- |
-| 1×   | 1                       | 2048 × 2048 (scrollable) | Full grid  |
+| 1×   | 1                       | 800 × 800 (scrollable) | Full grid  |
 | 2×   | 0.5                     | 1024 × 1024 per view     | 1/4 grid   |
 | 4×   | 0.25                    | 512 × 512 per view       | 1/16 grid  |
 | 8×   | 0.125                   | 256 × 256 per view       | 1/64 grid  |
@@ -452,7 +452,7 @@ Never draw grid lines at zoom < 4× (performance).
 
 #### Virtual Scrolling
 
-The canvas does not attempt to render all 2048×2048 pixels. Instead:
+The canvas does not attempt to render all 800×800 pixels. Instead:
 
 - Maintain `viewX`, `viewY` (top-left corner of current view in grid coordinates)
 - Maintain `zoom` level
@@ -483,7 +483,7 @@ The canvas does not attempt to render all 2048×2048 pixels. Instead:
 - **Pan:** Click and drag on canvas (when not in "purchase mode")
 - **Zoom In/Out:** Mouse wheel, or +/- buttons in toolbar
 - **Touch:** Two-finger pinch to zoom, one-finger drag to pan
-- **Mini-Map:** A 200×200px thumbnail in bottom-right corner showing the full 2048×2048 grid, with a rectangle indicating current viewport. Click/drag mini-map to navigate.
+- **Mini-Map:** A 200×200px thumbnail in bottom-right corner showing the full 800×800 grid, with a rectangle indicating current viewport. Click/drag mini-map to navigate.
 - **Coordinate display:** Shows current mouse-over pixel coordinates `(x, y)` in a fixed top bar
 - **Go to coordinates:** Input field to jump to specific x, y coordinates
 
@@ -2759,7 +2759,7 @@ function build_chunk_cache(int $cx, int $cy): string {
 // FULL ALGORITHM:
 // 1. Get current grid_session_id
 // 2. Take snapshot: Query all pixels in current session, render to PNG using GD or Imagick
-//    - Create 2048x2048 image, set each pixel color, save as PNG to /var/www/pixelforge/snapshots/session_{id}.png
+//    - Create 800x800 image, set each pixel color, save as PNG to /var/www/pixelforge/snapshots/session_{id}.png
 // 3. Update grid_sessions: SET is_current=0, ended_at=NOW(), snapshot_filename=..., total_pixels_painted=COUNT, unique_painters=COUNT(DISTINCT owner_id)
 // 4. INSERT new grid_sessions row (is_current=1)
 // 5. DELETE FROM pixels (truncate current state — all pixels reset to white/unowned)
@@ -2851,7 +2851,7 @@ define('REDIS_SESSION_DB', (int)($_ENV['REDIS_SESSION_DB'] ?? 1));
 // Security
 define('MAX_SCORE_PER_SECOND_HARD', 200);
 define('MAX_SCORE_PER_SECOND_SUSTAINED', 80);
-define('GRID_SIZE', 2048);
+define('GRID_SIZE', 800);
 define('CHUNK_SIZE', 64);
 define('PIXEL_COST_PXL', 1);
 define('PXL_PER_200_SCORE', 1); // 200 score = 1 PXL
