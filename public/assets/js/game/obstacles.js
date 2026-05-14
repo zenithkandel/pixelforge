@@ -17,7 +17,7 @@ const OBSTACLES = {
         { type: 'double_beam', width: 30, height: 4, yOffsetBase: 35, weight: 20 }
     ],
     special: [
-        { type: 'glitch_zone', width: 100, height: CANVAS_HEIGHT, weight: 10 },
+        { type: 'glitch_zone', width: 100, height: 0, weight: 10 },
         { type: 'quantum_block', width: 16, height: 16, weight: 10 },
         { type: 'data_storm', width: 20, height: 20, weight: 10 }
     ]
@@ -84,12 +84,17 @@ export class ObstacleManager {
             y = getAerialYOffset(obstacle.yOffsetBase || 30);
         }
 
+        let height = obstacle.height;
+        if (obstacle.type === 'glitch_zone') {
+            height = CANVAS_HEIGHT;
+        }
+
         return {
             type: obstacle.type,
             x: x,
             y: y,
             width: obstacle.width,
-            height: obstacle.height,
+            height: height,
             category: category
         };
     }
