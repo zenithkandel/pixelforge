@@ -1,35 +1,42 @@
 <?php
 
-class SessionHandler implements SessionHandlerInterface {
+class SessionHandler implements SessionHandlerInterface
+{
     private $redis;
     private $prefix = 'sess:';
     private $ttl = SESSION_TIMEOUT;
 
-    public function open($path, $name) {
+    public function open($path, $name)
+    {
         $this->redis = \Redis::getInstance()->getConnection();
         return true;
     }
 
-    public function close() {
+    public function close()
+    {
         return true;
     }
 
-    public function read($session_id) {
+    public function read($session_id)
+    {
         $data = $this->redis->get($this->prefix . $session_id);
         return $data ?: '';
     }
 
-    public function write($session_id, $data) {
+    public function write($session_id, $data)
+    {
         $this->redis->setex($this->prefix . $session_id, $this->ttl, $data);
         return true;
     }
 
-    public function destroy($session_id) {
+    public function destroy($session_id)
+    {
         $this->redis->del($this->prefix . $session_id);
         return true;
     }
 
-    public function gc($maxlifetime) {
+    public function gc($maxlifetime)
+    {
         return true; // Redis handles expiry automatically with SETEX
     }
 }
@@ -51,20 +58,24 @@ ini_set('session.gc_maxlifetime', SESSION_TIMEOUT);
 session_start();
 
 // Session helper functions
-function regenerate_session() {
+function regenerate_session()
+{
     session_regenerate_id(true);
 }
 
-function destroy_session() {
+function destroy_session()
+{
     $_SESSION = [];
     session_destroy();
 }
 
-function get_session_value($key, $default = null) {
+function get_session_value($key, $default = null)
+{
     return $_SESSION[$key] ?? $default;
 }
 
-function set_session_value($key, $value) {
+function set_session_value($key, $value)
+{
     $_SESSION[$key] = $value;
 }
 

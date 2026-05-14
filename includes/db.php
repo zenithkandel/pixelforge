@@ -1,10 +1,12 @@
 <?php
 
-class Database {
+class Database
+{
     private static $instance = null;
     private $pdo;
 
-    private function __construct() {
+    private function __construct()
+    {
         try {
             $dsn = 'mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME . ';charset=utf8mb4';
             $this->pdo = new PDO(
@@ -24,49 +26,59 @@ class Database {
         }
     }
 
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (self::$instance === null) {
             self::$instance = new self();
         }
         return self::$instance;
     }
 
-    public function getConnection() {
+    public function getConnection()
+    {
         return $this->pdo;
     }
 
-    public static function query($sql, $params = []) {
+    public static function query($sql, $params = [])
+    {
         $db = self::getInstance();
         $stmt = $db->pdo->prepare($sql);
         $stmt->execute($params);
         return $stmt;
     }
 
-    public static function fetchAll($sql, $params = []) {
+    public static function fetchAll($sql, $params = [])
+    {
         return self::query($sql, $params)->fetchAll();
     }
 
-    public static function fetch($sql, $params = []) {
+    public static function fetch($sql, $params = [])
+    {
         return self::query($sql, $params)->fetch();
     }
 
-    public static function execute($sql, $params = []) {
+    public static function execute($sql, $params = [])
+    {
         return self::query($sql, $params)->rowCount();
     }
 
-    public static function lastInsertId() {
+    public static function lastInsertId()
+    {
         return self::getInstance()->pdo->lastInsertId();
     }
 
-    public static function beginTransaction() {
+    public static function beginTransaction()
+    {
         self::getInstance()->pdo->beginTransaction();
     }
 
-    public static function commit() {
+    public static function commit()
+    {
         self::getInstance()->pdo->commit();
     }
 
-    public static function rollback() {
+    public static function rollback()
+    {
         self::getInstance()->pdo->rollback();
     }
 }

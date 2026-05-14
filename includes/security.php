@@ -1,6 +1,7 @@
 <?php
 
-function set_security_headers() {
+function set_security_headers()
+{
     header('Content-Type: application/json; charset=utf-8');
     header('X-Content-Type-Options: nosniff');
     header('X-Frame-Options: DENY');
@@ -11,34 +12,40 @@ function set_security_headers() {
     header('Permissions-Policy: geolocation=(), microphone=(), camera=()');
 }
 
-function get_csrf_token() {
+function get_csrf_token()
+{
     if (!isset($_SESSION['csrf_token'])) {
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     }
     return $_SESSION['csrf_token'];
 }
 
-function verify_csrf_token($token) {
+function verify_csrf_token($token)
+{
     if (!isset($_SESSION['csrf_token']) || $token !== $_SESSION['csrf_token']) {
         return false;
     }
     return true;
 }
 
-function sanitize_html($text) {
+function sanitize_html($text)
+{
     return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
 }
 
-function sanitize_string($str) {
+function sanitize_string($str)
+{
     return trim($str);
 }
 
-function get_request_json() {
+function get_request_json()
+{
     $json = file_get_contents('php://input');
     return json_decode($json, true) ?? [];
 }
 
-function get_request_param($param, $default = null) {
+function get_request_param($param, $default = null)
+{
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         return $_GET[$param] ?? $default;
     } else {
@@ -47,7 +54,8 @@ function get_request_param($param, $default = null) {
     }
 }
 
-function get_client_ip() {
+function get_client_ip()
+{
     if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
         $ip = $_SERVER['HTTP_CLIENT_IP'];
     } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -55,7 +63,7 @@ function get_client_ip() {
     } else {
         $ip = $_SERVER['REMOTE_ADDR'];
     }
-    
+
     // Validate IP
     if (filter_var($ip, FILTER_VALIDATE_IP)) {
         return $ip;
