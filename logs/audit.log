@@ -1,6 +1,0 @@
-[2026-05-14 05:40:46] user_register user_id=1 {"username":"zenithkandel","email":"kandelze123@gmail.com"}
-[2026-05-14 05:41:54] user_login user_id=1
-[2026-05-14 05:52:15] user_register user_id=2 {"username":"ramesh","email":"ram@esh.com"}
-[2026-05-14 05:52:28] user_login user_id=2
-[2026-05-14 05:58:49] user_login user_id=1
-[2026-05-14 06:15:08] user_login user_id=1
