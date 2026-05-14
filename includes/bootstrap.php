@@ -11,6 +11,7 @@ if (defined('PIXELFORGE_BOOTSTRAPPED')) {
 define('PIXELFORGE_BOOTSTRAPPED', true);
 
 require_once dirname(__DIR__) . '/includes/config.php';
+require_once dirname(__DIR__) . '/includes/logger.php';
 
 if (!defined('APP_ROOT')) {
     define('APP_ROOT', dirname(__DIR__));
