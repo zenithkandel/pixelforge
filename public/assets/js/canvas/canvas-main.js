@@ -25,7 +25,7 @@ const state = {
     dragStart: { x: 0, y: 0 },
     viewStart: { x: 0, y: 0 },
     purchaseMode: false,
-    isLoggedIn: <?php echo $is_logged_in ? 'true' : 'false'; ?>,
+    isLoggedIn: !!document.querySelector('.sidebar-footer .user-tag')?.textContent?.includes('@'),
     pendingPixels: new Map(),
     lastMousePos: { x: 0, y: 0 }
 };
