@@ -65,10 +65,16 @@ try {
     $stmt->execute();
     $scores = $stmt->fetchAll();
 
+    $count_where_clause = "1=1";
+    if ($type === 'daily') {
+        $count_where_clause = "DATE(created_at) = CURDATE()";
+    } elseif ($type === 'weekly') {
+        $count_where_clause = "created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+    }
     $stmt = $pdo->query("
         SELECT COUNT(DISTINCT user_id) as total_players
         FROM scores
-        WHERE {$where_clause}
+        WHERE {$count_where_clause}
     ");
     $total_players = (int)($stmt->fetch()['total_players'] ?? 0);
 
@@ -134,6 +140,6 @@ try {
     respond_success($response);
 
 } catch (Exception $e) {
-    log_error('Leaderboard fetch failed', ['exception' => $e->getMessage()]);
+    log_error('Leaderboard fetch failed', ['exception' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
     respond_error('server_error', 'Failed to fetch leaderboard', 500);
 }

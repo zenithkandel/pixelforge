@@ -9,3 +9,7 @@ Stack trace:
 [2026-05-14 05:55:06] Leaderboard fetch failed {"exception":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 's.created_at' in 'where clause'"}
 [2026-05-14 05:55:12] Leaderboard fetch failed {"exception":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 's.created_at' in 'where clause'"}
 [2026-05-14 05:55:34] Leaderboard fetch failed {"exception":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 's.created_at' in 'where clause'"}
+[2026-05-14 05:57:57] Leaderboard fetch failed {"exception":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 's.created_at' in 'where clause'"}
+[2026-05-14 05:58:53] Leaderboard fetch failed {"exception":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 's.created_at' in 'where clause'"}
+[2026-05-14 05:59:03] Leaderboard fetch failed {"exception":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 's.created_at' in 'where clause'"}
+[2026-05-14 06:00:40] Leaderboard fetch failed {"exception":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 's.created_at' in 'where clause'","trace":"#0 C:\\xampp\\htdocs\\codes\\pixelforge\\public\\api\\leaderboard.php(71): PDO->query('\\n        SELECT...')\n#1 {main}"}
