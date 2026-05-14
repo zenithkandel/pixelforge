@@ -20,7 +20,7 @@ if (!isset($data['session_id'], $data['score'], $data['lives'], $data['speed_tie
 $redis = get_redis();
 $pdo = get_db();
 
-if ($redis->get("game_active:{$user['id']}") !== $data['session_id']) {
+if ($redis && $redis->get("game_active:{$user['id']}") !== $data['session_id']) {
     respond_error('invalid_session', 'Game session not active', 400);
 }
 

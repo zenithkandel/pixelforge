@@ -112,5 +112,6 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
     </div>
 
     <script type="module" src="<?= BASE_URL ?>assets/js/game/game-main.js"></script>
+    <script>window.__USER_ID__ = <?= (int)($user['id'] ?? 0) ?>;</script>
 </body>
 </html>

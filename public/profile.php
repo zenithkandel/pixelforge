@@ -226,10 +226,11 @@ $user_sidebar = isset($_SESSION['user_id']) ? get_current_user_data() : null;
         document.querySelectorAll('.ach-claim-btn').forEach(btn => {
             btn.addEventListener('click', async () => {
                 const id = btn.dataset.achId;
+                const csrf = document.querySelector('meta[name="csrf-token"]').content;
                 const res = await fetch('<?= BASE_URL ?>api/user/claim-achievement.php', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content },
-                    body: JSON.stringify({ achievement_id: id })
+                    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrf },
+                    body: JSON.stringify({ csrf_token: csrf, achievement_id: id })
                 });
                 const data = await res.json();
                 if (data.ok) {

@@ -4,9 +4,13 @@ require_once dirname(__DIR__, 3) . '/includes/bootstrap.php';
 require_method('POST');
 
 $data = get_json_body();
-
-if (!isset($data['csrf_token']) || !isset($data['username']) || !isset($data['email']) || !isset($data['password'])) {
-    respond_error('missing_fields', 'All fields are required', 400);
+$missing = [];
+if (!isset($data['csrf_token'])) $missing[] = 'csrf_token';
+if (!isset($data['username'])) $missing[] = 'username';
+if (!isset($data['email'])) $missing[] = 'email';
+if (!isset($data['password'])) $missing[] = 'password';
+if (!empty($missing)) {
+    respond_error('missing_fields', 'Missing fields: ' . implode(', ', $missing), 400);
 }
 
 require_csrf($data['csrf_token']);

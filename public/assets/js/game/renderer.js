@@ -46,7 +46,7 @@ class GameRenderer {
     this.ctx.fillRect(0, GROUND_Y, this.canvas.width, 2);
   }
 
-  drawPlayer(pxlr, powerupColor) {
+  drawPlayer(pxlr, powerupColor, elapsedMs) {
     const ctx = this.ctx;
     const x = pxlr.x;
     const y = pxlr.y;

@@ -22,6 +22,11 @@ if (function_exists('apache_setenv')) {
 
 $last_heartbeat = time();
 $redis = get_redis();
+if (!$redis) {
+    http_response_code(503);
+    echo "data: " . json_encode(['error' => 'Cache unavailable']) . "\n\n";
+    exit;
+}
 
 while (!connection_aborted()) {
     $msg = $redis->getMessage();

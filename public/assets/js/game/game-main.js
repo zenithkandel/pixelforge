@@ -44,7 +44,7 @@ async function startNewGame() {
     canvas.hidden = false;
     pauseOverlay.hidden = true;
 
-    engine = new GameEngine(canvas, seed, <?= isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0 ?>);
+    engine = new GameEngine(canvas, seed, window.__USER_ID__ || 0);
     await engine.start(session_id, seed, hmac);
   } catch (e) {
     showToast('Failed to start game. Please try again.', 'error');

@@ -287,7 +287,7 @@ class GameEngine {
     this.renderer.drawObstacles(this.obstacles.getActive());
     this.renderer.drawShards(this.collectibles.getActive().shards);
     this.renderer.drawPowerCells(this.collectibles.getActive().powerCells);
-    this.renderer.drawPlayer(this.state.pxlr, this.state.powerupColor);
+    this.renderer.drawPlayer(this.state.pxlr, this.state.powerupColor, this.state.elapsedMs);
     this.renderer.drawParticles(this.state.particles);
   }
 

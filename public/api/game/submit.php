@@ -16,7 +16,7 @@ if (!isset($data['session_id'], $data['final_score'], $data['duration_ms'], $dat
 $redis = get_redis();
 $pdo = get_db();
 
-if ($redis->get("game_active:{$user['id']}") !== $data['session_id']) {
+if ($redis && $redis->get("game_active:{$user['id']}") !== $data['session_id']) {
     respond_error('invalid_session', 'Game session not active or already submitted', 400);
 }
 
@@ -28,6 +28,9 @@ if (!$session) {
     respond_error('invalid_session', 'Game session not found or already ended', 400);
 }
 
+if (!$redis) {
+    respond_error('server_error', 'Cache unavailable', 500);
+}
 if ($session['started_at'] && (time() - strtotime($session['started_at'])) > 7200) {
     $stmt = $pdo->prepare("UPDATE game_sessions SET is_valid=0, invalidation_reason='session_expired' WHERE id=?");
     $stmt->execute([$data['session_id']]);

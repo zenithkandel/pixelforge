@@ -31,6 +31,9 @@ $y = (int)$data['y'];
 $color = strtoupper($data['color']);
 
 $redis = get_redis();
+if (!$redis) {
+    respond_error('server_error', 'Cache unavailable', 500);
+}
 $pdo = get_db();
 
 $lock_key = "pixel_lock:{$x}:{$y}";

@@ -25,12 +25,14 @@ $ttl = match($type) {
     'alltime' => 600,
 };
 
-$cached = $redis->get($cache_key);
-if ($cached !== false) {
-    $data = json_decode($cached, true);
-    $total = $data['total'] ?? 0;
-    $entries = array_slice($data['entries'], $offset, $limit);
-    respond_success(['type' => $type, 'page' => $page, 'limit' => $limit, 'total' => $total, 'entries' => $entries]);
+if ($redis) {
+    $cached = $redis->get($cache_key);
+    if ($cached !== false) {
+        $data = json_decode($cached, true);
+        $total = $data['total'] ?? 0;
+        $entries = array_slice($data['entries'], $offset, $limit);
+        respond_success(['type' => $type, 'page' => $page, 'limit' => $limit, 'total' => $total, 'entries' => $entries]);
+    }
 }
 
 $pdo = get_db();

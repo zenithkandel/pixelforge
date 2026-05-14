@@ -13,10 +13,12 @@ if (!check_rate_limit("game_start:{$user['id']}", 20, 3600)) {
 $pdo = get_db();
 $redis = get_redis();
 
-$existing = $redis->get("game_active:{$user['id']}");
-if ($existing) {
-    $stmt = $pdo->prepare("UPDATE game_sessions SET is_valid=0, invalidation_reason='new_session_started' WHERE id=? AND user_id=?");
-    $stmt->execute([$existing, $user['id']]);
+if ($redis) {
+    $existing = $redis->get("game_active:{$user['id']}");
+    if ($existing) {
+        $stmt = $pdo->prepare("UPDATE game_sessions SET is_valid=0, invalidation_reason='new_session_started' WHERE id=? AND user_id=?");
+        $stmt->execute([$existing, $user['id']]);
+    }
 }
 
 $session_id = bin2hex(random_bytes(32));
@@ -28,7 +30,9 @@ $stmt->execute([$session_id, $user['id'], (string)$seed, $ip]);
 
 $hmac = hash_hmac('sha256', $session_id . ':' . $seed . ':' . $user['id'], GAME_HMAC_KEY);
 
-$redis->setex("game_active:{$user['id']}", 7200, $session_id);
+if ($redis) {
+    $redis->setex("game_active:{$user['id']}", 7200, $session_id);
+}
 
 respond_success([
     'session_id' => $session_id,

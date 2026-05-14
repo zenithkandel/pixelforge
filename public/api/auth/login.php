@@ -79,7 +79,7 @@ if ($last_login !== $today) {
     check_and_grant_achievements($pdo, $user['id'], 'login', []);
 
     $daily_bonus_key = "daily_bonus:{$user['id']}:{$today}";
-    if (!$redis->exists($daily_bonus_key)) {
+    if ($redis && !$redis->exists($daily_bonus_key)) {
         $redis->setex($daily_bonus_key, 86400, '1');
         $daily_bonus_earned = 5;
         $pdo->beginTransaction();

@@ -16,19 +16,24 @@ if (!check_rate_limit('chunk:' . get_client_ip(), 200, 60)) {
 }
 
 $redis = get_redis();
-
-$version = (int)($redis->get("chunk_v:{$cx}:{$cy}") ?? 0);
+$version = 0;
+if ($redis) {
+    $version = (int)($redis->get("chunk_v:{$cx}:{$cy}") ?? 0);
+}
 
 if ($v !== null && $v >= $version) {
     http_response_code(304);
     exit;
 }
 
-$chunk_data = $redis->get("chunk:{$cx}:{$cy}");
+$chunk_data = null;
+if ($redis) {
+    $chunk_data = $redis->get("chunk:{$cx}:{$cy}");
+}
 
-if ($chunk_data === false) {
+if ($chunk_data === null || $chunk_data === false) {
     $chunk_data = build_chunk_cache($cx, $cy);
-    $version = (int)($redis->get("chunk_v:{$cx}:{$cy}") ?? 0);
+    $version = $redis ? (int)($redis->get("chunk_v:{$cx}:{$cy}") ?? 0) : 0;
 }
 
 header('Content-Type: application/octet-stream');

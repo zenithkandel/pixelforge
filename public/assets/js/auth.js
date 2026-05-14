@@ -40,7 +40,12 @@ document.getElementById('login-form')?.addEventListener('submit', async e => {
     const res = await fetch(API_BASE + 'api/auth/login.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': api.csrfToken },
-      body: JSON.stringify({ username: fd.get('username'), password: fd.get('password'), remember: fd.get('remember') || false }),
+      body: JSON.stringify({
+        csrf_token: api.csrfToken,
+        username: fd.get('username'),
+        password: fd.get('password'),
+        remember: fd.get('remember') || false,
+      }),
       credentials: 'same-origin',
     });
     const data = await res.json();
@@ -83,6 +88,7 @@ document.getElementById('register-form')?.addEventListener('submit', async e => 
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': api.csrfToken },
       body: JSON.stringify({
+        csrf_token: api.csrfToken,
         username: fd.get('username'),
         email: fd.get('email'),
         password: fd.get('password'),
@@ -120,7 +126,10 @@ document.getElementById('forgot-form')?.addEventListener('submit', async e => {
     const res = await fetch(API_BASE + 'api/auth/forgot-password.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': api.csrfToken },
-      body: JSON.stringify({ email: fd.get('email') }),
+      body: JSON.stringify({
+        csrf_token: api.csrfToken,
+        email: fd.get('email'),
+      }),
       credentials: 'same-origin',
     });
     const data = await res.json();

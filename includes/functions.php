@@ -21,15 +21,23 @@ function get_db(): PDO {
     return $pdo;
 }
 
-function get_redis(): Redis {
+function get_redis(): ?Redis {
     static $redis = null;
     if ($redis === null) {
-        $redis = new Redis();
-        $redis->connect(REDIS_HOST, REDIS_PORT, 2.0);
-        if (REDIS_PASS) {
-            $redis->auth(REDIS_PASS);
+        if (!class_exists('Redis')) {
+            return null;
         }
-        $redis->select(REDIS_DB);
+        try {
+            $redis = new Redis();
+            $redis->connect(REDIS_HOST, REDIS_PORT, 2.0);
+            if (REDIS_PASS) {
+                $redis->auth(REDIS_PASS);
+            }
+            $redis->select(REDIS_DB);
+        } catch (Exception $e) {
+            error_log('Redis connection failed: ' . $e->getMessage());
+            return null;
+        }
     }
     return $redis;
 }
@@ -93,6 +101,7 @@ function validate_positive_int(mixed $v): bool {
 
 function check_rate_limit(string $key, int $max_hits, int $window_seconds): bool {
     $redis = get_redis();
+    if (!$redis) return true;
     $now = microtime(true);
     $window_start = $now - $window_seconds;
     $redis_key = "rl:{$key}";
@@ -108,19 +117,92 @@ function check_rate_limit(string $key, int $max_hits, int $window_seconds): bool
 }
 
 function send_email(string $to, string $subject, string $html_body, string $text_body = ''): bool {
+    if (empty(SMTP_HOST) || SMTP_HOST === 'smtp.example.com') {
+        error_log("SMTP not configured, skipping email to: $to");
+        return false;
+    }
+
+    $errno = 0;
+    $errstr = '';
+    $context = stream_context_create([
+        'ssl' => [
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true,
+        ]
+    ]);
+
+    $ssl = (SMTP_PORT === 465) ? 'ssl://' : '';
+    $fp = @fsockopen($ssl . SMTP_HOST, SMTP_PORT, $errno, $errstr, 10);
+
+    if (!$fp) {
+        error_log("SMTP connection failed: $errstr ($errno)");
+        return false;
+    }
+
+    $crypto = '';
+    if (SMTP_PORT === 587 && function_exists('stream_socket_enable_crypto')) {
+        stream_socket_enable_crypto($fp, true, STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT);
+        $crypto = "STARTTLS\r\n";
+        $reply = fgets($fp, 515);
+    } else {
+        $reply = fgets($fp, 515);
+    }
+
+    fputs($fp, "EHLO localhost\r\n");
+    $reply = fgets($fp, 515);
+
+    if (SMTP_PORT === 587 || strpos($reply, '250-STARTTLS') !== false) {
+        fputs($fp, "STARTTLS\r\n");
+        $reply = fgets($fp, 515);
+        if (function_exists('stream_socket_enable_crypto')) {
+            stream_socket_enable_crypto($fp, true, STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT);
+        }
+        fputs($fp, "EHLO localhost\r\n");
+        while ($r = fgets($fp, 515)) { if (substr($r, 3, 1) === ' ') break; }
+    }
+
+    if (!empty(SMTP_USER)) {
+        fputs($fp, "AUTH LOGIN\r\n");
+        fgets($fp, 515);
+        fputs($fp, base64_encode(SMTP_USER) . "\r\n");
+        fgets($fp, 515);
+        fputs($fp, base64_encode(SMTP_PASS) . "\r\n");
+        $reply = fgets($fp, 515);
+        if (substr($reply, 0, 3) !== '235') {
+            error_log("SMTP auth failed: $reply");
+            fclose($fp);
+            return false;
+        }
+    }
+
+    fputs($fp, "MAIL FROM:<" . SMTP_FROM . ">\r\n");
+    fgets($fp, 515);
+    fputs($fp, "RCPT TO:<$to>\r\n");
+    fgets($fp, 515);
+    fputs($fp, "DATA\r\n");
+    fgets($fp, 515);
+
     $headers = [
         'MIME-Version: 1.0',
-        'Content-type: text/html; charset=utf-8',
+        'Content-Type: text/html; charset=UTF-8',
         'From: ' . SMTP_FROM_NAME . ' <' . SMTP_FROM . '>',
         'Reply-To: ' . SMTP_FROM,
         'X-Mailer: PHP/' . phpversion(),
     ];
 
-    if ($text_body !== '') {
-        $headers[] = 'Content-type: multipart/alternative; boundary="boundary"';
-    }
+    fputs($fp, "To: $to\r\n");
+    fputs($fp, "Subject: $subject\r\n");
+    fputs($fp, implode("\r\n", $headers) . "\r\n");
+    fputs($fp, "\r\n");
+    fputs($fp, $html_body . "\r\n");
+    fputs($fp, ".\r\n");
+    fgets($fp, 515);
 
-    return mail($to, $subject, $html_body, implode("\r\n", $headers));
+    fputs($fp, "QUIT\r\n");
+    fclose($fp);
+
+    return true;
 }
 
 function send_verification_email(string $email, string $username, string $token): bool {
@@ -298,7 +380,7 @@ function build_chunk_cache(int $cx, int $cy): string {
     }
 
     $redis = get_redis();
-    $redis->setex("chunk:{$cx}:{$cy}", 300, $buffer);
+    if ($redis) $redis->setex("chunk:{$cx}:{$cy}", 300, $buffer);
     return $buffer;
 }
 
