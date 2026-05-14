@@ -31,15 +31,15 @@ try {
     } elseif ($type === 'weekly') {
         $date_filter = 'AND WEEK(s.created_at) = WEEK(NOW()) AND YEAR(s.created_at) = YEAR(NOW())';
     }
-    
+
     // Check cache first
     $cache_key = "leaderboard:$type:$page";
     $cached = Redis::get($cache_key);
-    
+
     if ($cached) {
         respond_success(json_decode($cached, true));
     }
-    
+
     // Fetch scores
     $sql = "
         SELECT 
@@ -55,24 +55,24 @@ try {
         ORDER BY s.score DESC
         LIMIT ? OFFSET ?
     ";
-    
+
     $scores = Database::fetchAll($sql, [$limit, $offset]);
-    
+
     // Get total count
     $count_sql = "SELECT COUNT(*) as total FROM scores s JOIN users u ON s.user_id = u.id WHERE u.is_banned = 0 $date_filter";
     $count = Database::fetch($count_sql);
-    
+
     $result = [
         'scores' => $scores,
-        'total' => (int)$count['total'],
+        'total' => (int) $count['total'],
         'page' => $page,
         'limit' => $limit
     ];
-    
+
     // Cache for appropriate duration
     $ttl = $type === 'daily' ? 60 : ($type === 'weekly' ? 300 : 600);
     Redis::set($cache_key, json_encode($result), $ttl);
-    
+
     respond_success($result);
 
 } catch (Exception $e) {

@@ -23,40 +23,40 @@ try {
         'SELECT id, username, created_at, login_streak FROM users WHERE username = ? AND is_banned = 0',
         [$username]
     );
-    
+
     if (!$user) {
         respond_error('user_not_found', 'User not found', 404);
     }
-    
+
     // Get stats
     $total_pxl = Database::fetch(
         'SELECT COALESCE(SUM(amount), 0) as total FROM pxl_transactions WHERE user_id = ? AND type = "game_earn"',
         [$user['id']]
     );
-    
+
     $total_pixels = Database::fetch(
         'SELECT COUNT(*) as count FROM pixel_history WHERE user_id = ?',
         [$user['id']]
     );
-    
+
     $best_score = Database::fetch(
         'SELECT MAX(score) as best FROM scores WHERE user_id = ?',
         [$user['id']]
     );
-    
+
     $games_played = Database::fetch(
         'SELECT COUNT(*) as count FROM scores WHERE user_id = ?',
         [$user['id']]
     );
-    
+
     respond_success([
         'username' => $user['username'],
         'created_at' => $user['created_at'],
         'login_streak' => $user['login_streak'],
-        'total_pxl_earned' => (int)$total_pxl['total'],
-        'total_pixels' => (int)$total_pixels['count'],
-        'best_score' => (int)($best_score['best'] ?? 0),
-        'games_played' => (int)$games_played['count']
+        'total_pxl_earned' => (int) $total_pxl['total'],
+        'total_pixels' => (int) $total_pixels['count'],
+        'best_score' => (int) ($best_score['best'] ?? 0),
+        'games_played' => (int) $games_played['count']
     ]);
 
 } catch (Exception $e) {

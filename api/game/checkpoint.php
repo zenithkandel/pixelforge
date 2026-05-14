@@ -51,7 +51,7 @@ if (!validate_game_score($score, $time_elapsed)) {
 try {
     // Store checkpoint in database
     // (In a real system, we'd store this to validate the final submission)
-    
+
     respond_success([], 'Checkpoint recorded');
 
 } catch (Exception $e) {

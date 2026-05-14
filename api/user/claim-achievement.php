@@ -22,7 +22,7 @@ try {
     if (!RateLimit::check("claim:$user_id", 50, 3600)) {
         respond_error('rate_limited', 'Too many claims', 429);
     }
-    
+
     if (claim_achievement($user_id, $achievement_key)) {
         respond_success([], 'Achievement claimed successfully');
     } else {

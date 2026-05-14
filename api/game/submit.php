@@ -51,79 +51,79 @@ if (!validate_game_score($final_score, $duration)) {
 
 try {
     Database::beginTransaction();
-    
+
     // Get game session record
     $game_session = Database::fetch(
         'SELECT id FROM game_sessions WHERE session_token = ?',
         [$session_token]
     );
-    
+
     // Mark session as complete
     Database::execute(
         'UPDATE game_sessions SET is_active = 0, ended_at = NOW() WHERE session_token = ?',
         [$session_token]
     );
-    
+
     // Calculate PXL earned
     $base_pxl = intdiv($final_score, 200); // 200 score = 1 PXL
-    
+
     // Check for daily first game bonus
     $today = date('Y-m-d');
     $first_game_today = !Database::fetch(
         'SELECT id FROM scores WHERE user_id = ? AND DATE(created_at) = ?',
         [$user_id, $today]
     );
-    
+
     $total_pxl = $base_pxl;
     if ($first_game_today) {
         $total_pxl *= 2; // 2× multiplier for first game
     }
-    
+
     // Check for daily high score bonus
     $daily_best = Database::fetch(
         'SELECT MAX(score) as best FROM scores WHERE user_id = ? AND DATE(created_at) = ?',
         [$user_id, $today]
     );
-    
+
     $is_daily_best = !$daily_best || $final_score > $daily_best['best'];
     if ($is_daily_best && !$first_game_today) {
         $total_pxl += 5;
     }
-    
+
     // Credit PXL
     credit_pxl($user_id, $total_pxl, 'game_earn', $game_session['id'], "Game score: $final_score");
-    
+
     // Store score
     Database::execute(
         'INSERT INTO scores (user_id, game_session_id, score, duration_seconds, pxl_earned, final_speed_tier, lives_at_end, highest_combo, total_shards_collected, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())',
         [$user_id, $game_session['id'], $final_score, $duration, $total_pxl, $final_speed_tier, $lives_at_end, $highest_combo, $total_shards]
     );
-    
+
     // Check and grant achievements
     $granted = check_and_grant_achievements($user_id, 'game_submit', [
         'score' => $final_score,
         'speed_tier' => $final_speed_tier
     ]);
-    
+
     // Also check combo achievements
     check_and_grant_achievements($user_id, 'combo', ['combo' => $highest_combo]);
-    
+
     Database::commit();
-    
+
     // Clear session from Redis
     Redis::del("game_session:$session_token");
-    
+
     // Get new balance
     $new_balance = get_pxl_balance($user_id);
-    
+
     // Get daily rank
     $rank = Database::fetch(
         'SELECT COUNT(*) + 1 as rank FROM scores WHERE DATE(created_at) = ? AND score > ?',
         [$today, $final_score]
     );
-    
+
     log_audit('game_submitted', $user_id, ['score' => $final_score, 'pxl_earned' => $total_pxl]);
-    
+
     respond_success([
         'pxl_earned' => $total_pxl,
         'new_balance' => $new_balance,

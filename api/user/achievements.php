@@ -12,7 +12,7 @@ $user_id = get_current_user_id();
 
 try {
     $achievements = get_user_achievements($user_id);
-    
+
     respond_success($achievements);
 
 } catch (Exception $e) {

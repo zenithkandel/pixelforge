@@ -29,7 +29,7 @@ try {
     // Generate session token and seed
     $session_token = generate_game_session_token();
     $seed = generate_game_seed();
-    
+
     // Create HMAC for this session
     $session_data = [
         'user_id' => $user_id,
@@ -37,15 +37,15 @@ try {
         'timestamp' => time()
     ];
     $hmac = hash_hmac('sha256', json_encode($session_data), GAME_HMAC_KEY);
-    
+
     // Store session
     Database::execute(
         'INSERT INTO game_sessions (user_id, session_token, seed, hmac_key, is_active, started_at) VALUES (?, ?, ?, ?, 1, NOW())',
         [$user_id, $session_token, $seed, $hmac]
     );
-    
+
     $game_session_id = Database::lastInsertId();
-    
+
     // Cache session in Redis with 2-hour timeout
     Redis::set("game_session:$session_token", json_encode([
         'user_id' => $user_id,
@@ -53,9 +53,9 @@ try {
         'seed' => $seed,
         'started_at' => time()
     ]), 7200);
-    
+
     log_audit('game_started', $user_id, ['session_token' => $session_token, 'seed' => $seed]);
-    
+
     respond_success([
         'session_token' => $session_token,
         'seed' => $seed,
