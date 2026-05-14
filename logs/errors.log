@@ -1,3 +1,11 @@
 [2026-05-14 05:38:00] Call to undefined function get_client_ip() in C:\xampp\htdocs\codes\pixelforge\public\api\auth\register.php:6
 Stack trace:
 #0 {main}
+[2026-05-14 05:55:03] Leaderboard fetch failed {"exception":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 's.created_at' in 'where clause'"}
+[2026-05-14 05:55:04] Leaderboard fetch failed {"exception":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 's.created_at' in 'where clause'"}
+[2026-05-14 05:55:05] Leaderboard fetch failed {"exception":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 's.created_at' in 'where clause'"}
+[2026-05-14 05:55:05] Leaderboard fetch failed {"exception":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 's.created_at' in 'where clause'"}
+[2026-05-14 05:55:06] Leaderboard fetch failed {"exception":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 's.created_at' in 'where clause'"}
+[2026-05-14 05:55:06] Leaderboard fetch failed {"exception":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 's.created_at' in 'where clause'"}
+[2026-05-14 05:55:12] Leaderboard fetch failed {"exception":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 's.created_at' in 'where clause'"}
+[2026-05-14 05:55:34] Leaderboard fetch failed {"exception":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 's.created_at' in 'where clause'"}

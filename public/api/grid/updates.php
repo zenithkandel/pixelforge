@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__, 3) . '/includes/bootstrap.php';
+require_once dirname(__DIR__, 2) . '/includes/bootstrap.php';
 
 $ip = get_client_ip();
 $redis = get_redis();
