@@ -1,6 +1,6 @@
 import { GameEngine } from './engine.js';
-import { startGame, checkpointGame, submitGame } from '/assets/js/api.js';
-import { showToast } from '/assets/js/ui.js';
+import { startGame, checkpointGame, submitGame } from '../api.js';
+import { showToast } from '../ui.js';
 
 const canvas = document.getElementById('game-canvas');
 const startScreen = document.getElementById('game-start-screen');
@@ -12,7 +12,7 @@ let currentPxlBalance = 0;
 
 async function initGame() {
   try {
-    const meRes = await fetch('/api/user/me.php', { credentials: 'same-origin' });
+    const meRes = await fetch('api/user/me.php', { credentials: 'same-origin' });
     const meData = await meRes.json();
     if (meData.ok) currentPxlBalance = meData.data.pxl_balance || 0;
   } catch (e) { /* ignore */ }

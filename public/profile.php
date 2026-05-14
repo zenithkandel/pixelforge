@@ -16,7 +16,7 @@ if ($target) {
 if (!$profile) {
     if ($target) {
         http_response_code(404);
-        echo '<!DOCTYPE html><html><head><title>User Not Found — PixelForge</title></head><body style="font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0"><div style="text-align:center"><h1>404</h1><p>User not found.</p><a href="/canvas.php">Go back</a></div></body></html>';
+        echo '<!DOCTYPE html><html><head><title>User Not Found</title></head><body style="font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0"><h1>404 — User Not Found</h1><p><a href="canvas.php">Go back</a></p></body></html>';
         exit;
     }
 }
@@ -63,6 +63,8 @@ $stmt = $pdo->prepare("
 ");
 $stmt->execute([$profile['id']]);
 $recent_games = $stmt->fetchAll();
+
+$user_sidebar = isset($_SESSION['user_id']) ? get_current_user_data() : null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,7 +76,7 @@ $recent_games = $stmt->fetchAll();
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
 </head>
 <body>
     <div class="app-shell">
@@ -87,30 +89,30 @@ $recent_games = $stmt->fetchAll();
                 </div>
             </div>
             <nav class="sidebar-nav">
-                <a href="/canvas.php" class="nav-item">
+                <a href="canvas.php" class="nav-item">
                     <span class="nav-icon">&#9634;</span>
                     <span class="nav-label">The Forge</span>
                 </a>
-                <a href="/game.php" class="nav-item">
+                <a href="game.php" class="nav-item">
                     <span class="nav-icon">&#9654;</span>
                     <span class="nav-label">Pixel Dash</span>
                 </a>
-                <a href="/leaderboard.php" class="nav-item">
+                <a href="leaderboard.php" class="nav-item">
                     <span class="nav-icon">&#9672;</span>
                     <span class="nav-label">Leaderboard</span>
                 </a>
-                <a href="/profile.php" class="nav-item <?= $is_own ? 'active' : '' ?>">
+                <a href="profile.php" class="nav-item <?= $is_own ? 'active' : '' ?>">
                     <span class="nav-icon">&#9678;</span>
                     <span class="nav-label">Profile</span>
                 </a>
             </nav>
-            <?php if ($is_own && $user): ?>
+            <?php if ($user_sidebar): ?>
             <div class="sidebar-footer">
                 <div class="balance-display">
                     <span class="balance-icon">&#9670;</span>
-                    <span class="balance-amount mono"><?= h($user['pxl_balance']) ?> PXL</span>
+                    <span class="balance-amount mono"><?= h((string)$user_sidebar['pxl_balance']) ?> PXL</span>
                 </div>
-                <div class="user-tag">@<?= h($user['username']) ?></div>
+                <div class="user-tag">@<?= h($user_sidebar['username']) ?></div>
             </div>
             <?php endif; ?>
         </aside>
@@ -122,29 +124,29 @@ $recent_games = $stmt->fetchAll();
                     <h1 class="profile-username"><?= h($profile['username']) ?></h1>
                     <div class="profile-meta">
                         Joined <?= date('M Y', strtotime($profile['created_at'])) ?>
-                        <?php if ($profile['login_streak'] > 0): ?>
+                        <?php if (($profile['login_streak'] ?? 0) > 0): ?>
                             &middot; <span class="streak-badge">&#9733; <?= $profile['login_streak'] ?>-day streak</span>
                         <?php endif; ?>
                     </div>
                 </div>
                 <?php if ($is_own): ?>
                 <div class="profile-actions">
-                    <a href="/api/auth/logout.php" class="btn btn-secondary btn-sm" data-api-logout>Sign Out</a>
+                    <a href="api/auth/logout.php" class="btn btn-secondary btn-sm" data-api-logout>Sign Out</a>
                 </div>
                 <?php endif; ?>
             </div>
 
             <div class="profile-stats">
                 <div class="stat-card">
-                    <span class="stat-card-value mono pxl-text"><?= h($profile['pxl_balance']) ?></span>
+                    <span class="stat-card-value mono pxl-text"><?= h((string)($profile['pxl_balance'] ?? 0)) ?></span>
                     <span class="stat-card-label">PXL Balance</span>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-card-value mono"><?= number_format($profile['total_pxl_earned']) ?></span>
+                    <span class="stat-card-value mono"><?= number_format($profile['total_pxl_earned'] ?? 0) ?></span>
                     <span class="stat-card-label">Total Earned</span>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-card-value mono"><?= number_format($profile['total_pxl_spent']) ?></span>
+                    <span class="stat-card-value mono"><?= number_format($profile['total_pxl_spent'] ?? 0) ?></span>
                     <span class="stat-card-label">Total Spent</span>
                 </div>
                 <div class="stat-card">
@@ -208,21 +210,21 @@ $recent_games = $stmt->fetchAll();
                 </div>
                 <?php else: ?>
                 <div class="empty-state">
-                    <p>No games played yet. <a href="/game.php" class="link">Play a game!</a></p>
+                    <p>No games played yet. <a href="game.php" class="link">Play a game!</a></p>
                 </div>
                 <?php endif; ?>
             </div>
         </main>
     </div>
 
-    <script type="module" src="/assets/js/ui.js"></script>
+    <script type="module" src="assets/js/ui.js"></script>
     <?php if ($is_own): ?>
     <script type="module">
-        import { claimAchievement } from '/assets/js/api.js';
+        import { claimAchievement } from 'assets/js/api.js';
         document.querySelectorAll('.ach-claim-btn').forEach(btn => {
             btn.addEventListener('click', async () => {
                 const id = btn.dataset.achId;
-                const res = await fetch('/api/user/claim-achievement.php', {
+                const res = await fetch('api/user/claim-achievement.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content },
                     body: JSON.stringify({ achievement_id: id })
@@ -246,7 +248,7 @@ $recent_games = $stmt->fetchAll();
             a.addEventListener('click', async e => {
                 e.preventDefault();
                 await fetch(a.href, { method: 'POST', credentials: 'same-origin' });
-                window.location.href = '/';
+                window.location.href = 'index.php';
             });
         });
     </script>

@@ -15,8 +15,8 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/assets/css/main.css" />
-    <link rel="stylesheet" href="/assets/css/game.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/game.css" />
 </head>
 <body>
     <div class="app-shell">
@@ -29,19 +29,19 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
                 </div>
             </div>
             <nav class="sidebar-nav">
-                <a href="/canvas.php" class="nav-item">
+                <a href="canvas.php" class="nav-item">
                     <span class="nav-icon">&#9634;</span>
                     <span class="nav-label">The Forge</span>
                 </a>
-                <a href="/game.php" class="nav-item active">
+                <a href="game.php" class="nav-item active">
                     <span class="nav-icon">&#9654;</span>
                     <span class="nav-label">Pixel Dash</span>
                 </a>
-                <a href="/leaderboard.php" class="nav-item">
+                <a href="leaderboard.php" class="nav-item">
                     <span class="nav-icon">&#9672;</span>
                     <span class="nav-label">Leaderboard</span>
                 </a>
-                <a href="/profile.php" class="nav-item">
+                <a href="profile.php" class="nav-item">
                     <span class="nav-icon">&#9678;</span>
                     <span class="nav-label">Profile</span>
                 </a>
@@ -49,7 +49,7 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
             <div class="sidebar-footer">
                 <div class="balance-display">
                     <span class="balance-icon">&#9670;</span>
-                    <span class="balance-amount mono"><?= h($user['pxl_balance']) ?> PXL</span>
+                    <span class="balance-amount mono"><?= h((string)($user['pxl_balance'] ?? 0)) ?> PXL</span>
                 </div>
                 <div class="user-tag">@<?= h($user['username']) ?></div>
             </div>
@@ -96,7 +96,7 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
                         </div>
                     </div>
                     <button class="btn btn-primary btn-xl" id="replay-btn">&#8635; PLAY AGAIN</button>
-                    <a href="/canvas.php" class="btn btn-secondary">&#9632; The Forge</a>
+                    <a href="canvas.php" class="btn btn-secondary">&#9632; The Forge</a>
                 </div>
 
                 <div class="game-pause-overlay" id="game-pause-overlay" hidden>
@@ -110,6 +110,6 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
         </main>
     </div>
 
-    <script type="module" src="/assets/js/game/game-main.js"></script>
+    <script type="module" src="assets/js/game/game-main.js"></script>
 </body>
 </html>

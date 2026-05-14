@@ -38,31 +38,31 @@ class ApiClient {
 export const api = new ApiClient();
 
 export async function claimAchievement(achievementId) {
-  return api.post('/api/user/claim-achievement.php', { achievement_id: achievementId });
+  return api.post('../../api/user/claim-achievement.php', { achievement_id: achievementId });
 }
 
 export async function getMe() {
-  return api.get('/api/user/me.php');
+  return api.get('../../api/user/me.php');
 }
 
 export async function startGame() {
-  return api.post('/api/game/start.php', {});
+  return api.post('../../api/game/start.php', {});
 }
 
 export async function checkpointGame(sessionId, score, lives, speedTier, hmac) {
-  return api.post('/api/game/checkpoint.php', { session_id: sessionId, score, lives, speed_tier: speedTier, hmac });
+  return api.post('../../api/game/checkpoint.php', { session_id: sessionId, score, lives, speed_tier: speedTier, hmac });
 }
 
 export async function submitGame(sessionId, score, durationMs, hmac) {
-  return api.post('/api/game/submit.php', { session_id: sessionId, score, duration_ms: durationMs, hmac });
+  return api.post('../../api/game/submit.php', { session_id: sessionId, score, duration_ms: durationMs, hmac });
 }
 
 export async function buyPixel(x, y, color) {
-  return api.post('/api/grid/buy.php', { x, y, color });
+  return api.post('../../api/grid/buy.php', { x, y, color });
 }
 
 export async function getChunk(cx, cy) {
-  return api.getBinary(`/api/grid/chunk.php?cx=${cx}&cy=${cy}`);
+  return api.getBinary(`../../api/grid/chunk.php?cx=${cx}&cy=${cy}`);
 }
 
 export default api;

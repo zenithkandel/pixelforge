@@ -302,7 +302,7 @@ function build_chunk_cache(int $cx, int $cy): string {
     return $buffer;
 }
 
-function log_error(Exception $e): void {
+function log_error(Throwable $e): void {
     error_log('[' . date('Y-m-d H:i:s') . '] ' . get_class($e) . ': ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine() . "\n" . $e->getTraceAsString());
 }
 

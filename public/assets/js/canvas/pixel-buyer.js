@@ -1,5 +1,5 @@
-import { api, buyPixel } from '/assets/js/api.js';
-import { showToast } from '/assets/js/ui.js';
+import { api, buyPixel } from '../api.js';
+import { showToast } from '../ui.js';
 
 class PixelBuyer {
   constructor(renderer, state) {

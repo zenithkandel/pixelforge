@@ -3,8 +3,8 @@ import { ChunkCache } from './chunk-cache.js';
 import { SSEClient } from './sse-client.js';
 import { PixelBuyer } from './pixel-buyer.js';
 import { MiniMap } from './mini-map.js';
-import { api, getChunk } from '/assets/js/api.js';
-import { showToast, debounce, throttle } from '/assets/js/ui.js';
+import { api, getChunk } from '../api.js';
+import { showToast, debounce, throttle } from '../ui.js';
 
 const state = {
   viewX: 0,
@@ -34,7 +34,7 @@ const isLoggedIn = document.querySelector('.sidebar') !== null;
 
 if (isLoggedIn) {
   try {
-    const me = await api.get('/api/user/me.php');
+    const me = await api.get('api/user/me.php');
     if (me.ok) state.userBalance = me.data.pxl_balance || 0;
   } catch (e) { /* ignore */ }
 }
@@ -91,7 +91,7 @@ function decodeChunkBinary(bin) {
   return imgData;
 }
 
-const sseClient = new SSEClient('/api/grid/updates.php');
+const sseClient = new SSEClient('api/grid/updates.php');
 sseClient.onPixelUpdate = (data) => {
   if (data.type === 'pixel') {
     const { cx, cy } = data;

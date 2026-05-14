@@ -6,7 +6,7 @@ require_method('GET');
 $token = $_GET['token'] ?? '';
 
 if (empty($token) || strlen($token) !== 64) {
-    header('Location: /?verify_error=invalid_token');
+    header('Location: ../index.php?verify_error=invalid_token');
     exit;
 }
 
@@ -17,7 +17,7 @@ $stmt->execute([$token]);
 $user = $stmt->fetch();
 
 if (!$user || strtotime($user['email_verify_expires']) < time()) {
-    header('Location: /?verify_error=expired');
+    header('Location: ../index.php?verify_error=expired');
     exit;
 }
 
@@ -26,4 +26,4 @@ $stmt->execute([$user['id']]);
 
 log_audit('email_verified', $user['id']);
 
-header('Location: /?verify_success=1');
+header('Location: ../index.php?verify_success=1');

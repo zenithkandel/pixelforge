@@ -28,7 +28,7 @@ if ($token) {
     <title>Email Verification — PixelForge</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
 </head>
 <body class="landing-body">
     <div class="landing-wrapper">
@@ -46,20 +46,20 @@ if ($token) {
                         <div style="font-size:48px;margin-bottom:16px">&#10003;</div>
                         <h2>Email Verified!</h2>
                         <p style="color:var(--text-secondary);margin:16px 0 24px">Your email has been confirmed. You can now play PIXEL DASH and paint the canvas.</p>
-                        <a href="/game.php" class="btn btn-primary btn-full">Play Pixel Dash</a>
+                        <a href="game.php" class="btn btn-primary btn-full">Play Pixel Dash</a>
                     </div>
                 <?php elseif ($status === 'invalid'): ?>
                     <div style="text-align:center">
                         <div style="font-size:48px;margin-bottom:16px">&#10007;</div>
                         <h2>Invalid Link</h2>
                         <p style="color:var(--text-secondary);margin:16px 0 24px">This verification link is invalid or has expired. Please request a new one.</p>
-                        <a href="/" class="btn btn-secondary btn-full">Go to Login</a>
+                        <a href="index.php" class="btn btn-secondary btn-full">Go to Login</a>
                     </div>
                 <?php else: ?>
                     <div style="text-align:center">
                         <h2>Missing Token</h2>
                         <p style="color:var(--text-secondary);margin:16px 0 24px">No verification token provided.</p>
-                        <a href="/" class="btn btn-secondary btn-full">Go to Login</a>
+                        <a href="index.php" class="btn btn-secondary btn-full">Go to Login</a>
                     </div>
                 <?php endif; ?>
             </div>

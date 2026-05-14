@@ -2,6 +2,8 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/auth.php';
 
 ini_set('session.use_strict_mode', '1');
 ini_set('session.cookie_httponly', '1');
@@ -24,11 +26,12 @@ header('Referrer-Policy: strict-origin-when-cross-origin');
 header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
 
 set_exception_handler(function (Throwable $e) {
-    log_error($e);
+    $msg = $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
+    error_log('[EXCEPTION] ' . $msg . "\n" . $e->getTraceAsString());
     if (!headers_sent()) {
         http_response_code(500);
         header('Content-Type: application/json; charset=utf-8');
     }
-    echo json_encode(['ok' => false, 'error' => 'server_error', 'message' => 'An internal error occurred'], JSON_UNESCAPED_UNICODE);
+    echo json_encode(['ok' => false, 'error' => 'server_error', 'message' => $msg], JSON_UNESCAPED_UNICODE);
     exit;
 });
