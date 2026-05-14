@@ -10,6 +10,7 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,9 +18,12 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
     <title>PixelForge — Where Pixels Come to Life</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet" />
     <link rel="stylesheet" href="/assets/css/main.css" />
 </head>
+
 <body class="landing-body">
     <div class="landing-wrapper">
         <header class="landing-header">
@@ -38,7 +42,8 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
                 <div class="hero-badge">Community Pixel Canvas</div>
                 <h1 class="hero-title">Paint the World,<br /><span class="hero-accent">One Pixel at a Time</span></h1>
                 <p class="hero-subtitle">
-                    Earn <span class="pxl-text">PXL</span> by playing <strong>PIXEL DASH</strong>, then spend them painting
+                    Earn <span class="pxl-text">PXL</span> by playing <strong>PIXEL DASH</strong>, then spend them
+                    painting
                     the communal 800×800 canvas. Collaborate, compete, and create.
                 </p>
                 <div class="hero-actions">
@@ -76,7 +81,8 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
                     </div>
                     <div class="form-group">
                         <label for="login-password">Password</label>
-                        <input type="password" id="login-password" name="password" autocomplete="current-password" required />
+                        <input type="password" id="login-password" name="password" autocomplete="current-password"
+                            required />
                     </div>
                     <div class="form-row form-row-between">
                         <label class="checkbox-label">
@@ -91,7 +97,8 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
                 <form id="register-form" class="auth-form" data-tab="register" hidden>
                     <div class="form-group">
                         <label for="reg-username">Username</label>
-                        <input type="text" id="reg-username" name="username" minlength="3" maxlength="20" autocomplete="username" required />
+                        <input type="text" id="reg-username" name="username" minlength="3" maxlength="20"
+                            autocomplete="username" required />
                         <span class="form-hint">3–20 characters, letters and numbers only</span>
                     </div>
                     <div class="form-group">
@@ -100,12 +107,14 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
                     </div>
                     <div class="form-group">
                         <label for="reg-password">Password</label>
-                        <input type="password" id="reg-password" name="password" minlength="8" autocomplete="new-password" required />
+                        <input type="password" id="reg-password" name="password" minlength="8"
+                            autocomplete="new-password" required />
                         <span class="form-hint">Minimum 8 characters</span>
                     </div>
                     <div class="form-group">
                         <label for="reg-confirm">Confirm Password</label>
-                        <input type="password" id="reg-confirm" name="password_confirm" autocomplete="new-password" required />
+                        <input type="password" id="reg-confirm" name="password_confirm" autocomplete="new-password"
+                            required />
                     </div>
                     <div class="form-error" id="register-error" hidden></div>
                     <button type="submit" class="btn btn-primary btn-full" id="register-btn">Create Account</button>
@@ -134,4 +143,5 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
         initAuth();
     </script>
 </body>
+
 </html>

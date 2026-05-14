@@ -1,6 +1,7 @@
 import { SeededPRNG } from './prng.js';
 import { ObstacleManager, GROUND_Y, GRAVITY, JUMP_VELOCITY, DOUBLE_JUMP_VELOCITY, SLIDE_DURATION } from './obstacles.js';
 import { CollectibleManager } from './collectibles.js';
+const POWERUP_DURATIONS = { SHIELD: 8000, MAGNET: 12000, TIMEWARP: 6000, SCORE_SURGE: 15000 };
 import { AudioManager } from './audio.js';
 import { HUD } from './hud.js';
 import { GameRenderer, SPEED_TIERS } from './renderer.js';
