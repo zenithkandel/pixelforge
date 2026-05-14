@@ -1,4 +1,4 @@
-import api from './api.js';
+import { api, API_BASE } from './api.js';
 
 let currentTab = 'login';
 
@@ -37,7 +37,7 @@ document.getElementById('login-form')?.addEventListener('submit', async e => {
 
   try {
     const fd = new FormData(e.target);
-    const res = await fetch('api/auth/login.php', {
+    const res = await fetch(API_BASE + 'api/auth/login.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': api.csrfToken },
       body: JSON.stringify({ username: fd.get('username'), password: fd.get('password'), remember: fd.get('remember') || false }),
@@ -45,7 +45,7 @@ document.getElementById('login-form')?.addEventListener('submit', async e => {
     });
     const data = await res.json();
     if (data.ok) {
-      window.location.href = data.data.redirect || 'game.php';
+      window.location.href = data.data.redirect || API_BASE + 'game.php';
     } else {
       errEl.textContent = data.message || 'Login failed. Check your credentials.';
       errEl.hidden = false;
@@ -79,7 +79,7 @@ document.getElementById('register-form')?.addEventListener('submit', async e => 
 
   try {
     const fd = new FormData(e.target);
-    const res = await fetch('api/auth/register.php', {
+    const res = await fetch(API_BASE + 'api/auth/register.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': api.csrfToken },
       body: JSON.stringify({
@@ -91,7 +91,7 @@ document.getElementById('register-form')?.addEventListener('submit', async e => 
     });
     const data = await res.json();
     if (data.ok) {
-      window.location.href = 'game.php';
+      window.location.href = API_BASE + 'game.php';
     } else {
       errEl.textContent = data.message || 'Registration failed.';
       errEl.hidden = false;
@@ -117,7 +117,7 @@ document.getElementById('forgot-form')?.addEventListener('submit', async e => {
 
   try {
     const fd = new FormData(e.target);
-    const res = await fetch('api/auth/forgot-password.php', {
+    const res = await fetch(API_BASE + 'api/auth/forgot-password.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': api.csrfToken },
       body: JSON.stringify({ email: fd.get('email') }),

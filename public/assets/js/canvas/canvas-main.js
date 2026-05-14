@@ -85,10 +85,15 @@ function decodeChunkBinary(bin) {
 }
 
 let base = '';
-const scripts = document.querySelectorAll('script[src]');
-for (const s of scripts) {
-  const m = s.src.match(/\/assets\/js\/canvas\/canvas-main\.js$/);
-  if (m) { base = s.src.replace(m[0], ''); break; }
+const metaBase = document.querySelector('meta[name="base-url"]')?.content;
+if (metaBase) {
+  base = metaBase;
+} else {
+  const scripts = document.querySelectorAll('script[src]');
+  for (const s of scripts) {
+    const m = s.src.match(/\/assets\/js\/canvas\/canvas-main\.js$/);
+    if (m) { base = s.src.replace(m[0], ''); break; }
+  }
 }
 
 const sseClient = new SSEClient(base + 'api/grid/updates.php');

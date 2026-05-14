@@ -16,7 +16,7 @@ if ($target) {
 if (!$profile) {
     if ($target) {
         http_response_code(404);
-        echo '<!DOCTYPE html><html><head><title>User Not Found</title></head><body style="font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0"><h1>404 — User Not Found</h1><p><a href="canvas.php">Go back</a></p></body></html>';
+        echo '<!DOCTYPE html><html><head><title>User Not Found</title></head><body style="font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0"><h1>404 — User Not Found</h1><p><a href="<?= BASE_URL ?>canvas.php">Go back</a></p></body></html>';
         exit;
     }
 }
@@ -71,7 +71,9 @@ $user_sidebar = isset($_SESSION['user_id']) ? get_current_user_data() : null;
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="base-url" content="<?= BASE_URL ?>" />
     <meta name="csrf-token" content="<?= h($csrf_token) ?>" />
+    <meta name="base-url" content="<?= BASE_URL ?>" />
     <title><?= h($profile['username']) ?> — PixelForge</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

@@ -10,7 +10,7 @@ ini_set('session.cookie_httponly', '1');
 ini_set('session.cookie_secure', APP_ENV !== 'local' ? '1' : '0');
 ini_set('session.cookie_samesite', 'Strict');
 ini_set('session.use_only_cookies', '1');
-ini_set('session.gc_maxlifetime', (string)SESSION_TTL);
+ini_set('session.gc_maxlifetime', (string) SESSION_TTL);
 
 session_name(SESSION_NAME);
 session_start();
@@ -23,7 +23,10 @@ $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (isset($
 $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
 $port = $_SERVER['SERVER_PORT'] ?? 80;
 $portStr = ($scheme === 'http' && $port == 80) || ($scheme === 'https' && $port == 443) ? '' : ':' . $port;
-define('BASE_URL', $scheme . '://' . $host . $portStr . '/');
+$scriptPath = $_SERVER['SCRIPT_NAME'] ?? '';
+$scriptDir = dirname($scriptPath);
+if ($scriptDir === '\\' || $scriptDir === '/') $scriptDir = '';
+define('BASE_URL', $scheme . '://' . $host . $portStr . rtrim($scriptDir, '/') . '/');
 
 header('Content-Security-Policy: default-src \'self\'; script-src \'self\' \'unsafe-inline\'; style-src \'self\' \'unsafe-inline\' https://fonts.googleapis.com; font-src \'self\' https://fonts.gstatic.com; img-src \'self\' data: blob:; connect-src \'self\' ws: wss:; media-src \'self\'; object-src \'none\'; base-uri \'self\'; form-action \'self\'; frame-ancestors \'none\';');
 header('X-Frame-Options: DENY');

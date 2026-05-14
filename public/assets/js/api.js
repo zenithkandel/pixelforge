@@ -40,11 +40,14 @@ class ApiClient {
 }
 
 const API_BASE = (function () {
+  const meta = document.querySelector('meta[name="base-url"]');
+  if (meta) return meta.content;
   const scripts = document.querySelectorAll('script[src]');
   for (const s of scripts) {
     const m = s.src.match(/\/assets\/js\/(?:canvas\/|game\/|)([^/]+\.js)$/);
     if (m) {
-      return s.src.slice(0, s.src.lastIndexOf('/') - m[0].length + s.src.length) + '/';
+      const idx = s.src.indexOf('/assets/js/');
+      return s.src.slice(0, idx + '/assets/'.length);
     }
   }
   return '';

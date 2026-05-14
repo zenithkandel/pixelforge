@@ -4,7 +4,7 @@ error_reporting(0);
 ignore_user_abort(true);
 set_time_limit(0);
 
-require_once dirname(__DIR__, 2) . '/includes/bootstrap.php';
+require_once dirname(__DIR__, 3) . '/includes/bootstrap.php';
 
 header('Content-Type: text/event-stream');
 header('Cache-Control: no-cache');

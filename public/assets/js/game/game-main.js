@@ -12,7 +12,8 @@ let currentPxlBalance = 0;
 
 async function initGame() {
   try {
-    const meRes = await fetch('api/user/me.php', { credentials: 'same-origin' });
+    const base = document.querySelector('meta[name="base-url"]')?.content || '';
+    const meRes = await fetch(base + 'api/user/me.php', { credentials: 'same-origin' });
     const meData = await meRes.json();
     if (meData.ok) currentPxlBalance = meData.data.pxl_balance || 0;
   } catch (e) { /* ignore */ }

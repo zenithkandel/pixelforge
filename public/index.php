@@ -2,7 +2,7 @@
 require_once dirname(__DIR__) . '/includes/bootstrap.php';
 
 if (isset($_SESSION['user_id'])) {
-    header('Location: game.php');
+    header('Location: ' . BASE_URL . 'game.php');
     exit;
 }
 
@@ -15,6 +15,7 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="<?= h($csrf_token) ?>" />
+    <meta name="base-url" content="<?= BASE_URL ?>" />
     <title>PixelForge — Where Pixels Come to Life</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

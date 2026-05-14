@@ -15,6 +15,7 @@ $session_uid = $_SESSION['user_id'] ?? 0;
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="base-url" content="<?= BASE_URL ?>" />
     <title>Leaderboard — PixelForge</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -80,13 +81,14 @@ $session_uid = $_SESSION['user_id'] ?? 0;
     </div>
 
     <script type="module">
+        const BASE_URL = document.querySelector('meta[name="base-url"]')?.content || '';
         const period = new URLSearchParams(window.location.search).get('period') || 'all';
         const container = document.getElementById('leaderboard-container');
         const sessionUid = <?= $session_uid ?>;
 
         async function loadLeaderboard() {
             try {
-                const res = await fetch(`api/leaderboard.php?period=${period}`, { credentials: 'same-origin' });
+                const res = await fetch(BASE_URL + `api/leaderboard.php?period=${period}`, { credentials: 'same-origin' });
                 const data = await res.json();
                 if (!data.ok) throw new Error(data.message || 'Failed to load');
 
@@ -105,7 +107,7 @@ $session_uid = $_SESSION['user_id'] ?? 0;
                     const isMe = row.user_id == sessionUid;
                     html += `<div class="lb-row ${rankClass} ${isMe ? 'lb-me' : ''}">
                         <span class="lb-rank">${rank <= 3 ? ['&#9813;','&#9812;','&#9811;'][rank-1] : rank}</span>
-                        <a class="lb-player" href="profile.php?username=${encodeURIComponent(row.username)}">${escapeHtml(row.username)}</a>
+                        <a class="lb-player" href="<?= BASE_URL ?>profile.php?username=${encodeURIComponent(row.username)}">${escapeHtml(row.username)}</a>
                         <span class="lb-score mono">${Number(row.score).toLocaleString()}</span>
                         <span class="lb-pxl mono">+${row.pxl_earned}</span>
                         <span class="lb-time">${row.when || ''}</span>
