@@ -10,6 +10,7 @@ function require_auth(): array {
 
 function require_verified(): array {
     $user = require_auth();
+    if (APP_ENV === 'local') return $user;
     if (!$user['email_verified']) {
         respond_error('email_not_verified', 'Please verify your email first', 403);
     }
