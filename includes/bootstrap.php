@@ -4,6 +4,10 @@
  * Must be included at the start of every PHP request
  */
 
+if (defined('PIXELFORGE_BOOTSTRAPPED')) {
+    return;
+}
+
 define('PIXELFORGE_BOOTSTRAPPED', true);
 
 require_once dirname(__DIR__) . '/includes/config.php';
