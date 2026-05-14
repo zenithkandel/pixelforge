@@ -21,7 +21,7 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/main.css" />
 </head>
 
 <body class="landing-body">
@@ -32,8 +32,8 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
                 <span class="brand-name">PixelForge</span>
             </div>
             <nav class="landing-nav">
-                <a href="canvas.php" class="nav-link">The Forge</a>
-                <a href="leaderboard.php" class="nav-link">Leaderboard</a>
+                <a href="<?= BASE_URL ?>canvas.php" class="nav-link">The Forge</a>
+                <a href="<?= BASE_URL ?>leaderboard.php" class="nav-link">Leaderboard</a>
             </nav>
         </header>
 
@@ -47,8 +47,8 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
                     the communal 800×800 canvas. Collaborate, compete, and create.
                 </p>
                 <div class="hero-actions">
-                    <a href="game.php" class="btn btn-primary btn-lg">Play Pixel Dash</a>
-                    <a href="canvas.php" class="btn btn-secondary btn-lg">View The Forge</a>
+                    <a href="<?= BASE_URL ?>game.php" class="btn btn-primary btn-lg">Play Pixel Dash</a>
+                    <a href="<?= BASE_URL ?>canvas.php" class="btn btn-secondary btn-lg">View The Forge</a>
                 </div>
                 <div class="hero-stats">
                     <div class="stat-item">
@@ -139,7 +139,7 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
     </div>
 
     <script type="module">
-        import { initAuth } from 'assets/js/auth.js';
+        import { initAuth } from '<?= BASE_URL ?>assets/js/auth.js';
         initAuth();
     </script>
 </body>

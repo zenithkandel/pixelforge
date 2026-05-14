@@ -76,7 +76,7 @@ $user_sidebar = isset($_SESSION['user_id']) ? get_current_user_data() : null;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/main.css" />
 </head>
 <body>
     <div class="app-shell">
@@ -89,19 +89,19 @@ $user_sidebar = isset($_SESSION['user_id']) ? get_current_user_data() : null;
                 </div>
             </div>
             <nav class="sidebar-nav">
-                <a href="canvas.php" class="nav-item">
+                <a href="<?= BASE_URL ?>canvas.php" class="nav-item">
                     <span class="nav-icon">&#9634;</span>
                     <span class="nav-label">The Forge</span>
                 </a>
-                <a href="game.php" class="nav-item">
+                <a href="<?= BASE_URL ?>game.php" class="nav-item">
                     <span class="nav-icon">&#9654;</span>
                     <span class="nav-label">Pixel Dash</span>
                 </a>
-                <a href="leaderboard.php" class="nav-item">
+                <a href="<?= BASE_URL ?>leaderboard.php" class="nav-item">
                     <span class="nav-icon">&#9672;</span>
                     <span class="nav-label">Leaderboard</span>
                 </a>
-                <a href="profile.php" class="nav-item <?= $is_own ? 'active' : '' ?>">
+                <a href="<?= BASE_URL ?>profile.php" class="nav-item <?= $is_own ? 'active' : '' ?>">
                     <span class="nav-icon">&#9678;</span>
                     <span class="nav-label">Profile</span>
                 </a>
@@ -210,21 +210,21 @@ $user_sidebar = isset($_SESSION['user_id']) ? get_current_user_data() : null;
                 </div>
                 <?php else: ?>
                 <div class="empty-state">
-                    <p>No games played yet. <a href="game.php" class="link">Play a game!</a></p>
+                    <p>No games played yet. <a href="<?= BASE_URL ?>game.php" class="link">Play a game!</a></p>
                 </div>
                 <?php endif; ?>
             </div>
         </main>
     </div>
 
-    <script type="module" src="assets/js/ui.js"></script>
+    <script type="module" src="<?= BASE_URL ?>assets/js/ui.js"></script>
     <?php if ($is_own): ?>
     <script type="module">
-        import { claimAchievement } from 'assets/js/api.js';
+        import { claimAchievement } from '<?= BASE_URL ?>assets/js/api.js';
         document.querySelectorAll('.ach-claim-btn').forEach(btn => {
             btn.addEventListener('click', async () => {
                 const id = btn.dataset.achId;
-                const res = await fetch('api/user/claim-achievement.php', {
+                const res = await fetch('<?= BASE_URL ?>api/user/claim-achievement.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content },
                     body: JSON.stringify({ achievement_id: id })
@@ -248,7 +248,7 @@ $user_sidebar = isset($_SESSION['user_id']) ? get_current_user_data() : null;
             a.addEventListener('click', async e => {
                 e.preventDefault();
                 await fetch(a.href, { method: 'POST', credentials: 'same-origin' });
-                window.location.href = 'index.php';
+                window.location.href = '<?= BASE_URL ?>index.php';
             });
         });
     </script>

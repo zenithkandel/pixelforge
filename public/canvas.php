@@ -17,8 +17,8 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="assets/css/canvas.css" />
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/main.css" />
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/canvas.css" />
 </head>
 <body>
     <div class="app-shell">
@@ -32,19 +32,19 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
                 </div>
             </div>
             <nav class="sidebar-nav">
-                <a href="canvas.php" class="nav-item active">
+                <a href="<?= BASE_URL ?>canvas.php" class="nav-item active">
                     <span class="nav-icon">&#9634;</span>
                     <span class="nav-label">The Forge</span>
                 </a>
-                <a href="game.php" class="nav-item">
+                <a href="<?= BASE_URL ?>game.php" class="nav-item">
                     <span class="nav-icon">&#9654;</span>
                     <span class="nav-label">Pixel Dash</span>
                 </a>
-                <a href="leaderboard.php" class="nav-item">
+                <a href="<?= BASE_URL ?>leaderboard.php" class="nav-item">
                     <span class="nav-icon">&#9672;</span>
                     <span class="nav-label">Leaderboard</span>
                 </a>
-                <a href="profile.php" class="nav-item">
+                <a href="<?= BASE_URL ?>profile.php" class="nav-item">
                     <span class="nav-icon">&#9678;</span>
                     <span class="nav-label">Profile</span>
                 </a>
@@ -98,8 +98,8 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
                 </div>
                 <?php else: ?>
                 <div class="toolbar-section">
-                    <a href="index.php" class="btn btn-primary">Sign In to Paint</a>
-                    <span class="guest-note">Viewing as guest &mdash; <a href="canvas.php?signup=1" class="link">Create account</a></span>
+                    <a href="<?= BASE_URL ?>index.php" class="btn btn-primary">Sign In to Paint</a>
+                    <span class="guest-note">Viewing as guest &mdash; <a href="<?= BASE_URL ?>canvas.php?signup=1" class="link">Create account</a></span>
                 </div>
                 <?php endif; ?>
             </div>
@@ -120,6 +120,6 @@ $csrf_token = $_SESSION['csrf_token'] ?? '';
         </main>
     </div>
 
-    <script type="module" src="assets/js/canvas/canvas-main.js"></script>
+    <script type="module" src="<?= BASE_URL ?>assets/js/canvas/canvas-main.js"></script>
 </body>
 </html>

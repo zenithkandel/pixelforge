@@ -32,13 +32,6 @@ let lastMousePos = { x: 0, y: 0 };
 
 const isLoggedIn = document.querySelector('.sidebar') !== null;
 
-if (isLoggedIn) {
-  try {
-    const me = await api.get('api/user/me.php');
-    if (me.ok) state.userBalance = me.data.pxl_balance || 0;
-  } catch (e) { /* ignore */ }
-}
-
 function initCanvas() {
   const w = wrapper.clientWidth;
   const h = wrapper.clientHeight;
@@ -91,7 +84,14 @@ function decodeChunkBinary(bin) {
   return imgData;
 }
 
-const sseClient = new SSEClient('api/grid/updates.php');
+let base = '';
+const scripts = document.querySelectorAll('script[src]');
+for (const s of scripts) {
+  const m = s.src.match(/\/assets\/js\/canvas\/canvas-main\.js$/);
+  if (m) { base = s.src.replace(m[0], ''); break; }
+}
+
+const sseClient = new SSEClient(base + 'api/grid/updates.php');
 sseClient.onPixelUpdate = (data) => {
   if (data.type === 'pixel') {
     const { cx, cy } = data;
