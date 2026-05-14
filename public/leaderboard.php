@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__, 2) . '/includes/bootstrap.php';
+require_once dirname(__DIR__) . '/includes/bootstrap.php';
 
 $period = $_GET['period'] ?? 'all';
 if (!in_array($period, ['daily', 'weekly', 'all'])) $period = 'all';

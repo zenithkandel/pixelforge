@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__, 2) . '/includes/bootstrap.php';
+require_once dirname(__DIR__) . '/includes/bootstrap.php';
 
 $user = null;
 if (isset($_SESSION['user_id'])) {
