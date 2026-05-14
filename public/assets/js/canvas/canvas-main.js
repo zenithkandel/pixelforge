@@ -117,7 +117,7 @@ overlayCanvas.addEventListener('click', async e => {
     const color = document.getElementById('current-color').value;
     
     if (confirm(`Paint pixel at (${x}, ${y}) with ${color}? Cost: 1 PXL`)) {
-        const res = await apiPost('/api/grid/buy.php', { x, y, color });
+        const res = await apiPost('api/grid/buy.php', { x, y, color });
         if (res.ok) {
             cache.updatePixel(Math.floor(x/64), Math.floor(y/64), x%64, y%64, color);
             renderVisibleChunks();
@@ -135,7 +135,7 @@ overlayCanvas.addEventListener('click', async e => {
 renderVisibleChunks();
 
 // SSE Setup
-const evtSource = new EventSource('/api/grid/updates.php?chunks=0,0'); // simplified for prototype
+const evtSource = new EventSource('api/grid/updates.php?chunks=0,0'); // simplified for prototype
 evtSource.onmessage = (e) => {
     const data = JSON.parse(e.data);
     if (data.type === 'pixel') {

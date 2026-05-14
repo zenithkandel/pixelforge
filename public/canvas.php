@@ -8,8 +8,8 @@ $is_logged_in = !empty($_SESSION['user_id']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Forge - PixelForge</title>
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/assets/css/canvas.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/canvas.css">
     <script>window.IS_LOGGED_IN = <?= $is_logged_in ? 'true' : 'false' ?>;</script>
 </head>
 <body>
@@ -37,6 +37,6 @@ $is_logged_in = !empty($_SESSION['user_id']);
         </div>
     </main>
 
-    <script type="module" src="/assets/js/canvas/canvas-main.js"></script>
+    <script type="module" src="assets/js/canvas/canvas-main.js"></script>
 </body>
 </html>

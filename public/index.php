@@ -2,7 +2,7 @@
 require_once dirname(__DIR__) . '/includes/bootstrap.php';
 
 if (!empty($_SESSION['user_id'])) {
-    header("Location: /canvas.php");
+    header("Location: canvas.php");
     exit;
 }
 ?>
@@ -12,7 +12,7 @@ if (!empty($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PixelForge</title>
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
     <div class="auth-container">
@@ -38,15 +38,15 @@ if (!empty($_SESSION['user_id'])) {
     </div>
     
     <script type="module">
-        import { getCsrfToken, apiPost } from '/assets/js/api.js';
+        import { getCsrfToken, apiPost } from './assets/js/api.js';
         
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const fd = new FormData(e.target);
             const data = Object.fromEntries(fd.entries());
-            const res = await apiPost('/api/auth/login.php', data);
+            const res = await apiPost('api/auth/login.php', data);
             if (res.ok) {
-                window.location.href = '/canvas.php';
+                window.location.href = 'canvas.php';
             } else {
                 alert(res.message);
             }
@@ -56,7 +56,7 @@ if (!empty($_SESSION['user_id'])) {
             e.preventDefault();
             const fd = new FormData(e.target);
             const data = Object.fromEntries(fd.entries());
-            const res = await apiPost('/api/auth/register.php', data);
+            const res = await apiPost('api/auth/register.php', data);
             if (res.ok) {
                 alert(res.data.message);
             } else {

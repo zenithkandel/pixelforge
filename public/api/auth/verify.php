@@ -19,5 +19,5 @@ $stmt = $db->prepare("UPDATE users SET email_verified = 1, email_verify_token = 
 $stmt->execute([$user_id]);
 
 // Redirect to login
-header("Location: /index.php?verified=1");
+header("Location: ../../index.php?verified=1");
 exit;

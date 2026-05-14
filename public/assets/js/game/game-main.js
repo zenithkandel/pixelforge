@@ -16,7 +16,7 @@ let speed_tier = 1;
 let startTime = 0;
 
 playBtn.addEventListener('click', async () => {
-    const res = await apiPost('/api/game/start.php', {});
+    const res = await apiPost('api/game/start.php', {});
     if (res.ok) {
         session_id = res.data.session_id;
         seed = res.data.seed;
@@ -40,7 +40,7 @@ function drawHUD() {
 
 function gameOver() {
     isPlaying = false;
-    apiPost('/api/game/submit.php', {
+    apiPost('api/game/submit.php', {
         session_id,
         final_score: Math.floor(score),
         duration_ms: Date.now() - startTime,

@@ -8,8 +8,8 @@ require_auth();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PIXEL DASH - PixelForge</title>
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/assets/css/game.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/game.css">
 </head>
 <body>
     <?php include dirname(__DIR__) . '/public/includes/sidebar.php'; ?>
@@ -33,6 +33,6 @@ require_auth();
         </div>
     </main>
 
-    <script type="module" src="/assets/js/game/game-main.js"></script>
+    <script type="module" src="assets/js/game/game-main.js"></script>
 </body>
 </html>

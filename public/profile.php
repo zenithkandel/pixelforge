@@ -7,7 +7,7 @@ $username = $_GET['username'] ?? '';
 <head>
     <meta charset="UTF-8">
     <title>Profile - PixelForge</title>
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
     <?php include dirname(__DIR__) . '/public/includes/sidebar.php'; ?>
@@ -16,10 +16,10 @@ $username = $_GET['username'] ?? '';
         <div id="p-stats"></div>
     </main>
     <script type="module">
-        import { apiGet } from '/assets/js/api.js';
+        import { apiGet } from './assets/js/api.js';
         const username = new URLSearchParams(window.location.search).get('username');
         if (username) {
-            apiGet('/api/user/profile.php?username=' + encodeURIComponent(username)).then(res => {
+            apiGet('api/user/profile.php?username=' + encodeURIComponent(username)).then(res => {
                 if (res.ok) {
                     document.getElementById('p-username').innerText = res.data.username;
                     document.getElementById('p-stats').innerHTML = `

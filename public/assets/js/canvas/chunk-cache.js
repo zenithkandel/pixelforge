@@ -7,7 +7,7 @@ export class ChunkCache {
         const key = `${cx}_${cy}`;
         const cached = this.cache.get(key);
         
-        const url = `/api/grid/chunk.php?cx=${cx}&cy=${cy}&v=${cached ? cached.version : currentVersion}`;
+        const url = `api/grid/chunk.php?cx=${cx}&cy=${cy}&v=${cached ? cached.version : currentVersion}`;
         const res = await fetch(url);
         
         if (res.status === 304) {

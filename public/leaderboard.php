@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Leaderboard - PixelForge</title>
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/main.css">
     <style>
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th, td { padding: 10px; border: 1px solid #333; text-align: left; }
@@ -21,15 +21,15 @@
         </table>
     </main>
     <script type="module">
-        import { apiGet } from '/assets/js/api.js';
-        apiGet('/api/leaderboard.php?type=daily').then(res => {
+        import { apiGet } from './assets/js/api.js';
+        apiGet('api/leaderboard.php?type=daily').then(res => {
             if (res.ok) {
                 const tbody = document.getElementById('lb-body');
                 res.data.forEach((row, idx) => {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td>${idx + 1}</td>
-                        <td><a href="/profile.php?username=${row.username}" style="color:#fff;">${row.username}</a></td>
+                        <td><a href="profile.php?username=${row.username}" style="color:#fff;">${row.username}</a></td>
                         <td>${row.score}</td>
                         <td>${row.pxl_earned}</td>
                     `;
