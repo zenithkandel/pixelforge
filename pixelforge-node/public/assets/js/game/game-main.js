@@ -560,10 +560,15 @@ class Game {
   }
 
   updateUI() {
-    document.getElementById('score')!.textContent = this.score.toLocaleString();
-    document.getElementById('highScore')!.textContent = this.highScore.toLocaleString();
-    document.getElementById('level')!.textContent = this.level;
-    document.getElementById('combo')!.textContent = `x${Math.max(1, this.combo)}`;
+    const scoreEl = document.getElementById('score');
+    const highScoreEl = document.getElementById('highScore');
+    const levelEl = document.getElementById('level');
+    const comboEl = document.getElementById('combo');
+    
+    if (scoreEl) scoreEl.textContent = this.score.toLocaleString();
+    if (highScoreEl) highScoreEl.textContent = this.highScore.toLocaleString();
+    if (levelEl) levelEl.textContent = this.level;
+    if (comboEl) comboEl.textContent = `x${Math.max(1, this.combo)}`;
 
     const shieldEl = document.querySelector('[data-type="shield"]');
     const magnetEl = document.querySelector('[data-type="magnet"]');
