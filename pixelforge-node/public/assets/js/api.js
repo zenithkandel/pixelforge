@@ -4,7 +4,6 @@ class PixelForgeAPI {
   constructor() {
     this.accessToken = null;
     this.refreshPromise = null;
-    this.csrfToken = null;
   }
 
   async request(endpoint, options = {}) {
@@ -18,82 +17,33 @@ class PixelForgeAPI {
       headers['Authorization'] = `Bearer ${this.accessToken}`;
     }
 
-    if (this.csrfToken && ['POST', 'PUT', 'DELETE', 'PATCH'].includes(options.method?.toUpperCase())) {
-      headers['X-CSRF-Token'] = this.csrfToken;
-    }
-
-    const response = await fetch(url, {
-      ...options,
-      headers,
-      credentials: 'include'
-    });
-
-    if (response.status === 401 && options.method !== 'POST') {
-      const refreshed = await this.refreshToken();
-      if (refreshed) {
-        headers['Authorization'] = `Bearer ${this.accessToken}`;
-        const retryResponse = await fetch(url, {
-          ...options,
-          headers,
-          credentials: 'include'
-        });
-        return this.handleResponse(retryResponse);
-      }
-    }
-
-    return this.handleResponse(response);
-  }
-
-  async handleResponse(response) {
-    const contentType = response.headers.get('content-type');
-    let data;
-
-    if (contentType && contentType.includes('application/json')) {
-      data = await response.json();
-    } else if (contentType && contentType.includes('application/octet-stream')) {
-      const buffer = await response.arrayBuffer();
-      return {
-        ok: true,
-        data: buffer,
-        version: response.headers.get('X-Chunk-Version')
-      };
-    } else {
-      data = await response.text();
-    }
-
-    if (!response.ok) {
-      throw new Error(data.error || data.message || 'Request failed');
-    }
-
-    return data;
-  }
-
-  async refreshToken() {
-    if (this.refreshPromise) {
-      return this.refreshPromise;
-    }
-
-    this.refreshPromise = this.doRefresh();
-    return this.refreshPromise;
-  }
-
-  async doRefresh() {
     try {
-      const response = await fetch(`${API_BASE}/auth/refresh`, {
-        method: 'POST',
+      const response = await fetch(url, {
+        ...options,
+        headers,
         credentials: 'include'
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        this.accessToken = data.data.accessToken;
-        return true;
+      const contentType = response.headers.get('content-type');
+      
+      if (contentType && contentType.includes('application/octet-stream')) {
+        const buffer = await response.arrayBuffer();
+        return {
+          ok: true,
+          buffer: new Uint8Array(buffer),
+          version: response.headers.get('X-Chunk-Version')
+        };
       }
-      return false;
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || data.message || 'Request failed');
+      }
+
+      return data;
     } catch (err) {
-      return false;
-    } finally {
-      this.refreshPromise = null;
+      throw err;
     }
   }
 
@@ -101,44 +51,23 @@ class PixelForgeAPI {
     this.accessToken = token;
   }
 
-  setCsrfToken(token) {
-    this.csrfToken = token;
-  }
-
   clearTokens() {
     this.accessToken = null;
   }
 
-  get(endpoint, options = {}) {
-    return this.request(endpoint, { ...options, method: 'GET' });
+  get(endpoint) {
+    return this.request(endpoint, { method: 'GET' });
   }
 
-  post(endpoint, body, options = {}) {
+  post(endpoint, body) {
     return this.request(endpoint, {
-      ...options,
       method: 'POST',
       body: JSON.stringify(body)
     });
   }
 
-  put(endpoint, body, options = {}) {
-    return this.request(endpoint, {
-      ...options,
-      method: 'PUT',
-      body: JSON.stringify(body)
-    });
-  }
-
-  delete(endpoint, options = {}) {
-    return this.request(endpoint, { ...options, method: 'DELETE' });
-  }
-
   async login(username, password) {
-    const response = await this.post('/auth/login', { username, password });
-    if (response.ok && response.data.accessToken) {
-      this.accessToken = response.data.accessToken;
-    }
-    return response;
+    return this.post('/auth/login', { username, password });
   }
 
   async register(username, email, password) {
@@ -148,9 +77,7 @@ class PixelForgeAPI {
   async logout() {
     try {
       await this.post('/auth/logout', {});
-    } catch (e) {
-      // ignore
-    }
+    } catch (e) {}
     this.clearTokens();
   }
 
@@ -158,11 +85,11 @@ class PixelForgeAPI {
     try {
       return await this.get('/grid/session');
     } catch (e) {
-      return null;
+      return { ok: false, data: null };
     }
   }
 
-  async getCurrentUser() {
+  async getUserMe() {
     return this.get('/user/me');
   }
 }
@@ -170,18 +97,26 @@ class PixelForgeAPI {
 window.pixelforge = {
   api: new PixelForgeAPI(),
 
-  async showToast(message, type = 'info', duration = 3000) {
-    const container = document.getElementById('toastContainer') || document.body;
+  showToast(message, type = 'info', duration = 3000) {
+    let container = document.getElementById('toastContainer');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'toastContainer';
+      container.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;';
+      document.body.appendChild(container);
+    }
+    
+    const icons = { success: '✓', error: '✗', warning: '⚠', info: 'ℹ' };
     const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.innerHTML = `
-      <span class="toast-icon">${type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ'}</span>
-      <span class="toast-message">${message}</span>
-    `;
+    toast.style.cssText = 'background:#1a1a26;border:1px solid #2a2a3a;border-radius:8px;padding:12px 20px;display:flex;align-items:center;gap:10px;animation:slideIn 0.3s ease;font-family:Rajdhani,sans-serif;font-size:14px;color:#e0e0e0;';
+    if (type === 'success') toast.style.borderColor = '#00ff88';
+    if (type === 'error') toast.style.borderColor = '#ff4757';
+    toast.innerHTML = `<span style="font-size:18px;">${icons[type] || icons.info}</span><span>${message}</span>`;
     container.appendChild(toast);
 
     setTimeout(() => {
       toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.3s';
       setTimeout(() => toast.remove(), 300);
     }, duration);
   },
@@ -191,11 +126,7 @@ window.pixelforge = {
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
-  },
-
-  formatNumber(num) {
-    if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-    if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
-    return num.toString();
   }
 };
+
+window.showToast = window.pixelforge.showToast;
