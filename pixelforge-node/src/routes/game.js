@@ -148,7 +148,7 @@ router.post('/submit', authRequired, async (req, res, next) => {
       [finalScore, finalScore, finalScore, req.user.userId]
     );
     
-    await pxlService.creditPxl(req.user.userId, pxlEarned, 'earn', `PIXEL DASH score: ${finalScore}`, session.id);
+    await pxlService.creditPxlDirect(pool, req.user.userId, pxlEarned, 'earn', `PIXEL DASH score: ${finalScore}`, session.id);
     
     return success(res, {
       score: finalScore,

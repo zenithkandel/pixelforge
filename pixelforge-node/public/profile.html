@@ -95,9 +95,9 @@
             window.location.href = '/';
           }
         } else {
-          await waitForAuth();
+          await pixelforge.auth.waitForInit();
           
-          if (pixelforge.auth?.isLoggedIn) {
+          if (pixelforge.auth?.isLoggedIn && pixelforge.auth?.user) {
             const response = await pixelforge.api.getUserMe();
             if (response.ok && response.data) {
               displayProfile(response.data, true);
@@ -112,22 +112,6 @@
         console.error('Profile load error:', err);
         window.location.href = '/login.html';
       }
-    }
-
-    function waitForAuth() {
-      return new Promise((resolve) => {
-        if (pixelforge.auth && pixelforge.auth.user !== undefined) {
-          resolve();
-        } else {
-          setTimeout(() => {
-            if (pixelforge.auth && pixelforge.auth.user !== undefined) {
-              resolve();
-            } else {
-              resolve();
-            }
-          }, 100);
-        }
-      });
     }
 
     function displayProfile(userData, isOwnProfile) {

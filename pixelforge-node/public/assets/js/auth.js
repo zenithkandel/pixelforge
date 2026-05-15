@@ -1,6 +1,7 @@
 const auth = {
   user: null,
   isLoggedIn: false,
+  initialized: false,
 
   async init() {
     const token = localStorage.getItem('accessToken');
@@ -8,6 +9,7 @@ const auth = {
       pixelforge.api.setAccessToken(token);
       await this.loadUser();
     }
+    this.initialized = true;
     this.updateUI();
   },
 
@@ -96,6 +98,23 @@ const auth = {
 
   isAdmin() {
     return this.user?.isAdmin || false;
+  },
+
+  waitForInit() {
+    return new Promise((resolve) => {
+      if (this.initialized) {
+        resolve();
+        return;
+      }
+      const check = () => {
+        if (this.initialized) {
+          resolve();
+        } else {
+          setTimeout(check, 50);
+        }
+      };
+      check();
+    });
   }
 };
 
