@@ -16,7 +16,7 @@ const auth = {
   async loadUser() {
     try {
       const response = await window.pixelforge.api.get('/user/me');
-      if (response.ok) {
+      if (response.ok && response.data) {
         this.user = response.data;
         this.isLoggedIn = true;
       } else {
@@ -46,14 +46,18 @@ const auth = {
 
   async login(username, password) {
     try {
-      const response = await window.pixelforge.api.login(username, password);
-      if (response.ok) {
+      const response = await window.pixelforge.api.post('/auth/login', { username, password });
+      
+      if (response.ok && response.data.accessToken) {
         localStorage.setItem('accessToken', response.data.accessToken);
+        window.pixelforge.api.setAccessToken(response.data.accessToken);
         await this.loadUser();
         this.updateUI();
         return { success: true };
-      } else {
+      } else if (response.error) {
         return { success: false, error: response.error };
+      } else {
+        return { success: false, error: 'Login failed' };
       }
     } catch (err) {
       return { success: false, error: err.message };
@@ -62,11 +66,14 @@ const auth = {
 
   async register(username, email, password) {
     try {
-      const response = await window.pixelforge.api.register(username, email, password);
-      if (response.ok) {
+      const response = await window.pixelforge.api.post('/auth/register', { username, email, password });
+      
+      if (response.ok && response.data) {
         return { success: true, needsVerification: response.data.needsVerification };
-      } else {
+      } else if (response.error) {
         return { success: false, error: response.error };
+      } else {
+        return { success: false, error: 'Registration failed' };
       }
     } catch (err) {
       return { success: false, error: err.message };
@@ -74,12 +81,18 @@ const auth = {
   },
 
   async logout() {
-    await window.pixelforge.api.logout();
+    try {
+      await window.pixelforge.api.post('/auth/logout', {});
+    } catch (e) {
+      // ignore
+    }
     localStorage.removeItem('accessToken');
     this.user = null;
     this.isLoggedIn = false;
     this.updateUI();
-    window.location.href = '/';
+    if (window.location.pathname !== '/') {
+      window.location.href = '/';
+    }
   },
 
   getBalance() {
