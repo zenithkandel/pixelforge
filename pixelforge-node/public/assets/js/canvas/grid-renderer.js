@@ -10,18 +10,18 @@ class GridRenderer {
     this.minimapCtx = minimapCanvas.getContext('2d');
     this.cache = cache;
 
-    this.pixelSize = 1;
+    this.zoom = 1;
     this.selectedColor = '#FF0000';
     this.hoverX = -1;
     this.hoverY = -1;
+    this.scrollX = 0;
+    this.scrollY = 0;
 
     this.chunkCanvases = new Map();
     this.minimapCanvases = new Map();
-    this.pendingChunk = null;
-    this.isRendering = false;
+    this.pendingRender = false;
 
     this.setupCanvas();
-    this.initMinimap();
   }
 
   setupCanvas() {
@@ -30,36 +30,37 @@ class GridRenderer {
     
     this.canvas.width = GRID_SIZE * dpr;
     this.canvas.height = GRID_SIZE * dpr;
-    this.canvas.style.width = `${GRID_SIZE}px`;
-    this.canvas.style.height = `${GRID_SIZE}px`;
+    this.canvas.style.width = `${GRID_SIZE * this.zoom}px`;
+    this.canvas.style.height = `${GRID_SIZE * this.zoom}px`;
 
     this.ctx.scale(dpr, dpr);
     this.ctx.imageSmoothingEnabled = false;
   }
 
-  initMinimap() {
-    this.minimapCtx.imageSmoothingEnabled = false;
+  setZoom(zoom) {
+    this.zoom = Math.max(0.5, Math.min(4, zoom));
+    this.canvas.style.width = `${GRID_SIZE * this.zoom}px`;
+    this.canvas.style.height = `${GRID_SIZE * this.zoom}px`;
+    this.scheduleRender();
   }
 
-  setZoom(pixelSize) {
-    this.pixelSize = Math.max(0.5, Math.min(4, pixelSize));
-    this.setupCanvas();
-    this.scheduleRender();
+  getZoom() {
+    return this.zoom;
   }
 
   screenToGrid(screenX, screenY) {
     const rect = this.canvas.getBoundingClientRect();
-    const x = Math.floor((screenX - rect.left) / this.pixelSize);
-    const y = Math.floor((screenY - rect.top) / this.pixelSize);
+    const x = Math.floor((screenX - rect.left) / this.zoom);
+    const y = Math.floor((screenY - rect.top) / this.zoom);
     return { x, y };
   }
 
   scheduleRender() {
-    if (this.isRendering) return;
-    this.isRendering = true;
+    if (this.pendingRender) return;
+    this.pendingRender = true;
     requestAnimationFrame(() => {
       this.render();
-      this.isRendering = false;
+      this.pendingRender = false;
     });
   }
 
@@ -71,34 +72,45 @@ class GridRenderer {
       for (let cx = 0; cx < NUM_CHUNKS; cx++) {
         const chunk = this.cache.get(cx, cy);
         if (chunk && chunk.buffer) {
-          let chunkCanvas = this.chunkCanvases.get(`${cx}_${cy}`);
+          let canvas = this.chunkCanvases.get(`${cx}_${cy}`);
           
-          if (!chunkCanvas) {
-            chunkCanvas = this.createChunkCanvas(cx, cy, chunk.buffer);
-            this.chunkCanvases.set(`${cx}_${cy}`, chunkCanvas);
+          if (!canvas) {
+            canvas = this.createChunkCanvas(cx, cy, chunk.buffer);
+            this.chunkCanvases.set(`${cx}_${cy}`, canvas);
           }
           
-          this.ctx.drawImage(chunkCanvas, 0, 0, GRID_SIZE, GRID_SIZE);
+          this.ctx.drawImage(
+            canvas,
+            cx * CHUNK_SIZE * this.zoom,
+            cy * CHUNK_SIZE * this.zoom,
+            CHUNK_SIZE * this.zoom,
+            CHUNK_SIZE * this.zoom
+          );
         }
       }
     }
 
     if (this.hoverX >= 0 && this.hoverY >= 0) {
-      this.ctx.strokeStyle = 'rgba(0, 170, 255, 0.8)';
+      this.ctx.strokeStyle = 'rgba(0, 170, 255, 0.9)';
       this.ctx.lineWidth = 2;
-      this.ctx.strokeRect(this.hoverX, this.hoverY, 1, 1);
+      this.ctx.strokeRect(
+        this.hoverX * this.zoom,
+        this.hoverY * this.zoom,
+        this.zoom,
+        this.zoom
+      );
     }
 
     this.renderMinimap();
   }
 
   createChunkCanvas(cx, cy, buffer) {
-    const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = CHUNK_SIZE;
-    tempCanvas.height = CHUNK_SIZE;
-    const tempCtx = tempCanvas.getContext('2d');
+    const canvas = document.createElement('canvas');
+    canvas.width = CHUNK_SIZE;
+    canvas.height = CHUNK_SIZE;
+    const ctx = canvas.getContext('2d');
 
-    const imageData = tempCtx.createImageData(CHUNK_SIZE, CHUNK_SIZE);
+    const imageData = ctx.createImageData(CHUNK_SIZE, CHUNK_SIZE);
     const data = imageData.data;
 
     for (let py = 0; py < CHUNK_SIZE; py++) {
@@ -112,8 +124,8 @@ class GridRenderer {
       }
     }
 
-    tempCtx.putImageData(imageData, 0, 0);
-    return tempCanvas;
+    ctx.putImageData(imageData, 0, 0);
+    return canvas;
   }
 
   renderMinimap() {
@@ -133,22 +145,34 @@ class GridRenderer {
             this.minimapCanvases.set(`${cx}_${cy}`, mmCanvas);
           }
           
-          this.minimapCtx.drawImage(mmCanvas, cx * CHUNK_SIZE * scale, cy * CHUNK_SIZE * scale, CHUNK_SIZE * scale, CHUNK_SIZE * scale);
+          this.minimapCtx.drawImage(
+            mmCanvas,
+            cx * CHUNK_SIZE * scale,
+            cy * CHUNK_SIZE * scale,
+            CHUNK_SIZE * scale,
+            CHUNK_SIZE * scale
+          );
         }
       }
     }
 
     if (this.hoverX >= 0 && this.hoverY >= 0) {
       this.minimapCtx.strokeStyle = '#00aaff';
-      this.minimapCtx.lineWidth = 1;
-      this.minimapCtx.strokeRect(this.hoverX * scale, this.hoverY * scale, scale, scale);
+      this.minimapCtx.lineWidth = 2;
+      this.minimapCtx.strokeRect(
+        this.hoverX * scale,
+        this.hoverY * scale,
+        scale,
+        scale
+      );
     }
   }
 
   setHover(x, y) {
+    const changed = this.hoverX !== x || this.hoverY !== y;
     this.hoverX = x;
     this.hoverY = y;
-    this.scheduleRender();
+    if (changed) this.scheduleRender();
   }
 
   applyPixelUpdate(x, y, color) {

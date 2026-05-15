@@ -5,7 +5,6 @@ const NUM_CHUNKS = GRID_SIZE / CHUNK_SIZE;
 class ChunkCache {
   constructor() {
     this.chunks = new Map();
-    this.pending = new Map();
   }
 
   getChunkKey(cx, cy) {
@@ -27,31 +26,23 @@ class ChunkCache {
       return this.chunks.get(key);
     }
 
-    if (this.pending.has(key)) {
-      return this.pending.get(key);
-    }
-
-    const promise = (async () => {
-      try {
-        const result = await api.get(`/grid/chunk/${cx}/${cy}`);
-        if (result && result.buffer) {
-          this.set(cx, cy, result);
-          return result;
-        }
-      } catch (err) {
-        console.error(`Failed to load chunk ${cx},${cy}:`, err);
+    try {
+      const response = await fetch(`/api/grid/chunk/${cx}/${cy}`, {
+        headers: api.accessToken ? { 'Authorization': `Bearer ${api.accessToken}` } : {}
+      });
+      
+      if (response.ok) {
+        const buffer = await response.arrayBuffer();
+        const uint8Array = new Uint8Array(buffer);
+        const version = response.headers.get('X-Chunk-Version') || '0';
+        const result = { buffer: uint8Array, version: parseInt(version) };
+        this.set(cx, cy, result);
+        return result;
       }
-      return null;
-    })();
-
-    this.pending.set(key, promise);
-    const result = await promise;
-    this.pending.delete(key);
-    return result;
-  }
-
-  invalidate(cx, cy) {
-    this.chunks.delete(this.getChunkKey(cx, cy));
+    } catch (err) {
+      console.error(`Failed to load chunk ${cx},${cy}:`, err);
+    }
+    return null;
   }
 
   invalidateAll() {
@@ -59,28 +50,18 @@ class ChunkCache {
   }
 
   async preloadChunks(centerCx, centerCy, radius, api) {
-    const needed = [];
     const promises = [];
 
-    for (let dy = -radius; dy <= radius; dy++) {
-      for (let dx = -radius; dx <= radius; dx++) {
-        const cx = centerCx + dx;
-        const cy = centerCy + dy;
-        if (cx >= 0 && cx < NUM_CHUNKS && cy >= 0 && cy < NUM_CHUNKS) {
-          if (!this.get(cx, cy)) {
-            needed.push({ cx, cy });
-          }
+    for (let cy = 0; cy < NUM_CHUNKS; cy++) {
+      for (let cx = 0; cx < NUM_CHUNKS; cx++) {
+        if (!this.get(cx, cy)) {
+          promises.push(this.loadChunk(cx, cy, api));
         }
       }
     }
 
-    for (const { cx, cy } of needed) {
-      promises.push(this.loadChunk(cx, cy, api));
-    }
-
-    if (promises.length > 0) {
-      await Promise.all(promises);
-    }
+    await Promise.all(promises);
+    console.log(`Loaded ${this.chunks.size} chunks`);
   }
 }
 
