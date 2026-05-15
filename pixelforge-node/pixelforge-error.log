@@ -1,0 +1,9 @@
+2026-05-15T11:30:30.747Z [ERROR]: Error: user_exists
+    at C:\xampp\htdocs\codes\pixelforge\pixelforge-node\src\routes\auth.js:28:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-05-15T11:30:35.525Z [ERROR]: Error: user_exists
+    at C:\xampp\htdocs\codes\pixelforge\pixelforge-node\src\routes\auth.js:28:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-05-15T11:30:50.567Z [ERROR]: Error: email_not_verified
+    at C:\xampp\htdocs\codes\pixelforge\pixelforge-node\src\routes\auth.js:89:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
