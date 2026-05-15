@@ -15,15 +15,16 @@ const auth = {
 
   async loadUser() {
     try {
-      const response = await window.pixelforge.api.get('/user/me');
+      const response = await window.pixelforge.api.getUserMe();
       if (response.ok && response.data) {
         this.user = response.data;
         this.isLoggedIn = true;
       } else {
-        this.logout();
+        this.logoutLocal();
       }
     } catch (err) {
       console.error('Failed to load user:', err);
+      this.logoutLocal();
     }
   },
 
@@ -36,7 +37,7 @@ const auth = {
     if (this.isLoggedIn && this.user) {
       navAuth?.classList.add('hidden');
       navUser?.classList.remove('hidden');
-      if (navBalance) navBalance.textContent = this.user.pxlBalance;
+      if (navBalance) navBalance.textContent = this.user.pxlBalance || 0;
       if (navAvatar) navAvatar.textContent = this.user.username.charAt(0).toUpperCase();
     } else {
       navAuth?.classList.remove('hidden');
@@ -46,7 +47,7 @@ const auth = {
 
   async login(username, password) {
     try {
-      const response = await window.pixelforge.api.post('/auth/login', { username, password });
+      const response = await window.pixelforge.api.login(username, password);
       
       if (response.ok && response.data.accessToken) {
         localStorage.setItem('accessToken', response.data.accessToken);
@@ -54,10 +55,8 @@ const auth = {
         await this.loadUser();
         this.updateUI();
         return { success: true };
-      } else if (response.error) {
-        return { success: false, error: response.error };
       } else {
-        return { success: false, error: 'Login failed' };
+        return { success: false, error: response.error || 'Login failed' };
       }
     } catch (err) {
       return { success: false, error: err.message };
@@ -66,14 +65,12 @@ const auth = {
 
   async register(username, email, password) {
     try {
-      const response = await window.pixelforge.api.post('/auth/register', { username, email, password });
+      const response = await window.pixelforge.api.register(username, email, password);
       
       if (response.ok && response.data) {
         return { success: true, needsVerification: response.data.needsVerification };
-      } else if (response.error) {
-        return { success: false, error: response.error };
       } else {
-        return { success: false, error: 'Registration failed' };
+        return { success: false, error: response.error || 'Registration failed' };
       }
     } catch (err) {
       return { success: false, error: err.message };
@@ -82,17 +79,17 @@ const auth = {
 
   async logout() {
     try {
-      await window.pixelforge.api.post('/auth/logout', {});
-    } catch (e) {
-      // ignore
-    }
+      await window.pixelforge.api.logout();
+    } catch (e) {}
+    this.logoutLocal();
+  },
+
+  logoutLocal() {
     localStorage.removeItem('accessToken');
+    window.pixelforge.api.clearTokens();
     this.user = null;
     this.isLoggedIn = false;
     this.updateUI();
-    if (window.location.pathname !== '/') {
-      window.location.href = '/';
-    }
   },
 
   getBalance() {
