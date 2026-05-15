@@ -13,3 +13,21 @@
 2026-05-15T11:49:34.649Z [ERROR]: Error: invalid_token
     at C:\xampp\htdocs\codes\pixelforge\pixelforge-node\src\routes\auth.js:197:13
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-05-15T12:18:34.908Z [ERROR]: Error: cheat_detected
+    at C:\xampp\htdocs\codes\pixelforge\pixelforge-node\src\routes\game.js:119:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-05-15T12:18:36.895Z [ERROR]: Error: session_exists
+    at C:\xampp\htdocs\codes\pixelforge\pixelforge-node\src\routes\game.js:22:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-05-15T12:18:49.883Z [ERROR]: Error: cheat_detected
+    at C:\xampp\htdocs\codes\pixelforge\pixelforge-node\src\routes\game.js:119:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-05-15T12:19:44.409Z [ERROR]: Error: session_exists
+    at C:\xampp\htdocs\codes\pixelforge\pixelforge-node\src\routes\game.js:22:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-05-15T12:19:59.348Z [ERROR]: Error: session_exists
+    at C:\xampp\htdocs\codes\pixelforge\pixelforge-node\src\routes\game.js:22:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-05-15T12:20:49.355Z [ERROR]: Error: session_exists
+    at C:\xampp\htdocs\codes\pixelforge\pixelforge-node\src\routes\game.js:22:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
