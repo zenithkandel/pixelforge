@@ -5,13 +5,18 @@ let transporter = null;
 
 function getTransporter() {
   if (!transporter) {
+    const isSSL = process.env.SMTP_SECURE === 'true' || config.smtp.port === 465;
+    
     transporter = nodemailer.createTransport({
       host: config.smtp.host,
       port: config.smtp.port,
-      secure: config.smtp.port === 465,
+      secure: isSSL,
       auth: {
         user: config.smtp.user,
         pass: config.smtp.pass
+      },
+      tls: {
+        rejectUnauthorized: false
       }
     });
   }
@@ -19,7 +24,7 @@ function getTransporter() {
 }
 
 async function sendVerificationEmail(email, username, token) {
-  const verifyUrl = `http://${process.env.HOST || 'localhost'}:${config.server.port}/api/auth/verify-email?token=${token}`;
+  const verifyUrl = `http://localhost:${config.server.port}/api/auth/verify-email?token=${token}`;
   
   const html = `
     <!DOCTYPE html>
@@ -60,13 +65,15 @@ async function sendVerificationEmail(email, username, token) {
       html
     });
     console.log(`Verification email sent to ${email}`);
+    return true;
   } catch (err) {
     console.error('Failed to send verification email:', err.message);
+    return false;
   }
 }
 
 async function sendPasswordResetEmail(email, username, token) {
-  const resetUrl = `http://${process.env.HOST || 'localhost'}:${config.server.port}/reset-password.html?token=${token}`;
+  const resetUrl = `http://localhost:${config.server.port}/reset-password.html?token=${token}`;
   
   const html = `
     <!DOCTYPE html>
@@ -107,8 +114,10 @@ async function sendPasswordResetEmail(email, username, token) {
       html
     });
     console.log(`Password reset email sent to ${email}`);
+    return true;
   } catch (err) {
     console.error('Failed to send password reset email:', err.message);
+    return false;
   }
 }
 
@@ -154,8 +163,10 @@ async function sendAchievementEmail(email, username, achievement) {
       subject: `Achievement Unlocked: ${achievement.name}`,
       html
     });
+    return true;
   } catch (err) {
     console.error('Failed to send achievement email:', err.message);
+    return false;
   }
 }
 
