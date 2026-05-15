@@ -28,7 +28,7 @@
         <a href="/" class="nav-link">Home</a>
         <a href="/game.html" class="nav-link">PIXEL DASH</a>
         <a href="/canvas.html" class="nav-link">The Forge</a>
-        <a href="/leaderboard.html" class="nav-link active">Leaderboard</a>
+        <a href="/leaderboard.html" class="nav-link">Leaderboard</a>
       </div>
       <div class="nav-auth" id="navAuth">
         <a href="/login.html" class="btn btn-outline">Login</a>
@@ -86,42 +86,66 @@
       const urlParams = new URLSearchParams(window.location.search);
       const usernameParam = urlParams.get('user');
 
-      let userData;
-      
       try {
         if (usernameParam) {
           const response = await pixelforge.api.get(`/user/${usernameParam}`);
-          if (!response.ok || !response.data) {
+          if (response.ok && response.data) {
+            displayProfile(response.data, false);
+          } else {
             window.location.href = '/';
-            return;
           }
-          userData = response.data;
-        } else if (pixelforge.auth?.isLoggedIn) {
-          const response = await pixelforge.api.getUserMe();
-          if (!response.ok || !response.data) {
-            window.location.href = '/login.html';
-            return;
-          }
-          userData = response.data;
-          document.getElementById('logoutSection').classList.remove('hidden');
-          document.getElementById('logoutBtn').addEventListener('click', () => {
-            pixelforge.auth.logout();
-          });
         } else {
-          window.location.href = '/login.html';
-          return;
+          await waitForAuth();
+          
+          if (pixelforge.auth?.isLoggedIn) {
+            const response = await pixelforge.api.getUserMe();
+            if (response.ok && response.data) {
+              displayProfile(response.data, true);
+            } else {
+              window.location.href = '/login.html';
+            }
+          } else {
+            window.location.href = '/login.html';
+          }
         }
-
-        document.getElementById('profileAvatar').textContent = userData.username.charAt(0).toUpperCase();
-        document.getElementById('profileUsername').textContent = userData.username;
-        document.getElementById('profileJoined').textContent = userData.joinedAt ? new Date(userData.joinedAt).toLocaleDateString() : '-';
-        document.getElementById('statBalance').textContent = userData.pxlBalance || 0;
-        document.getElementById('statHighScore').textContent = userData.highScore || userData.high_score || 0;
-        document.getElementById('statGames').textContent = userData.gamesPlayed || userData.games_played || 0;
-        document.getElementById('statPixels').textContent = userData.weeklyPixels || userData.weekly_pixels || 0;
       } catch (err) {
         console.error('Profile load error:', err);
-        pixelforge.showToast('Failed to load profile', 'error');
+        window.location.href = '/login.html';
+      }
+    }
+
+    function waitForAuth() {
+      return new Promise((resolve) => {
+        if (pixelforge.auth && pixelforge.auth.user !== undefined) {
+          resolve();
+        } else {
+          setTimeout(() => {
+            if (pixelforge.auth && pixelforge.auth.user !== undefined) {
+              resolve();
+            } else {
+              resolve();
+            }
+          }, 100);
+        }
+      });
+    }
+
+    function displayProfile(userData, isOwnProfile) {
+      document.getElementById('profileAvatar').textContent = userData.username.charAt(0).toUpperCase();
+      document.getElementById('profileUsername').textContent = userData.username;
+      document.getElementById('profileJoined').textContent = userData.joinedAt ? new Date(userData.joinedAt).toLocaleDateString() : '-';
+      document.getElementById('statBalance').textContent = userData.pxlBalance || userData.pxl_balance || 0;
+      document.getElementById('statHighScore').textContent = userData.highScore || userData.high_score || 0;
+      document.getElementById('statGames').textContent = userData.gamesPlayed || userData.games_played || 0;
+      document.getElementById('statPixels').textContent = userData.weeklyPixels || userData.weekly_pixels || 0;
+
+      if (isOwnProfile) {
+        const logoutSection = document.getElementById('logoutSection');
+        logoutSection.classList.remove('hidden');
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+          pixelforge.auth.logout();
+          window.location.href = '/';
+        });
       }
     }
 
