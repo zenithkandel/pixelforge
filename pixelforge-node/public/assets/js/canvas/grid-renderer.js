@@ -11,18 +11,21 @@ class GridRenderer {
     this.cache = cache;
 
     this.pixelSize = 1;
-    this.offsetX = 0;
-    this.offsetY = 0;
-
     this.selectedColor = '#FF0000';
     this.hoverX = -1;
     this.hoverY = -1;
 
+    this.chunkCanvases = new Map();
+    this.minimapChunkCanvases = new Map();
+    this.needsFullRender = true;
+    this.renderQueued = false;
+
     this.setupCanvas();
+    this.initMinimap();
   }
 
   setupCanvas() {
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const displaySize = GRID_SIZE * this.pixelSize;
 
     this.canvas.width = GRID_SIZE * dpr;
@@ -32,33 +35,21 @@ class GridRenderer {
 
     this.ctx.scale(dpr, dpr);
     this.ctx.imageSmoothingEnabled = false;
+  }
 
+  initMinimap() {
     this.minimapCtx.imageSmoothingEnabled = false;
+    
+    const minimapDpr = 1;
+    this.minimapCanvas.width = 160 * minimapDpr;
+    this.minimapCanvas.height = 160 * minimapDpr;
   }
 
   setZoom(pixelSize) {
-    this.pixelSize = pixelSize;
+    this.pixelSize = Math.max(0.5, Math.min(4, pixelSize));
     this.setupCanvas();
-    this.render();
-  }
-
-  pan(dx, dy) {
-    this.offsetX += dx;
-    this.offsetY += dy;
-
-    const maxOffset = GRID_SIZE * this.pixelSize;
-    this.offsetX = Math.max(-maxOffset / 2, Math.min(maxOffset / 2, this.offsetX));
-    this.offsetY = Math.max(-maxOffset / 2, Math.min(maxOffset / 2, this.offsetY));
-  }
-
-  setHover(x, y) {
-    this.hoverX = x;
-    this.hoverY = y;
-  }
-
-  clearHover() {
-    this.hoverX = -1;
-    this.hoverY = -1;
+    this.needsFullRender = true;
+    this.queueRender();
   }
 
   screenToGrid(screenX, screenY) {
@@ -68,30 +59,63 @@ class GridRenderer {
     return { x, y };
   }
 
+  pan(dx, dy) {
+    this.needsFullRender = true;
+  }
+
+  panTo(x, y) {
+    this.needsFullRender = true;
+    this.queueRender();
+  }
+
+  setHoverFromCoords(clientX, clientY) {
+    const { x, y } = this.screenToGrid(clientX, clientY);
+    this.setHover(x, y);
+  }
+
+  queueRender() {
+    if (this.renderQueued) return;
+    this.renderQueued = true;
+    requestAnimationFrame(() => {
+      this.renderQueued = false;
+      this.render();
+    });
+  }
+
   render() {
+    if (!this.needsFullRender) return;
+
     this.ctx.fillStyle = '#FFFFFF';
     this.ctx.fillRect(0, 0, GRID_SIZE, GRID_SIZE);
 
-    this.ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
-    this.ctx.lineWidth = 0.5;
-
-    const startChunkX = 0;
-    const startChunkY = 0;
-    const endChunkX = NUM_CHUNKS;
-    const endChunkY = NUM_CHUNKS;
-
-    for (let cy = startChunkY; cy < endChunkY; cy++) {
-      for (let cx = startChunkX; cx < endChunkX; cx++) {
+    for (let cy = 0; cy < NUM_CHUNKS; cy++) {
+      for (let cx = 0; cx < NUM_CHUNKS; cx++) {
         const chunk = this.cache.get(cx, cy);
         if (chunk && chunk.buffer) {
-          this.renderChunk(cx, cy, chunk.buffer);
+          let chunkCanvas = this.chunkCanvases.get(`${cx}_${cy}`);
+          
+          if (!chunkCanvas) {
+            chunkCanvas = this.createChunkCanvas(cx, cy, chunk.buffer);
+            this.chunkCanvases.set(`${cx}_${cy}`, chunkCanvas);
+          }
+          
+          const scale = this.pixelSize;
+          this.ctx.drawImage(
+            chunkCanvas,
+            cx * CHUNK_SIZE * scale,
+            cy * CHUNK_SIZE * scale,
+            CHUNK_SIZE * scale,
+            CHUNK_SIZE * scale
+          );
         }
       }
     }
 
+    this.renderChunkBorders();
+    
     if (this.hoverX >= 0 && this.hoverY >= 0) {
-      this.ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
-      this.ctx.lineWidth = 1;
+      this.ctx.strokeStyle = 'rgba(0, 170, 255, 0.8)';
+      this.ctx.lineWidth = 2 / this.pixelSize;
       this.ctx.strokeRect(
         this.hoverX * this.pixelSize,
         this.hoverY * this.pixelSize,
@@ -100,23 +124,23 @@ class GridRenderer {
       );
     }
 
-    this.renderChunkBorders();
     this.renderMinimap();
+    this.needsFullRender = false;
   }
 
-  renderChunk(cx, cy, buffer) {
-    const xOffset = cx * CHUNK_SIZE;
-    const yOffset = cy * CHUNK_SIZE;
-    const dpr = window.devicePixelRatio || 1;
+  createChunkCanvas(cx, cy, buffer) {
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = CHUNK_SIZE;
+    tempCanvas.height = CHUNK_SIZE;
+    const tempCtx = tempCanvas.getContext('2d');
 
-    const imageData = this.ctx.createImageData(CHUNK_SIZE, CHUNK_SIZE);
+    const imageData = tempCtx.createImageData(CHUNK_SIZE, CHUNK_SIZE);
     const data = imageData.data;
 
     for (let py = 0; py < CHUNK_SIZE; py++) {
       for (let px = 0; px < CHUNK_SIZE; px++) {
         const offset = (py * CHUNK_SIZE + px) * 3;
         const pixelOffset = (py * CHUNK_SIZE + px) * 4;
-
         data[pixelOffset] = buffer[offset];
         data[pixelOffset + 1] = buffer[offset + 1];
         data[pixelOffset + 2] = buffer[offset + 2];
@@ -124,23 +148,14 @@ class GridRenderer {
       }
     }
 
-    const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = CHUNK_SIZE;
-    tempCanvas.height = CHUNK_SIZE;
-    const tempCtx = tempCanvas.getContext('2d');
     tempCtx.putImageData(imageData, 0, 0);
-
-    this.ctx.drawImage(
-      tempCanvas,
-      xOffset * this.pixelSize,
-      yOffset * this.pixelSize,
-      CHUNK_SIZE * this.pixelSize,
-      CHUNK_SIZE * this.pixelSize
-    );
+    return tempCanvas;
   }
 
   renderChunkBorders() {
-    this.ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
+    if (this.pixelSize < 3) return;
+    
+    this.ctx.strokeStyle = 'rgba(0, 0, 0, 0.15)';
     this.ctx.lineWidth = 1;
 
     for (let i = 0; i <= NUM_CHUNKS; i++) {
@@ -160,36 +175,39 @@ class GridRenderer {
   renderMinimap() {
     const scale = 160 / GRID_SIZE;
 
-    this.minimapCtx.fillStyle = '#333';
+    this.minimapCtx.fillStyle = '#1a1a26';
     this.minimapCtx.fillRect(0, 0, 160, 160);
 
     for (let cy = 0; cy < NUM_CHUNKS; cy++) {
       for (let cx = 0; cx < NUM_CHUNKS; cx++) {
         const chunk = this.cache.get(cx, cy);
         if (chunk && chunk.buffer) {
-          this.renderMinimapChunk(cx, cy, chunk.buffer, scale);
+          let mmCanvas = this.minimapChunkCanvases.get(`${cx}_${cy}`);
+          
+          if (!mmCanvas) {
+            mmCanvas = this.createMinimapChunkCanvas(cx, cy, chunk.buffer);
+            this.minimapChunkCanvases.set(`${cx}_${cy}`, mmCanvas);
+          }
+          
+          this.minimapCtx.drawImage(mmCanvas, cx * CHUNK_SIZE * scale, cy * CHUNK_SIZE * scale, CHUNK_SIZE * scale, CHUNK_SIZE * scale);
         }
       }
     }
 
     if (this.hoverX >= 0 && this.hoverY >= 0) {
-      this.minimapCtx.strokeStyle = 'rgba(0, 170, 255, 0.8)';
+      this.minimapCtx.strokeStyle = '#00aaff';
       this.minimapCtx.lineWidth = 1;
-      this.minimapCtx.strokeRect(
-        this.hoverX * scale,
-        this.hoverY * scale,
-        scale,
-        scale
-      );
+      this.minimapCtx.strokeRect(this.hoverX * scale, this.hoverY * scale, scale, scale);
     }
   }
 
-  renderMinimapChunk(cx, cy, buffer, scale) {
-    const xOffset = Math.floor(cx * CHUNK_SIZE * scale);
-    const yOffset = Math.floor(cy * CHUNK_SIZE * scale);
-    const size = Math.ceil(CHUNK_SIZE * scale);
+  createMinimapChunkCanvas(cx, cy, buffer) {
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = CHUNK_SIZE;
+    tempCanvas.height = CHUNK_SIZE;
+    const tempCtx = tempCanvas.getContext('2d');
 
-    const imageData = this.minimapCtx.createImageData(CHUNK_SIZE, CHUNK_SIZE);
+    const imageData = tempCtx.createImageData(CHUNK_SIZE, CHUNK_SIZE);
     const data = imageData.data;
 
     for (let py = 0; py < CHUNK_SIZE; py++) {
@@ -203,13 +221,14 @@ class GridRenderer {
       }
     }
 
-    const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = CHUNK_SIZE;
-    tempCanvas.height = CHUNK_SIZE;
-    const tempCtx = tempCanvas.getContext('2d');
     tempCtx.putImageData(imageData, 0, 0);
+    return tempCanvas;
+  }
 
-    this.minimapCtx.drawImage(tempCanvas, xOffset, yOffset, size, size);
+  setHover(x, y) {
+    this.hoverX = x;
+    this.hoverY = y;
+    this.queueRender();
   }
 
   applyPixelUpdate(x, y, color) {
@@ -230,8 +249,24 @@ class GridRenderer {
       chunk.buffer[offset + 1] = g;
       chunk.buffer[offset + 2] = b;
 
-      this.render();
+      this.chunkCanvases.delete(`${cx}_${cy}`);
+      this.minimapChunkCanvases.delete(`${cx}_${cy}`);
+      
+      this.needsFullRender = true;
+      this.queueRender();
     }
+  }
+
+  invalidateChunk(cx, cy) {
+    this.chunkCanvases.delete(`${cx}_${cy}`);
+    this.minimapChunkCanvases.delete(`${cx}_${cy}`);
+    this.needsFullRender = true;
+  }
+
+  invalidateAll() {
+    this.chunkCanvases.clear();
+    this.minimapChunkCanvases.clear();
+    this.needsFullRender = true;
   }
 }
 

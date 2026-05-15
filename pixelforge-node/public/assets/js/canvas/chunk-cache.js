@@ -33,11 +33,16 @@ class ChunkCache {
 
     const promise = (async () => {
       try {
-        const buffer = await api.get(`/grid/chunk/${cx}/${cy}`);
-        if (buffer?.data) {
-          const version = buffer.version || 0;
-          this.set(cx, cy, { buffer: buffer.data, version });
-          return { buffer: buffer.data, version };
+        const response = await fetch(`/api/grid/chunk/${cx}/${cy}`, {
+          headers: api.accessToken ? { 'Authorization': `Bearer ${api.accessToken}` } : {}
+        });
+        
+        if (response.ok) {
+          const buffer = await response.arrayBuffer();
+          const version = response.headers.get('X-Chunk-Version') || 0;
+          const uint8Array = new Uint8Array(buffer);
+          this.set(cx, cy, { buffer: uint8Array, version });
+          return { buffer: uint8Array, version };
         }
       } catch (err) {
         console.error(`Failed to load chunk ${cx},${cy}:`, err);
@@ -51,17 +56,6 @@ class ChunkCache {
     return result;
   }
 
-  getPixelColor(cx, cy, lx, ly, buffer) {
-    if (!buffer) return { r: 255, g: 255, b: 255 };
-    
-    const offset = (ly * CHUNK_SIZE + lx) * 3;
-    return {
-      r: buffer[offset],
-      g: buffer[offset + 1],
-      b: buffer[offset + 2]
-    };
-  }
-
   invalidate(cx, cy) {
     this.chunks.delete(this.getChunkKey(cx, cy));
   }
@@ -72,18 +66,27 @@ class ChunkCache {
 
   async preloadChunks(centerCx, centerCy, radius, api) {
     const promises = [];
+    const needed = [];
+
     for (let dy = -radius; dy <= radius; dy++) {
       for (let dx = -radius; dx <= radius; dx++) {
         const cx = centerCx + dx;
         const cy = centerCy + dy;
         if (cx >= 0 && cx < NUM_CHUNKS && cy >= 0 && cy < NUM_CHUNKS) {
           if (!this.get(cx, cy)) {
-            promises.push(this.loadChunk(cx, cy, api));
+            needed.push({ cx, cy });
           }
         }
       }
     }
-    await Promise.all(promises);
+
+    for (const { cx, cy } of needed) {
+      promises.push(this.loadChunk(cx, cy, api));
+    }
+
+    if (promises.length > 0) {
+      await Promise.all(promises);
+    }
   }
 }
 

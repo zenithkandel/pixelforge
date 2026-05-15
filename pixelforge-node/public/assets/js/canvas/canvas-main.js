@@ -47,17 +47,18 @@ class CanvasApp {
     }
 
     if (window.pixelforge.auth?.isLoggedIn) {
-      const user = await this.api.get('/user/me');
-      if (user?.data) {
-        document.getElementById('pxlBalance').textContent = user.data.pxlBalance;
-      }
+      try {
+        const user = await this.api.get('/user/me');
+        if (user?.data) {
+          document.getElementById('pxlBalance').textContent = user.data.pxlBalance;
+        }
+      } catch (e) {}
     }
   }
 
   async loadInitialChunks() {
     const centerChunk = 6;
     await this.chunkCache.preloadChunks(centerChunk, centerChunk, 3, this.api);
-    this.renderer.render();
   }
 
   setupEventListeners() {
@@ -65,7 +66,7 @@ class CanvasApp {
     this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
     this.canvas.addEventListener('mouseup', () => this.handleMouseUp());
     this.canvas.addEventListener('mouseleave', () => this.handleMouseUp());
-    this.canvas.addEventListener('wheel', (e) => this.handleWheel(e));
+    this.canvas.addEventListener('wheel', (e) => this.handleWheel(e), { passive: false });
 
     this.canvas.addEventListener('contextmenu', (e) => e.preventDefault());
 
@@ -112,6 +113,7 @@ class CanvasApp {
     this.sseClient.onGridReset = async (data) => {
       window.pixelforge.showToast(data.message, 'info', 5000);
       this.chunkCache.invalidateAll();
+      this.renderer.invalidateAll();
       await this.loadInitialChunks();
       await this.loadSession();
     };
@@ -178,27 +180,30 @@ class CanvasApp {
   }
 
   handleMouseMove(e) {
-    const { x, y } = this.renderer.screenToGrid(e.clientX, e.clientY);
-
-    document.getElementById('coordX').textContent = x;
-    document.getElementById('coordY').textContent = y;
-    document.getElementById('currentChunk').textContent = `${Math.floor(x/64)},${Math.floor(y/64)}`;
-
-    this.renderer.setHover(x, y);
+    const coordX = document.getElementById('coordX');
+    const coordY = document.getElementById('coordY');
+    const chunkDisplay = document.getElementById('currentChunk');
+    
+    if (coordX && coordY && chunkDisplay) {
+      const { x, y } = this.renderer.screenToGrid(e.clientX, e.clientY);
+      coordX.textContent = x;
+      coordY.textContent = y;
+      chunkDisplay.textContent = `${Math.floor(x/64)},${Math.floor(y/64)}`;
+    }
 
     if (this.isPanning) {
       const dx = e.clientX - this.lastMousePos.x;
       const dy = e.clientY - this.lastMousePos.y;
       this.renderer.pan(dx, dy);
       this.lastMousePos = { x: e.clientX, y: e.clientY };
-      this.renderer.render();
+      this.renderer.queueRender();
       return;
     }
 
     if (this.isDrawing) {
       this.handleDraw(e);
     } else {
-      this.renderer.render();
+      this.renderer.setHoverFromCoords(e.clientX, e.clientY);
     }
   }
 
@@ -216,10 +221,12 @@ class CanvasApp {
     if (this.currentTool === 'brush') {
       await this.pixelBuyer.purchasePixel(x, y, this.renderer.selectedColor);
       this.sessionPixels++;
-      document.getElementById('sessionPixels').textContent = this.sessionPixels;
+      const el = document.getElementById('sessionPixels');
+      if (el) el.textContent = this.sessionPixels;
     } else if (this.currentTool === 'eyedropper') {
       const color = this.pixelBuyer.eyedrop(x, y);
-      document.getElementById('customColor').value = color;
+      const input = document.getElementById('customColor');
+      if (input) input.value = color;
     }
   }
 
@@ -234,15 +241,14 @@ class CanvasApp {
     const x = Math.floor((e.clientX - rect.left) / (160 / 800));
     const y = Math.floor((e.clientY - rect.top) / (160 / 800));
     
-    this.renderer.offsetX = (400 - x) * this.renderer.pixelSize;
-    this.renderer.offsetY = (400 - y) * this.renderer.pixelSize;
-    this.renderer.render();
+    this.renderer.panTo(x, y);
   }
 
   setZoom(value) {
     this.zoom = Math.max(this.minZoom, Math.min(this.maxZoom, value));
     this.renderer.setZoom(this.zoom);
-    document.getElementById('zoomLevel').textContent = `${Math.round(this.zoom * 100)}%`;
+    const level = document.getElementById('zoomLevel');
+    if (level) level.textContent = `${Math.round(this.zoom * 100)}%`;
   }
 
   zoomIn() {
@@ -255,6 +261,7 @@ class CanvasApp {
 
   zoomFit() {
     const container = document.getElementById('canvasContainer');
+    if (!container) return;
     const maxSize = Math.min(container.clientWidth, container.clientHeight) - 40;
     this.setZoom(maxSize / 800);
   }
