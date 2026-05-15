@@ -46,16 +46,13 @@
         <p style="text-align: center; margin-top: 20px; color: var(--text-muted);">
           Don't have an account? <a href="/register.html" style="color: var(--accent-primary);">Sign up</a>
         </p>
-        <p style="text-align: center; margin-top: 10px;">
-          <a href="/forgot-password.html" style="color: var(--text-muted); font-size: 14px;">Forgot password?</a>
-        </p>
       </div>
     </div>
   </main>
 
   <script type="module" src="/assets/js/api.js"></script>
   <script type="module" src="/assets/js/auth.js"></script>
-  <script>
+  <script type="module">
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const errorEl = document.getElementById('errorMessage');
@@ -64,9 +61,10 @@
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
       
-      const result = await window.pixelforge.auth.login(username, password);
+      const result = await pixelforge.auth.login(username, password);
       
       if (result.success) {
+        pixelforge.showToast('Login successful!', 'success');
         window.location.href = '/';
       } else {
         errorEl.textContent = result.error || 'Login failed';

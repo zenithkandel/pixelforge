@@ -9,13 +9,10 @@ class CanvasApp {
     this.sseClient = new SSEClient(this.api);
 
     this.zoom = 1;
-    this.minZoom = 0.5;
-    this.maxZoom = 4;
     this.currentTool = 'brush';
     this.isPanning = false;
     this.lastMousePos = { x: 0, y: 0 };
     this.isDrawing = false;
-
     this.sessionPixels = 0;
     this.resetTimer = null;
 
@@ -23,42 +20,61 @@ class CanvasApp {
   }
 
   async init() {
-    await this.loadSession();
-    await this.loadInitialChunks();
-    this.setupEventListeners();
-    this.setupSSE();
-    this.setupUI();
-    this.startResetTimer();
+    this.showLoading(true);
     
-    document.getElementById('loadingOverlay')?.classList.add('hidden');
+    try {
+      await Promise.all([
+        this.loadSession(),
+        this.loadInitialChunks()
+      ]);
+      
+      this.setupEventListeners();
+      this.setupSSE();
+      this.setupUI();
+      this.startResetTimer();
+      this.renderer.scheduleRender();
+      
+    } catch (err) {
+      console.error('Init error:', err);
+      window.pixelforge.showToast('Failed to load canvas', 'error');
+    } finally {
+      this.showLoading(false);
+    }
+  }
+
+  showLoading(show) {
+    const overlay = document.getElementById('loadingOverlay');
+    if (overlay) {
+      overlay.classList.toggle('hidden', !show);
+    }
   }
 
   async loadSession() {
     try {
-      const session = await this.api.get('/grid/session');
-      if (session?.data) {
-        document.getElementById('themeDisplay').querySelector('.theme-name').textContent = 
-          session.data.theme || 'Free Paint';
-        document.getElementById('themeDesc').textContent = 
-          session.data.description || '';
+      const response = await this.api.get('/grid/session');
+      if (response.ok && response.data) {
+        const themeName = document.querySelector('.theme-name');
+        const themeDesc = document.getElementById('themeDesc');
+        if (themeName) themeName.textContent = response.data.theme || 'Free Paint';
+        if (themeDesc) themeDesc.textContent = response.data.description || '';
       }
     } catch (err) {
-      console.error('Failed to load session:', err);
+      console.error('Session load error:', err);
     }
 
     if (window.pixelforge.auth?.isLoggedIn) {
       try {
-        const user = await this.api.get('/user/me');
-        if (user?.data) {
-          document.getElementById('pxlBalance').textContent = user.data.pxlBalance;
+        const user = await this.api.getUserMe();
+        if (user.ok && user.data) {
+          const balanceEl = document.getElementById('pxlBalance');
+          if (balanceEl) balanceEl.textContent = user.data.pxlBalance || 0;
         }
       } catch (e) {}
     }
   }
 
   async loadInitialChunks() {
-    const centerChunk = 6;
-    await this.chunkCache.preloadChunks(centerChunk, centerChunk, 3, this.api);
+    await this.chunkCache.preloadChunks(6, 6, 6, this.api);
   }
 
   setupEventListeners() {
@@ -67,7 +83,6 @@ class CanvasApp {
     this.canvas.addEventListener('mouseup', () => this.handleMouseUp());
     this.canvas.addEventListener('mouseleave', () => this.handleMouseUp());
     this.canvas.addEventListener('wheel', (e) => this.handleWheel(e), { passive: false });
-
     this.canvas.addEventListener('contextmenu', (e) => e.preventDefault());
 
     this.minimap.addEventListener('click', (e) => this.handleMinimapClick(e));
@@ -100,40 +115,34 @@ class CanvasApp {
 
   setupSSE() {
     this.sseClient.onPixelUpdate = (data) => {
-      this.renderer.applyPixelUpdate(data.x, data.y, data.color);
+      if (data.x !== undefined && data.y !== undefined && data.color) {
+        this.renderer.applyPixelUpdate(data.x, data.y, data.color);
+      }
       
       if (data.gemBonus) {
-        window.pixelforge.showToast(
-          `${data.username} found a gem!`,
-          'success'
-        );
+        window.pixelforge.showToast(`${data.username} found a gem! +${data.gemBonus} PXL`, 'success');
       }
     };
 
-    this.sseClient.onGridReset = async (data) => {
-      window.pixelforge.showToast(data.message, 'info', 5000);
+    this.sseClient.onGridReset = async () => {
       this.chunkCache.invalidateAll();
       this.renderer.invalidateAll();
       await this.loadInitialChunks();
-      await this.loadSession();
+      window.pixelforge.showToast('Canvas has been reset!', 'info');
     };
 
-    this.sseClient.onPowerHourStart = (data) => {
-      window.pixelforge.showToast(data.message, 'success', 10000);
+    this.sseClient.onPowerHourStart = () => {
+      window.pixelforge.showToast('⚡ Power Hour Started! Free pixels!', 'success', 10000);
       document.getElementById('powerHourBanner')?.classList.remove('hidden');
     };
 
     this.sseClient.onPowerHourEnd = () => {
-      window.pixelforge.showToast('Power Hour has ended!', 'info');
+      window.pixelforge.showToast('Power Hour ended', 'info');
       document.getElementById('powerHourBanner')?.classList.add('hidden');
     };
 
     this.sseClient.onAchievement = (data) => {
-      window.pixelforge.showToast(
-        `🏆 Achievement: ${data.name}! +${data.reward} PXL`,
-        'success',
-        5000
-      );
+      window.pixelforge.showToast(`🏆 ${data.name}! +${data.reward} PXL`, 'success', 5000);
     };
 
     this.sseClient.connect([]);
@@ -147,26 +156,27 @@ class CanvasApp {
   async loadLeaderboard() {
     try {
       const response = await this.api.get('/leaderboard/weekly-pixels');
-      if (response?.data?.leaders) {
+      if (response.ok && response.data?.leaders) {
         const container = document.getElementById('leaderboardMini');
-        container.innerHTML = response.data.leaders.slice(0, 5).map((leader, i) => `
-          <div class="leader-item">
-            <span class="rank">#${i + 1}</span>
-            <span class="name">${this.escapeHtml(leader.username)}</span>
-            <span class="count">${leader.pixel_count}</span>
-          </div>
-        `).join('');
+        if (container) {
+          container.innerHTML = response.data.leaders.slice(0, 5).map((leader, i) => `
+            <div class="leader-item">
+              <span class="rank">#${i + 1}</span>
+              <span class="name">${window.pixelforge.escapeHtml(leader.username)}</span>
+              <span class="count">${leader.pixel_count}</span>
+            </div>
+          `).join('');
+        }
       }
     } catch (err) {
-      console.error('Failed to load leaderboard:', err);
+      console.error('Leaderboard load error:', err);
     }
   }
 
   handleMouseDown(e) {
-    if (e.button === 2 || e.button === 1) {
+    if (e.button === 2) {
       this.isPanning = true;
       this.lastMousePos = { x: e.clientX, y: e.clientY };
-      this.canvas.style.cursor = 'grabbing';
       return;
     }
 
@@ -180,37 +190,36 @@ class CanvasApp {
   }
 
   handleMouseMove(e) {
+    const { x, y } = this.renderer.screenToGrid(e.clientX, e.clientY);
+    
     const coordX = document.getElementById('coordX');
     const coordY = document.getElementById('coordY');
     const chunkDisplay = document.getElementById('currentChunk');
     
-    if (coordX && coordY && chunkDisplay) {
-      const { x, y } = this.renderer.screenToGrid(e.clientX, e.clientY);
-      coordX.textContent = x;
-      coordY.textContent = y;
-      chunkDisplay.textContent = `${Math.floor(x/64)},${Math.floor(y/64)}`;
-    }
+    if (coordX) coordX.textContent = x;
+    if (coordY) coordY.textContent = y;
+    if (chunkDisplay) chunkDisplay.textContent = `${Math.floor(x/64)},${Math.floor(y/64)}`;
+
+    this.renderer.setHover(x, y);
 
     if (this.isPanning) {
       const dx = e.clientX - this.lastMousePos.x;
       const dy = e.clientY - this.lastMousePos.y;
-      this.renderer.pan(dx, dy);
+      const rect = this.canvas.getBoundingClientRect();
+      this.canvas.parentElement.scrollLeft -= dx;
+      this.canvas.parentElement.scrollTop -= dy;
       this.lastMousePos = { x: e.clientX, y: e.clientY };
-      this.renderer.queueRender();
       return;
     }
 
     if (this.isDrawing) {
       this.handleDraw(e);
-    } else {
-      this.renderer.setHoverFromCoords(e.clientX, e.clientY);
     }
   }
 
   handleMouseUp() {
     this.isPanning = false;
     this.isDrawing = false;
-    this.canvas.style.cursor = 'crosshair';
   }
 
   async handleDraw(e) {
@@ -219,21 +228,35 @@ class CanvasApp {
     if (x < 0 || x >= 800 || y < 0 || y >= 800) return;
 
     if (this.currentTool === 'brush') {
-      await this.pixelBuyer.purchasePixel(x, y, this.renderer.selectedColor);
-      this.sessionPixels++;
-      const el = document.getElementById('sessionPixels');
-      if (el) el.textContent = this.sessionPixels;
+      const success = await this.pixelBuyer.purchasePixel(x, y, this.renderer.selectedColor);
+      if (success) {
+        this.sessionPixels++;
+        const el = document.getElementById('sessionPixels');
+        if (el) el.textContent = this.sessionPixels;
+        
+        const balanceEl = document.getElementById('pxlBalance');
+        if (balanceEl && window.pixelforge.auth?.user) {
+          window.pixelforge.auth.user.pxlBalance--;
+          balanceEl.textContent = window.pixelforge.auth.user.pxlBalance;
+        }
+      }
     } else if (this.currentTool === 'eyedropper') {
       const color = this.pixelBuyer.eyedrop(x, y);
+      this.renderer.selectedColor = color;
       const input = document.getElementById('customColor');
       if (input) input.value = color;
+      document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+      window.pixelforge.showToast(`Color: ${color}`, 'info', 1500);
     }
   }
 
   handleWheel(e) {
     e.preventDefault();
-    const delta = e.deltaY > 0 ? -0.1 : 0.1;
-    this.setZoom(this.zoom + delta);
+    const delta = e.deltaY > 0 ? -0.2 : 0.2;
+    this.zoom = Math.max(0.5, Math.min(4, this.zoom + delta));
+    this.renderer.setZoom(this.zoom);
+    const level = document.getElementById('zoomLevel');
+    if (level) level.textContent = `${Math.round(this.zoom * 100)}%`;
   }
 
   handleMinimapClick(e) {
@@ -241,42 +264,44 @@ class CanvasApp {
     const x = Math.floor((e.clientX - rect.left) / (160 / 800));
     const y = Math.floor((e.clientY - rect.top) / (160 / 800));
     
-    this.renderer.panTo(x, y);
-  }
-
-  setZoom(value) {
-    this.zoom = Math.max(this.minZoom, Math.min(this.maxZoom, value));
-    this.renderer.setZoom(this.zoom);
-    const level = document.getElementById('zoomLevel');
-    if (level) level.textContent = `${Math.round(this.zoom * 100)}%`;
+    const container = document.getElementById('canvasScroll');
+    if (container) {
+      container.scrollLeft = x * this.renderer.pixelSize - container.clientWidth / 2;
+      container.scrollTop = y * this.renderer.pixelSize - container.clientHeight / 2;
+    }
   }
 
   zoomIn() {
-    this.setZoom(this.zoom + 0.25);
+    this.zoom = Math.min(4, this.zoom + 0.5);
+    this.renderer.setZoom(this.zoom);
+    document.getElementById('zoomLevel').textContent = `${Math.round(this.zoom * 100)}%`;
   }
 
   zoomOut() {
-    this.setZoom(this.zoom - 0.25);
+    this.zoom = Math.max(0.5, this.zoom - 0.5);
+    this.renderer.setZoom(this.zoom);
+    document.getElementById('zoomLevel').textContent = `${Math.round(this.zoom * 100)}%`;
   }
 
   zoomFit() {
     const container = document.getElementById('canvasContainer');
     if (!container) return;
     const maxSize = Math.min(container.clientWidth, container.clientHeight) - 40;
-    this.setZoom(maxSize / 800);
+    this.zoom = maxSize / 800;
+    this.renderer.setZoom(this.zoom);
+    document.getElementById('zoomLevel').textContent = `${Math.round(this.zoom * 100)}%`;
   }
 
   startResetTimer() {
     const updateTimer = () => {
       const now = new Date();
       const daysUntilSunday = 7 - now.getDay();
-      const hoursUntilSunday = daysUntilSunday * 24 - now.getHours();
-      const minutesUntilReset = hoursUntilSunday * 60 - now.getMinutes();
-      const secondsUntilReset = minutesUntilReset * 60 - now.getSeconds();
+      const hoursUntilReset = daysUntilSunday * 24 - now.getHours() - (now.getDay() === 0 ? 24 : 0);
+      const secondsTotal = hoursUntilReset * 3600 - now.getMinutes() * 60 - now.getSeconds();
 
-      const h = Math.floor(secondsUntilReset / 3600);
-      const m = Math.floor((secondsUntilReset % 3600) / 60);
-      const s = secondsUntilReset % 60;
+      const h = Math.floor(secondsTotal / 3600);
+      const m = Math.floor((secondsTotal % 3600) / 60);
+      const s = secondsTotal % 60;
 
       const timerEl = document.getElementById('resetTimer');
       if (timerEl) {
@@ -288,16 +313,8 @@ class CanvasApp {
     this.resetTimer = setInterval(updateTimer, 1000);
   }
 
-  escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-
   destroy() {
-    if (this.resetTimer) {
-      clearInterval(this.resetTimer);
-    }
+    if (this.resetTimer) clearInterval(this.resetTimer);
     this.sseClient.disconnect();
   }
 }
@@ -308,8 +325,4 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('pixelCanvas')) {
     window.canvasApp = new CanvasApp();
   }
-});
-
-window.addEventListener('beforeunload', () => {
-  window.canvasApp?.destroy();
 });

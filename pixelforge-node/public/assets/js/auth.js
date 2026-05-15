@@ -1,5 +1,3 @@
-window.pixelforge = window.pixelforge || {};
-
 const auth = {
   user: null,
   isLoggedIn: false,
@@ -7,7 +5,7 @@ const auth = {
   async init() {
     const token = localStorage.getItem('accessToken');
     if (token) {
-      window.pixelforge.api.setAccessToken(token);
+      pixelforge.api.setAccessToken(token);
       await this.loadUser();
     }
     this.updateUI();
@@ -15,7 +13,7 @@ const auth = {
 
   async loadUser() {
     try {
-      const response = await window.pixelforge.api.getUserMe();
+      const response = await pixelforge.api.getUserMe();
       if (response.ok && response.data) {
         this.user = response.data;
         this.isLoggedIn = true;
@@ -47,11 +45,11 @@ const auth = {
 
   async login(username, password) {
     try {
-      const response = await window.pixelforge.api.login(username, password);
+      const response = await pixelforge.api.login(username, password);
       
-      if (response.ok && response.data.accessToken) {
+      if (response.ok && response.data?.accessToken) {
         localStorage.setItem('accessToken', response.data.accessToken);
-        window.pixelforge.api.setAccessToken(response.data.accessToken);
+        pixelforge.api.setAccessToken(response.data.accessToken);
         await this.loadUser();
         this.updateUI();
         return { success: true };
@@ -65,7 +63,7 @@ const auth = {
 
   async register(username, email, password) {
     try {
-      const response = await window.pixelforge.api.register(username, email, password);
+      const response = await pixelforge.api.register(username, email, password);
       
       if (response.ok && response.data) {
         return { success: true, needsVerification: response.data.needsVerification };
@@ -79,14 +77,14 @@ const auth = {
 
   async logout() {
     try {
-      await window.pixelforge.api.logout();
+      await pixelforge.api.logout();
     } catch (e) {}
     this.logoutLocal();
   },
 
   logoutLocal() {
     localStorage.removeItem('accessToken');
-    window.pixelforge.api.clearTokens();
+    pixelforge.api.clearTokens();
     this.user = null;
     this.isLoggedIn = false;
     this.updateUI();

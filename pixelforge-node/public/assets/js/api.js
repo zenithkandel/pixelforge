@@ -3,7 +3,6 @@ const API_BASE = '/api';
 class PixelForgeAPI {
   constructor() {
     this.accessToken = null;
-    this.refreshPromise = null;
   }
 
   async request(endpoint, options = {}) {
@@ -35,15 +34,9 @@ class PixelForgeAPI {
         };
       }
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || data.message || 'Request failed');
-      }
-
-      return data;
+      return await response.json();
     } catch (err) {
-      throw err;
+      return { ok: false, error: err.message };
     }
   }
 
@@ -82,51 +75,74 @@ class PixelForgeAPI {
   }
 
   async getSession() {
-    try {
-      return await this.get('/grid/session');
-    } catch (e) {
-      return { ok: false, data: null };
-    }
+    return this.get('/grid/session');
   }
 
   async getUserMe() {
     return this.get('/user/me');
   }
+
+  async startGame() {
+    return this.post('/game/start', {});
+  }
+
+  async submitScore(sessionToken, score, duration) {
+    return this.post('/game/submit', {
+      sessionToken,
+      score,
+      duration,
+      checkpoints: [],
+      checkpointsHmac: '',
+      obstaclesHit: 0,
+      powerUpsCollected: 0
+    });
+  }
+}
+
+const api = new PixelForgeAPI();
+
+function showToast(message, type = 'info', duration = 3000) {
+  let container = document.getElementById('toastContainer');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toastContainer';
+    container.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;';
+    document.body.appendChild(container);
+  }
+  
+  const icons = { success: '✓', error: '✗', warning: '⚠', info: 'ℹ' };
+  const toast = document.createElement('div');
+  toast.style.cssText = 'background:#1a1a26;border:1px solid #2a2a3a;border-radius:8px;padding:12px 20px;display:flex;align-items:center;gap:10px;animation:slideIn 0.3s ease;font-family:Rajdhani,sans-serif;font-size:14px;color:#e0e0e0;';
+  if (type === 'success') toast.style.borderColor = '#00ff88';
+  if (type === 'error') toast.style.borderColor = '#ff4757';
+  toast.innerHTML = `<span style="font-size:18px;">${icons[type] || icons.info}</span><span>${message}</span>`;
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transition = 'opacity 0.3s';
+    setTimeout(() => toast.remove(), 300);
+  }, duration);
+}
+
+function escapeHtml(str) {
+  if (typeof str !== 'string') return str;
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function formatNumber(num) {
+  if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+  if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+  return num.toString();
 }
 
 window.pixelforge = {
-  api: new PixelForgeAPI(),
-
-  showToast(message, type = 'info', duration = 3000) {
-    let container = document.getElementById('toastContainer');
-    if (!container) {
-      container = document.createElement('div');
-      container.id = 'toastContainer';
-      container.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;';
-      document.body.appendChild(container);
-    }
-    
-    const icons = { success: '✓', error: '✗', warning: '⚠', info: 'ℹ' };
-    const toast = document.createElement('div');
-    toast.style.cssText = 'background:#1a1a26;border:1px solid #2a2a3a;border-radius:8px;padding:12px 20px;display:flex;align-items:center;gap:10px;animation:slideIn 0.3s ease;font-family:Rajdhani,sans-serif;font-size:14px;color:#e0e0e0;';
-    if (type === 'success') toast.style.borderColor = '#00ff88';
-    if (type === 'error') toast.style.borderColor = '#ff4757';
-    toast.innerHTML = `<span style="font-size:18px;">${icons[type] || icons.info}</span><span>${message}</span>`;
-    container.appendChild(toast);
-
-    setTimeout(() => {
-      toast.style.opacity = '0';
-      toast.style.transition = 'opacity 0.3s';
-      setTimeout(() => toast.remove(), 300);
-    }, duration);
-  },
-
-  escapeHtml(str) {
-    if (typeof str !== 'string') return str;
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
+  api,
+  showToast,
+  escapeHtml,
+  formatNumber
 };
 
-window.showToast = window.pixelforge.showToast;
+window.showToast = showToast;

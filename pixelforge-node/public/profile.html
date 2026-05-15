@@ -15,12 +15,6 @@
     .profile-stat { background: var(--bg-card); border: 1px solid var(--border-primary); border-radius: var(--radius-lg); padding: 20px; text-align: center; }
     .profile-stat-value { font-family: var(--font-display); font-size: 24px; color: var(--accent-primary); }
     .profile-stat-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin-top: 5px; }
-    .achievements-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
-    .achievement-card { background: var(--bg-card); border: 1px solid var(--border-primary); border-radius: var(--radius-md); padding: 15px; display: flex; gap: 15px; align-items: center; }
-    .achievement-card.locked { opacity: 0.5; }
-    .achievement-icon { font-size: 32px; }
-    .achievement-info h4 { font-size: 14px; margin-bottom: 4px; }
-    .achievement-info p { font-size: 12px; color: var(--text-muted); }
   </style>
 </head>
 <body>
@@ -34,7 +28,7 @@
         <a href="/" class="nav-link">Home</a>
         <a href="/game.html" class="nav-link">PIXEL DASH</a>
         <a href="/canvas.html" class="nav-link">The Forge</a>
-        <a href="/leaderboard.html" class="nav-link">Leaderboard</a>
+        <a href="/leaderboard.html" class="nav-link active">Leaderboard</a>
       </div>
       <div class="nav-auth" id="navAuth">
         <a href="/login.html" class="btn btn-outline">Login</a>
@@ -62,86 +56,72 @@
 
       <div class="profile-stats">
         <div class="profile-stat">
-          <div class="profile-stat-value" id="statBalance">0</div>
+          <div class="profile-stat-value" id="statBalance">-</div>
           <div class="profile-stat-label">PXL Balance</div>
         </div>
         <div class="profile-stat">
-          <div class="profile-stat-value" id="statHighScore">0</div>
+          <div class="profile-stat-value" id="statHighScore">-</div>
           <div class="profile-stat-label">High Score</div>
         </div>
         <div class="profile-stat">
-          <div class="profile-stat-value" id="statGames">0</div>
+          <div class="profile-stat-value" id="statGames">-</div>
           <div class="profile-stat-label">Games Played</div>
         </div>
         <div class="profile-stat">
-          <div class="profile-stat-value" id="statPixels">0</div>
-          <div class="profile-stat-label">Weekly Pixels</div>
+          <div class="profile-stat-value" id="statPixels">-</div>
+          <div class="profile-stat-label">Pixels This Week</div>
         </div>
       </div>
 
-      <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Achievements</h2>
-      <div class="achievements-grid" id="achievementsGrid">
-        <p style="color: var(--text-muted);">Loading achievements...</p>
-      </div>
-
       <div id="logoutSection" class="hidden" style="margin-top: 40px; text-align: center;">
-        <button class="btn btn-outline" onclick="window.pixelforge.auth.logout()">Logout</button>
+        <button class="btn btn-outline" id="logoutBtn">Logout</button>
       </div>
     </div>
   </main>
 
   <script type="module" src="/assets/js/api.js"></script>
   <script type="module" src="/assets/js/auth.js"></script>
-  <script>
+  <script type="module">
     async function loadProfile() {
       const urlParams = new URLSearchParams(window.location.search);
       const usernameParam = urlParams.get('user');
 
       let userData;
       
-      if (usernameParam) {
-        const response = await window.pixelforge.api.get(`/user/${usernameParam}`);
-        if (!response?.data) {
-          window.location.href = '/';
-          return;
-        }
-        userData = response.data;
-      } else if (window.pixelforge.auth?.isLoggedIn) {
-        const response = await window.pixelforge.api.get('/user/me');
-        if (!response?.data) {
+      try {
+        if (usernameParam) {
+          const response = await pixelforge.api.get(`/user/${usernameParam}`);
+          if (!response.ok || !response.data) {
+            window.location.href = '/';
+            return;
+          }
+          userData = response.data;
+        } else if (pixelforge.auth?.isLoggedIn) {
+          const response = await pixelforge.api.getUserMe();
+          if (!response.ok || !response.data) {
+            window.location.href = '/login.html';
+            return;
+          }
+          userData = response.data;
+          document.getElementById('logoutSection').classList.remove('hidden');
+          document.getElementById('logoutBtn').addEventListener('click', () => {
+            pixelforge.auth.logout();
+          });
+        } else {
           window.location.href = '/login.html';
           return;
         }
-        userData = response.data;
-        document.getElementById('logoutSection').classList.remove('hidden');
-      } else {
-        window.location.href = '/login.html';
-        return;
-      }
 
-      document.getElementById('profileAvatar').textContent = userData.username.charAt(0).toUpperCase();
-      document.getElementById('profileUsername').textContent = userData.username;
-      document.getElementById('profileJoined').textContent = new Date(userData.joinedAt).toLocaleDateString();
-      document.getElementById('statBalance').textContent = (userData.pxlBalance || userData.pxl_balance || 0).toLocaleString();
-      document.getElementById('statHighScore').textContent = (userData.highScore || userData.high_score || 0).toLocaleString();
-      document.getElementById('statGames').textContent = (userData.gamesPlayed || userData.games_played || 0).toLocaleString();
-      document.getElementById('statPixels').textContent = (userData.weeklyPixels || userData.weekly_pixels || 0).toLocaleString();
-
-      const allAchievements = await window.pixelforge.api.get('/user/achievements/list');
-      if (allAchievements?.data?.achievements) {
-        const earnedCodes = new Set((userData.achievements || []).map(a => a.code));
-        document.getElementById('achievementsGrid').innerHTML = allAchievements.data.achievements.map(ach => {
-          const earned = earnedCodes.has(ach.code);
-          return `
-            <div class="achievement-card ${earned ? '' : 'locked'}">
-              <span class="achievement-icon">${ach.icon || '🏆'}</span>
-              <div class="achievement-info">
-                <h4>${ach.name}</h4>
-                <p>${ach.description}</p>
-              </div>
-            </div>
-          `;
-        }).join('');
+        document.getElementById('profileAvatar').textContent = userData.username.charAt(0).toUpperCase();
+        document.getElementById('profileUsername').textContent = userData.username;
+        document.getElementById('profileJoined').textContent = userData.joinedAt ? new Date(userData.joinedAt).toLocaleDateString() : '-';
+        document.getElementById('statBalance').textContent = userData.pxlBalance || 0;
+        document.getElementById('statHighScore').textContent = userData.highScore || userData.high_score || 0;
+        document.getElementById('statGames').textContent = userData.gamesPlayed || userData.games_played || 0;
+        document.getElementById('statPixels').textContent = userData.weeklyPixels || userData.weekly_pixels || 0;
+      } catch (err) {
+        console.error('Profile load error:', err);
+        pixelforge.showToast('Failed to load profile', 'error');
       }
     }
 
