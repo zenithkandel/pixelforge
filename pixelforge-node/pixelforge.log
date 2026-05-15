@@ -31,3 +31,21 @@
 2026-05-15T12:20:49.355Z [ERROR]: Error: session_exists
     at C:\xampp\htdocs\codes\pixelforge\pixelforge-node\src\routes\game.js:22:13
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-05-15T12:28:49.691Z [ERROR]: Error: cheat_detected
+    at C:\xampp\htdocs\codes\pixelforge\pixelforge-node\src\routes\game.js:119:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-05-15T12:28:52.144Z [ERROR]: Error: session_exists
+    at C:\xampp\htdocs\codes\pixelforge\pixelforge-node\src\routes\game.js:22:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-05-15T14:41:37.399Z [ERROR]: Error: cheat_detected
+    at C:\xampp\htdocs\codes\pixelforge\pixelforge-node\src\routes\game.js:119:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-05-15T14:41:41.717Z [ERROR]: Error: session_exists
+    at C:\xampp\htdocs\codes\pixelforge\pixelforge-node\src\routes\game.js:22:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-05-15T14:42:04.504Z [ERROR]: Error: cheat_detected
+    at C:\xampp\htdocs\codes\pixelforge\pixelforge-node\src\routes\game.js:119:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-05-15T14:44:41.245Z [ERROR]: Error: session_exists
+    at C:\xampp\htdocs\codes\pixelforge\pixelforge-node\src\routes\game.js:22:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)

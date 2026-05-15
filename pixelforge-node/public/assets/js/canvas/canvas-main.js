@@ -191,7 +191,7 @@ class CanvasApp {
     
     if (coordX) coordX.textContent = Math.max(0, Math.min(799, x));
     if (coordY) coordY.textContent = Math.max(0, Math.min(799, y));
-    if (chunkDisplay) chunkDisplay.textContent = `${Math.floor(Math.max(0, Math.min(799, x))/64},${Math.floor(Math.max(0, Math.min(799, y))/64)}`;
+    if (chunkDisplay) chunkDisplay.textContent = `${Math.floor(Math.max(0, Math.min(799, x))/64)},${Math.floor(Math.max(0, Math.min(799, y))/64)}`;
 
     this.renderer.setHover(x, y);
 
