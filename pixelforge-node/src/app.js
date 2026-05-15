@@ -7,6 +7,18 @@ const path = require('path');
 const config = require('./config');
 const { getPool } = require('./database');
 
+const { generateToken, doubleCsrfProtection } = doubleCsrf({
+  getSecret: () => config.csrf.secret,
+  cookieName: 'x-csrf-token',
+  cookieOptions: {
+    httpOnly: false,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict'
+  },
+  size: 64,
+  ignoredMethods: ['GET', 'HEAD', 'OPTIONS']
+});
+
 function createApp() {
   const app = express();
 
@@ -47,18 +59,6 @@ function createApp() {
 
   app.use(express.static(path.join(__dirname, '../public')));
 
-  const { generateToken, doubleCsrfProtection } = doubleCsrf({
-    getSecret: () => config.csrf.secret,
-    cookieName: 'x-csrf-token',
-    cookieOptions: {
-      httpOnly: false,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict'
-    },
-    size: 64,
-    ignoredMethods: ['GET', 'HEAD', 'OPTIONS']
-  });
-
   app.use((req, res, next) => {
     req.csrfToken = () => generateToken(req, res);
     next();
@@ -66,6 +66,7 @@ function createApp() {
 
   app.set('db', getPool());
   app.set('config', config);
+  app.set('doubleCsrfProtection', doubleCsrfProtection);
 
   const authRoutes = require('./routes/auth');
   const gameRoutes = require('./routes/game');
