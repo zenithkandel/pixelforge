@@ -33,16 +33,10 @@ class ChunkCache {
 
     const promise = (async () => {
       try {
-        const response = await fetch(`/api/grid/chunk/${cx}/${cy}`, {
-          headers: api.accessToken ? { 'Authorization': `Bearer ${api.accessToken}` } : {}
-        });
-        
-        if (response.ok) {
-          const buffer = await response.arrayBuffer();
-          const version = response.headers.get('X-Chunk-Version') || 0;
-          const uint8Array = new Uint8Array(buffer);
-          this.set(cx, cy, { buffer: uint8Array, version });
-          return { buffer: uint8Array, version };
+        const result = await api.get(`/grid/chunk/${cx}/${cy}`);
+        if (result && result.buffer) {
+          this.set(cx, cy, result);
+          return result;
         }
       } catch (err) {
         console.error(`Failed to load chunk ${cx},${cy}:`, err);
@@ -65,8 +59,8 @@ class ChunkCache {
   }
 
   async preloadChunks(centerCx, centerCy, radius, api) {
-    const promises = [];
     const needed = [];
+    const promises = [];
 
     for (let dy = -radius; dy <= radius; dy++) {
       for (let dx = -radius; dx <= radius; dx++) {
