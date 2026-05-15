@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaderboard - PixelForge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <style>
+    .leaderboard-page { padding: 100px 20px 60px; }
+    .leaderboard-tabs { display: flex; gap: 10px; margin-bottom: 30px; justify-content: center; }
+    .leaderboard-tab { padding: 12px 24px; background: var(--bg-tertiary); border: 1px solid var(--border-primary); border-radius: var(--radius-md); cursor: pointer; transition: all 0.2s; font-weight: 600; }
+    .leaderboard-tab:hover { border-color: var(--accent-primary); }
+    .leaderboard-tab.active { background: var(--accent-primary); color: var(--bg-primary); border-color: var(--accent-primary); }
+    .leaderboard-table { width: 100%; border-collapse: collapse; }
+    .leaderboard-table th, .leaderboard-table td { padding: 15px 20px; text-align: left; border-bottom: 1px solid var(--border-primary); }
+    .leaderboard-table th { font-family: var(--font-display); font-size: 11px; color: var(--accent-primary); text-transform: uppercase; }
+    .leaderboard-table tr:hover td { background: var(--bg-hover); }
+    .rank-badge { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; font-family: var(--font-display); font-size: 12px; }
+    .rank-1 { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #000; }
+    .rank-2 { background: linear-gradient(135deg, #c0c0c0, #a0a0a0); color: #000; }
+    .rank-3 { background: linear-gradient(135deg, #cd7f32, #a0522d); color: #fff; }
+    .rank-default { background: var(--bg-tertiary); color: var(--text-muted); }
+    .user-link { color: var(--accent-canvas); font-weight: 600; }
+    .user-link:hover { text-decoration: underline; }
+    .score-value { font-family: var(--font-display); font-size: 14px; color: var(--accent-primary); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="nav-logo">
+        <span class="logo-icon">◈</span>
+        <span class="logo-text">PIXEL<span class="accent">FORGE</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/game.html" class="nav-link">PIXEL DASH</a>
+        <a href="/canvas.html" class="nav-link">The Forge</a>
+        <a href="/leaderboard.html" class="nav-link active">Leaderboard</a>
+      </div>
+      <div class="nav-auth" id="navAuth">
+        <a href="/login.html" class="btn btn-outline">Login</a>
+        <a href="/register.html" class="btn btn-primary">Sign Up</a>
+      </div>
+      <div class="nav-user hidden" id="navUser">
+        <div class="pxl-balance">
+          <span class="pxl-icon">◆</span>
+          <span id="navBalance">0</span> PXL
+        </div>
+        <a href="/profile.html" class="user-avatar" id="navAvatar">?</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-content leaderboard-page">
+    <div class="container">
+      <h1 class="section-title">Leaderboard</h1>
+      
+      <div class="leaderboard-tabs">
+        <button class="leaderboard-tab active" data-tab="highscore">High Scores</button>
+        <button class="leaderboard-tab" data-tab="pxl">PXL Balance</button>
+        <button class="leaderboard-tab" data-tab="weekly">Weekly Pixels</button>
+      </div>
+
+      <div class="card" style="overflow-x: auto;">
+        <table class="leaderboard-table" id="leaderboardTable">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Player</th>
+              <th id="scoreHeader">Score</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboardBody">
+            <tr><td colspan="3" style="text-align: center; color: var(--text-muted);">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/assets/js/api.js"></script>
+  <script type="module" src="/assets/js/auth.js"></script>
+  <script>
+    let currentTab = 'highscore';
+
+    async function loadLeaderboard(tab) {
+      const tbody = document.getElementById('leaderboardBody');
+      const header = document.getElementById('scoreHeader');
+      
+      tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: var(--text-muted);">Loading...</td></tr>';
+
+      let endpoint, scoreLabel;
+      switch (tab) {
+        case 'highscore':
+          endpoint = '/leaderboard/score';
+          scoreLabel = 'High Score';
+          break;
+        case 'pxl':
+          endpoint = '/leaderboard/pxl';
+          scoreLabel = 'PXL Balance';
+          break;
+        case 'weekly':
+          endpoint = '/leaderboard/weekly-pixels';
+          scoreLabel = 'Pixels This Week';
+          break;
+      }
+
+      header.textContent = scoreLabel;
+
+      try {
+        const response = await window.pixelforge.api.get(endpoint);
+        if (response?.data?.leaders) {
+          tbody.innerHTML = response.data.leaders.map((entry, i) => {
+            const rankClass = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : 'rank-default';
+            const score = entry.high_score || entry.pxl_balance || entry.pixel_count || 0;
+            return `
+              <tr>
+                <td><span class="rank-badge ${rankClass}">${i + 1}</span></td>
+                <td><a href="/profile.html?user=${entry.username}" class="user-link">${window.escapeHtml(entry.username)}</a></td>
+                <td class="score-value">${score.toLocaleString()}</td>
+              </tr>
+            `;
+          }).join('');
+        }
+      } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: var(--accent-error);">Failed to load leaderboard</td></tr>';
+      }
+    }
+
+    document.querySelectorAll('.leaderboard-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.leaderboard-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentTab = tab.dataset.tab;
+        loadLeaderboard(currentTab);
+      });
+    });
+
+    loadLeaderboard(currentTab);
+  </script>
+</body>
+</html>

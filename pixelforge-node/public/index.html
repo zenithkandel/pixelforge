@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PixelForge - Communal Pixel Canvas + Arcade Games</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="nav-logo">
+        <span class="logo-icon">◈</span>
+        <span class="logo-text">PIXEL<span class="accent">FORGE</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="/" class="nav-link active">Home</a>
+        <a href="/game.html" class="nav-link">PIXEL DASH</a>
+        <a href="/canvas.html" class="nav-link">The Forge</a>
+        <a href="/leaderboard.html" class="nav-link">Leaderboard</a>
+      </div>
+      <div class="nav-auth" id="navAuth">
+        <a href="/login.html" class="btn btn-outline">Login</a>
+        <a href="/register.html" class="btn btn-primary">Sign Up</a>
+      </div>
+      <div class="nav-user hidden" id="navUser">
+        <div class="pxl-balance">
+          <span class="pxl-icon">◆</span>
+          <span id="navBalance">0</span> PXL
+        </div>
+        <a href="/profile.html" class="user-avatar" id="navAvatar">?</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="hero-line">CREATE</span>
+          <span class="hero-line accent">COLLABORATE</span>
+          <span class="hero-line">COMPETE</span>
+        </h1>
+        <p class="hero-subtitle">
+          A massive 800×800 communal pixel canvas meets fast-paced arcade action.
+          Play PIXEL DASH, earn PXL, paint the world.
+        </p>
+        <div class="hero-actions">
+          <a href="/game.html" class="btn btn-game btn-lg">
+            <span class="btn-icon">▶</span> Play PIXEL DASH
+          </a>
+          <a href="/canvas.html" class="btn btn-canvas btn-lg">
+            <span class="btn-icon">✎</span> Open The Forge
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-value">800×800</span>
+            <span class="stat-label">Pixel Canvas</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" id="activeUsers">0</span>
+            <span class="stat-label">Active Users</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" id="totalPixels">0</span>
+            <span class="stat-label">Pixels Placed</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" id="weeklyTheme">Loading...</span>
+            <span class="stat-label">This Week's Theme</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <h2 class="section-title">Platform Features</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>PIXEL DASH</h3>
+            <p>Fast-paced arcade runner with procedurally generated obstacles. Score high, earn PXL currency for the canvas.</p>
+            <a href="/game.html" class="btn btn-sm btn-outline">Play Now</a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">✎</div>
+            <h3>The Forge</h3>
+            <p>800×800 collaborative pixel canvas. Every pixel costs 1 PXL. Weekly themed competitions with prizes.</p>
+            <a href="/canvas.html" class="btn btn-sm btn-outline">Start Painting</a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🏆</div>
+            <h3>Weekly Wars</h3>
+            <p>Vote for the best pixel art. Top 3 artists win bonus PXL. New themes every Sunday with canvas reset.</p>
+            <a href="/canvas.html#vote" class="btn btn-sm btn-outline">View Themes</a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💎</div>
+            <h3>Hidden Gems</h3>
+            <p>Random pixels become hidden gems. Find them for instant PXL bonuses. New gems spawn every hour.</p>
+            <a href="/canvas.html#gems" class="btn btn-sm btn-outline">Find Gems</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-box">
+          <h2>Ready to Start?</h2>
+          <p>Join thousands of players creating, competing, and earning PXL every day.</p>
+          <div class="cta-actions">
+            <a href="/register.html" class="btn btn-primary btn-lg">Create Account</a>
+            <a href="/game.html" class="btn btn-outline btn-lg">Try as Guest</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="logo-icon">◈</span>
+          <span>PIXELFORGE</span>
+        </div>
+        <div class="footer-links">
+          <a href="/game.html">PIXEL DASH</a>
+          <a href="/canvas.html">The Forge</a>
+          <a href="/leaderboard.html">Leaderboard</a>
+          <a href="/profile.html">Profile</a>
+        </div>
+        <div class="footer-copy">
+          © 2024 PixelForge. Communal pixel art meets arcade action.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script type="module" src="/assets/js/api.js"></script>
+  <script type="module" src="/assets/js/auth.js"></script>
+  <script type="module" src="/assets/js/ui.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const sessionData = await window.pixelforge.getSession();
+      if (sessionData?.weeklyTheme) {
+        document.getElementById('weeklyTheme').textContent = sessionData.weeklyTheme.theme || 'Free Paint';
+      }
+      
+      const weekLeaderboard = await window.pixelforge.api.get('/leaderboard/weekly-pixels');
+      if (weekLeaderboard?.data?.leaders) {
+        document.getElementById('activeUsers').textContent = weekLeaderboard.data.leaders.length;
+        let totalPixels = 0;
+        weekLeaderboard.data.leaders.forEach(l => totalPixels += l.pixel_count);
+        document.getElementById('totalPixels').textContent = totalPixels.toLocaleString();
+      }
+    });
+  </script>
+</body>
+</html>

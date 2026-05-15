@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PIXEL DASH - PixelForge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/game.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="nav-logo">
+        <span class="logo-icon">◈</span>
+        <span class="logo-text">PIXEL<span class="accent">FORGE</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/game.html" class="nav-link active">PIXEL DASH</a>
+        <a href="/canvas.html" class="nav-link">The Forge</a>
+        <a href="/leaderboard.html" class="nav-link">Leaderboard</a>
+      </div>
+      <div class="nav-auth" id="navAuth">
+        <a href="/login.html" class="btn btn-outline">Login</a>
+        <a href="/register.html" class="btn btn-primary">Sign Up</a>
+      </div>
+      <div class="nav-user hidden" id="navUser">
+        <div class="pxl-balance">
+          <span class="pxl-icon">◆</span>
+          <span id="navBalance">0</span> PXL
+        </div>
+        <a href="/profile.html" class="user-avatar" id="navAvatar">?</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="game-container">
+    <div class="game-wrapper">
+      <div class="game-header">
+        <div class="game-stats">
+          <div class="stat-item">
+            <span class="stat-label">SCORE</span>
+            <span class="stat-value" id="score">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">HIGH</span>
+            <span class="stat-value" id="highScore">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">LEVEL</span>
+            <span class="stat-value" id="level">1</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">COMBO</span>
+            <span class="stat-value" id="combo">x1</span>
+          </div>
+        </div>
+        <div class="power-ups" id="powerUps">
+          <div class="power-up" data-type="shield" title="Shield: Survive one collision">
+            <span>🛡️</span>
+          </div>
+          <div class="power-up" data-type="magnet" title="Magnet: Auto-collect nearby items">
+            <span>🧲</span>
+          </div>
+          <div class="power-up" data-type="slowmo" title="Slow Motion: Slow game speed">
+            <span>⏱️</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="canvas-wrapper">
+        <canvas id="gameCanvas"></canvas>
+        <div class="game-overlay" id="startScreen">
+          <div class="overlay-content">
+            <h1 class="game-title">PIXEL DASH</h1>
+            <p class="game-tagline">Run, jump, survive. Earn PXL.</p>
+            <button class="btn btn-game btn-lg" id="startBtn">
+              <span>▶</span> START GAME
+            </button>
+            <div class="controls-hint">
+              <p><kbd>SPACE</kbd> or <kbd>↑</kbd> Jump</p>
+              <p><kbd>↓</kbd> Slide</p>
+              <p>Collect power cells, avoid obstacles!</p>
+            </div>
+          </div>
+        </div>
+        <div class="game-overlay hidden" id="gameOverScreen">
+          <div class="overlay-content">
+            <h1 class="game-title">GAME OVER</h1>
+            <div class="final-stats">
+              <div class="final-stat">
+                <span class="stat-label">FINAL SCORE</span>
+                <span class="stat-value" id="finalScore">0</span>
+              </div>
+              <div class="final-stat">
+                <span class="stat-label">PXL EARNED</span>
+                <span class="stat-value" id="pxlEarned">0</span>
+              </div>
+            </div>
+            <button class="btn btn-game btn-lg" id="restartBtn">
+              <span>↻</span> PLAY AGAIN
+            </button>
+            <button class="btn btn-outline" id="homeBtn">Back to Home</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/assets/js/api.js"></script>
+  <script type="module" src="/assets/js/game/prng.js"></script>
+  <script type="module" src="/assets/js/game/renderer.js"></script>
+  <script type="module" src="/assets/js/game/obstacles.js"></script>
+  <script type="module" src="/assets/js/game/collectibles.js"></script>
+  <script type="module" src="/assets/js/game/audio.js"></script>
+  <script type="module" src="/assets/js/game/hud.js"></script>
+  <script type="module" src="/assets/js/game/game-main.js"></script>
+</body>
+</html>
