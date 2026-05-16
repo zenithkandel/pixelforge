@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Runner</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="menu-container">
+        <div class="title-section">
+            <h1 class="game-title">RETRO RUNNER</h1>
+            <p class="subtitle">Press SPACE to Start</p>
+        </div>
+        
+        <div class="instructions">
+            <h2>Controls</h2>
+            <div class="control-keys">
+                <div class="key-box">
+                    <span class="key">SPACE</span>
+                    <span class="action">Jump</span>
+                </div>
+                <div class="key-box">
+                    <span class="key">↓</span>
+                    <span class="action">Slide</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="leaderboard-preview">
+            <h2>Top 5 Scores</h2>
+            <ul id="preview-scores"></ul>
+        </div>
+    </div>
+
+    <script>
+        const title = document.querySelector('.game-title');
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*';
+        
+        setInterval(() => {
+            title.textContent = Array(12).fill(0).map(() => 
+                chars[Math.floor(Math.random() * chars.length)]
+            ).join('');
+        }, 100);
+
+        fetch('/api/game/leaderboard')
+            .then(r => r.json())
+            .then(d => {
+                if (d.ok) {
+                    const list = document.getElementById('preview-scores');
+                    d.scores.slice(0, 5).forEach((s, i) => {
+                        list.innerHTML += `<li><span>#${i+1}</span> ${s.player}: ${s.score}</li>`;
+                    });
+                }
+            });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' || e.code === 'Enter') {
+                window.location.href = '/game';
+            }
+        });
+    </script>
+</body>
+</html>
