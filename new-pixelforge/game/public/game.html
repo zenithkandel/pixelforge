@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Runner - Play</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="game-wrapper">
+        <div class="hud">
+            <div class="hud-item">SCORE: <span id="score">0</span></div>
+            <div class="hud-item">COINS: <span id="coins">0</span></div>
+            <div class="hud-item">HIGH: <span id="highscore">0</span></div>
+        </div>
+        
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        
+        <div class="game-over-screen" id="gameOver">
+            <h2>GAME OVER</h2>
+            <p>Score: <span id="final-score">0</span></p>
+            <p>Coins: <span id="final-coins">0</span></p>
+            <input type="text" id="player-name" placeholder="Your Name" maxlength="12" autofocus>
+            <button id="submit-score">Submit Score</button>
+            <button id="restart-btn">Play Again</button>
+            <p class="hint">Press SPACE to restart</p>
+        </div>
+
+        <div class="start-screen" id="startScreen">
+            <h2>RETRO RUNNER</h2>
+            <p>Avoid obstacles, collect coins!</p>
+            <p class="blink">Press SPACE to Start</p>
+        </div>
+
+        <div class="powerup-indicator" id="powerup"></div>
+    </div>
+
+    <script src="js/game.js"></script>
+</body>
+</html>

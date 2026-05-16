@@ -1,12 +1,13 @@
 {
   "name": "new-pixelforge",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Retro Runner Game",
+  "main": "game/src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node game/src/server.js",
+    "dev": "node game/src/server.js"
   },
-  "keywords": [],
+  "keywords": ["game", "endless-runner", "retro"],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
