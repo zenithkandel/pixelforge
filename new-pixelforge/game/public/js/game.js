@@ -8,9 +8,15 @@
     const GAME_HEIGHT = 400;
     const GROUND_Y = 350;
 
-    const BASE_SPEED = 5;
-    const MAX_SPEED = 10;
-    const SPEED_INCREMENT = 0.001;
+    const config = {
+        baseSpeed: 4,
+        maxSpeed: 7,
+        speedIncreaseRate: 0.0003,
+        jumpForce: -12,
+        secondJumpForce: -10,
+        gravity: 0.45,
+        slideDuration: 45
+    };
 
     const state = {
         running: false,
@@ -18,7 +24,7 @@
         score: 0,
         coins: 0,
         highScore: parseInt(localStorage.getItem('retroRunnerHigh')) || 0,
-        speed: BASE_SPEED,
+        speed: config.baseSpeed,
         distance: 0,
         frameCount: 0,
         lastObstacle: 0,
@@ -32,71 +38,76 @@
     };
 
     const player = {
-        x: 100,
+        x: 80,
         y: GROUND_Y - 40,
-        width: 40,
+        width: 36,
         height: 40,
         velocityY: 0,
         jumping: false,
-        secondJump: false,
+        canDoubleJump: false,
         sliding: false,
         slideTimer: 0,
         invincible: false,
         invincibilityTimer: 0,
-        trail: []
+        groundY: GROUND_Y - 40
     };
 
     const obstacles = [];
     const coins = [];
     const powerups = [];
     const particles = [];
-    const backgroundStars = [];
-    const groundDetails = [];
+    const stars = [];
+    const groundLines = [];
 
-    const keys = { space: false, down: false, spacePressed: false };
+    const keys = { space: false, spaceLocked: false };
 
-    for (let i = 0; i < 80; i++) {
-        backgroundStars.push({
+    for (let i = 0; i < 60; i++) {
+        stars.push({
             x: Math.random() * GAME_WIDTH,
-            y: Math.random() * (GROUND_Y - 80),
-            size: Math.random() * 2 + 0.5,
-            speed: Math.random() * 0.3 + 0.1,
-            brightness: Math.random()
+            y: Math.random() * (GROUND_Y - 60),
+            size: Math.random() * 1.5 + 0.5,
+            speed: Math.random() * 0.2 + 0.05
         });
     }
 
-    for (let i = 0; i < 20; i++) {
-        groundDetails.push({
+    for (let i = 0; i < 15; i++) {
+        groundLines.push({
             x: Math.random() * GAME_WIDTH,
-            y: GROUND_Y + 10 + Math.random() * 30,
-            width: 3 + Math.random() * 8,
-            height: 2 + Math.random() * 4
+            y: GROUND_Y + 12 + Math.random() * 25,
+            w: 2 + Math.random() * 6,
+            h: 1 + Math.random() * 3
         });
     }
 
     document.addEventListener('keydown', e => {
         if (e.code === 'Space') {
             e.preventDefault();
-            if (!keys.spacePressed) {
+            if (!state.running && !state.gameOver) {
+                startGame();
+            } else if (state.gameOver) {
+                restartGame();
+            } else if (!keys.spaceLocked) {
                 keys.space = true;
-                keys.spacePressed = true;
-                if (!state.running && !state.gameOver) startGame();
-                else if (state.gameOver) restartGame();
-                else doJump();
+                keys.spaceLocked = true;
+                handleJump();
             }
         }
         if (e.code === 'ArrowDown' || e.code === 'KeyS') {
             e.preventDefault();
-            keys.down = true;
+            if (!player.jumping && !player.sliding && state.running) {
+                startSlide();
+            }
         }
     });
 
     document.addEventListener('keyup', e => {
         if (e.code === 'Space') {
             keys.space = false;
-            keys.spacePressed = false;
+            keys.spaceLocked = false;
         }
-        if (e.code === 'ArrowDown' || e.code === 'KeyS') keys.down = false;
+        if (e.code === 'ArrowDown' || e.code === 'KeyS') {
+            if (player.sliding) endSlide();
+        }
     });
 
     document.getElementById('restart-btn').addEventListener('click', restartGame);
@@ -112,7 +123,7 @@
         state.gameOver = false;
         state.score = 0;
         state.coins = 0;
-        state.speed = BASE_SPEED;
+        state.speed = config.baseSpeed;
         state.distance = 0;
         state.frameCount = 0;
         state.powerup = null;
@@ -121,15 +132,13 @@
         state.comboTimer = 0;
         state.level = 1;
 
-        player.y = GROUND_Y - player.height;
+        player.y = player.groundY;
         player.velocityY = 0;
         player.jumping = false;
-        player.secondJump = false;
+        player.canDoubleJump = false;
         player.sliding = false;
         player.slideTimer = 0;
         player.invincible = false;
-        player.invincibilityTimer = 0;
-        player.trail = [];
 
         obstacles.length = 0;
         coins.length = 0;
@@ -149,72 +158,58 @@
 
     function submitScore() {
         const name = document.getElementById('player-name').value.trim() || 'Player';
-        const finalScore = state.score + state.coins * 5 + state.combo * 10;
+        const finalScore = state.score + state.coins * 5;
         fetch('/api/game/score', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ score: finalScore, player: name })
         }).then(r => r.json()).then(d => {
-            if (d.ok) {
-                alert(`Score submitted! Rank: #${d.rank}`);
-            }
+            if (d.ok) alert(`Rank: #${d.rank}`);
         });
         restartGame();
     }
 
-    function doJump() {
+    function handleJump() {
         if (!player.sliding) {
             if (!player.jumping) {
-                player.velocityY = -13;
+                player.velocityY = config.jumpForce;
                 player.jumping = true;
-                player.secondJump = true;
-                spawnParticles(player.x + player.width / 2, player.y + player.height, 8, '#00fff5');
-                addTrail();
-            } else if (player.secondJump) {
-                player.velocityY = -11;
-                player.secondJump = false;
-                spawnParticles(player.x + player.width / 2, player.y + player.height, 12, '#ffd700');
-                addTrail();
-                if (state.comboTimer <= 0) {
-                    state.combo = 1;
-                } else {
-                    state.combo++;
-                }
-                state.comboTimer = 60;
+                player.canDoubleJump = true;
+                spawnParticles(player.x + player.width/2, player.y + player.height, 6, '#00fff5');
+            } else if (player.canDoubleJump) {
+                player.velocityY = config.secondJumpForce;
+                player.canDoubleJump = false;
+                spawnParticles(player.x + player.width/2, player.y + player.height/2, 10, '#ffd700');
+                
+                state.combo = state.comboTimer > 0 ? state.combo + 1 : 1;
+                state.comboTimer = 90;
             }
         }
     }
 
-    function addTrail() {
-        player.trail.push({ x: player.x, y: player.y, alpha: 1 });
-        if (player.trail.length > 8) player.trail.shift();
+    function startSlide() {
+        player.sliding = true;
+        player.slideTimer = config.slideDuration;
+        player.height = 18;
+        player.y = GROUND_Y - 18;
+        spawnParticles(player.x, player.y + 5, 4, '#e94560');
     }
 
-    function slide() {
-        if (!player.sliding && !player.jumping) {
-            player.sliding = true;
-            player.slideTimer = 50;
-            player.height = 20;
-            player.y = GROUND_Y - 20;
-            spawnParticles(player.x, player.y + 10, 5, '#e94560');
-        }
-    }
-
-    function stopSlide() {
+    function endSlide() {
         player.sliding = false;
         player.height = 40;
-        player.y = GROUND_Y - 40;
+        player.y = player.groundY;
     }
 
     function spawnParticles(x, y, count, color) {
         for (let i = 0; i < count; i++) {
             particles.push({
                 x, y,
-                vx: (Math.random() - 0.5) * 8,
-                vy: (Math.random() - 0.5) * 8 - 3,
-                life: 25 + Math.random() * 15,
+                vx: (Math.random() - 0.5) * 5,
+                vy: (Math.random() - 0.8) * 4,
+                life: 20 + Math.random() * 10,
                 color,
-                size: Math.random() * 5 + 2
+                size: Math.random() * 4 + 2
             });
         }
     }
@@ -224,13 +219,13 @@
 
         state.frameCount++;
         state.distance += state.speed;
-        
-        if (state.speed < MAX_SPEED) {
-            state.speed += SPEED_INCREMENT;
+
+        if (state.speed < config.maxSpeed) {
+            state.speed += config.speedIncreaseRate;
         }
 
-        state.score = Math.floor(state.distance / 10);
-        state.level = 1 + Math.floor(state.distance / 2000);
+        state.score = Math.floor(state.distance / 12);
+        state.level = 1 + Math.floor(state.distance / 3000);
 
         if (state.comboTimer > 0) {
             state.comboTimer--;
@@ -247,291 +242,208 @@
 
         if (player.invincible) {
             player.invincibilityTimer--;
-            if (player.invincibilityTimer <= 0) {
-                player.invincible = false;
-            }
+            if (player.invincibilityTimer <= 0) player.invincible = false;
         }
 
-        if (keys.down && !player.jumping && !player.sliding) slide();
-
         if (player.jumping) {
-            player.velocityY += 0.6;
+            player.velocityY += config.gravity;
             player.y += player.velocityY;
-            
-            if (player.y >= GROUND_Y - 40) {
-                player.y = GROUND_Y - 40;
+
+            if (player.y >= player.groundY) {
+                player.y = player.groundY;
                 player.jumping = false;
+                player.canDoubleJump = false;
                 player.velocityY = 0;
-                player.secondJump = false;
-                spawnParticles(player.x + player.width / 2, player.y + 40, 5, '#e94560');
             }
         }
 
         if (player.sliding) {
             player.slideTimer--;
-            if (player.slideTimer <= 0) stopSlide();
+            if (player.slideTimer <= 0) endSlide();
         }
 
-        for (let i = player.trail.length - 1; i >= 0; i--) {
-            player.trail[i].alpha -= 0.15;
-            if (player.trail[i].alpha <= 0) player.trail.splice(i, 1);
-        }
-        if (state.running && !player.sliding) addTrail();
-
-        const minGap = Math.max(50, 120 - state.level * 5);
-        const randomGap = minGap + Math.random() * 60;
-        
-        if (state.frameCount - state.lastObstacle > randomGap) {
+        const minFrames = Math.max(70, 100 - state.level * 8);
+        if (state.frameCount - state.lastObstacle > minFrames + Math.random() * 40) {
             spawnObstacle();
             state.lastObstacle = state.frameCount;
         }
 
-        if (state.frameCount - state.lastCoin > 30 + Math.random() * 50) {
+        if (state.frameCount - state.lastCoin > 25 + Math.random() * 35) {
             spawnCoin();
             state.lastCoin = state.frameCount;
         }
 
-        if (state.frameCount - state.lastPowerup > 600 + Math.random() * 400) {
+        if (state.frameCount - state.lastPowerup > 500 + Math.random() * 500) {
             spawnPowerup();
             state.lastPowerup = state.frameCount;
         }
 
-        updateObstacles();
-        updateCoins();
-        updatePowerups();
-        updateParticles();
-        updateStars();
+        updateGameObjects();
         checkCollisions();
-
-        document.getElementById('score').textContent = state.score;
-        document.getElementById('coins').textContent = state.coins;
+        updateUI();
     }
 
     function spawnObstacle() {
-        const typeRandom = Math.random();
-        let type, obs;
+        const types = ['ground', 'flying', 'double'];
+        const type = types[Math.floor(Math.random() * types.length)];
         
-        if (typeRandom < 0.5) {
-            type = 'ground';
-            obs = {
-                x: GAME_WIDTH + 50,
-                type,
-                width: 30 + Math.random() * 25,
-                height: 25 + Math.random() * 20,
-                y: GROUND_Y
-            };
+        let obs = { x: GAME_WIDTH + 30, type };
+
+        if (type === 'ground') {
+            obs.width = 28 + Math.random() * 18;
+            obs.height = 28 + Math.random() * 15;
             obs.y = GROUND_Y - obs.height;
-        } else if (typeRandom < 0.8) {
-            type = 'flying';
-            obs = {
-                x: GAME_WIDTH + 50,
-                type,
-                width: 35,
-                height: 25,
-                y: GROUND_Y - 60 - Math.random() * 40
-            };
+        } else if (type === 'flying') {
+            obs.width = 32;
+            obs.height = 22;
+            obs.y = GROUND_Y - 55 - Math.random() * 35;
         } else {
-            type = 'wide';
-            obs = {
-                x: GAME_WIDTH + 50,
-                type,
-                width: 60 + Math.random() * 30,
-                height: 25,
-                y: GROUND_Y - 25
-            };
+            obs.width = 50;
+            obs.height = 22;
+            obs.y = GROUND_Y - 22;
         }
 
-        obs.color = getObstacleColor();
+        obs.color = ['#ff6b6b', '#feca57', '#a29bfe', '#fd79a8'][Math.floor(Math.random() * 4)];
         obstacles.push(obs);
     }
 
-    function getObstacleColor() {
-        const colors = ['#ff6b6b', '#feca57', '#5f27cd', '#ff9ff3', '#54a0ff'];
-        return colors[Math.floor(Math.random() * colors.length)];
-    }
-
     function spawnCoin() {
-        const coinY = GROUND_Y - 35 - Math.random() * 90;
-        const patterns = ['single', 'arc', 'line'];
-        const pattern = patterns[Math.floor(Math.random() * patterns.length)];
-        
-        if (pattern === 'single') {
-            coins.push({ x: GAME_WIDTH + 50, y: coinY, collected: false, bounceOffset: Math.random() * Math.PI * 2 });
-        } else if (pattern === 'arc') {
-            for (let i = 0; i < 3; i++) {
-                coins.push({
-                    x: GAME_WIDTH + 50 + i * 30,
-                    y: coinY - Math.abs(i - 1) * 20,
-                    collected: false,
-                    bounceOffset: Math.random() * Math.PI * 2
-                });
-            }
-        } else {
-            for (let i = 0; i < 4; i++) {
-                coins.push({
-                    x: GAME_WIDTH + 50 + i * 25,
-                    y: coinY,
-                    collected: false,
-                    bounceOffset: Math.random() * Math.PI * 2
-                });
-            }
-        }
+        const y = GROUND_Y - 30 - Math.random() * 80;
+        coins.push({ x: GAME_WIDTH + 30, y, collected: false, offset: Math.random() * Math.PI * 2 });
     }
 
     function spawnPowerup() {
         const types = ['shield', 'magnet', 'double'];
         const type = types[Math.floor(Math.random() * types.length)];
         powerups.push({
-            x: GAME_WIDTH + 50,
-            y: GROUND_Y - 50 - Math.random() * 50,
+            x: GAME_WIDTH + 30,
+            y: GROUND_Y - 45 - Math.random() * 45,
             type,
-            width: 28,
-            height: 28,
-            rotation: 0
+            width: 26,
+            height: 26,
+            rot: 0
         });
     }
 
-    function updateObstacles() {
+    function updateGameObjects() {
         for (let i = obstacles.length - 1; i >= 0; i--) {
             obstacles[i].x -= state.speed;
-            if (obstacles[i].x + obstacles[i].width < -50) {
-                obstacles.splice(i, 1);
-            }
+            if (obstacles[i].x + obstacles[i].width < -20) obstacles.splice(i, 1);
         }
-    }
 
-    function updateCoins() {
         for (let i = coins.length - 1; i >= 0; i--) {
-            const coin = coins[i];
-            coin.x -= state.speed;
-            
+            const c = coins[i];
+            c.x -= state.speed;
+
             if (state.powerup === 'magnet') {
-                const dx = player.x + player.width/2 - (coin.x + 10);
-                const dy = player.y + player.height/2 - (coin.y + 10);
+                const dx = (player.x + player.width/2) - (c.x + 10);
+                const dy = (player.y + player.height/2) - (c.y + 10);
                 const dist = Math.sqrt(dx*dx + dy*dy);
-                if (dist < 200) {
-                    coin.x += dx * 0.08;
-                    coin.y += dy * 0.08;
+                if (dist < 180) {
+                    c.x += dx * 0.06;
+                    c.y += dy * 0.06;
                 }
             }
 
-            if (coin.x + 20 < -50 || coin.collected) {
-                if (coin.collected) {
-                    coins.splice(i, 1);
-                } else if (coin.x < -20) {
-                    coins.splice(i, 1);
-                }
+            if (c.x < -20 || c.collected) {
+                if (c.collected) coins.splice(i, 1);
+                else if (c.x < -20) coins.splice(i, 1);
             }
         }
-    }
 
-    function updatePowerups() {
         for (let i = powerups.length - 1; i >= 0; i--) {
             powerups[i].x -= state.speed;
-            powerups[i].rotation += 0.1;
-            if (powerups[i].x + powerups[i].width < -50) {
-                powerups.splice(i, 1);
-            }
+            powerups[i].rot += 0.08;
+            if (powerups[i].x < -20) powerups.splice(i, 1);
         }
-    }
 
-    function updateParticles() {
         for (let i = particles.length - 1; i >= 0; i--) {
             const p = particles[i];
             p.x += p.vx;
             p.y += p.vy;
-            p.vy += 0.25;
+            p.vy += 0.2;
             p.life--;
             if (p.life <= 0) particles.splice(i, 1);
         }
-    }
 
-    function updateStars() {
-        for (const star of backgroundStars) {
-            star.x -= star.speed * (state.running ? 0.3 : 0.1);
-            if (star.x < 0) star.x = GAME_WIDTH;
-            star.brightness = 0.4 + Math.sin(state.frameCount * 0.05 + star.x * 0.01) * 0.4;
+        for (const s of stars) {
+            s.x -= s.speed * (state.running ? 0.25 : 0.1);
+            if (s.x < 0) s.x = GAME_WIDTH;
         }
-        
-        for (const detail of groundDetails) {
-            detail.x -= state.speed * 0.5;
-            if (detail.x + detail.width < 0) {
-                detail.x = GAME_WIDTH + Math.random() * 50;
-            }
+
+        for (const l of groundLines) {
+            l.x -= state.speed * 0.4;
+            if (l.x + l.w < 0) l.x = GAME_WIDTH + Math.random() * 30;
         }
     }
 
     function checkCollisions() {
         const pBox = {
-            x: player.x + 8,
-            y: player.y + 5,
-            w: player.width - 16,
-            h: player.height - 10
+            x: player.x + 6,
+            y: player.y + 4,
+            w: player.width - 12,
+            h: player.height - 8
         };
 
         for (const obs of obstacles) {
             if (rectIntersect(pBox.x, pBox.y, pBox.w, pBox.h, obs.x, obs.y, obs.width, obs.height)) {
                 if (player.invincible) {
-                    spawnParticles(obs.x + obs.width/2, obs.y + obs.height/2, 15, obs.color);
-                    const idx = obstacles.indexOf(obs);
-                    if (idx > -1) obstacles.splice(idx, 1);
+                    spawnParticles(obs.x + obs.width/2, obs.y + obs.height/2, 12, obs.color);
+                    obstacles.splice(obstacles.indexOf(obs), 1);
                     state.score += 5;
                 } else {
-                    gameOver();
+                    endGame();
                     return;
                 }
             }
         }
 
-        for (const coin of coins) {
-            if (!coin.collected && rectIntersect(pBox.x, pBox.y, pBox.w, pBox.h, coin.x, coin.y, 18, 18)) {
-                coin.collected = true;
+        for (const c of coins) {
+            if (!c.collected && rectIntersect(pBox.x, pBox.y, pBox.w, pBox.h, c.x, c.y, 16, 16)) {
+                c.collected = true;
                 state.coins++;
-                const coinValue = state.powerup === 'double' ? 20 : 10;
-                state.score += coinValue;
-                spawnParticles(coin.x + 9, coin.y + 9, 10, '#ffd700');
+                state.score += state.powerup === 'double' ? 20 : 10;
+                spawnParticles(c.x + 8, c.y + 8, 8, '#ffd700');
             }
         }
 
         for (let i = powerups.length - 1; i >= 0; i--) {
-            const pu = powerups[i];
-            if (rectIntersect(pBox.x, pBox.y, pBox.w, pBox.h, pu.x, pu.y, pu.width, pu.height)) {
-                activatePowerup(pu.type);
+            const p = powerups[i];
+            if (rectIntersect(pBox.x, pBox.y, pBox.w, pBox.h, p.x, p.y, p.width, p.height)) {
+                activatePowerup(p.type);
                 powerups.splice(i, 1);
-                spawnParticles(pu.x + pu.width/2, pu.y + pu.height/2, 20, '#00fff5');
+                spawnParticles(p.x + p.width/2, p.y + p.height/2, 15, '#00fff5');
             }
         }
     }
 
     function activatePowerup(type) {
-        const indicator = document.getElementById('powerup');
-        
+        const ind = document.getElementById('powerup');
         if (type === 'shield') {
             player.invincible = true;
-            player.invincibilityTimer = 400;
-            indicator.textContent = '🛡️ SHIELD';
+            player.invincibilityTimer = 350;
+            ind.textContent = 'SHIELD';
         } else if (type === 'magnet') {
             state.powerup = 'magnet';
-            state.powerupTimer = 400;
-            indicator.textContent = '🧲 MAGNET';
+            state.powerupTimer = 350;
+            ind.textContent = 'MAGNET';
         } else if (type === 'double') {
             state.powerup = 'double';
-            state.powerupTimer = 400;
-            indicator.textContent = '✨ 2X POINTS';
+            state.powerupTimer = 350;
+            ind.textContent = '2X';
         }
-        
-        indicator.classList.add('active');
+        ind.classList.add('active');
     }
 
     function rectIntersect(x1, y1, w1, h1, x2, y2, w2, h2) {
         return x1 < x2 + w2 && x1 + w1 > x2 && y1 < y2 + h2 && y1 + h1 > y2;
     }
 
-    function gameOver() {
+    function endGame() {
         state.running = false;
         state.gameOver = true;
 
-        const finalScore = state.score + state.coins * 5 + state.combo * 10;
+        const finalScore = state.score;
         if (finalScore > state.highScore) {
             state.highScore = finalScore;
             localStorage.setItem('retroRunnerHigh', state.highScore);
@@ -543,17 +455,18 @@
         document.getElementById('gameOver').style.display = 'block';
         document.getElementById('player-name').focus();
 
-        for (let i = 0; i < 40; i++) {
-            spawnParticles(
-                player.x + player.width/2,
-                player.y + player.height/2,
-                3, '#e94560'
-            );
+        for (let i = 0; i < 30; i++) {
+            spawnParticles(player.x + player.width/2, player.y + player.height/2, 2, '#e94560');
         }
     }
 
+    function updateUI() {
+        document.getElementById('score').textContent = state.score;
+        document.getElementById('coins').textContent = state.coins;
+    }
+
     function draw() {
-        ctx.fillStyle = '#0a0a15';
+        ctx.fillStyle = '#0d0d14';
         ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
         drawStars();
@@ -562,150 +475,126 @@
         drawCoins();
         drawPowerups();
         drawPlayer();
-        drawHUD();
         drawParticles();
+        drawHUD();
     }
 
     function drawStars() {
-        for (const star of backgroundStars) {
-            ctx.fillStyle = `rgba(255, 255, 255, ${star.brightness})`;
+        for (const s of stars) {
+            const a = 0.3 + Math.sin(state.frameCount * 0.03 + s.x * 0.01) * 0.3;
+            ctx.fillStyle = `rgba(255,255,255,${a})`;
             ctx.beginPath();
-            ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+            ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
             ctx.fill();
         }
     }
 
     function drawGround() {
-        const gradient = ctx.createLinearGradient(0, GROUND_Y, 0, GAME_HEIGHT);
-        gradient.addColorStop(0, '#1a1a2e');
-        gradient.addColorStop(1, '#0f0f1a');
-        ctx.fillStyle = gradient;
+        const g = ctx.createLinearGradient(0, GROUND_Y, 0, GAME_HEIGHT);
+        g.addColorStop(0, '#1a1a2e');
+        g.addColorStop(1, '#0d0d14');
+        ctx.fillStyle = g;
         ctx.fillRect(0, GROUND_Y, GAME_WIDTH, GAME_HEIGHT - GROUND_Y);
 
         ctx.fillStyle = '#e94560';
-        ctx.fillRect(0, GROUND_Y, GAME_WIDTH, 3);
+        ctx.fillRect(0, GROUND_Y, GAME_WIDTH, 2);
 
         ctx.fillStyle = '#0f3460';
-        for (let x = 0; x < GAME_WIDTH; x += 80) {
-            ctx.fillRect(x, GROUND_Y + 8, 40, 2);
+        for (let x = 0; x < GAME_WIDTH; x += 60) {
+            ctx.fillRect(x, GROUND_Y + 6, 30, 2);
         }
 
-        ctx.fillStyle = 'rgba(15, 52, 96, 0.5)';
-        for (const detail of groundDetails) {
-            ctx.fillRect(detail.x, detail.y, detail.width, detail.height);
+        ctx.fillStyle = 'rgba(15,52,96,0.4)';
+        for (const l of groundLines) {
+            ctx.fillRect(l.x, l.y, l.w, l.h);
         }
     }
 
     function drawPlayer() {
-        for (const t of player.trail) {
-            ctx.globalAlpha = t.alpha * 0.5;
-            ctx.fillStyle = '#e94560';
-            ctx.fillRect(t.x, t.y, player.width, player.height);
-        }
-        ctx.globalAlpha = 1;
-
-        const flash = player.invincible && Math.floor(state.frameCount / 4) % 2 === 0;
-        if (flash) {
-            ctx.globalAlpha = 0.6;
-        }
+        const flash = player.invincible && Math.floor(state.frameCount / 3) % 2 === 0;
+        if (flash) ctx.globalAlpha = 0.5;
 
         ctx.fillStyle = player.invincible ? '#00fff5' : '#e94560';
         ctx.fillRect(player.x, player.y, player.width, player.height);
 
         ctx.fillStyle = '#fff';
-        ctx.fillRect(player.x + 6, player.y + 8, 10, 10);
-        ctx.fillRect(player.x + 24, player.y + 8, 10, 10);
+        ctx.fillRect(player.x + 5, player.y + 8, 9, 9);
+        ctx.fillRect(player.x + 20, player.y + 8, 9, 9);
 
-        ctx.fillStyle = '#0a0a15';
-        ctx.fillRect(player.x + 8, player.y + 10, 6, 6);
-        ctx.fillRect(player.x + 26, player.y + 10, 6, 6);
+        ctx.fillStyle = '#0d0d14';
+        ctx.fillRect(player.x + 7, player.y + 10, 5, 5);
+        ctx.fillRect(player.x + 22, player.y + 10, 5, 5);
 
-        if (player.jumping) {
-            ctx.fillStyle = '#fff';
-            ctx.globalAlpha = 0.8;
-            ctx.fillRect(player.x + 3, player.y - 8, 12, 12);
-            ctx.fillRect(player.x + 25, player.y - 8, 12, 12);
-            ctx.globalAlpha = 1;
+        if (player.jumping && player.canDoubleJump) {
+            ctx.fillStyle = '#ffd700';
+            ctx.fillRect(player.x + 2, player.y - 8, 8, 8);
+            ctx.fillRect(player.x + 24, player.y - 8, 8, 8);
         }
 
-        if (player.secondJump && player.jumping) {
-            ctx.fillStyle = '#ffd700';
-            ctx.fillText('!', player.x + 17, player.y - 15);
+        if (player.sliding) {
+            ctx.fillStyle = '#e94560';
+            ctx.fillRect(player.x - 4, player.y + 2, 8, 16);
         }
 
         ctx.globalAlpha = 1;
     }
 
     function drawObstacles() {
-        for (const obs of obstacles) {
-            ctx.fillStyle = obs.color;
-            ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
+        for (const o of obstacles) {
+            ctx.fillStyle = o.color;
+            ctx.fillRect(o.x, o.y, o.width, o.height);
 
-            ctx.fillStyle = 'rgba(0,0,0,0.3)';
-            ctx.fillRect(obs.x + 3, obs.y + 3, obs.width - 6, obs.height - 6);
+            ctx.fillStyle = 'rgba(0,0,0,0.25)';
+            ctx.fillRect(o.x + 2, o.y + 2, o.width - 4, o.height - 4);
 
-            ctx.fillStyle = obs.color;
-            ctx.fillRect(obs.x + 6, obs.y + 6, obs.width - 12, obs.height - 12);
-
-            ctx.fillStyle = 'rgba(255,255,255,0.2)';
-            ctx.fillRect(obs.x + 8, obs.y + 8, obs.width - 20, 4);
+            ctx.fillStyle = o.color;
+            ctx.fillRect(o.x + 5, o.y + 5, o.width - 10, o.height - 10);
         }
     }
 
     function drawCoins() {
-        for (const coin of coins) {
-            if (coin.collected) continue;
+        for (const c of coins) {
+            if (c.collected) continue;
 
-            const bounce = Math.sin(state.frameCount * 0.15 + coin.bounceOffset) * 4;
-            const rotation = state.frameCount * 0.1;
-            
-            ctx.save();
-            ctx.translate(coin.x + 10, coin.y + 10 + bounce);
-            ctx.rotate(rotation);
-            
+            const bob = Math.sin(state.frameCount * 0.12 + c.offset) * 3;
+
             ctx.fillStyle = '#ffd700';
             ctx.beginPath();
-            ctx.arc(0, 0, 9, 0, Math.PI * 2);
+            ctx.arc(c.x + 8, c.y + 8 + bob, 8, 0, Math.PI * 2);
             ctx.fill();
 
             ctx.fillStyle = '#ffed4a';
             ctx.beginPath();
-            ctx.arc(-2, -2, 4, 0, Math.PI * 2);
+            ctx.arc(c.x + 6, c.y + 6 + bob, 3, 0, Math.PI * 2);
             ctx.fill();
-            
-            ctx.restore();
         }
     }
 
     function drawPowerups() {
-        for (const pu of powerups) {
-            const pulse = 1 + Math.sin(state.frameCount * 0.1) * 0.15;
+        for (const p of powerups) {
+            const psize = 1 + Math.sin(state.frameCount * 0.1) * 0.1;
             ctx.save();
-            ctx.translate(pu.x + pu.width/2, pu.y + pu.height/2);
-            ctx.scale(pulse, pulse);
-            ctx.rotate(pu.rotation);
+            ctx.translate(p.x + p.width/2, p.y + p.height/2);
+            ctx.scale(psize, psize);
+            ctx.rotate(p.rot);
 
-            if (pu.type === 'shield') {
+            if (p.type === 'shield') {
                 ctx.fillStyle = '#00fff5';
                 ctx.beginPath();
-                ctx.arc(0, 0, 14, 0, Math.PI * 2);
+                ctx.arc(0, 0, 12, 0, Math.PI * 2);
                 ctx.fill();
-                ctx.fillStyle = 'rgba(255,255,255,0.3)';
-                ctx.beginPath();
-                ctx.arc(-3, -3, 5, 0, Math.PI * 2);
-                ctx.fill();
-            } else if (pu.type === 'magnet') {
+            } else if (p.type === 'magnet') {
                 ctx.fillStyle = '#e74c3c';
                 ctx.beginPath();
-                ctx.arc(-8, 0, 8, 0, Math.PI * 2);
-                ctx.arc(8, 0, 8, 0, Math.PI * 2);
+                ctx.arc(-6, 0, 7, 0, Math.PI * 2);
+                ctx.arc(6, 0, 7, 0, Math.PI * 2);
                 ctx.fill();
-            } else if (pu.type === 'double') {
+            } else if (p.type === 'double') {
                 ctx.fillStyle = '#2ecc71';
                 ctx.beginPath();
-                ctx.moveTo(0, -14);
-                ctx.lineTo(12, 7);
-                ctx.lineTo(-12, 7);
+                ctx.moveTo(0, -12);
+                ctx.lineTo(10, 6);
+                ctx.lineTo(-10, 6);
                 ctx.closePath();
                 ctx.fill();
             }
@@ -714,25 +603,25 @@
         }
     }
 
-    function drawHUD() {
-        if (state.combo > 1) {
-            ctx.fillStyle = '#ffd700';
-            ctx.font = '16px "Press Start 2P"';
-            ctx.fillText(`COMBO x${state.combo}`, GAME_WIDTH - 180, 30);
-        }
-
-        ctx.fillStyle = '#e94560';
-        ctx.font = '12px "Press Start 2P"';
-        ctx.fillText(`LV ${state.level}`, 10, 25);
-    }
-
     function drawParticles() {
         for (const p of particles) {
-            ctx.globalAlpha = p.life / 40;
+            ctx.globalAlpha = p.life / 30;
             ctx.fillStyle = p.color;
             ctx.fillRect(p.x - p.size/2, p.y - p.size/2, p.size, p.size);
         }
         ctx.globalAlpha = 1;
+    }
+
+    function drawHUD() {
+        if (state.combo > 1) {
+            ctx.fillStyle = '#ffd700';
+            ctx.font = '14px "Press Start 2P"';
+            ctx.fillText(`COMBO x${state.combo}`, GAME_WIDTH - 160, 28);
+        }
+
+        ctx.fillStyle = '#e94560';
+        ctx.font = '10px "Press Start 2P"';
+        ctx.fillText(`LV${state.level}`, 10, 22);
     }
 
     function gameLoop() {
