@@ -20,6 +20,13 @@ class PixelBuyer {
     setTimeout(() => this.cooldown = false, 200);
 
     try {
+      const cx = Math.floor(x / 64);
+      const cy = Math.floor(y / 64);
+      
+      if (!this.renderer.cache.get(cx, cy)) {
+        await window.canvasApp.chunkCache.loadChunk(cx, cy, this.api);
+      }
+      
       this.renderer.applyPixelUpdate(x, y, color);
       
       const response = await this.api.post('/grid/buy', { x, y, color });
@@ -30,10 +37,12 @@ class PixelBuyer {
         }
         return true;
       } else {
+        this.renderer.applyPixelUpdate(x, y, '#FFFFFF');
         window.pixelforge.showToast(response.error || 'Failed to place pixel', 'error');
         return false;
       }
     } catch (err) {
+      this.renderer.applyPixelUpdate(x, y, '#FFFFFF');
       window.pixelforge.showToast(err.message || 'Connection error', 'error');
       return false;
     }

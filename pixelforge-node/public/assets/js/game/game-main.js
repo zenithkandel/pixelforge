@@ -47,6 +47,8 @@ class Game {
     
     this.gameState = 'menu';
     this.sessionToken = null;
+    this.gameStartTime = 0;
+    this.gameDuration = 0;
     
     this.lastObstacleSpawn = 0;
     this.lastCollectibleSpawn = 0;
@@ -114,6 +116,7 @@ class Game {
     this.distance = 0;
 
     this.gameState = 'playing';
+    this.gameStartTime = Date.now();
     document.getElementById('startScreen')?.classList.add('hidden');
     document.getElementById('gameOverScreen')?.classList.add('hidden');
 
@@ -346,6 +349,7 @@ class Game {
           this.gameOver();
           return;
         }
+        break;
       }
     }
 
@@ -460,6 +464,7 @@ class Game {
 
     const finalScore = this.score;
     const pxlEarned = Math.floor(finalScore / 100);
+    this.gameDuration = this.gameStartTime > 0 ? Date.now() - this.gameStartTime : 0;
 
     document.getElementById('finalScore').textContent = finalScore.toLocaleString();
     document.getElementById('pxlEarned').textContent = pxlEarned;
@@ -467,7 +472,15 @@ class Game {
 
     if (this.sessionToken) {
       try {
-        await pixelforge.api.submitScore(this.sessionToken, finalScore, Date.now());
+        const response = await pixelforge.api.submitScore(this.sessionToken, finalScore, this.gameDuration);
+        if (response.ok && response.data?.newBalance !== undefined) {
+          const newBalance = response.data.newBalance;
+          if (window.pixelforge.auth?.user) {
+            window.pixelforge.auth.user.pxlBalance = newBalance;
+          }
+          const balanceEl = document.getElementById('navBalance');
+          if (balanceEl) balanceEl.textContent = newBalance;
+        }
       } catch (err) {
         console.error('Failed to submit score:', err);
       }
