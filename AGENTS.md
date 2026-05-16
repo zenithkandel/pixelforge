@@ -10,11 +10,12 @@ npm install
 node server.js
 ```
 
-First run creates `.env` from `.env.example` and exits. Edit `.env` with SMTP settings, then run again. Server auto-generates secrets (JWT_SECRET, CSRF_SECRET, GAME_HMAC_SECRET) and runs database migrations on subsequent starts.
+First run creates `.env` from `.env.example` and exits. Edit `.env` with SMTP and DB settings, then run again. Server auto-generates secrets (JWT_SECRET, REFRESH_TOKEN_SECRET, CSRF_SECRET, GAME_HMAC_SECRET) and runs database migrations on subsequent starts.
 
 ## Required Env Variables
 - `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASS`, `DB_NAME` (MySQL)
-- `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` (email)
+- `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`, `SMTP_FROM_NAME` (email)
+- `PORT` (default: 3000)
 - Secrets are auto-generated; do not set manually
 
 ## Build/Test Commands

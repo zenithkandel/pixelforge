@@ -1,14 +1,14 @@
 {
-  "name": "new-pixelforge",
+  "name": "void-breaker",
   "version": "1.0.0",
-  "description": "Retro Runner Game",
+  "description": "Void Breaker - Space Arcade Shooter",
   "main": "game/src/server.js",
   "scripts": {
     "start": "node game/src/server.js",
     "dev": "node game/src/server.js"
   },
-  "keywords": ["game", "endless-runner", "retro"],
-  "author": "",
+  "keywords": ["game", "arcade", "shooter", "space"],
+  "author": "PixelForge",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {

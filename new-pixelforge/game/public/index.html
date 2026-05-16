@@ -3,63 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retro Runner</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>VOID BREAKER - Space Arcade Shooter</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <div class="menu-container">
-        <div class="title-section">
-            <h1 class="game-title">RETRO RUNNER</h1>
-            <p class="subtitle">Press SPACE to Start</p>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    
+    <div class="container">
+        <div class="title-container">
+            <h1 class="game-title">
+                <span class="title-void">VOID</span>
+                <span class="title-breaker">BREAKER</span>
+            </h1>
+            <p class="subtitle">Space Arcade Shooter</p>
         </div>
         
-        <div class="instructions">
-            <h2>Controls</h2>
-            <div class="control-keys">
-                <div class="key-box">
-                    <span class="key">SPACE</span>
-                    <span class="action">Jump / Double Jump</span>
-                </div>
-                <div class="key-box">
-                    <span class="key">↓</span>
-                    <span class="action">Slide</span>
+        <div class="menu">
+            <button class="btn btn-primary btn-start" onclick="window.location.href='/game'">
+                <span class="btn-text">START GAME</span>
+                <span class="btn-glow"></span>
+            </button>
+            
+            <div class="leaderboard-section">
+                <h2 class="section-title">TOP PILOTS</h2>
+                <div class="leaderboard" id="leaderboard">
+                    <div class="loading">Loading scores...</div>
                 </div>
             </div>
-            <p class="hint">Press SPACE again mid-air for double jump!</p>
         </div>
-
-        <div class="leaderboard-preview">
-            <h2>Top 5 Scores</h2>
-            <ul id="preview-scores"></ul>
+        
+        <div class="controls-info">
+            <div class="control-item">
+                <span class="key">↑↓←→</span>
+                <span class="action">Move</span>
+            </div>
+            <div class="control-item">
+                <span class="key">SPACE</span>
+                <span class="action">Fire</span>
+            </div>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <span class="feature-icon">◆</span>
+                <span>Wave-based combat</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">★</span>
+                <span>Power-ups & upgrades</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">☠</span>
+                <span>Boss battles</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">⚡</span>
+                <span>Combo system</span>
+            </div>
         </div>
     </div>
-
+    
     <script>
-        const title = document.querySelector('.game-title');
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*';
-        
-        setInterval(() => {
-            title.textContent = Array(12).fill(0).map(() => 
-                chars[Math.floor(Math.random() * chars.length)]
-            ).join('');
-        }, 100);
-
-        fetch('/api/game/leaderboard')
+        fetch('/api/scores')
             .then(r => r.json())
             .then(d => {
-                if (d.ok) {
-                    const list = document.getElementById('preview-scores');
-                    d.scores.slice(0, 5).forEach((s, i) => {
-                        list.innerHTML += `<li><span>#${i+1}</span> ${s.player}: ${s.score}</li>`;
-                    });
+                if (d.ok && d.scores.length) {
+                    const html = d.scores.slice(0, 10).map((s, i) => 
+                        `<div class="score-row ${i < 3 ? 'top-three' : ''}">
+                            <span class="rank">#${i + 1}</span>
+                            <span class="player">${s.player}</span>
+                            <span class="score">${s.score.toLocaleString()}</span>
+                        </div>`
+                    ).join('');
+                    document.getElementById('leaderboard').innerHTML = html;
+                } else {
+                    document.getElementById('leaderboard').innerHTML = '<div class="no-scores">No scores yet</div>';
                 }
             });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space' || e.code === 'Enter') {
-                window.location.href = '/game';
-            }
-        });
     </script>
 </body>
 </html>
