@@ -7,6 +7,10 @@ require_once __DIR__ . '/includes/xp.php';
 
 require_login();
 $user = get_current_user();
+if (!is_array($user) || !isset($user['id'])) {
+    header('Location: ' . APP_URL . '/login.php');
+    exit;
+}
 
 $existing_token = Database::fetch("SELECT token FROM game_tokens WHERE user_id = ? AND used = 0 AND created_at > DATE_SUB(NOW(), INTERVAL 10 MINUTE)", [$user['id']]);
 if ($existing_token) {
