@@ -59,15 +59,17 @@ function require_admin(): void {
     log_admin('ADMIN', 'Admin panel accessed', ['page' => basename($_SERVER['PHP_SELF'])]);
 }
 
-function get_current_user(): ?array {
-    if (!is_logged_in()) return null;
-    $db = get_db();
-    try {
-        $stmt = $db->prepare('SELECT * FROM users WHERE id = ?');
-        $stmt->execute([(int)$_SESSION['user_id']]);
-        return $stmt->fetch() ?: null;
-    } catch (PDOException $e) {
-        log_error('DB', 'Database error in get_current_user: ' . $e->getMessage(), ['code' => $e->getCode()]);
-        return null;
+if (!function_exists('get_current_user')) {
+    function get_current_user(): ?array {
+        if (!is_logged_in()) return null;
+        $db = get_db();
+        try {
+            $stmt = $db->prepare('SELECT * FROM users WHERE id = ?');
+            $stmt->execute([(int)$_SESSION['user_id']]);
+            return $stmt->fetch() ?: null;
+        } catch (PDOException $e) {
+            log_error('DB', 'Database error in get_current_user: ' . $e->getMessage(), ['code' => $e->getCode()]);
+            return null;
+        }
     }
 }
