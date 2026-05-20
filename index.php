@@ -36,6 +36,25 @@ require_once __DIR__ . '/includes/header.php';
     <?php endif; ?>
 </div>
 
+<script>
+const CANVAS = {
+    pollingInterval: null,
+    pixels: [],
+    zoom: 1,
+    offsetX: 0,
+    offsetY: 0,
+    isDragging: false,
+    dragStartX: 0,
+    dragStartY: 0,
+    dragOffsetStartX: 0,
+    dragOffsetStartY: 0,
+    gridSize: 100,
+    cellSize: 8,
+    territoryMode: false,
+    myPixelsMode: false,
+    currentUserId: <?= isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : 'null' ?>,
+};
+</script>
 <script src="<?= BASE_URL ?>/assets/js/index-canvas.js"></script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

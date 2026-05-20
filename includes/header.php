@@ -54,6 +54,3 @@ if (!isset($page_title)) $page_title = APP_NAME;
             <?php endif; ?>
         </div>
     </nav>
-    <script>var BASE_URL = '<?= BASE_URL ?>';</script>
-</body>
-</html>

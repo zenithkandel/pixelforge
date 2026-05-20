@@ -52,7 +52,7 @@ require_once __DIR__ . '/includes/header.php';
 </div>
 
 <script>
-var CANVAS_CONFIG = {
+window.CANVAS_CONFIG = {
     currentUserId: <?= (int)$_SESSION['user_id'] ?>,
     csrfToken: '<?= csrf_token() ?>',
     username: '<?= htmlspecialchars($_SESSION['username']) ?>',
