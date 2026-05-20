@@ -1,5 +1,12 @@
 <?php
 
+ini_set('session.cookie_httponly', 1);
+ini_set('session.cookie_samesite', 'Strict');
+ini_set('session.use_strict_mode', 1);
+ini_set('session.gc_maxlifetime', 7200);
+
+session_start();
+
 require_once __DIR__ . '/includes/db.php';
 
 define('DB_HOST', 'localhost');
@@ -31,10 +38,3 @@ define('RATE_LIMIT_PIXEL_PLACEMENTS', 10);
 define('RATE_LIMIT_PIXEL_WINDOW', 60);
 define('RATE_LIMIT_REGISTER', 3);
 define('RATE_LIMIT_REGISTER_WINDOW', 3600);
-
-ini_set('session.cookie_httponly', 1);
-ini_set('session.cookie_samesite', 'Strict');
-ini_set('session.use_strict_mode', 1);
-ini_set('session.gc_maxlifetime', 7200);
-
-session_start();
