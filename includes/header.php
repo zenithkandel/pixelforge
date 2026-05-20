@@ -26,7 +26,7 @@ if (!isset($page_title)) $page_title = APP_NAME;
         <div class="nav-right">
             <?php if (isset($_SESSION['user_id'])): ?>
                 <?php
-                $nav_user = get_current_user();
+                $nav_user = current_user();
                 if ($nav_user):
                     $nav_level = (int)$nav_user['level'];
                     $nav_xp = (int)$nav_user['xp'];

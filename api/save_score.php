@@ -103,7 +103,7 @@ try {
 
     $db->commit();
 
-    $new_user = get_current_user();
+    $new_user = current_user();
     $achievements = check_achievements($db, $user_id);
 
     log_info('GAME', 'Score saved', [

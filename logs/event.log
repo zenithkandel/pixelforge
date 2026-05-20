@@ -24,3 +24,29 @@
 [2026-05-20 10:52:45] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Uncaught Exception: Cannot access offset of type string on string | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\includes\\header.php","line":31,"trace":"#0 C:\\xampp\\htdocs\\codes\\pixelforge\\index.php(11): require_once()\n#1 {main}"}
 [2026-05-20 10:52:49] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Page request received
 [2026-05-20 10:52:49] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Uncaught Exception: Cannot access offset of type string on string | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\includes\\header.php","line":31,"trace":"#0 C:\\xampp\\htdocs\\codes\\pixelforge\\index.php(11): require_once()\n#1 {main}"}
+[2026-05-20 10:53:09] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 10:53:09] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Uncaught Exception: Cannot access offset of type string on string | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\includes\\header.php","line":31,"trace":"#0 C:\\xampp\\htdocs\\codes\\pixelforge\\index.php(11): require_once()\n#1 {main}"}
+[2026-05-20 10:53:11] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 10:53:11] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/game.php] Uncaught Exception: Cannot access offset of type string on string | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\includes\\header.php","line":31,"trace":"#0 C:\\xampp\\htdocs\\codes\\pixelforge\\game.php(22): require_once()\n#1 {main}"}
+[2026-05-20 10:53:12] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/canvas.php] Page request received
+[2026-05-20 10:53:12] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/canvas.php] Uncaught Exception: Cannot access offset of type string on string | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\includes\\header.php","line":31,"trace":"#0 C:\\xampp\\htdocs\\codes\\pixelforge\\canvas.php(14): require_once()\n#1 {main}"}
+[2026-05-20 10:53:13] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/leaderboard.php] Page request received
+[2026-05-20 10:53:13] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/leaderboard.php] Uncaught Exception: Cannot access offset of type string on string | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\includes\\header.php","line":31,"trace":"#0 C:\\xampp\\htdocs\\codes\\pixelforge\\leaderboard.php(15): require_once()\n#1 {main}"}
+[2026-05-20 10:53:17] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Page request received
+[2026-05-20 10:53:17] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Admin panel accessed | {"page":"index.php"}
+[2026-05-20 10:53:17] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Uncaught Exception: Cannot access offset of type string on string | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\includes\\header.php","line":31,"trace":"#0 C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\index.php(28): require_once()\n#1 {main}"}
+[2026-05-20 10:54:52] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Page request received
+[2026-05-20 10:54:52] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Admin panel accessed | {"page":"index.php"}
+[2026-05-20 10:54:52] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Uncaught Exception: Call to undefined function xp_progress_in_level() | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\includes\\header.php","line":34,"trace":"#0 C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\index.php(28): require_once()\n#1 {main}"}
+[2026-05-20 10:54:55] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/leaderboard.php] Page request received
+[2026-05-20 10:54:59] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 10:55:02] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/profile.php?user=admin] Page request received
+[2026-05-20 10:55:06] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 10:55:20] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 10:55:22] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 10:55:24] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/canvas.php] Page request received
+[2026-05-20 10:55:28] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 10:55:32] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/leaderboard.php] Page request received
+[2026-05-20 10:55:33] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 10:55:37] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 10:55:55] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received

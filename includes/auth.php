@@ -59,8 +59,8 @@ function require_admin(): void {
     log_admin('ADMIN', 'Admin panel accessed', ['page' => basename($_SERVER['PHP_SELF'])]);
 }
 
-if (!function_exists('get_current_user')) {
-    function get_current_user(): ?array {
+if (!function_exists('current_user')) {
+    function current_user(): ?array {
         if (!is_logged_in()) return null;
         $db = get_db();
         try {
@@ -68,7 +68,7 @@ if (!function_exists('get_current_user')) {
             $stmt->execute([(int)$_SESSION['user_id']]);
             return $stmt->fetch() ?: null;
         } catch (PDOException $e) {
-            log_error('DB', 'Database error in get_current_user: ' . $e->getMessage(), ['code' => $e->getCode()]);
+            log_error('DB', 'Database error in current_user: ' . $e->getMessage(), ['code' => $e->getCode()]);
             return null;
         }
     }
