@@ -496,6 +496,7 @@ let combo = 0;
 let comboTimer = 0;
 let gameRunning = false;
 let gamePaused = false;
+let gameStarted = false;
 
 let keys = {
     left: false,
@@ -511,6 +512,10 @@ let enemiesPerWave = 10;
 let bossWave = false;
 
 function init() {
+    gameRunning = false;
+    gamePaused = false;
+    gameStarted = false;
+    
     player = new Player();
     bullets = [];
     enemies = [];
@@ -808,10 +813,19 @@ function gameOver() {
     document.getElementById('finalWave').textContent = wave;
 }
 
+let gameStarted = false;
+
 function startGame() {
+    if (gameStarted) return;
+    gameStarted = true;
+    
     init();
     gameRunning = true;
+    gamePaused = false;
     document.getElementById('startScreen').classList.add('hidden');
+    document.getElementById('gameOverScreen').classList.add('hidden');
+    document.getElementById('pauseOverlay').classList.add('hidden');
+    
     gameLoop();
 }
 
@@ -824,13 +838,16 @@ document.addEventListener('keydown', (e) => {
     if (e.code === 'ArrowDown' || e.code === 'KeyS') keys.down = true;
     if (e.code === 'Space') {
         keys.shoot = true;
-        if (!gameRunning) startGame();
+        if (!gameStarted) startGame();
         e.preventDefault();
     }
     if (e.code === 'KeyP' || e.code === 'Escape') {
-        if (gameRunning) {
-            gamePaused = !gamePaused;
-            document.getElementById('pauseOverlay').classList.toggle('hidden', !gamePaused);
+        if (gameRunning && !gamePaused) {
+            gamePaused = true;
+            document.getElementById('pauseOverlay').classList.remove('hidden');
+        } else if (gamePaused) {
+            gamePaused = false;
+            document.getElementById('pauseOverlay').classList.add('hidden');
         }
     }
 });
