@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($result['error'])) {
             $error = $result['error'];
         } else {
+            session_write_close();
             header('Location: ' . APP_URL . '/game.php');
             exit;
         }
@@ -28,12 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - <?php echo APP_NAME; ?></title>
     <link rel="stylesheet" href="<?php echo APP_URL; ?>/assets/css/style.css">
 </head>
+
 <body>
     <main class="auth-page">
         <div class="auth-card">
@@ -49,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="password" id="password" name="password" required autocomplete="current-password">
                 </div>
                 <?php if ($error): ?>
-                <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
+                    <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
                 <?php endif; ?>
                 <button type="submit" class="btn primary">Login</button>
             </form>
@@ -58,19 +61,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </main>
 
     <?php if ($streak_bonus > 0): ?>
-    <div id="streak-toast" class="toast" data-bonus="<?php echo $streak_bonus; ?>" data-days="<?php echo $streak_days; ?>">
-        <div class="toast-content">
-            <span class="toast-icon">🔥</span>
-            <div>
-                <strong>Streak Bonus!</strong>
-                <span>+<?php echo $streak_bonus; ?> currency for <?php echo $streak_days; ?>-day streak!</span>
+        <div id="streak-toast" class="toast" data-bonus="<?php echo $streak_bonus; ?>"
+            data-days="<?php echo $streak_days; ?>">
+            <div class="toast-content">
+                <span class="toast-icon">🔥</span>
+                <div>
+                    <strong>Streak Bonus!</strong>
+                    <span>+<?php echo $streak_bonus; ?> currency for <?php echo $streak_days; ?>-day streak!</span>
+                </div>
             </div>
         </div>
-    </div>
     <?php endif; ?>
 
     <script>
-        document.getElementById('login-form').addEventListener('submit', function(e) {
+        document.getElementById('login-form').addEventListener('submit', function (e) {
             const btn = this.querySelector('button[type="submit"]');
             btn.disabled = true;
             btn.textContent = 'Logging in...';
@@ -83,4 +87,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     </script>
 </body>
+
 </html>
