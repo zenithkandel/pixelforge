@@ -35,7 +35,6 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
             width: var(--admin-sidebar-width);
             background: var(--bg-surface);
             border-right: 1px solid var(--border-subtle);
-            padding: var(--space-lg) 0;
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
@@ -44,18 +43,19 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
             left: 0;
             bottom: 0;
             z-index: 100;
+            overflow-y: auto;
             transition: background var(--transition-slow);
         }
 
         .admin-brand {
-            padding: 0 var(--space-lg);
-            margin-bottom: var(--space-xl);
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-subtle);
         }
 
         .admin-brand a {
             display: flex;
             align-items: center;
-            gap: var(--space-sm);
+            gap: 10px;
             font-size: 18px;
             font-weight: 700;
             color: var(--purple-bright);
@@ -63,7 +63,12 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
         }
 
         .admin-nav-section {
-            margin-bottom: var(--space-lg);
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .admin-nav-section:last-of-type {
+            border-bottom: none;
         }
 
         .admin-nav-label {
@@ -72,30 +77,28 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: var(--text-muted);
-            padding: 0 var(--space-lg);
-            margin-bottom: var(--space-sm);
+            padding: 0 20px;
+            margin-bottom: 8px;
         }
 
         .admin-nav {
             display: flex;
             flex-direction: column;
             gap: 2px;
-            padding: 0 var(--space-sm);
+            padding: 0 12px;
         }
 
         .admin-nav a {
-            padding: 10px var(--space-md);
-            padding-left: calc(var(--space-md) - 3px);
+            padding: 10px 16px;
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
-            border-radius: var(--radius-md);
-            transition: all var(--transition-fast);
+            border-radius: 8px;
+            transition: all 0.15s ease;
             display: flex;
             align-items: center;
-            gap: var(--space-sm);
-            box-sizing: border-box;
+            gap: 10px;
         }
 
         .admin-nav a:hover {
@@ -107,28 +110,28 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
             background: var(--bg-elevated);
             color: var(--purple-bright);
             border-left: 3px solid var(--purple-core);
-            padding-left: var(--space-md);
-        }
         }
 
         .admin-nav a .nav-icon {
             font-size: 16px;
-            width: 24px;
-            text-align: center;
+            width: 20px;
+            text-align: left;
+            flex-shrink: 0;
         }
 
         .admin-sidebar-footer {
             margin-top: auto;
-            padding: var(--space-md) var(--space-lg);
+            padding: 16px 20px;
             border-top: 1px solid var(--border-subtle);
+            background: var(--bg-surface);
         }
 
         .admin-user-info {
             display: flex;
             align-items: center;
-            gap: var(--space-sm);
-            padding: var(--space-sm);
-            border-radius: var(--radius-md);
+            gap: 10px;
+            padding: 10px;
+            border-radius: 8px;
             background: var(--bg-elevated);
         }
 
@@ -136,6 +139,7 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
             width: 32px;
             height: 32px;
             font-size: 13px;
+            flex-shrink: 0;
         }
 
         .admin-user-info .user-details {
@@ -161,6 +165,8 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
             flex: 1;
             margin-left: var(--admin-sidebar-width);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .admin-header {
@@ -170,7 +176,7 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 var(--space-xl);
+            padding: 0 32px;
             position: sticky;
             top: 0;
             z-index: 50;
