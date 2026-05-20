@@ -6,7 +6,7 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 
 define('APP_NAME', 'PixelFlap');
-define('APP_URL', 'http://localhost/pixelforge');
+define('APP_URL', 'http://localhost/codes/pixelforge');
 
 define('PIXEL_COST', 5);
 define('PIXEL_EXPIRY_DAYS', 14);
