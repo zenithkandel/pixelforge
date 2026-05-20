@@ -1,6 +1,6 @@
 <?php
 $user = get_current_user();
-$xp_progress_val = $user ? xp_progress($user['xp']) : 0;
+$xp_progress_val = (is_array($user) && isset($user['xp'])) ? xp_progress($user['xp']) : 0;
 ?>
 <nav class="navbar">
     <div class="nav-left">

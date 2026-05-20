@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/includes/db.php';
+
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'pixelforge');
 define('DB_USER', 'root');

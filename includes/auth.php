@@ -2,7 +2,7 @@
 
 if (!function_exists('is_logged_in')) {
 function is_logged_in() {
-    return isset($_SESSION['user_id']);
+    return isset($_SESSION['user_id']) && is_numeric($_SESSION['user_id']);
 }
 }
 
@@ -36,8 +36,9 @@ function require_admin() {
 
 if (!function_exists('get_current_user')) {
 function get_current_user() {
-    if (!is_logged_in()) return null;
-    return Database::fetch("SELECT * FROM users WHERE id = ?", [$_SESSION['user_id']]);
+    if (!is_logged_in() || !isset($_SESSION['user_id'])) return null;
+    $user = Database::fetch("SELECT * FROM users WHERE id = ?", [$_SESSION['user_id']]);
+    return is_array($user) ? $user : null;
 }
 }
 
