@@ -284,7 +284,7 @@
         document.getElementById('go-coins').textContent = coinsCollected + ' coins';
         document.getElementById('go-best').textContent = '';
 
-        var BASE_URL = window.AppConfig && window.AppConfig.baseUrl ? window.AppConfig.baseUrl : '';
+        if (typeof BASE_URL === 'undefined') BASE_URL = '';
 
         var body = 'game_token=' + encodeURIComponent(gameToken) +
             '&score=' + score +
@@ -464,7 +464,7 @@
 
     gameToken = typeof GAME_TOKEN !== 'undefined' ? GAME_TOKEN : '';
     csrfToken = typeof CSRF_TOKEN !== 'undefined' ? CSRF_TOKEN : '';
-    var BASE_URL = window.AppConfig && window.AppConfig.baseUrl ? window.AppConfig.baseUrl : '';
+    if (typeof BASE_URL === 'undefined') BASE_URL = '';
 
     reset();
     startPregame();

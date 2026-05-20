@@ -51,6 +51,13 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </div>
 
+<script>
+var CANVAS_CONFIG = {
+    currentUserId: <?= (int)$_SESSION['user_id'] ?>,
+    csrfToken: '<?= csrf_token() ?>',
+    username: '<?= htmlspecialchars($_SESSION['username']) ?>',
+};
+</script>
 <script src="<?= BASE_URL ?>/assets/js/canvas.js"></script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

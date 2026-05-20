@@ -19,10 +19,10 @@
         cellSize: 8,
         territoryMode: false,
         myPixelsMode: false,
-        currentUserId: window.AppConfig && window.AppConfig.userId ? window.AppConfig.userId : null,
+        currentUserId: null,
     };
 
-    var BASE_URL = window.AppConfig && window.AppConfig.baseUrl ? window.AppConfig.baseUrl : '';
+    var BASE_URL = window.BASE_URL || '';
 
     function renderCanvas() {
         ctx.fillStyle = '#1a1a1a';

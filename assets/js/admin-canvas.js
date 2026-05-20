@@ -6,8 +6,8 @@
 
     var pixels = [];
     var cellSize = 8;
-    var BASE_URL = window.AppConfig && window.AppConfig.baseUrl ? window.AppConfig.baseUrl : '';
-    var CSRF_TOKEN = window.AppConfig && window.AppConfig.csrfToken ? window.AppConfig.csrfToken : '';
+    var BASE_URL = window.BASE_URL || '';
+    var CSRF_TOKEN = window.CSRF_TOKEN || '';
 
     function render() {
         ctx.fillStyle = '#1a1a1a';

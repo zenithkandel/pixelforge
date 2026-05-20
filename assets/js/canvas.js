@@ -16,12 +16,12 @@
         dragOffsetStartY: 0,
         gridSize: 100,
         cellSize: 8,
-        currentUserId: window.AppConfig && window.AppConfig.userId ? window.AppConfig.userId : null,
+        currentUserId: null,
         selectedCell: null,
     };
 
-    var BASE_URL = window.AppConfig && window.AppConfig.baseUrl ? window.AppConfig.baseUrl : '';
-    var CSRF_TOKEN = window.AppConfig && window.AppConfig.csrfToken ? window.AppConfig.csrfToken : '';
+    var BASE_URL = window.BASE_URL || '';
+    var CSRF_TOKEN = window.CSRF_TOKEN || '';
 
     function renderCanvas() {
         ctx.fillStyle = '#1a1a1a';
@@ -240,7 +240,7 @@
                         x: cell.col, y: cell.row,
                         color: document.getElementById('pixel-color').value,
                         owner_id: CANVAS_STATE.currentUserId,
-                        username: window.AppConfig && window.AppConfig.username ? window.AppConfig.username : '',
+                        username: window.CURRENT_USER ? window.CURRENT_USER.username : '',
                         level: null, placed_at: new Date().toISOString(), expires_at: null
                     });
                     if (panelError) panelError.textContent = '';

@@ -54,13 +54,6 @@ if (!isset($page_title)) $page_title = APP_NAME;
             <?php endif; ?>
         </div>
     </nav>
-    <script>
-    window.AppConfig = {
-        baseUrl: '<?= BASE_URL ?>',
-        userId: <?= isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : 'null' ?>,
-        username: <?= isset($_SESSION['username']) ? "'" . htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8') . "'" : 'null' ?>,
-        csrfToken: <?= function_exists('csrf_token') ? "'" . htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') . "'" : 'null' ?>,
-    };
-    </script>
+    <script>var BASE_URL = '<?= BASE_URL ?>';</script>
 </body>
 </html>
