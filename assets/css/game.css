@@ -1,0 +1,271 @@
+.game-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.game-container {
+    position: relative;
+    width: 480px;
+    height: 640px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #1a1a2e;
+}
+
+#game-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.hud {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    pointer-events: none;
+}
+
+#score {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.multiplier-badge {
+    background: var(--gold);
+    color: #000;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+}
+
+.multiplier-badge.hidden {
+    display: none;
+}
+
+.pause-btn {
+    pointer-events: auto;
+    background: rgba(0,0,0,0.5);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: white;
+}
+
+.powerup-bar {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0,0,0,0.7);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+}
+
+.powerup-bar.hidden { display: none; }
+
+#powerup-icon {
+    font-size: 1.5rem;
+}
+
+#powerup-timer {
+    width: 60px;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+#powerup-timer::after {
+    content: '';
+    display: block;
+    height: 100%;
+    background: var(--primary);
+    width: 100%;
+    transition: width 0.1s linear;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.overlay.hidden { display: none; }
+
+.start-screen h1 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.start-screen p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.game-over h2 {
+    font-size: 2rem;
+    color: var(--danger);
+}
+
+.final-score, .multiplier-result, .currency-earned, .xp-earned {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+    font-size: 1.1rem;
+}
+
+.final-score .label, .multiplier-result .label, .currency-earned .label, .xp-earned .label {
+    color: var(--text-secondary);
+}
+
+#final-score-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+#currency-value {
+    color: var(--gold);
+    font-weight: bold;
+}
+
+#xp-value {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.personal-best {
+    color: var(--gold);
+    font-size: 1.2rem;
+    animation: bounce 0.5s ease infinite alternate;
+}
+
+.personal-best.hidden { display: none; }
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-5px); }
+}
+
+#play-again {
+    margin-top: 1rem;
+}
+
+.leaderboard-section {
+    width: 100%;
+    max-width: 600px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.leaderboard-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.leaderboard-tabs .tab {
+    flex: 1;
+    padding: 0.75rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.leaderboard-tabs .tab.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+.leaderboard-table th {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.leaderboard-table tr:hover {
+    background: var(--bg);
+}
+
+.leaderboard-table tr.highlight {
+    border: 1px solid var(--primary);
+    background: rgba(124, 58, 237, 0.1);
+}
+
+.player-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+}
+
+.your-rank {
+    text-align: center;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: var(--bg);
+    border-radius: 6px;
+    color: var(--gold);
+    font-weight: 600;
+}
+
+@media (max-width: 520px) {
+    .game-container {
+        width: 100%;
+        max-width: 360px;
+        height: 480px;
+    }
+}
