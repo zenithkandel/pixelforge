@@ -10,3 +10,18 @@ LOGIN POST: calling process_login for zen
 LOGIN POST: success, session user_id = 3
 GAME: session start. Session ID: th84ou196p381q36tflcbe4vjq user_id: 3
 GAME: failed to get_current_user, redirecting to login.php
+LOGIN POST: calling process_login for zen
+LOGIN POST: success, session user_id = 3
+GAME: session start. Session ID: th84ou196p381q36tflcbe4vjq user_id: 3
+GAME: session start. Session ID: th84ou196p381q36tflcbe4vjq user_id: 3
+GAME: session start. Session ID: th84ou196p381q36tflcbe4vjq user_id: 3
+GAME: session start. Session ID: th84ou196p381q36tflcbe4vjq user_id: 3
+GAME: session start. Session ID: th84ou196p381q36tflcbe4vjq user_id: 3
+GAME: session start. Session ID: th84ou196p381q36tflcbe4vjq user_id: 3
+GAME: session start. Session ID: th84ou196p381q36tflcbe4vjq user_id: 3
+GAME: session start. Session ID: th84ou196p381q36tflcbe4vjq user_id: 3
+GAME: session start. Session ID: th84ou196p381q36tflcbe4vjq user_id: 3
+GAME: session start. Session ID: th84ou196p381q36tflcbe4vjq user_id: 3
+GAME: session start. Session ID: th84ou196p381q36tflcbe4vjq user_id: 3
+GAME: session start. Session ID: th84ou196p381q36tflcbe4vjq user_id: 3
+GAME: session start. Session ID: th84ou196p381q36tflcbe4vjq user_id: 3

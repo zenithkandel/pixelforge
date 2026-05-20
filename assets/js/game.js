@@ -1,4 +1,4 @@
-(function() {
+(function () {
     const canvas = document.getElementById('game-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -388,7 +388,11 @@
             const data = await response.json();
 
             if (data.success) {
-                document.getElementById('user-balance').value = data.new_balance;
+                const balanceInput = document.getElementById('user-balance');
+                if (balanceInput) balanceInput.value = data.new_balance;
+
+                const balanceSpan = document.querySelector('.balance');
+                if (balanceSpan) balanceSpan.textContent = '💰' + data.new_balance;
 
                 if (data.new_achievements && data.new_achievements.length > 0) {
                     setTimeout(() => {
