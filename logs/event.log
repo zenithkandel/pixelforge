@@ -5,3 +5,7 @@
 [2026-05-20 10:44:57] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/install.php] Page request received
 [2026-05-20 10:47:08] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/install.php] Page request received
 [2026-05-20 10:47:09] [INFO] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/install.php] Installation completed successfully
+[2026-05-20 10:47:55] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/admin/] Page request received
+[2026-05-20 10:47:55] [ERROR] [PHP] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/admin/] FATAL: Cannot redeclare get_current_user() | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\includes\\auth.php","line":71}
+[2026-05-20 10:48:10] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 10:48:10] [ERROR] [PHP] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/] FATAL: Cannot redeclare get_current_user() | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\includes\\auth.php","line":71}
