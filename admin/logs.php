@@ -13,6 +13,10 @@ $page = max(1, (int)($_GET['page'] ?? 1));
 $per_page = 30;
 $offset = ($page - 1) * $per_page;
 
+$page_title = 'Logs';
+require_once __DIR__ . '/header.php';
+?>
+
 try {
     $count_sql = 'SELECT COUNT(*) FROM admin_log';
     $logs_sql = 'SELECT a.*, u.username FROM admin_log a JOIN users u ON a.admin_id = u.id';
@@ -42,8 +46,8 @@ try {
     $total_pages = 0;
 }
 
-$page_title = 'Admin Log';
-require_once __DIR__ . '/../includes/header.php';
+$page_title = 'Logs';
+require_once __DIR__ . '/header.php';
 ?>
 
 <div class="page-content">
@@ -97,5 +101,7 @@ require_once __DIR__ . '/../includes/header.php';
     </div>
     <?php endif; ?>
 </div>
+</main>
+</div>
 
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/footer.php'; ?>

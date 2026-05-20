@@ -47,6 +47,12 @@
     var gameToken = '';
     var csrfToken = '';
 
+    function updateCurrencyDisplay(balance) {
+        if (!balance) return;
+        var currEls = document.querySelectorAll('nav .currency');
+        currEls.forEach(function(el) { el.textContent = Math.round(balance).toLocaleString() + ' 💰'; });
+    }
+
     function reset() {
         bird.y = 300;
         bird.vy = 0;
@@ -296,6 +302,9 @@
             body: body
         }).then(function(res) { return res.json(); })
           .then(function(data) {
+              if (data.success && data.new_balance) {
+                  updateCurrencyDisplay(data.new_balance);
+              }
               if (data.success && data.new_achievements && data.new_achievements.length > 0) {
                   if (typeof window.queueAchievements === 'function') {
                       window.queueAchievements(data.new_achievements);

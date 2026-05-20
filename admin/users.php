@@ -14,6 +14,10 @@ $page = max(1, (int)($_GET['page'] ?? 1));
 $per_page = 25;
 $offset = ($page - 1) * $per_page;
 
+$page_title = 'Users';
+require_once __DIR__ . '/header.php';
+?>
+
 $messages = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -164,6 +168,7 @@ require_once __DIR__ . '/../includes/header.php';
     </div>
     <?php endif; ?>
 </div>
+</div>
 
 <div id="user-modal" class="modal-overlay" style="display:none;">
     <div class="modal">
@@ -247,4 +252,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/footer.php'; ?>

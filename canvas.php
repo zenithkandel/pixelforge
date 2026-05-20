@@ -86,6 +86,16 @@ require_once __DIR__ . '/includes/header.php';
     const panelError = document.getElementById('panel-error');
     const placeBtn = document.getElementById('place-pixel-btn');
 
+    function updateCurrencyDisplay(balance) {
+        if (!balance) return;
+        var currEls = document.querySelectorAll('nav .currency');
+        currEls.forEach(function(el) { el.textContent = number_format(balance) + ' 💰'; });
+    }
+
+    function number_format(n) {
+        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
     colorInput.addEventListener('input', function() { colorHexInput.value = this.value; });
     colorHexInput.addEventListener('input', function() {
         if (/^#[0-9A-Fa-f]{6}$/.test(this.value)) colorInput.value = this.value;
@@ -286,6 +296,7 @@ require_once __DIR__ . '/includes/header.php';
             .then(function(res) { return res.json().then(function(data) { return { ok: res.ok, data: data }; }); })
             .then(function(result) {
                 if (result.ok && result.data.success) {
+                    updateCurrencyDisplay(result.data.new_balance);
                     var pixelMap = {};
                     CANVAS_STATE.pixels.forEach(function(p, i) {
                         if (p.x === cell.col && p.y === cell.row) return;

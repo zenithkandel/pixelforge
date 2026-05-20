@@ -347,3 +347,342 @@
 [2026-05-20 12:36:26] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
 [2026-05-20 12:36:32] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
 [2026-05-20 12:36:32] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:36:36] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:36:36] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:36:42] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:36:42] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:36:47] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:36:47] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:36:52] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:36:52] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:36:57] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:36:57] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:37:02] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:37:02] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:37:07] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:37:07] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:37:11] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:37:11] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:37:11] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:37:11] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:37:17] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:37:17] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:37:22] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:37:22] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:37:27] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:37:27] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:37:32] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:37:32] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:37:37] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:37:37] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:37:42] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:37:42] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:37:43] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 12:37:43] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 12:37:49] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 12:37:49] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":0,"multiplier":1,"coins":0}
+[2026-05-20 12:37:49] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":0,"currency":0,"xp":0,"balance":155}
+[2026-05-20 12:37:51] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 12:37:51] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 12:38:05] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 12:38:05] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":4,"multiplier":1,"coins":0}
+[2026-05-20 12:38:05] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":4,"currency":8,"xp":4,"balance":163}
+[2026-05-20 12:38:11] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:38:11] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:39:11] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:39:11] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:40:11] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:40:11] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:41:11] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:41:11] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:42:11] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:42:11] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:43:08] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:43:08] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:43:09] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 12:43:09] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:43:09] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:43:10] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 12:43:10] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:43:10] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:43:11] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 12:43:11] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:43:11] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:43:17] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:43:17] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:43:18] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 12:43:18] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 12:43:22] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:43:22] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:43:26] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 12:43:26] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":2,"multiplier":1,"coins":0}
+[2026-05-20 12:43:26] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":2,"currency":4,"xp":2,"balance":167}
+[2026-05-20 12:43:27] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:43:27] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:43:29] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 12:43:29] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 12:43:32] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:43:32] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:43:37] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:43:37] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:43:39] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 12:43:40] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":4,"multiplier":1,"coins":0}
+[2026-05-20 12:43:40] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":4,"currency":8,"xp":4,"balance":175}
+[2026-05-20 12:43:42] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:43:42] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:43:47] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:43:47] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:43:52] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:43:52] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:43:52] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/canvas.php] Page request received
+[2026-05-20 12:43:52] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:43:52] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:43:57] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:43:57] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:43:57] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:43:57] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":6}
+[2026-05-20 12:44:00] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:44:00] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":12,"y":13,"color":"#7c3aed"}
+[2026-05-20 12:44:00] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":12,"y":13,"color":"#7c3aed","new_balance":170}
+[2026-05-20 12:44:02] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:44:02] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":7}
+[2026-05-20 12:44:02] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:44:02] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":7}
+[2026-05-20 12:44:04] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:44:04] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":12,"y":14,"color":"#7c3aed"}
+[2026-05-20 12:44:04] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":12,"y":14,"color":"#7c3aed","new_balance":165}
+[2026-05-20 12:44:06] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:44:06] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":15,"y":23,"color":"#7c3aed"}
+[2026-05-20 12:44:06] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":15,"y":23,"color":"#7c3aed","new_balance":160}
+[2026-05-20 12:44:07] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:44:07] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":9}
+[2026-05-20 12:44:07] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:44:07] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":9}
+[2026-05-20 12:44:08] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:44:08] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":17,"y":24,"color":"#7c3aed"}
+[2026-05-20 12:44:08] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":17,"y":24,"color":"#7c3aed","new_balance":155}
+[2026-05-20 12:44:10] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:44:10] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":22,"y":23,"color":"#7c3aed"}
+[2026-05-20 12:44:10] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":22,"y":23,"color":"#7c3aed","new_balance":150}
+[2026-05-20 12:44:12] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:44:12] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":11}
+[2026-05-20 12:44:12] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:44:12] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":11}
+[2026-05-20 12:44:13] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:44:13] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":19,"y":24,"color":"#7c3aed"}
+[2026-05-20 12:44:13] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":19,"y":24,"color":"#7c3aed","new_balance":145}
+[2026-05-20 12:44:15] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:44:15] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":13,"y":26,"color":"#7c3aed"}
+[2026-05-20 12:44:15] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":13,"y":26,"color":"#7c3aed","new_balance":140}
+[2026-05-20 12:44:17] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:44:17] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":19,"y":22,"color":"#7c3aed"}
+[2026-05-20 12:44:17] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":19,"y":22,"color":"#7c3aed","new_balance":135}
+[2026-05-20 12:44:17] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:44:17] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":14}
+[2026-05-20 12:44:19] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:44:19] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":24,"y":24,"color":"#7c3aed"}
+[2026-05-20 12:44:19] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":24,"y":24,"color":"#7c3aed","new_balance":130}
+[2026-05-20 12:44:22] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:44:22] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":21,"y":27,"color":"#7c3aed"}
+[2026-05-20 12:44:22] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":21,"y":27,"color":"#7c3aed","new_balance":125}
+[2026-05-20 12:44:22] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:44:22] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":16}
+[2026-05-20 12:44:28] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:44:28] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":16}
+[2026-05-20 12:44:33] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:44:33] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":16}
+[2026-05-20 12:44:38] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:44:38] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":16}
+[2026-05-20 12:44:43] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:44:43] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":16}
+[2026-05-20 12:44:48] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:44:48] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":16}
+[2026-05-20 12:44:53] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:44:53] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":16}
+[2026-05-20 12:44:58] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:44:58] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":16}
+[2026-05-20 12:45:02] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:45:02] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":15,"y":28,"color":"#7c3aed"}
+[2026-05-20 12:45:02] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":15,"y":28,"color":"#7c3aed","new_balance":120}
+[2026-05-20 12:45:02] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:45:02] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":17}
+[2026-05-20 12:45:04] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:45:04] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":13,"y":24,"color":"#7c3aed"}
+[2026-05-20 12:45:04] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":13,"y":24,"color":"#7c3aed","new_balance":115}
+[2026-05-20 12:45:07] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:45:07] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":21,"y":21,"color":"#7c3aed"}
+[2026-05-20 12:45:07] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":21,"y":21,"color":"#7c3aed","new_balance":110}
+[2026-05-20 12:45:07] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:45:07] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":19}
+[2026-05-20 12:45:09] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:45:09] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":24,"y":21,"color":"#7c3aed"}
+[2026-05-20 12:45:09] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":24,"y":21,"color":"#7c3aed","new_balance":105}
+[2026-05-20 12:45:11] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:45:11] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":20}
+[2026-05-20 12:45:12] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:45:12] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":16,"y":21,"color":"#7c3aed"}
+[2026-05-20 12:45:12] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":16,"y":21,"color":"#7c3aed","new_balance":100}
+[2026-05-20 12:45:12] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:45:12] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":21}
+[2026-05-20 12:45:14] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/profile.php?user=zenithkandel] Page request received
+[2026-05-20 12:45:24] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 12:45:24] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 12:45:35] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 12:45:35] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":4,"multiplier":1,"coins":0}
+[2026-05-20 12:45:35] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":4,"currency":8,"xp":4,"balance":108}
+[2026-05-20 12:45:40] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:45:40] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":21}
+[2026-05-20 12:45:41] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:45:41] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":21}
+[2026-05-20 12:45:43] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/canvas.php] Page request received
+[2026-05-20 12:45:43] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:45:43] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":21}
+[2026-05-20 12:45:47] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:45:47] [INFO] [PIXEL] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":49,"y":31,"color":"#7c3aed"}
+[2026-05-20 12:45:47] [INFO] [PIXEL] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":49,"y":31,"color":"#7c3aed","new_balance":5}
+[2026-05-20 12:45:47] [INFO] [ACHIEVEMENT] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Achievement unlocked | {"slug":"first_pixel","reward":15}
+[2026-05-20 12:45:48] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:45:48] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":22}
+[2026-05-20 12:45:49] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:45:49] [INFO] [PIXEL] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":70,"y":66,"color":"#7c3aed"}
+[2026-05-20 12:45:49] [INFO] [PIXEL] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":70,"y":66,"color":"#7c3aed","new_balance":15}
+[2026-05-20 12:45:51] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:45:51] [INFO] [PIXEL] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":57,"y":80,"color":"#7c3aed"}
+[2026-05-20 12:45:51] [INFO] [PIXEL] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":57,"y":80,"color":"#7c3aed","new_balance":10}
+[2026-05-20 12:45:53] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:45:53] [INFO] [PIXEL] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":41,"y":76,"color":"#7c3aed"}
+[2026-05-20 12:45:53] [INFO] [PIXEL] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":41,"y":76,"color":"#7c3aed","new_balance":5}
+[2026-05-20 12:45:53] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:45:53] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":25}
+[2026-05-20 12:45:55] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:45:55] [INFO] [PIXEL] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":77,"y":75,"color":"#7c3aed"}
+[2026-05-20 12:45:55] [INFO] [PIXEL] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":77,"y":75,"color":"#7c3aed","new_balance":0}
+[2026-05-20 12:45:55] [INFO] [ACHIEVEMENT] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Achievement unlocked | {"slug":"pixel_5","reward":30}
+[2026-05-20 12:45:55] [INFO] [XP] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] User levelled up | {"new_level":2,"total_xp":65}
+[2026-05-20 12:45:58] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:45:58] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":26}
+[2026-05-20 12:46:00] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:46:00] [INFO] [PIXEL] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":83,"y":86,"color":"#7c3aed"}
+[2026-05-20 12:46:00] [INFO] [PIXEL] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":83,"y":86,"color":"#7c3aed","new_balance":25}
+[2026-05-20 12:46:02] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 12:46:02] [INFO] [PIXEL] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":55,"y":90,"color":"#7c3aed"}
+[2026-05-20 12:46:02] [INFO] [PIXEL] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":55,"y":90,"color":"#7c3aed","new_balance":20}
+[2026-05-20 12:46:03] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:46:03] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":28}
+[2026-05-20 12:46:05] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 12:46:05] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 12:46:08] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:46:08] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":28}
+[2026-05-20 12:46:14] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:46:14] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":28}
+[2026-05-20 12:46:14] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/canvas.php] Page request received
+[2026-05-20 12:46:14] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:46:15] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":28}
+[2026-05-20 12:46:15] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/canvas.php] Page request received
+[2026-05-20 12:46:15] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:46:15] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":28}
+[2026-05-20 12:46:17] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 12:46:17] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:46:17] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":28}
+[2026-05-20 12:46:22] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:46:22] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":28}
+[2026-05-20 12:46:27] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:46:27] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":28}
+[2026-05-20 12:46:32] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:46:32] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":28}
+[2026-05-20 12:46:36] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 12:46:36] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 12:46:37] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/canvas.php] Page request received
+[2026-05-20 12:46:38] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:46:38] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":28}
+[2026-05-20 12:46:38] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/leaderboard.php] Page request received
+[2026-05-20 12:46:40] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/profile.php?user=zenithkandel] Page request received
+[2026-05-20 12:46:46] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/canvas.php] Page request received
+[2026-05-20 12:46:46] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:46:46] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":28}
+[2026-05-20 12:46:51] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 12:46:51] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":28}
+[2026-05-20 12:46:55] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Page request received
+[2026-05-20 12:46:55] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-20 12:46:55] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: Undefined variable $total | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":111}
+[2026-05-20 12:46:55] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [8192]: number_format(): Passing null to parameter #1 ($num) of type float is deprecated | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":111}
+[2026-05-20 12:46:55] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: Undefined variable $messages | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":119}
+[2026-05-20 12:46:55] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: foreach() argument must be of type array|object, null given | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":119}
+[2026-05-20 12:46:55] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: Undefined variable $users | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":139}
+[2026-05-20 12:46:55] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: foreach() argument must be of type array|object, null given | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":139}
+[2026-05-20 12:46:55] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: Undefined variable $total_pages | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":163}
+[2026-05-20 12:46:55] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: require_once(C:\xampp\htdocs\codes\pixelforge\admin/footer.php): Failed to open stream: No such file or directory | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":255}
+[2026-05-20 12:46:55] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Uncaught Exception: Failed opening required 'C:\xampp\htdocs\codes\pixelforge\admin/footer.php' (include_path='C:\xampp\php\PEAR') | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":255,"trace":"#0 {main}"}
+[2026-05-20 12:46:56] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Page request received
+[2026-05-20 12:46:56] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-20 12:46:56] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: Undefined variable $total | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":111}
+[2026-05-20 12:46:56] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [8192]: number_format(): Passing null to parameter #1 ($num) of type float is deprecated | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":111}
+[2026-05-20 12:46:56] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: Undefined variable $messages | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":119}
+[2026-05-20 12:46:56] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: foreach() argument must be of type array|object, null given | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":119}
+[2026-05-20 12:46:56] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: Undefined variable $users | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":139}
+[2026-05-20 12:46:56] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: foreach() argument must be of type array|object, null given | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":139}
+[2026-05-20 12:46:56] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: Undefined variable $total_pages | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":163}
+[2026-05-20 12:46:56] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: require_once(C:\xampp\htdocs\codes\pixelforge\admin/footer.php): Failed to open stream: No such file or directory | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":255}
+[2026-05-20 12:46:56] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Uncaught Exception: Failed opening required 'C:\xampp\htdocs\codes\pixelforge\admin/footer.php' (include_path='C:\xampp\php\PEAR') | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":255,"trace":"#0 {main}"}
+[2026-05-20 12:46:58] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] Page request received
+[2026-05-20 12:46:58] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] Admin panel accessed | {"page":"canvas.php"}
+[2026-05-20 12:46:58] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] PHP Error [2]: Undefined variable $total_pixels | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\canvas.php","line":79}
+[2026-05-20 12:46:58] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] PHP Error [8192]: number_format(): Passing null to parameter #1 ($num) of type float is deprecated | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\canvas.php","line":79}
+[2026-05-20 12:46:58] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] PHP Error [2]: require_once(C:\xampp\htdocs\codes\pixelforge\admin/footer.php): Failed to open stream: No such file or directory | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\canvas.php","line":198}
+[2026-05-20 12:46:58] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] Uncaught Exception: Failed opening required 'C:\xampp\htdocs\codes\pixelforge\admin/footer.php' (include_path='C:\xampp\php\PEAR') | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\canvas.php","line":198,"trace":"#0 {main}"}
+[2026-05-20 12:46:59] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Page request received
+[2026-05-20 12:46:59] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Admin panel accessed | {"page":"index.php"}
+[2026-05-20 12:47:00] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Page request received
+[2026-05-20 12:47:00] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-20 12:47:00] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: Undefined variable $total | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":111}
+[2026-05-20 12:47:00] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [8192]: number_format(): Passing null to parameter #1 ($num) of type float is deprecated | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":111}
+[2026-05-20 12:47:00] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: Undefined variable $messages | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":119}
+[2026-05-20 12:47:00] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: foreach() argument must be of type array|object, null given | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":119}
+[2026-05-20 12:47:00] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: Undefined variable $users | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":139}
+[2026-05-20 12:47:00] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: foreach() argument must be of type array|object, null given | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":139}
+[2026-05-20 12:47:00] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: Undefined variable $total_pages | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":163}
+[2026-05-20 12:47:00] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: require_once(C:\xampp\htdocs\codes\pixelforge\admin/footer.php): Failed to open stream: No such file or directory | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":255}
+[2026-05-20 12:47:00] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Uncaught Exception: Failed opening required 'C:\xampp\htdocs\codes\pixelforge\admin/footer.php' (include_path='C:\xampp\php\PEAR') | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":255,"trace":"#0 {main}"}
+[2026-05-20 12:47:01] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] Page request received
+[2026-05-20 12:47:01] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] Admin panel accessed | {"page":"canvas.php"}
+[2026-05-20 12:47:01] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] PHP Error [2]: Undefined variable $total_pixels | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\canvas.php","line":79}
+[2026-05-20 12:47:01] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] PHP Error [8192]: number_format(): Passing null to parameter #1 ($num) of type float is deprecated | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\canvas.php","line":79}
+[2026-05-20 12:47:01] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] PHP Error [2]: require_once(C:\xampp\htdocs\codes\pixelforge\admin/footer.php): Failed to open stream: No such file or directory | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\canvas.php","line":198}
+[2026-05-20 12:47:02] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] Uncaught Exception: Failed opening required 'C:\xampp\htdocs\codes\pixelforge\admin/footer.php' (include_path='C:\xampp\php\PEAR') | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\canvas.php","line":198,"trace":"#0 {main}"}
+[2026-05-20 12:47:02] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] Page request received
+[2026-05-20 12:47:02] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] Admin panel accessed | {"page":"logs.php"}
+[2026-05-20 12:47:02] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] PHP Error [2]: Undefined variable $total | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\logs.php","line":57}
+[2026-05-20 12:47:02] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] PHP Error [8192]: number_format(): Passing null to parameter #1 ($num) of type float is deprecated | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\logs.php","line":57}
+[2026-05-20 12:47:02] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] PHP Error [2]: Undefined variable $total_pages | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\logs.php","line":96}
+[2026-05-20 12:47:02] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] PHP Error [2]: require_once(C:\xampp\htdocs\codes\pixelforge\admin/footer.php): Failed to open stream: No such file or directory | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\logs.php","line":105}
+[2026-05-20 12:47:02] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] Uncaught Exception: Failed opening required 'C:\xampp\htdocs\codes\pixelforge\admin/footer.php' (include_path='C:\xampp\php\PEAR') | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\logs.php","line":105,"trace":"#0 {main}"}
+[2026-05-20 12:47:06] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Page request received
+[2026-05-20 12:47:06] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Admin panel accessed | {"page":"index.php"}
+[2026-05-20 12:47:07] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Page request received
+[2026-05-20 12:47:07] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Admin panel accessed | {"page":"index.php"}
+[2026-05-20 12:47:08] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] Page request received
+[2026-05-20 12:47:08] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] Admin panel accessed | {"page":"canvas.php"}
+[2026-05-20 12:47:08] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] PHP Error [2]: Undefined variable $total_pixels | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\canvas.php","line":79}
+[2026-05-20 12:47:08] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] PHP Error [8192]: number_format(): Passing null to parameter #1 ($num) of type float is deprecated | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\canvas.php","line":79}
+[2026-05-20 12:47:08] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] PHP Error [2]: require_once(C:\xampp\htdocs\codes\pixelforge\admin/footer.php): Failed to open stream: No such file or directory | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\canvas.php","line":198}
+[2026-05-20 12:47:08] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] Uncaught Exception: Failed opening required 'C:\xampp\htdocs\codes\pixelforge\admin/footer.php' (include_path='C:\xampp\php\PEAR') | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\canvas.php","line":198,"trace":"#0 {main}"}
+[2026-05-20 12:47:09] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Page request received
+[2026-05-20 12:47:09] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-20 12:47:09] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: Undefined variable $total | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":111}
+[2026-05-20 12:47:09] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [8192]: number_format(): Passing null to parameter #1 ($num) of type float is deprecated | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":111}
+[2026-05-20 12:47:09] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: Undefined variable $messages | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":119}
+[2026-05-20 12:47:09] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: foreach() argument must be of type array|object, null given | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":119}
+[2026-05-20 12:47:09] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: Undefined variable $users | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":139}
+[2026-05-20 12:47:09] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: foreach() argument must be of type array|object, null given | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":139}
+[2026-05-20 12:47:09] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: Undefined variable $total_pages | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":163}
+[2026-05-20 12:47:09] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] PHP Error [2]: require_once(C:\xampp\htdocs\codes\pixelforge\admin/footer.php): Failed to open stream: No such file or directory | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":255}
+[2026-05-20 12:47:09] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Uncaught Exception: Failed opening required 'C:\xampp\htdocs\codes\pixelforge\admin/footer.php' (include_path='C:\xampp\php\PEAR') | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\users.php","line":255,"trace":"#0 {main}"}
+[2026-05-20 12:47:11] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] Page request received
+[2026-05-20 12:47:11] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] Admin panel accessed | {"page":"logs.php"}
+[2026-05-20 12:47:11] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] PHP Error [2]: Undefined variable $total | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\logs.php","line":57}
+[2026-05-20 12:47:11] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] PHP Error [8192]: number_format(): Passing null to parameter #1 ($num) of type float is deprecated | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\logs.php","line":57}
+[2026-05-20 12:47:11] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] PHP Error [2]: Undefined variable $total_pages | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\logs.php","line":96}
+[2026-05-20 12:47:11] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] PHP Error [2]: require_once(C:\xampp\htdocs\codes\pixelforge\admin/footer.php): Failed to open stream: No such file or directory | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\logs.php","line":105}
+[2026-05-20 12:47:11] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] Uncaught Exception: Failed opening required 'C:\xampp\htdocs\codes\pixelforge\admin/footer.php' (include_path='C:\xampp\php\PEAR') | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\logs.php","line":105,"trace":"#0 {main}"}
+[2026-05-20 12:47:12] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Page request received
+[2026-05-20 12:47:12] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Admin panel accessed | {"page":"index.php"}
