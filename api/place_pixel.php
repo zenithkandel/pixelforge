@@ -73,7 +73,7 @@ try {
 
             $db->prepare('INSERT INTO pixel_placements (user_id) VALUES (?)')->execute([$user_id]);
 
-            $xp_result = add_xp($db, $user_id, 1);
+            $xp_result = add_xp($db, $user_id, 1, true);
 
             log_info('PIXEL', 'Own pixel repainted', ['x' => $x, 'y' => $y, 'color' => $color]);
         } else {
@@ -104,7 +104,7 @@ try {
 
         $db->prepare('INSERT INTO pixel_placements (user_id) VALUES (?)')->execute([$user_id]);
 
-        $xp_result = add_xp($db, $user_id, 5);
+        $xp_result = add_xp($db, $user_id, 5, true);
 
         log_info('PIXEL', 'Pixel claimed', ['x' => $x, 'y' => $y, 'color' => $color, 'new_balance' => (int)$user['balance'] - 5]);
     }
