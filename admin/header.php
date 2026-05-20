@@ -48,7 +48,7 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
 
         .admin-brand {
             padding: 20px 24px;
-            border-bottom: 1px solid var(--border-subtle);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
 
         .admin-brand a {
@@ -57,13 +57,13 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
             gap: 10px;
             font-size: 18px;
             font-weight: 700;
-            color: var(--purple-bright);
+            color: #a78bfa;
             text-decoration: none;
         }
 
         .admin-nav-section {
             padding: 16px 0;
-            border-bottom: 1px solid var(--border-subtle);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
 
         .admin-nav-section:last-of-type {
@@ -75,7 +75,7 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: var(--text-muted);
+            color: #50506a;
             padding: 0 20px;
             margin-bottom: 8px;
         }
@@ -89,7 +89,7 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
 
         .admin-nav a {
             padding: 10px 16px;
-            color: var(--text-secondary);
+            color: #9090b0;
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
@@ -101,14 +101,14 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
         }
 
         .admin-nav a:hover {
-            background: var(--bg-hover);
-            color: var(--text-primary);
+            background: rgba(255,255,255,0.05);
+            color: #f0f0ff;
         }
 
         .admin-nav a.active {
-            background: var(--bg-elevated);
-            color: var(--purple-bright);
-            border-left: 3px solid var(--purple-core);
+            background: #161625;
+            color: #a78bfa;
+            border-left: 3px solid #7c3aed;
         }
 
         .admin-nav a .nav-icon {
@@ -121,8 +121,8 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
         .admin-sidebar-footer {
             margin-top: auto;
             padding: 16px 20px;
-            border-top: 1px solid var(--border-subtle);
-            background: var(--bg-surface);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            background: #0f0f1a;
         }
 
         .admin-user-info {
@@ -131,7 +131,7 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
             gap: 10px;
             padding: 10px;
             border-radius: 8px;
-            background: var(--bg-elevated);
+            background: #161625;
         }
 
         .admin-user-info .avatar-circle {
@@ -149,7 +149,7 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
         .admin-user-info .username {
             font-size: 13px;
             font-weight: 600;
-            color: var(--text-primary);
+            color: #f0f0ff;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -157,7 +157,7 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
 
         .admin-user-info .role {
             font-size: 11px;
-            color: var(--text-muted);
+            color: #50506a;
         }
 
         .admin-main {
