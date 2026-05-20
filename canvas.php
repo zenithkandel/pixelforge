@@ -14,29 +14,29 @@ $extra_css = '';
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="page-content">
-    <div class="page-header" style="text-align:center;">
+<div class="page-content" style="padding:40px;">
+    <div class="page-header" style="text-align:center; margin-bottom:40px;">
         <h1>Interactive Canvas</h1>
         <p>Click to paint directly on the canvas. Cost: <span class="currency">5 💰</span> for unclaimed cells.</p>
     </div>
 
-    <div style="display:flex;gap:var(--space-lg);flex-wrap:wrap;justify-content:center;align-items:flex-start;">
-        <div id="canvas-container" style="position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);cursor:crosshair;">
+    <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;align-items:flex-start;">
+        <div id="canvas-container" style="position:relative;border-radius:18px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.8);cursor:crosshair;">
             <canvas id="pixel-canvas" width="800" height="800" style="display:block;"></canvas>
-            <div id="canvas-status" style="position:absolute;top:12px;right:12px;display:flex;align-items:center;gap:6px;font-size:12px;background:rgba(0,0,0,0.6);padding:6px 10px;border-radius:var(--radius-pill);backdrop-filter:blur(8px);">
-                <span style="width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse-dot 2s ease infinite;"></span> <span style="color:#fff;">Live</span>
+            <div id="canvas-status" style="position:absolute;top:12px;right:12px;display:flex;align-items:center;gap:6px;font-size:12px;background:rgba(0,0,0,0.6);padding:6px 10px;border-radius:999px;backdrop-filter:blur(8px);">
+                <span style="width:8px;height:8px;border-radius:50%;background:#22c55e;animation:pulse-dot 2s ease infinite;"></span> <span style="color:#fff;">Live</span>
             </div>
-            <div id="zoom-indicator" style="position:absolute;bottom:12px;left:12px;font-size:12px;background:rgba(0,0,0,0.6);padding:6px 10px;border-radius:var(--radius-pill);backdrop-filter:blur(8px);color:#fff;">1×</div>
+            <div id="zoom-indicator" style="position:absolute;bottom:12px;left:12px;font-size:12px;background:rgba(0,0,0,0.6);padding:6px 10px;border-radius:999px;backdrop-filter:blur(8px);color:#fff;">1x</div>
         </div>
 
-        <div class="card" style="width:200px;align-self:flex-start;position:sticky;top:80px;">
-            <h3 style="margin:0 0 var(--space-md);font-size:16px;font-weight:600;">Paint Tools</h3>
+        <div class="card" style="width:200px;align-self:flex-start;position:sticky;top:80px;background:#1a1a2e;border:1px solid rgba(255,255,255,0.06);border-radius:18px;padding:24px;">
+            <h3 style="margin:0 0 16px;font-size:16px;font-weight:600;color:#f0f0ff;">Paint Tools</h3>
 
-            <div class="form-group">
-                <label style="font-weight:500;display:block;margin-bottom:8px;">Current Color</label>
-                <div style="display:flex;gap:var(--space-sm);align-items:center;margin-bottom:8px;">
-                    <input type="color" id="paint-color" value="#7c3aed" style="width:48px;height:40px;padding:2px;border-radius:var(--radius-sm);cursor:pointer;border:1px solid var(--border-default);">
-                    <input type="text" id="paint-color-hex" value="#7c3aed" style="flex:1;font-family:var(--font-mono);font-size:13px;margin:0;">
+            <div style="margin-bottom:16px;">
+                <label style="font-weight:500;display:block;margin-bottom:8px;color:#9090b0;">Current Color</label>
+                <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+                    <input type="color" id="paint-color" value="#7c3aed" style="width:48px;height:40px;padding:2px;border-radius:6px;cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:#12121f;">
+                    <input type="text" id="paint-color-hex" value="#7c3aed" style="flex:1;font-family:monospace;font-size:13px;margin:0;background:#12121f;border:1px solid rgba(255,255,255,0.1);color:#f0f0ff;">
                 </div>
                 <div style="display:flex;gap:4px;flex-wrap:wrap;">
                     <button class="color-preset" data-color="#7c3aed" style="width:24px;height:24px;background:#7c3aed;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
@@ -52,19 +52,19 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
             </div>
 
-            <div style="padding:var(--space-sm);background:var(--bg-elevated);border-radius:var(--radius-md);margin-top:var(--space-md);">
-                <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px;">Balance</div>
-                <div id="paint-balance" class="currency" style="font-size:18px;"></div>
+            <div style="padding:8px;background:#161625;border-radius:12px;margin-top:16px;">
+                <div style="font-size:13px;color:#50506a;margin-bottom:4px;">Balance</div>
+                <div id="paint-balance" class="currency" style="font-size:18px;color:#fbbf24;"></div>
             </div>
 
-            <div style="margin-top:var(--space-md);">
-                <button id="toggle-territory" class="btn-secondary btn-sm" style="width:100%;margin-bottom:8px;">Territory View</button>
-                <button id="toggle-mypixels" class="btn-secondary btn-sm" style="width:100%;">My Pixels</button>
+            <div style="margin-top:16px;">
+                <button id="toggle-territory" class="btn-secondary btn-sm" style="width:100%;margin-bottom:8px;background:transparent;border:1px solid rgba(255,255,255,0.1);color:#f0f0ff;padding:7px 14px;border-radius:999px;font-weight:500;cursor:pointer;">Territory View</button>
+                <button id="toggle-mypixels" class="btn-secondary btn-sm" style="width:100%;background:transparent;border:1px solid rgba(255,255,255,0.1);color:#f0f0ff;padding:7px 14px;border-radius:999px;font-weight:500;cursor:pointer;">My Pixels</button>
             </div>
         </div>
     </div>
 
-    <div id="paint-toast" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--bg-elevated);border:1px solid var(--purple-core);border-radius:var(--radius-lg);padding:12px 20px;box-shadow:var(--shadow-lg);z-index:9999;display:none;align-items:center;gap:10px;">
+    <div id="paint-toast" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#161625;border:1px solid #7c3aed;border-radius:18px;padding:12px 20px;box-shadow:0 8px 40px rgba(0,0,0,0.8);z-index:9999;display:none;align-items:center;gap:10px;color:#f0f0ff;">
         <span id="paint-toast-icon">🎨</span>
         <span id="paint-toast-text" style="font-size:14px;"></span>
     </div>
@@ -77,7 +77,19 @@ require_once __DIR__ . '/includes/header.php';
         pixels: [],
         pendingPixels: new Set(),
         lastPaintTime: 0,
-        paintCooldown: 300,
+        paintCooldown: 250,
+        zoom: 1,
+        offsetX: 0,
+        offsetY: 0,
+        isDragging: false,
+        dragStartX: 0,
+        dragStartY: 0,
+        dragOffsetStartX: 0,
+        dragOffsetStartY: 0,
+        gridSize: 100,
+        cellSize: 8,
+        territoryMode: false,
+        myPixelsMode: false,
         currentUserId: <?= (int)$_SESSION['user_id'] ?>,
     };
 
@@ -88,8 +100,8 @@ require_once __DIR__ . '/includes/header.php';
     const toastIcon = document.getElementById('paint-toast-icon');
     const toastText = document.getElementById('paint-toast-text');
 
-    const currentUserBalance = <?= (int)($nav_user['balance'] ?? 0) ?>;
-    balanceDisplay.textContent = currentUserBalance.toLocaleString() + ' 💰';
+    var navCurrency = document.querySelector('nav .currency');
+    if (navCurrency) balanceDisplay.textContent = navCurrency.textContent;
 
     colorInput.addEventListener('input', function() { colorHexInput.value = this.value; });
     colorHexInput.addEventListener('input', function() {
@@ -101,8 +113,11 @@ require_once __DIR__ . '/includes/header.php';
             var c = this.dataset.color;
             colorInput.value = c;
             colorHexInput.value = c;
+            document.querySelectorAll('.color-preset').forEach(function(b) { b.style.border = '2px solid transparent'; });
+            this.style.border = '2px solid #fff';
         });
     });
+    document.querySelector('.color-preset').style.border = '2px solid #fff';
 
     function showToast(msg, icon, duration) {
         toastText.textContent = msg;
@@ -122,13 +137,19 @@ require_once __DIR__ . '/includes/header.php';
         navCurr.forEach(function(el) { el.textContent = Math.round(balance).toLocaleString() + ' 💰'; });
     }
 
-    function paintPixel(col, row, color, isOwn) {
+    function paintPixel(col, row) {
         var key = col + ',' + row;
         if (CANVAS_STATE.pendingPixels.has(key)) return;
 
         var now = Date.now();
         if (now - CANVAS_STATE.lastPaintTime < CANVAS_STATE.paintCooldown) return;
         CANVAS_STATE.lastPaintTime = now;
+
+        var color = colorInput.value;
+        var pixelMap = {};
+        CANVAS_STATE.pixels.forEach(function(p) { pixelMap[p.x + ',' + p.y] = p; });
+        var existing = pixelMap[col + ',' + row];
+        var isOwn = existing && existing.owner_id === CANVAS_STATE.currentUserId;
 
         CANVAS_STATE.pendingPixels.add(key);
 
@@ -139,15 +160,13 @@ require_once __DIR__ . '/includes/header.php';
             level: null, placed_at: new Date().toISOString(), expires_at: null
         };
 
-        var existingIdx = -1;
-        for (var i = 0; i < CANVAS_STATE.pixels.length; i++) {
-            if (CANVAS_STATE.pixels[i].x === col && CANVAS_STATE.pixels[i].y === row) {
-                existingIdx = i;
-                break;
+        if (existing) {
+            for (var i = 0; i < CANVAS_STATE.pixels.length; i++) {
+                if (CANVAS_STATE.pixels[i].x === col && CANVAS_STATE.pixels[i].y === row) {
+                    CANVAS_STATE.pixels[i] = localPixel;
+                    break;
+                }
             }
-        }
-        if (existingIdx >= 0) {
-            CANVAS_STATE.pixels[existingIdx] = localPixel;
         } else {
             CANVAS_STATE.pixels.push(localPixel);
         }
@@ -165,15 +184,22 @@ require_once __DIR__ . '/includes/header.php';
                 CANVAS_STATE.pendingPixels.delete(key);
                 if (data.success) {
                     if (data.new_balance !== undefined) updateCurrencyDisplay(data.new_balance);
-                    showToast('Pixel placed!', '✅', 1500);
+                    showToast('Painted!', '✅', 1200);
                 } else {
-                    showToast(data.error || 'Failed to place', '❌', 2000);
-                    var idx = -1;
-                    for (var i = 0; i < CANVAS_STATE.pixels.length; i++) {
-                        if (CANVAS_STATE.pixels[i].x === col && CANVAS_STATE.pixels[i].y === row) { idx = i; break; }
+                    showToast(data.error || 'Cannot place', '❌', 2000);
+                    if (!isOwn) {
+                        for (var i = 0; i < CANVAS_STATE.pixels.length; i++) {
+                            if (CANVAS_STATE.pixels[i].x === col && CANVAS_STATE.pixels[i].y === row && CANVAS_STATE.pixels[i].owner_id === CANVAS_STATE.currentUserId) {
+                                if (existing) {
+                                    CANVAS_STATE.pixels[i] = existing;
+                                } else {
+                                    CANVAS_STATE.pixels.splice(i, 1);
+                                }
+                                break;
+                            }
+                        }
+                        renderCanvas();
                     }
-                    if (idx >= 0 && !isOwn) CANVAS_STATE.pixels.splice(idx, 1);
-                    renderCanvas();
                 }
             })
             .catch(function() {
@@ -182,51 +208,10 @@ require_once __DIR__ . '/includes/header.php';
             });
     }
 
-    CANVAS_STATE = {
-        zoom: 1,
-        offsetX: 0,
-        offsetY: 0,
-        isDragging: false,
-        dragStartX: 0,
-        dragStartY: 0,
-        dragOffsetStartX: 0,
-        dragOffsetStartY: 0,
-        gridSize: 100,
-        cellSize: 8,
-        territoryMode: false,
-        myPixelsMode: false,
-        currentUserId: <?= (int)$_SESSION['user_id'] ?>,
-        selectedCell: null,
-    };
-
     const canvas = document.getElementById('pixel-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-
-    const panel = document.getElementById('pixel-panel');
-    const colorInput = document.getElementById('pixel-color');
-    const colorHexInput = document.getElementById('pixel-color-hex');
-    const panelCoords = document.getElementById('panel-coords');
-    const panelOwner = document.getElementById('panel-owner');
-    const panelCost = document.getElementById('panel-cost');
-    const panelError = document.getElementById('panel-error');
-    const placeBtn = document.getElementById('place-pixel-btn');
-
-    function updateCurrencyDisplay(balance) {
-        if (!balance) return;
-        var currEls = document.querySelectorAll('nav .currency');
-        currEls.forEach(function(el) { el.textContent = number_format(balance) + ' 💰'; });
-    }
-
-    function number_format(n) {
-        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
-
-    colorInput.addEventListener('input', function() { colorHexInput.value = this.value; });
-    colorHexInput.addEventListener('input', function() {
-        if (/^#[0-9A-Fa-f]{6}$/.test(this.value)) colorInput.value = this.value;
-    });
 
     function renderCanvas() {
         ctx.fillStyle = '#1a1a1a';
@@ -262,30 +247,16 @@ require_once __DIR__ . '/includes/header.php';
             }
         }
 
-        if (CANVAS_STATE.selectedCell) {
-            var sx = CANVAS_STATE.offsetX + CANVAS_STATE.selectedCell.col * size;
-            var sy = CANVAS_STATE.offsetY + CANVAS_STATE.selectedCell.row * size;
-            ctx.strokeStyle = '#fff';
-            ctx.lineWidth = 2;
-            ctx.strokeRect(sx, sy, size, size);
-        }
-
         if (CANVAS_STATE.zoom >= 3) {
             ctx.strokeStyle = '#252535';
             ctx.lineWidth = 0.5;
             for (var gx = startCol; gx <= endCol; gx++) {
                 var x = CANVAS_STATE.offsetX + gx * size;
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, 800);
-                ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 800); ctx.stroke();
             }
             for (var gy = startRow; gy <= endRow; gy++) {
                 var y = CANVAS_STATE.offsetY + gy * size;
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(800, y);
-                ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(800, y); ctx.stroke();
             }
         }
     }
@@ -301,6 +272,8 @@ require_once __DIR__ . '/includes/header.php';
         return { col: col, row: row };
     }
 
+    var dragMoved = false;
+
     canvas.addEventListener('wheel', function(e) {
         e.preventDefault();
         var rect = canvas.getBoundingClientRect();
@@ -313,8 +286,6 @@ require_once __DIR__ . '/includes/header.php';
         document.getElementById('zoom-indicator').textContent = Math.round(CANVAS_STATE.zoom) + '×';
         renderCanvas();
     });
-
-    var dragMoved = false;
 
     canvas.addEventListener('mousedown', function(e) {
         CANVAS_STATE.isDragging = true;
@@ -338,11 +309,11 @@ require_once __DIR__ . '/includes/header.php';
 
     canvas.addEventListener('mouseup', function(e) {
         CANVAS_STATE.isDragging = false;
-        canvas.style.cursor = 'grab';
+        canvas.style.cursor = 'crosshair';
         if (dragMoved) return;
         var cell = getCell(e);
         if (!cell) return;
-        selectCell(cell);
+        paintPixel(cell.col, cell.row);
     });
 
     canvas.addEventListener('touchstart', function(e) {
@@ -372,83 +343,10 @@ require_once __DIR__ . '/includes/header.php';
         if (dragMoved) return;
         var cell = getCell({ clientX: CANVAS_STATE.dragStartX, clientY: CANVAS_STATE.dragStartY });
         if (!cell) return;
-        selectCell(cell);
+        paintPixel(cell.col, cell.row);
     });
 
-    canvas.style.cursor = 'grab';
-
-    function selectCell(cell) {
-        CANVAS_STATE.selectedCell = cell;
-        panel.style.display = 'block';
-        panelCoords.textContent = '(' + cell.col + ', ' + cell.row + ')';
-
-        var pixelMap = {};
-        CANVAS_STATE.pixels.forEach(function(p) { pixelMap[p.x + ',' + p.y] = p; });
-        var existing = pixelMap[cell.col + ',' + cell.row];
-
-        if (existing) {
-            if (existing.owner_id === CANVAS_STATE.currentUserId) {
-                panelOwner.innerHTML = '<span style="color:var(--green);">Your pixel</span>';
-                panelCost.textContent = 'Free — your pixel';
-                placeBtn.disabled = false;
-                placeBtn.textContent = 'Repaint Pixel';
-            } else {
-                panelOwner.innerHTML = 'Owned by <strong>' + (existing.username || 'Unknown') + '</strong>';
-                panelCost.textContent = 'Not claimable';
-                placeBtn.disabled = true;
-            }
-        } else {
-            panelOwner.textContent = 'Unclaimed';
-            panelCost.textContent = '5 💰';
-            placeBtn.disabled = false;
-            placeBtn.textContent = 'Place Pixel';
-        }
-        panelError.textContent = '';
-        renderCanvas();
-    }
-
-    placeBtn.addEventListener('click', function() {
-        if (!CANVAS_STATE.selectedCell) return;
-        placeBtn.disabled = true;
-        placeBtn.innerHTML = '<span class="spinner"></span> Placing...';
-
-        var cell = CANVAS_STATE.selectedCell;
-        var formData = new URLSearchParams();
-        formData.append('x', cell.col);
-        formData.append('y', cell.row);
-        formData.append('color', colorInput.value);
-        formData.append('csrf_token', '<?= csrf_token() ?>');
-
-        fetch('api/place_pixel.php', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: formData })
-            .then(function(res) { return res.json().then(function(data) { return { ok: res.ok, data: data }; }); })
-            .then(function(result) {
-                if (result.ok && result.data.success) {
-                    updateCurrencyDisplay(result.data.new_balance);
-                    var pixelMap = {};
-                    CANVAS_STATE.pixels.forEach(function(p, i) {
-                        if (p.x === cell.col && p.y === cell.row) return;
-                        pixelMap[p.x + ',' + p.y] = p;
-                    });
-                    CANVAS_STATE.pixels = Object.values(pixelMap);
-                    CANVAS_STATE.pixels.push({
-                        x: cell.col, y: cell.row, color: colorInput.value,
-                        owner_id: CANVAS_STATE.currentUserId, username: '<?= htmlspecialchars($_SESSION['username']) ?>' ,
-                        level: null, placed_at: new Date().toISOString(), expires_at: null
-                    });
-                    panelError.textContent = '';
-                    renderCanvas();
-                } else {
-                    panelError.textContent = (result.data && result.data.error) || 'Failed to place pixel';
-                    placeBtn.disabled = false;
-                    placeBtn.textContent = 'Place Pixel';
-                }
-            })
-            .catch(function() {
-                panelError.textContent = 'Network error. Try again.';
-                placeBtn.disabled = false;
-                placeBtn.textContent = 'Place Pixel';
-            });
-    });
+    canvas.style.cursor = 'crosshair';
 
     document.getElementById('toggle-territory').addEventListener('click', function() {
         CANVAS_STATE.territoryMode = !CANVAS_STATE.territoryMode;
