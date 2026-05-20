@@ -67,9 +67,13 @@
 
 All app activity logged to `/logs/event.log` (auto-created by logger.php).
 
+- Cron (optional): `0 * * * * curl -s http://yoursite.com/api/get_canvas.php > /dev/null` — ensures hourly pixel decay cleanup even without visitors.
+
 - Helper functions: `log_info()`, `log_warn()`, `log_error()`, `log_debug()`, `log_sec()`, `log_admin()`
 - Format: `[timestamp] [LEVEL] [CATEGORY] [user:id(name)] [ip:ip] [METHOD /uri] message | {context}`
-- Protect `/logs/` with `.htaccess` (Deny from all). Never expose raw logs.
+- Protect `/logs/` AND `/includes/` with `.htaccess` (Deny from all). Never expose raw logs.
+- Log rotation: auto-renames to `.bak` when >10MB.
+- Useful filters: `grep "\[SECURITY\]" logs/event.log`, `grep "\[ERROR\]" logs/event.log`
 
 ---
 

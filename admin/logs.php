@@ -13,10 +13,6 @@ $page = max(1, (int)($_GET['page'] ?? 1));
 $per_page = 30;
 $offset = ($page - 1) * $per_page;
 
-$page_title = 'Logs';
-require_once __DIR__ . '/header.php';
-?>
-
 try {
     $count_sql = 'SELECT COUNT(*) FROM admin_log';
     $logs_sql = 'SELECT a.*, u.username FROM admin_log a JOIN users u ON a.admin_id = u.id';
@@ -82,8 +78,8 @@ require_once __DIR__ . '/header.php';
             <?php else: ?>
                 <?php foreach ($logs as $log): ?>
                 <tr>
-                    <td style="font-weight:500;"><?= htmlspecialchars($log['username']) ?></td>
-                    <td><span style="font-size:12px;font-weight:600;color:var(--purple-bright);"><?= htmlspecialchars($log['action']) ?></span></td>
+                    <td><?= htmlspecialchars($log['username']) ?></td>
+                    <td><?= htmlspecialchars($log['action']) ?></td>
                     <td><?= htmlspecialchars($log['target_type'] ?? '—') ?> #<?= $log['target_id'] ?? '—' ?></td>
                     <td style="font-size:12px;color:var(--text-muted);"><?= htmlspecialchars($log['details'] ?? '—') ?></td>
                     <td style="font-size:12px;color:var(--text-muted);"><?= htmlspecialchars($log['performed_at']) ?></td>
@@ -101,7 +97,5 @@ require_once __DIR__ . '/header.php';
     </div>
     <?php endif; ?>
 </div>
-</main>
-</div>
 
-<?php require_once __DIR__ . '/footer.php'; ?>
+<?php require_once __DIR__ . '/footer.php';

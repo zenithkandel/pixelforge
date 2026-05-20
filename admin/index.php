@@ -29,7 +29,7 @@ $page_title = 'Admin Dashboard';
 require_once __DIR__ . '/header.php';
 ?>
 
-</div>
+<div class="page-content">
     <div class="page-header">
         <h1>Admin Dashboard</h1>
     </div>
@@ -79,6 +79,5 @@ require_once __DIR__ . '/header.php';
         </tbody>
     </table>
 </div>
-</main>
-</div>
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+
+<?php require_once __DIR__ . '/footer.php'; ?>

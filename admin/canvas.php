@@ -11,12 +11,6 @@ require_admin();
 $db = get_db();
 $messages = [];
 
-$page_title = 'Canvas';
-require_once __DIR__ . '/header.php';
-?>
-
-<div class="page-content">
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_verify();
     $action = $_POST['action'] ?? '';
@@ -94,7 +88,43 @@ require_once __DIR__ . '/header.php';
         </div>
         <p style="color:var(--text-muted);font-size:13px;margin-top:8px;">Click a pixel to erase it.</p>
     </div>
-</main>
+</div>
+
+<div id="reset-modal" class="modal-overlay" style="display:none;">
+    <div class="modal">
+        <h3>Reset Canvas</h3>
+        <p style="color:var(--red);">This deletes ALL pixels. Type RESET to confirm.</p>
+        <form method="POST">
+            <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+            <input type="hidden" name="action" value="reset_canvas">
+            <div class="form-group">
+                <input type="text" name="confirm_text" placeholder="Type RESET" autocomplete="off">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary modal-cancel-btn" data-modal="reset-modal">Cancel</button>
+                <button type="submit" class="btn-danger">Reset Canvas</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="fill-modal" class="modal-overlay" style="display:none;">
+    <div class="modal">
+        <h3>Fill Unclaimed</h3>
+        <p style="color:var(--text-secondary);">Fill all unclaimed pixels with a color.</p>
+        <form method="POST">
+            <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+            <input type="hidden" name="action" value="fill_unclaimed">
+            <div class="form-group">
+                <label>Color</label>
+                <input type="color" name="fill_color" value="#333355" style="width:100px;">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary modal-cancel-btn" data-modal="fill-modal">Cancel</button>
+                <button type="submit" class="btn-primary">Fill Unclaimed</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <script nonce="<?= $GLOBALS['csp_nonce'] ?>">
@@ -159,4 +189,4 @@ require_once __DIR__ . '/header.php';
 })();
 </script>
 
-<?php require_once __DIR__ . '/footer.php'; ?>
+<?php require_once __DIR__ . '/footer.php';

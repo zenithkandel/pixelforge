@@ -13,11 +13,6 @@ $search = trim($_GET['search'] ?? '');
 $page = max(1, (int)($_GET['page'] ?? 1));
 $per_page = 25;
 $offset = ($page - 1) * $per_page;
-
-$page_title = 'Users';
-require_once __DIR__ . '/header.php';
-?>
-
 $messages = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -100,8 +95,8 @@ try {
     $total_pages = 0;
 }
 
-$page_title = 'User Management';
-require_once __DIR__ . '/../includes/header.php';
+$page_title = 'Users';
+require_once __DIR__ . '/header.php';
 ?>
 
 <div class="page-content">
@@ -167,7 +162,6 @@ require_once __DIR__ . '/../includes/header.php';
         <?php endfor; ?>
     </div>
     <?php endif; ?>
-</div>
 </div>
 
 <div id="user-modal" class="modal-overlay" style="display:none;">
@@ -252,4 +246,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<?php require_once __DIR__ . '/footer.php'; ?>
+<?php require_once __DIR__ . '/footer.php';

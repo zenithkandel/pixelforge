@@ -67,18 +67,24 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
 
 nav {
-  background: rgba(8, 8, 16, 0.85);
+  background: rgba(8, 8, 16, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border-subtle);
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
   padding: 0 var(--space-xl);
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+body {
+  padding-top: 60px;
 }
 
 nav .nav-brand {
