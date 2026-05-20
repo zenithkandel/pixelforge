@@ -303,9 +303,6 @@
               }
           }).catch(function() {});
     }
-              }
-          }).catch(function() {});
-    }
 
     function render() {
         ctx.fillStyle = '#0a0a18';
