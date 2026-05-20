@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../includes/xp.php';
 if (!isset($page_title)) $page_title = 'Admin — ' . APP_NAME;
 $current_page = basename($_SERVER['PHP_SELF']);
+$nav_user = isset($_SESSION['user_id']) ? current_user() : null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,92 +11,345 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
+    <script nonce="<?= $GLOBALS['csp_nonce'] ?? '' ?>">
+    (function() {
+        var stored = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = stored || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+    })();
+    </script>
     <style>
-        .admin-layout { display: flex; min-height: calc(100vh - 60px); }
-        .admin-sidebar {
-            width: 220px;
-            background: var(--bg-secondary);
-            border-right: 1px solid var(--border);
-            padding: 20px 0;
-            flex-shrink: 0;
+        :root {
+            --admin-sidebar-width: 240px;
+            --admin-header-height: 60px;
         }
-        .admin-sidebar h3 {
+
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+            background: var(--bg-base);
+        }
+
+        .admin-sidebar {
+            width: var(--admin-sidebar-width);
+            background: var(--bg-surface);
+            border-right: 1px solid var(--border-subtle);
+            padding: var(--space-lg) 0;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 100;
+            transition: background var(--transition-slow);
+        }
+
+        .admin-brand {
+            padding: 0 var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+
+        .admin-brand a {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--purple-bright);
+            text-decoration: none;
+        }
+
+        .admin-nav-section {
+            margin-bottom: var(--space-lg);
+        }
+
+        .admin-nav-label {
             font-size: 11px;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: var(--text-muted);
-            padding: 0 16px 12px;
+            padding: 0 var(--space-lg);
+            margin-bottom: var(--space-sm);
         }
-        .admin-sidebar nav {
+
+        .admin-nav {
             display: flex;
             flex-direction: column;
+            gap: 2px;
+            padding: 0 var(--space-sm);
         }
-        .admin-sidebar a {
-            padding: 10px 16px;
+
+        .admin-nav a {
+            padding: 10px var(--space-md);
+            padding-left: calc(var(--space-md) - 3px);
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 14px;
-            transition: all 0.15s;
+            font-weight: 500;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: var(--space-sm);
+            box-sizing: border-box;
         }
-        .admin-sidebar a:hover { background: var(--bg-tertiary); color: var(--text-primary); }
-        .admin-sidebar a.active { background: var(--purple-dim); color: var(--purple-bright); }
-        .admin-content { flex: 1; padding: 32px; overflow-x: auto; }
+
+        .admin-nav a:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .admin-nav a.active {
+            background: var(--bg-elevated);
+            color: var(--purple-bright);
+            border-left: 3px solid var(--purple-core);
+            padding-left: var(--space-md);
+        }
+        }
+
+        .admin-nav a .nav-icon {
+            font-size: 16px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .admin-sidebar-footer {
+            margin-top: auto;
+            padding: var(--space-md) var(--space-lg);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .admin-user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm);
+            border-radius: var(--radius-md);
+            background: var(--bg-elevated);
+        }
+
+        .admin-user-info .avatar-circle {
+            width: 32px;
+            height: 32px;
+            font-size: 13px;
+        }
+
+        .admin-user-info .user-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .admin-user-info .username {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .admin-user-info .role {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .admin-main {
+            flex: 1;
+            margin-left: var(--admin-sidebar-width);
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            height: var(--admin-header-height);
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--space-xl);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(12px);
+            transition: background var(--transition-slow), border-color var(--transition-slow);
+        }
+
+        .admin-header-left {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .admin-page-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .admin-header-right {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .admin-content {
+            padding: var(--space-xl);
+        }
+
+        .admin-section {
+            margin-bottom: var(--space-xl);
+        }
+
+        .admin-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-md);
+        }
+
+        .admin-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .admin-breadcrumb {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .admin-breadcrumb a {
+            color: var(--text-secondary);
+        }
+
+        .admin-breadcrumb a:hover {
+            color: var(--purple-bright);
+        }
+
+        @media (max-width: 768px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+            }
+            .admin-sidebar.open {
+                transform: translateX(0);
+            }
+            .admin-main {
+                margin-left: 0;
+            }
+            .admin-content {
+                padding: var(--space-md);
+            }
+        }
     </style>
 </head>
 <body>
-    <nav>
-        <a href="<?= BASE_URL ?>/" class="nav-brand">🎨 <?= APP_NAME ?></a>
-        <div class="nav-center">
-            <a href="<?= BASE_URL ?>/" class="<?= basename($_SERVER['PHP_SELF']) === 'index.php' ? 'active' : '' ?>">Canvas</a>
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <a href="<?= BASE_URL ?>/game.php">Game</a>
-                <a href="<?= BASE_URL ?>/canvas.php">Draw</a>
-                <a href="<?= BASE_URL ?>/leaderboard.php">Scores</a>
-            <?php endif; ?>
-        </div>
-        <div class="nav-right">
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <?php
-                $nav_user = current_user();
-                if ($nav_user):
-                    $nav_level = (int)$nav_user['level'];
-                    $nav_xp = (int)$nav_user['xp'];
-                    $nav_balance = (int)$nav_user['balance'];
-                    $nav_progress = xp_progress_in_level($nav_xp);
-                    $nav_initial = strtoupper(substr($nav_user['username'], 0, 1));
-                ?>
-                <div class="xp-bar-wrap">
-                    <div class="xp-bar-fill" style="width: <?= round($nav_progress * 100) ?>%"></div>
-                </div>
-                <span class="level-badge">Lv<?= $nav_level ?></span>
-                <span class="currency"><?= number_format($nav_balance) ?> 💰</span>
-                <a href="<?= BASE_URL ?>/profile.php?user=<?= urlencode($nav_user['username']) ?>" style="display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--text-primary);">
-                    <span class="avatar-circle" style="background:<?= htmlspecialchars($nav_user['avatar_color']) ?>"><?= $nav_initial ?></span>
-                </a>
-                <?php if ($nav_user['role'] === 'admin'): ?>
-                    <a href="<?= BASE_URL ?>/admin/" class="level-badge" style="text-decoration:none;">Admin</a>
-                <?php endif; ?>
-                <a href="<?= BASE_URL ?>/logout.php" class="btn-secondary btn-sm">Logout</a>
-                <?php endif; ?>
-            <?php else: ?>
-                <a href="<?= BASE_URL ?>/login.php" class="btn-secondary btn-sm">Login</a>
-                <a href="<?= BASE_URL ?>/register.php" class="btn-primary btn-sm">Register</a>
-            <?php endif; ?>
-        </div>
-    </nav>
     <div class="admin-layout">
         <aside class="admin-sidebar">
-            <h3>Admin</h3>
-            <nav>
-                <a href="<?= BASE_URL ?>/admin/" class="<?= $current_page === 'index.php' ? 'active' : '' ?>">📊 Dashboard</a>
-                <a href="<?= BASE_URL ?>/admin/users.php" class="<?= $current_page === 'users.php' ? 'active' : '' ?>">👥 Users</a>
-                <a href="<?= BASE_URL ?>/admin/canvas.php" class="<?= $current_page === 'canvas.php' ? 'active' : '' ?>">🎨 Canvas</a>
-                <a href="<?= BASE_URL ?>/admin/logs.php" class="<?= $current_page === 'logs.php' ? 'active' : '' ?>">📋 Logs</a>
-            </nav>
+            <div class="admin-brand">
+                <a href="<?= BASE_URL ?>/">
+                    <span style="font-size:20px;">🎨</span>
+                    <span><?= APP_NAME ?></span>
+                </a>
+            </div>
+
+            <div class="admin-nav-section">
+                <div class="admin-nav-label">Dashboard</div>
+                <nav class="admin-nav">
+                    <a href="<?= BASE_URL ?>/admin/" class="<?= $current_page === 'index.php' ? 'active' : '' ?>">
+                        <span class="nav-icon">📊</span> Overview
+                    </a>
+                    <a href="<?= BASE_URL ?>/admin/users.php" class="<?= $current_page === 'users.php' ? 'active' : '' ?>">
+                        <span class="nav-icon">👥</span> Users
+                    </a>
+                    <a href="<?= BASE_URL ?>/admin/canvas.php" class="<?= $current_page === 'canvas.php' ? 'active' : '' ?>">
+                        <span class="nav-icon">🎨</span> Canvas
+                    </a>
+                    <a href="<?= BASE_URL ?>/admin/logs.php" class="<?= $current_page === 'logs.php' ? 'active' : '' ?>">
+                        <span class="nav-icon">📋</span> Logs
+                    </a>
+                </nav>
+            </div>
+
+            <div class="admin-nav-section">
+                <div class="admin-nav-label">Quick Links</div>
+                <nav class="admin-nav">
+                    <a href="<?= BASE_URL ?>/">
+                        <span class="nav-icon">🌐</span> Main Site
+                    </a>
+                    <a href="<?= BASE_URL ?>/game.php">
+                        <span class="nav-icon">🎮</span> Game
+                    </a>
+                    <a href="<?= BASE_URL ?>/leaderboard.php">
+                        <span class="nav-icon">🏆</span> Leaderboard
+                    </a>
+                </nav>
+            </div>
+
+            <?php if ($nav_user): ?>
+            <div class="admin-sidebar-footer">
+                <div class="admin-user-info">
+                    <span class="avatar-circle" style="background:<?= htmlspecialchars($nav_user['avatar_color']) ?>"><?= strtoupper(substr($nav_user['username'], 0, 1)) ?></span>
+                    <div class="user-details">
+                        <div class="username"><?= htmlspecialchars($nav_user['username']) ?></div>
+                        <div class="role">Admin</div>
+                    </div>
+                </div>
+                <a href="<?= BASE_URL ?>/logout.php" class="btn-secondary btn-sm" style="margin-top:var(--space-sm);width:100%;justify-content:center;">Logout</a>
+            </div>
+            <?php endif; ?>
         </aside>
-        <main class="admin-content">
-</main>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <div class="admin-header-left">
+                    <button class="btn-icon mobile-menu-toggle" id="sidebar-toggle" style="display:none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12h18M3 6h18M3 18h18"/>
+                        </svg>
+                    </button>
+                    <h1 class="admin-page-title"><?= htmlspecialchars($page_title) ?></h1>
+                </div>
+                <div class="admin-header-right">
+                    <button class="theme-toggle" id="admin-theme-toggle" title="Toggle theme">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="admin-content">
 </div>
+
+<script nonce="<?= $GLOBALS['csp_nonce'] ?? '' ?>">
+(function() {
+    var toggle = document.getElementById('admin-theme-toggle');
+    function updateThemeIcon() {
+        var theme = document.documentElement.getAttribute('data-theme');
+        if (toggle) toggle.querySelector('.theme-icon').textContent = theme === 'light' ? '☀️' : '🌙';
+    }
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        updateThemeIcon();
+    }
+    if (toggle) toggle.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    var sidebarToggle = document.getElementById('sidebar-toggle');
+    var sidebar = document.querySelector('.admin-sidebar');
+    if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('open');
+        });
+    }
+
+    updateThemeIcon();
+})();
+</script>
