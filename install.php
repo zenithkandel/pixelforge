@@ -29,7 +29,7 @@ $queries = [
         color       VARCHAR(7)  NOT NULL,
         owner_id    INT         DEFAULT NULL,
         placed_at   TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
-        expires_at  TIMESTAMP   DEFAULT NULL,
+        expires_at  TIMESTAMP   NULL,
         UNIQUE KEY uq_pixel (x, y),
         FOREIGN KEY (owner_id) REFERENCES users(id) ON DELETE SET NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
