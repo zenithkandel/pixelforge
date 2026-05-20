@@ -50,3 +50,38 @@
 [2026-05-20 10:55:33] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
 [2026-05-20 10:55:37] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
 [2026-05-20 10:55:55] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 10:56:10] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 10:56:14] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Page request received
+[2026-05-20 10:56:14] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Admin panel accessed | {"page":"index.php"}
+[2026-05-20 10:56:14] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Uncaught Exception: Call to undefined function xp_progress_in_level() | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\includes\\header.php","line":34,"trace":"#0 C:\\xampp\\htdocs\\codes\\pixelforge\\admin\\index.php(28): require_once()\n#1 {main}"}
+[2026-05-20 10:57:59] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Page request received
+[2026-05-20 10:57:59] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Admin panel accessed | {"page":"index.php"}
+[2026-05-20 10:58:05] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 10:58:07] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 10:58:12] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Page request received
+[2026-05-20 10:58:12] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Admin panel accessed | {"page":"index.php"}
+[2026-05-20 10:58:23] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Page request received
+[2026-05-20 10:58:23] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Admin panel accessed | {"page":"index.php"}
+[2026-05-20 10:58:25] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/logout.php] Page request received
+[2026-05-20 10:58:25] [INFO] [AUTH] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/logout.php] User logged out
+[2026-05-20 10:58:25] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 10:58:27] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/register.php] Page request received
+[2026-05-20 10:58:38] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [POST /codes/pixelforge/register.php] Page request received
+[2026-05-20 10:58:39] [INFO] [AUTH] [user:guest(guest)] [ip:::1] [POST /codes/pixelforge/register.php] New user registered | {"username":"zenithkandel","email":"kandelze123@gmail.com"}
+[2026-05-20 10:58:39] [DEBUG] [SYSTEM] [user:1(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 10:58:42] [DEBUG] [SYSTEM] [user:1(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 10:58:43] [DEBUG] [SYSTEM] [user:1(zenithkandel)] [ip:::1] [GET /codes/pixelforge/logout.php] Page request received
+[2026-05-20 10:58:43] [INFO] [AUTH] [user:1(zenithkandel)] [ip:::1] [GET /codes/pixelforge/logout.php] User logged out
+[2026-05-20 10:58:43] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 10:58:44] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/login.php] Page request received
+[2026-05-20 10:58:49] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [POST /codes/pixelforge/login.php] Page request received
+[2026-05-20 10:58:49] [INFO] [AUTH] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/login.php] Daily streak bonus awarded | {"streak":1,"bonus":10}
+[2026-05-20 10:58:49] [INFO] [AUTH] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/login.php] User logged in | {"username":"zenithkandel"}
+[2026-05-20 10:58:49] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 10:58:52] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 11:06:16] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 11:09:02] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 11:09:22] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 11:09:30] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php] Page request received
+[2026-05-20 11:09:31] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/canvas.php] Page request received
+[2026-05-20 11:11:36] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received

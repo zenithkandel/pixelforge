@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/xp.php';
 if (!isset($page_title)) $page_title = APP_NAME;
 ?>
 <!DOCTYPE html>
