@@ -20,15 +20,17 @@ function xp_progress_in_level(int $xp): float {
     return $xp_needed > 0 ? $xp_current / $xp_needed : 1.0;
 }
 
-function add_xp(PDO $db, int $user_id, int $amount): array {
+function add_xp(PDO $db, int $user_id, int $amount, bool $external_transaction = false): array {
     try {
-        $db->beginTransaction();
+        if (!$external_transaction) {
+            $db->beginTransaction();
+        }
 
         $stmt = $db->prepare('SELECT xp, level FROM users WHERE id = ? FOR UPDATE');
         $stmt->execute([$user_id]);
         $user = $stmt->fetch();
         if (!$user) {
-            $db->rollBack();
+            if (!$external_transaction) $db->rollBack();
             return ['leveled_up' => false, 'new_level' => 0, 'new_xp' => 0];
         }
 
@@ -40,7 +42,9 @@ function add_xp(PDO $db, int $user_id, int $amount): array {
         $stmt = $db->prepare('UPDATE users SET xp = ?, level = ? WHERE id = ?');
         $stmt->execute([$new_xp, $new_level, $user_id]);
 
-        $db->commit();
+        if (!$external_transaction) {
+            $db->commit();
+        }
 
         if ($leveled_up) {
             log_info('XP', 'User levelled up', ['new_level' => $new_level, 'total_xp' => $new_xp]);
@@ -52,7 +56,7 @@ function add_xp(PDO $db, int $user_id, int $amount): array {
             'new_xp'     => $new_xp,
         ];
     } catch (PDOException $e) {
-        $db->rollBack();
+        if (!$external_transaction && $db->inTransaction()) $db->rollBack();
         log_error('DB', 'XP update error: ' . $e->getMessage(), ['code' => $e->getCode(), 'user_id' => $user_id]);
         return ['leveled_up' => false, 'new_level' => 0, 'new_xp' => 0];
     }

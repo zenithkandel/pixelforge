@@ -63,7 +63,7 @@ function check_achievements(PDO $db, int $user_id): array {
 
         if (!empty($unlocked)) {
             $total_xp = count($unlocked) * 20;
-            add_xp($db, $user_id, $total_xp);
+            add_xp($db, $user_id, $total_xp, true);
         }
     } catch (PDOException $e) {
         log_error('DB', 'Achievement check error: ' . $e->getMessage(), ['code' => $e->getCode()]);

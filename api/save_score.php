@@ -99,7 +99,7 @@ try {
     $stmt = $db->prepare('UPDATE users SET balance = balance + ? WHERE id = ?');
     $stmt->execute([$currency_earned, $user_id]);
 
-    $xp_result = add_xp($db, $user_id, $xp_earned);
+    $xp_result = add_xp($db, $user_id, $xp_earned, true);
 
     $db->commit();
 
