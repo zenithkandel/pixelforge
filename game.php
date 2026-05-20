@@ -5,9 +5,12 @@ require_once __DIR__ . '/includes/csrf.php';
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/xp.php';
 
+error_log("GAME: session start. Session ID: " . session_id() . " user_id: " . ($_SESSION['user_id'] ?? 'none') . "\n", 3, __DIR__ . '/debug.log');
+
 require_login();
 $user = get_current_user();
 if (!is_array($user) || !isset($user['id'])) {
+    error_log("GAME: failed to get_current_user, redirecting to login.php\n", 3, __DIR__ . '/debug.log');
     header('Location: ' . APP_URL . '/login.php');
     exit;
 }
@@ -36,6 +39,7 @@ $user_rank = Database::fetch("
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,6 +47,7 @@ $user_rank = Database::fetch("
     <link rel="stylesheet" href="<?php echo APP_URL; ?>/assets/css/style.css">
     <link rel="stylesheet" href="<?php echo APP_URL; ?>/assets/css/game.css">
 </head>
+
 <body>
     <?php include __DIR__ . '/includes/navbar.php'; ?>
 
@@ -111,26 +116,27 @@ $user_rank = Database::fetch("
                 </thead>
                 <tbody id="leaderboard-body">
                     <?php foreach ($leaderboard as $i => $row): ?>
-                    <tr class="<?php echo $row['username'] === $user['username'] ? 'highlight' : ''; ?>">
-                        <td><?php echo $i + 1; ?></td>
-                        <td>
-                            <div class="player-cell">
-                                <span class="avatar" style="background: <?php echo htmlspecialchars($row['avatar_color']); ?>">
-                                    <?php echo strtoupper($row['username'][0]); ?>
-                                </span>
-                                <span class="player-name"><?php echo htmlspecialchars($row['username']); ?></span>
-                                <span class="level-badge small">Lv.<?php echo $row['level']; ?></span>
-                            </div>
-                        </td>
-                        <td><?php echo $row['score']; ?></td>
-                        <td>×<?php echo $row['multiplier']; ?></td>
-                        <td>+<?php echo $row['currency_earned']; ?></td>
-                    </tr>
+                        <tr class="<?php echo $row['username'] === $user['username'] ? 'highlight' : ''; ?>">
+                            <td><?php echo $i + 1; ?></td>
+                            <td>
+                                <div class="player-cell">
+                                    <span class="avatar"
+                                        style="background: <?php echo htmlspecialchars($row['avatar_color']); ?>">
+                                        <?php echo strtoupper($row['username'][0]); ?>
+                                    </span>
+                                    <span class="player-name"><?php echo htmlspecialchars($row['username']); ?></span>
+                                    <span class="level-badge small">Lv.<?php echo $row['level']; ?></span>
+                                </div>
+                            </td>
+                            <td><?php echo $row['score']; ?></td>
+                            <td>×<?php echo $row['multiplier']; ?></td>
+                            <td>+<?php echo $row['currency_earned']; ?></td>
+                        </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
             <?php if ($user_rank['rank'] > 10): ?>
-            <div class="your-rank">Your rank: #<?php echo $user_rank['rank']; ?></div>
+                <div class="your-rank">Your rank: #<?php echo $user_rank['rank']; ?></div>
             <?php endif; ?>
         </div>
     </main>
@@ -142,4 +148,5 @@ $user_rank = Database::fetch("
     <script src="<?php echo APP_URL; ?>/assets/js/game.js"></script>
     <script src="<?php echo APP_URL; ?>/assets/js/achievements.js"></script>
 </body>
+
 </html>

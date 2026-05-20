@@ -16,10 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!csrf_verify($_POST['csrf_token'] ?? '')) {
         $error = 'Invalid request.';
     } else {
+        error_log("LOGIN POST: calling process_login for $username\n", 3, __DIR__ . '/debug.log');
         $result = process_login($username, $password);
         if (isset($result['error'])) {
+            error_log("LOGIN POST: error returned - " . $result['error'] . "\n", 3, __DIR__ . '/debug.log');
             $error = $result['error'];
         } else {
+            error_log("LOGIN POST: success, session user_id = " . ($_SESSION['user_id'] ?? 'none') . "\n", 3, __DIR__ . '/debug.log');
             header('Location: ' . APP_URL . '/game.php');
             exit;
         }

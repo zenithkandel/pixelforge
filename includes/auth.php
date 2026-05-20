@@ -52,7 +52,7 @@ if (!function_exists('get_current_user')) {
 if (!function_exists('login_user')) {
     function login_user($user)
     {
-        session_regenerate_id(false);
+        // session_regenerate_id(false);
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['role'] = $user['role'];
         $_SESSION['username'] = $user['username'];
