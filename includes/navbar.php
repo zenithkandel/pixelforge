@@ -1,6 +1,7 @@
 <?php
 $user = get_current_user();
-$xp_progress_val = (is_array($user) && isset($user['xp'])) ? xp_progress($user['xp']) : 0;
+$is_logged_in = is_array($user) && isset($user['id']);
+$xp_progress_val = $is_logged_in ? xp_progress($user['xp']) : 0;
 ?>
 <nav class="navbar">
     <div class="nav-left">
@@ -17,7 +18,7 @@ $xp_progress_val = (is_array($user) && isset($user['xp'])) ? xp_progress($user['
     </div>
 
     <div class="nav-right">
-        <?php if ($user): ?>
+        <?php if ($is_logged_in): ?>
         <div class="xp-bar-container">
             <div class="xp-bar" style="width: <?php echo ($xp_progress_val * 100); ?>%"></div>
         </div>
