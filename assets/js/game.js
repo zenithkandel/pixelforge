@@ -44,6 +44,9 @@
     var powerupBar = document.getElementById('powerup-bar');
     var overlay = document.getElementById('game-overlay');
 
+    var gameToken = '';
+    var csrfToken = '';
+
     function reset() {
         bird.y = 300;
         bird.vy = 0;
@@ -93,7 +96,7 @@
         var types = ['shield', 'slowmo', 'magnet', 'double_coin'];
         var type = types[Math.floor(Math.random() * types.length)];
         var colors = { shield: '#3b82f6', slowmo: '#a78bfa', magnet: '#fbbf24', double_coin: '#22c55e' };
-        var icons = { shield: '🛡️', slowmo: '⏱️', magnet: '🧲', double_coin: '💎' };
+        var icons = { shield: '\u{1f6e1}\u{fe0f}', slowmo: '\u{23f1}\u{fe0f}', magnet: '\u{1f9f2}', double_coin: '\u{1f48e}' };
         powerUps.push({ x: pipe.x + PIPE_WIDTH / 2, y: gapCenter, type: type, collected: false, r: 10, color: colors[type], icon: icons[type] });
     }
 
@@ -153,7 +156,6 @@
                     flashTimer = 90;
                 }
 
-                var oldMult = multiplier;
                 if (score >= 40) multiplier = 3.0;
                 else if (score >= 30) multiplier = 2.5;
                 else if (score >= 20) multiplier = 2.0;
@@ -162,7 +164,7 @@
 
                 if (multiplier > 1.0 && multiplierEl) {
                     multiplierEl.style.display = 'block';
-                    multiplierEl.textContent = multiplier.toFixed(1) + '×';
+                    multiplierEl.textContent = multiplier.toFixed(1) + '\u00d7';
                 }
 
                 if (!p.scoredWithPU && pipesSinceLastPowerUp >= 8 && Math.random() < 0.6) {
@@ -173,9 +175,7 @@
                 spawnCoins(p);
             }
 
-            if (p.x + PIPE_WIDTH < -10) {
-                pipes.splice(i, 1);
-            }
+            if (p.x + PIPE_WIDTH < -10) pipes.splice(i, 1);
         }
 
         for (var i = coins.length - 1; i >= 0; i--) {
@@ -232,34 +232,28 @@
                     if (activeShield) {
                         activeShield = false;
                         if (powerupHud) powerupHud.style.display = 'none';
-                    } else {
-                        die();
-                    }
+                    } else die();
                 }
                 if (bird.y + BIRD_SIZE / 2 > p.gapY + p.gapH) {
                     if (activeShield) {
                         activeShield = false;
                         if (powerupHud) powerupHud.style.display = 'none';
-                    } else {
-                        die();
-                    }
+                    } else die();
                 }
             }
-            if (bird.y - BIRD_SIZE / 2 < 0 || bird.y + BIRD_SIZE / 2 > 640) {
-                if (activeShield) {
-                    activeShield = false;
-                    bird.y = Math.max(BIRD_SIZE / 2, Math.min(640 - BIRD_SIZE / 2, bird.y));
-                } else {
-                    die();
-                }
-            }
+        }
+        if (bird.y - BIRD_SIZE / 2 < 0 || bird.y + BIRD_SIZE / 2 > 640) {
+            if (activeShield) {
+                activeShield = false;
+                bird.y = Math.max(BIRD_SIZE / 2, Math.min(640 - BIRD_SIZE / 2, bird.y));
+            } else die();
         }
     }
 
     function activatePowerUp(pu) {
         if (pu.type === 'shield') {
             activeShield = true;
-            if (powerupHud) { powerupHud.style.display = 'flex'; powerupIcon.textContent = '🛡️'; powerupBar.style.width = '100%'; }
+            if (powerupHud) { powerupHud.style.display = 'flex'; powerupIcon.textContent = pu.icon; powerupBar.style.width = '100%'; }
         } else if (pu.type === 'slowmo') {
             activePowerUp = { type: 'slowmo', duration: 300, timeLeft: 300 };
         } else {
@@ -284,23 +278,24 @@
 
         overlay.style.display = 'flex';
         document.getElementById('go-score').textContent = score;
-        document.getElementById('go-multiplier').textContent = multiplier.toFixed(1) + '× multiplier';
-        document.getElementById('go-currency').textContent = '+' + currencyEarned + ' 💰';
+        document.getElementById('go-multiplier').textContent = multiplier.toFixed(1) + '\u00d7 multiplier';
+        document.getElementById('go-currency').textContent = '+' + currencyEarned + ' \u{1f4b0}';
         document.getElementById('go-xp').textContent = '+' + xpEarned + ' XP';
         document.getElementById('go-coins').textContent = coinsCollected + ' coins';
         document.getElementById('go-best').textContent = '';
 
-        var formData = new URLSearchParams();
-        formData.append('game_token', GAME_TOKEN);
-        formData.append('score', score);
-        formData.append('multiplier', multiplier);
-        formData.append('coins_collected', coinsCollected);
-        formData.append('csrf_token', '<?php require_once __DIR__ . "/../includes/csrf.php"; echo csrf_token(); ?>');
+        if (typeof BASE_URL === 'undefined') var BASE_URL = '';
+
+        var body = 'game_token=' + encodeURIComponent(gameToken) +
+            '&score=' + score +
+            '&multiplier=' + multiplier +
+            '&coins_collected=' + coinsCollected +
+            '&csrf_token=' + encodeURIComponent(csrfToken);
 
         fetch(BASE_URL + '/api/save_score.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: 'game_token=' + encodeURIComponent(GAME_TOKEN) + '&score=' + score + '&multiplier=' + multiplier + '&coins_collected=' + coinsCollected + '&csrf_token=<?php require_once __DIR__ . "/../includes/csrf.php"; echo csrf_token(); ?>'
+            body: body
         }).then(function(res) { return res.json(); })
           .then(function(data) {
               if (data.success && data.new_achievements && data.new_achievements.length > 0) {
@@ -315,14 +310,24 @@
         ctx.fillStyle = '#0a0a18';
         ctx.fillRect(0, 0, 480, 640);
 
-        for (var i = 0; i < backgroundStars.length; i++) {
-            var s = backgroundStars[i];
-            if (gameRunning) s.x -= s.speed;
-            if (s.x < 0) s.x = 480;
-            ctx.fillStyle = 'rgba(255,255,255,' + (0.2 + s.r * 0.3) + ')';
-            ctx.beginPath();
-            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-            ctx.fill();
+        if (gameRunning) {
+            for (var i = 0; i < backgroundStars.length; i++) {
+                var s = backgroundStars[i];
+                s.x -= s.speed;
+                if (s.x < 0) s.x = 480;
+                ctx.fillStyle = 'rgba(255,255,255,' + (0.2 + s.r * 0.3) + ')';
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        } else {
+            for (var i = 0; i < backgroundStars.length; i++) {
+                var s = backgroundStars[i];
+                ctx.fillStyle = 'rgba(255,255,255,' + (0.2 + s.r * 0.3) + ')';
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
         }
 
         for (var i = 0; i < pipes.length; i++) {
@@ -334,7 +339,7 @@
             ctx.fillStyle = gradient;
             ctx.fillRect(p.x, 0, PIPE_WIDTH, p.gapY);
             ctx.fillRect(p.x, p.gapY + p.gapH, PIPE_WIDTH, 640 - p.gapY - p.gapH);
-            ctx.fillStyle = '#3a8a3a';
+            ctx.fillStyle = '#267526';
             ctx.fillRect(p.x - 3, p.gapY - 20, PIPE_WIDTH + 6, 20);
             ctx.fillRect(p.x - 3, p.gapY + p.gapH, PIPE_WIDTH + 6, 20);
         }
@@ -413,9 +418,7 @@
     canvas.addEventListener('touchstart', function(e) { e.preventDefault(); flap(); });
 
     document.getElementById('btn-play-again').addEventListener('click', function() {
-        fetch(BASE_URL + '/game.php', { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
-            .then(function() { reset(); startPregame(); })
-            .catch(function() { reset(); startPregame(); });
+        location.reload();
     });
 
     function startPregame() {
@@ -431,22 +434,24 @@
     }
 
     function loadLeaderboard(period) {
-        fetch(BASE_URL + '/api/get_canvas.php?leaderboard=1&period=' + period)
-            .then(function(res) { return res.json(); })
-            .then(function(data) {})
-            .catch(function() {});
-
         var lbBody = document.getElementById('lb-body');
         var lbRank = document.getElementById('lb-your-rank');
         if (!lbBody) return;
 
-        fetch(BASE_URL + '/leaderboard.php?ajax=1&period=' + period, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        var baseUrl = typeof BASE_URL !== 'undefined' ? BASE_URL : '';
+
+        var params = new URLSearchParams({ ajax: '1', period: period });
+        fetch(baseUrl + '/leaderboard.php?' + params.toString(), { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
             .then(function(res) { return res.text(); })
             .then(function(html) {
-                if (html.trim().startsWith('<')) {
+                if (html.trim().startsWith('<tr') || html.trim().startsWith('<td')) {
                     lbBody.innerHTML = html;
+                } else {
+                    lbBody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--text-muted);">No scores yet</td></tr>';
                 }
-            }).catch(function() { lbBody.innerHTML = '<tr><td colspan="5" class="empty-state">Could not load leaderboard</td></tr>'; });
+            }).catch(function() {
+                lbBody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--text-muted);">Could not load leaderboard</td></tr>';
+            });
     }
 
     document.querySelectorAll('.tab-btn').forEach(function(btn) {
@@ -456,6 +461,10 @@
             loadLeaderboard(this.dataset.lb);
         });
     });
+
+    gameToken = typeof GAME_TOKEN !== 'undefined' ? GAME_TOKEN : '';
+    csrfToken = typeof CSRF_TOKEN !== 'undefined' ? CSRF_TOKEN : '';
+    if (typeof BASE_URL === 'undefined') var BASE_URL = '';
 
     reset();
     startPregame();

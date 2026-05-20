@@ -81,6 +81,8 @@ require_once __DIR__ . '/includes/header.php';
 
 <script>
 var GAME_TOKEN = '<?= $game_token ?>';
+var CSRF_TOKEN = '<?= csrf_token() ?>';
+var BASE_URL = '<?= BASE_URL ?>';
 var CURRENT_USER = { id: <?= (int)$_SESSION['user_id'] ?>, username: '<?= htmlspecialchars($_SESSION['username']) ?>' };
 </script>
 <script src="<?= BASE_URL ?>/assets/js/game.js"></script>
