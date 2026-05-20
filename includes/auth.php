@@ -39,12 +39,17 @@ if (!function_exists('require_admin')) {
     }
 }
 
-if (!function_exists('get_current_user')) {
-    function get_current_user()
+if (!function_exists('get_logged_in_user')) {
+    function get_logged_in_user()
     {
-        if (!is_logged_in() || !isset($_SESSION['user_id']))
+        if (!is_logged_in() || !isset($_SESSION['user_id'])) {
+            error_log("get_logged_in_user: failed is_logged_in. ID is: " . var_export($_SESSION['user_id'] ?? null, true) . "\n", 3, __DIR__ . '/../debug.log');
             return null;
+        }
         $user = Database::fetch("SELECT * FROM users WHERE id = ?", [$_SESSION['user_id']]);
+        if (!is_array($user)) {
+            error_log("get_logged_in_user: Database::fetch returned non-array for id " . $_SESSION['user_id'] . "\n", 3, __DIR__ . '/../debug.log');
+        }
         return is_array($user) ? $user : null;
     }
 }

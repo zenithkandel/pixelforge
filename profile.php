@@ -28,7 +28,7 @@ $recent_pixels = Database::fetchAll("
     WHERE owner_id = ? ORDER BY placed_at DESC LIMIT 10
 ", [$profile_user['id']]);
 
-$user = get_current_user();
+$user = get_logged_in_user();
 ?>
 <!DOCTYPE html>
 <html lang="en">

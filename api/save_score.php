@@ -94,7 +94,7 @@ $new_achievements = [];
 
 $new_achievements = array_merge($new_achievements, check_score_achievements($_SESSION['user_id'], $score, $multiplier));
 
-$user = get_current_user();
+$user = get_logged_in_user();
 $new_achievements = array_merge($new_achievements, check_streak_achievements($_SESSION['user_id'], $user['streak_days']));
 $new_achievements = array_merge($new_achievements, check_level_achievements($_SESSION['user_id'], $user['level']));
 
@@ -107,7 +107,7 @@ $achievements_data = array_map(function($a) {
     ];
 }, $new_achievements);
 
-$user = get_current_user();
+$user = get_logged_in_user();
 echo json_encode([
     'success' => true,
     'score' => $score,

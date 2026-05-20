@@ -4,7 +4,7 @@ require_once __DIR__ . '/includes/headers.php';
 require_once __DIR__ . '/includes/csrf.php';
 require_once __DIR__ . '/includes/auth.php';
 
-$user = get_current_user();
+$user = get_logged_in_user();
 
 $scores_all = Database::fetchAll("
     SELECT u.id, u.username, u.avatar_color, u.level, s.score, s.multiplier, s.currency_earned, s.played_at

@@ -6,7 +6,7 @@ require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/xp.php';
 
 require_login();
-$user = get_current_user();
+$user = get_logged_in_user();
 ?>
 <!DOCTYPE html>
 <html lang="en">

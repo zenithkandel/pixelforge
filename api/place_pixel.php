@@ -65,7 +65,7 @@ if ($existing) {
         exit;
     }
 } else {
-    $user = get_current_user();
+    $user = get_logged_in_user();
     if ($user['balance'] < PIXEL_COST) {
         http_response_code(400);
         echo json_encode(['error' => 'Insufficient balance']);
@@ -98,7 +98,7 @@ if ($existing && $existing['owner_id'] === $_SESSION['user_id']) {
 Database::query("INSERT INTO pixel_placements (user_id) VALUES (?)", [$_SESSION['user_id']]);
 
 $xp_result = add_xp($_SESSION['user_id'], $xp_gain);
-$user = get_current_user();
+$user = get_logged_in_user();
 
 $new_achievements = check_pixel_achievements($_SESSION['user_id']);
 

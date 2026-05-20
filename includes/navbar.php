@@ -1,5 +1,5 @@
 <?php
-$user = get_current_user();
+$user = get_logged_in_user();
 $is_logged_in = is_array($user) && isset($user['id']);
 $xp_progress_val = $is_logged_in ? xp_progress($user['xp']) : 0;
 ?>

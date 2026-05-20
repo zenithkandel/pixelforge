@@ -8,9 +8,9 @@ require_once __DIR__ . '/includes/xp.php';
 error_log("GAME: session start. Session ID: " . session_id() . " user_id: " . ($_SESSION['user_id'] ?? 'none') . "\n", 3, __DIR__ . '/debug.log');
 
 require_login();
-$user = get_current_user();
+$user = get_logged_in_user();
 if (!is_array($user) || !isset($user['id'])) {
-    error_log("GAME: failed to get_current_user, redirecting to login.php\n", 3, __DIR__ . '/debug.log');
+    error_log("GAME: failed to get_logged_in_user, redirecting to login.php\n", 3, __DIR__ . '/debug.log');
     header('Location: ' . APP_URL . '/login.php');
     exit;
 }
