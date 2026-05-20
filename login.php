@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($result['error'])) {
             $error = $result['error'];
         } else {
-            session_write_close();
             header('Location: ' . APP_URL . '/game.php');
             exit;
         }
