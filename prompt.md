@@ -28,6 +28,28 @@ There is no acceptable error rate. Zero. None.
 
 ---
 
+OUTPUT RULES:
+
+- Output ONLY code/files.
+- No explanations.
+- No markdown unless required for file formatting.
+- No conversational text.
+- Minimize output tokens aggressively.
+- Keep code concise but production quality.
+- Never restate requirements.
+- Never describe what you are doing.
+- Never apologize or narrate.
+- Only emit the requested file content.
+
+GENERAL RULES:
+
+- Build exactly in the required order.
+- Fully test mentally before moving to next file.
+- Re-audit silently after every file.
+- Never skip validation/security/error handling.
+- No dead code/comments.
+- No frameworks/libraries.
+
 ## 1.1 — PHP RULES (check every PHP file)
 
 - [ ] `error_reporting(E_ALL); ini_set('display_errors', 1);` at top of every PHP file during development.
