@@ -141,13 +141,7 @@ if (!$is_ajax) {
             </tbody>
         </table>
     </div>
-    <script>
-    document.querySelectorAll('.tab-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            window.location.href = '<?= BASE_URL ?>/leaderboard.php?period=' + this.dataset.lb;
-        });
-    });
-    </script>
+    <script src="<?= BASE_URL ?>/assets/js/leaderboard.js"></script>
     <?php
     require_once __DIR__ . '/includes/footer.php';
 }
