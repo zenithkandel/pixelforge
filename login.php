@@ -103,33 +103,38 @@ require_once __DIR__ . '/includes/header.php';
 
 <div class="page-center">
     <div class="card auth-card">
-        <h2>Welcome Back</h2>
-        <p style="color:var(--text-secondary);margin-bottom:24px;">Log in to your <?= APP_NAME ?> account.</p>
+        <div style="text-align:center;margin-bottom:var(--space-lg);">
+            <div style="font-size:48px;margin-bottom:var(--space-sm);">🎨</div>
+            <h2>Welcome Back</h2>
+            <p style="color:var(--text-secondary);margin:0;">Log in to your <?= APP_NAME ?> account.</p>
+        </div>
 
         <?php if ($success): ?>
-            <div style="background:rgba(34,197,94,0.1);color:var(--green);padding:10px 16px;border-radius:8px;margin-bottom:16px;"><?= htmlspecialchars($success) ?></div>
+            <div class="form-success" style="background:rgba(34,197,94,0.1);padding:12px 16px;border-radius:var(--radius-md);margin-bottom:var(--space-md);text-align:center;"><?= htmlspecialchars($success) ?></div>
         <?php endif; ?>
 
         <?php if ($errors): ?>
-            <?php foreach ($errors as $err): ?>
-                <div style="background:rgba(239,68,68,0.1);color:var(--red);padding:10px 16px;border-radius:8px;margin-bottom:8px;"><?= htmlspecialchars($err) ?></div>
-            <?php endforeach; ?>
+            <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);padding:12px 16px;border-radius:var(--radius-md);margin-bottom:var(--space-md);">
+                <?php foreach ($errors as $err): ?>
+                    <div style="color:var(--red);font-size:14px;"><?= htmlspecialchars($err) ?></div>
+                <?php endforeach; ?>
+            </div>
         <?php endif; ?>
 
         <form method="POST">
             <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
             <div class="form-group">
                 <label for="login">Username or Email</label>
-                <input type="text" id="login" name="login" required value="<?= htmlspecialchars($login ?? '') ?>">
+                <input type="text" id="login" name="login" required placeholder="Enter username or email" value="<?= htmlspecialchars($login ?? '') ?>" autocomplete="username">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" required placeholder="Enter password" autocomplete="current-password">
             </div>
-            <button type="submit" class="btn-primary" style="width:100%;">Login</button>
+            <button type="submit" class="btn-primary" style="width:100%;margin-top:var(--space-sm);">Sign In</button>
         </form>
-        <p style="text-align:center;margin-top:20px;color:var(--text-muted);">
-            Don't have an account? <a href="<?= BASE_URL ?>/register.php" style="color:var(--purple-bright);">Register</a>
+        <p style="text-align:center;margin-top:var(--space-lg);margin-bottom:0;color:var(--text-muted);font-size:14px;">
+            Don't have an account? <a href="<?= BASE_URL ?>/register.php" style="font-weight:600;">Create one</a>
         </p>
     </div>
 </div>

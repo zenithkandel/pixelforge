@@ -12,6 +12,14 @@ if (!isset($page_title)) $page_title = APP_NAME;
     <?php if (isset($extra_css)): ?>
         <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/<?= htmlspecialchars($extra_css, ENT_QUOTES, 'UTF-8') ?>">
     <?php endif; ?>
+    <script nonce="<?= $GLOBALS['csp_nonce'] ?? '' ?>">
+    (function() {
+        var stored = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = stored || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+    })();
+    </script>
 </head>
 <body>
     <nav>
@@ -24,7 +32,10 @@ if (!isset($page_title)) $page_title = APP_NAME;
                 <a href="<?= BASE_URL ?>/leaderboard.php" class="<?= basename($_SERVER['PHP_SELF']) === 'leaderboard.php' ? 'active' : '' ?>">Scores</a>
             <?php endif; ?>
         </div>
-        <div class="nav-right">
+        <div class="nav-right nav-right-desktop">
+            <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
+                <span class="theme-icon">🌙</span>
+            </button>
             <?php if (isset($_SESSION['user_id'])): ?>
                 <?php
                 $nav_user = current_user();
@@ -53,4 +64,76 @@ if (!isset($page_title)) $page_title = APP_NAME;
                 <a href="<?= BASE_URL ?>/register.php" class="btn-primary btn-sm">Register</a>
             <?php endif; ?>
         </div>
+        <button class="hamburger" id="mobile-menu-toggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </nav>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <button class="theme-toggle" id="mobile-theme-toggle" style="margin-bottom: 8px; width: 100%; justify-content: center;">
+            <span class="theme-icon">🌙</span>
+        </button>
+        <a href="<?= BASE_URL ?>/">Canvas</a>
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <a href="<?= BASE_URL ?>/game.php">Game</a>
+            <a href="<?= BASE_URL ?>/canvas.php">Draw</a>
+            <a href="<?= BASE_URL ?>/leaderboard.php">Scores</a>
+            <?php if (isset($nav_user)): ?>
+                <a href="<?= BASE_URL ?>/profile.php?user=<?= urlencode($nav_user['username']) ?>">Profile</a>
+                <?php if ($nav_user['role'] === 'admin'): ?>
+                    <a href="<?= BASE_URL ?>/admin/">Admin</a>
+                <?php endif; ?>
+                <a href="<?= BASE_URL ?>/logout.php" style="color: var(--red);">Logout</a>
+            <?php endif; ?>
+        <?php else: ?>
+            <a href="<?= BASE_URL ?>/login.php">Login</a>
+            <a href="<?= BASE_URL ?>/register.php">Register</a>
+        <?php endif; ?>
+    </div>
+
+    <script nonce="<?= $GLOBALS['csp_nonce'] ?? '' ?>">
+    (function() {
+        var toggle = document.getElementById('theme-toggle');
+        var mobileToggle = document.getElementById('mobile-theme-toggle');
+        var mobileMenu = document.getElementById('mobile-menu');
+        var mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+
+        function updateThemeIcon() {
+            var theme = document.documentElement.getAttribute('data-theme');
+            var icon = theme === 'light' ? '☀️' : '🌙';
+            if (toggle) toggle.querySelector('.theme-icon').textContent = icon;
+            if (mobileToggle) mobileToggle.querySelector('.theme-icon').textContent = icon;
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            updateThemeIcon();
+        }
+
+        function toggleTheme() {
+            var current = document.documentElement.getAttribute('data-theme');
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        }
+
+        if (toggle) toggle.addEventListener('click', toggleTheme);
+        if (mobileToggle) mobileToggle.addEventListener('click', toggleTheme);
+
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                mobileMenu.classList.toggle('open');
+            });
+        }
+
+        document.addEventListener('click', function(e) {
+            if (mobileMenu && !mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                mobileMenu.classList.remove('open');
+            }
+        });
+
+        updateThemeIcon();
+    })();
+    </script>

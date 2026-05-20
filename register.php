@@ -86,35 +86,43 @@ require_once __DIR__ . '/includes/header.php';
 
 <div class="page-center">
     <div class="card auth-card">
-        <h2>Join <?= APP_NAME ?></h2>
-        <p style="color:var(--text-secondary);margin-bottom:24px;">Create your account and start building.</p>
+        <div style="text-align:center;margin-bottom:var(--space-lg);">
+            <div style="font-size:48px;margin-bottom:var(--space-sm);">🎨</div>
+            <h2>Join <?= APP_NAME ?></h2>
+            <p style="color:var(--text-secondary);margin:0;">Create your account and start building.</p>
+        </div>
 
-        <?php foreach ($errors as $err): ?>
-            <div style="background:rgba(239,68,68,0.1);color:var(--red);padding:10px 16px;border-radius:8px;margin-bottom:8px;"><?= htmlspecialchars($err) ?></div>
-        <?php endforeach; ?>
+        <?php if (!empty($errors)): ?>
+            <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);padding:12px 16px;border-radius:var(--radius-md);margin-bottom:var(--space-md);">
+                <?php foreach ($errors as $err): ?>
+                    <div style="color:var(--red);font-size:14px;"><?= htmlspecialchars($err) ?></div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
 
         <form method="POST">
             <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" required maxlength="30" value="<?= htmlspecialchars($username ?? '') ?>">
+                <input type="text" id="username" name="username" required maxlength="30" placeholder="Choose a username" value="<?= htmlspecialchars($username ?? '') ?>" autocomplete="username">
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" required value="<?= htmlspecialchars($email ?? '') ?>">
+                <input type="email" id="email" name="email" required placeholder="you@example.com" value="<?= htmlspecialchars($email ?? '') ?>" autocomplete="email">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required minlength="8">
+                <input type="password" id="password" name="password" required minlength="8" placeholder="At least 8 characters">
+                <div class="form-hint">Must contain at least one letter and one number</div>
             </div>
             <div class="form-group">
                 <label for="confirm_password">Confirm Password</label>
-                <input type="password" id="confirm_password" name="confirm_password" required>
+                <input type="password" id="confirm_password" name="confirm_password" required placeholder="Repeat your password">
             </div>
-            <button type="submit" class="btn-primary" style="width:100%;">Register</button>
+            <button type="submit" class="btn-primary" style="width:100%;margin-top:var(--space-sm);">Create Account</button>
         </form>
-        <p style="text-align:center;margin-top:20px;color:var(--text-muted);">
-            Already have an account? <a href="<?= BASE_URL ?>/login.php" style="color:var(--purple-bright);">Login</a>
+        <p style="text-align:center;margin-top:var(--space-lg);margin-bottom:0;color:var(--text-muted);font-size:14px;">
+            Already have an account? <a href="<?= BASE_URL ?>/login.php" style="font-weight:600;">Sign in</a>
         </p>
     </div>
 </div>
