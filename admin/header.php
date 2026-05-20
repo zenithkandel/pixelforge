@@ -32,9 +32,9 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
         }
 
         .admin-sidebar {
-            width: var(--admin-sidebar-width);
-            background: var(--bg-surface);
-            border-right: 1px solid var(--border-subtle);
+            width: 240px;
+            background: #0f0f1a;
+            border-right: 1px solid rgba(255,255,255,0.06);
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
@@ -44,7 +44,6 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
             bottom: 0;
             z-index: 100;
             overflow-y: auto;
-            transition: background var(--transition-slow);
         }
 
         .admin-brand {
@@ -163,16 +162,17 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
 
         .admin-main {
             flex: 1;
-            margin-left: var(--admin-sidebar-width);
+            margin-left: 240px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            background: #080810;
         }
 
         .admin-header {
-            height: var(--admin-header-height);
-            background: var(--bg-surface);
-            border-bottom: 1px solid var(--border-subtle);
+            height: 60px;
+            background: #0f0f1a;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -181,30 +181,29 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
             top: 0;
             z-index: 50;
             backdrop-filter: blur(12px);
-            transition: background var(--transition-slow), border-color var(--transition-slow);
         }
 
         .admin-header-left {
             display: flex;
             align-items: center;
-            gap: var(--space-md);
+            gap: 16px;
         }
 
         .admin-page-title {
             font-size: 18px;
             font-weight: 600;
-            color: var(--text-primary);
+            color: #f0f0ff;
             margin: 0;
         }
 
         .admin-header-right {
             display: flex;
             align-items: center;
-            gap: var(--space-md);
+            gap: 16px;
         }
 
         .admin-content {
-            padding: var(--space-xl);
+            padding: 40px;
         }
 
         .admin-section {
