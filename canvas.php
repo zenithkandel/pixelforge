@@ -17,35 +17,37 @@ require_once __DIR__ . '/includes/header.php';
 <div class="page-content">
     <div class="page-header" style="text-align:center;">
         <h1>Interactive Canvas</h1>
-        <p>Click a cell to place or repaint a pixel. Cost: 5 💰 for unclaimed cells.</p>
+        <p>Click a cell to place or repaint a pixel. Cost: <span class="currency">5 💰</span> for unclaimed cells.</p>
     </div>
 
-    <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;">
-        <div id="canvas-container" style="position:relative;">
-            <canvas id="pixel-canvas" width="800" height="800"></canvas>
-            <div id="canvas-status" style="position:absolute;top:8px;right:12px;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--green);">
-                <span style="width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse-dot 2s ease infinite;"></span> Live
+    <div style="display:flex;gap:var(--space-lg);flex-wrap:wrap;justify-content:center;align-items:flex-start;">
+        <div id="canvas-container" style="position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);">
+            <canvas id="pixel-canvas" width="800" height="800" style="display:block;"></canvas>
+            <div id="canvas-status" style="position:absolute;top:12px;right:12px;display:flex;align-items:center;gap:6px;font-size:12px;background:rgba(0,0,0,0.6);padding:6px 10px;border-radius:var(--radius-pill);backdrop-filter:blur(8px);">
+                <span style="width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse-dot 2s ease infinite;"></span> <span style="color:#fff;">Live</span>
             </div>
-            <div id="zoom-indicator" style="position:absolute;bottom:8px;left:12px;font-size:12px;color:var(--text-muted);">1×</div>
+            <div id="zoom-indicator" style="position:absolute;bottom:12px;left:12px;font-size:12px;background:rgba(0,0,0,0.6);padding:6px 10px;border-radius:var(--radius-pill);backdrop-filter:blur(8px);color:#fff;">1×</div>
         </div>
 
-        <div id="pixel-panel" class="card" style="width:280px;align-self:flex-start;display:none;">
-            <h3 style="margin-top:0;font-size:16px;">Pixel <span id="panel-coords"></span></h3>
-            <div id="panel-owner" class="form-group" style="font-size:13px;color:var(--text-muted);"></div>
+        <div id="pixel-panel" class="card" style="width:280px;align-self:flex-start;display:none;position:sticky;top:80px;">
+            <h3 style="margin:0 0 var(--space-md);font-size:16px;font-weight:600;">Pixel <span id="panel-coords" style="font-family:var(--font-mono);font-weight:400;"></span></h3>
+            <div id="panel-owner" style="font-size:13px;color:var(--text-muted);margin-bottom:var(--space-md);padding:var(--space-sm) var(--space-md);background:var(--bg-elevated);border-radius:var(--radius-sm);"></div>
             <div class="form-group">
-                <label for="pixel-color">Color</label>
-                <input type="color" id="pixel-color" value="#7c3aed">
-                <input type="text" id="pixel-color-hex" value="#7c3aed" style="margin-top:4px;font-family:var(--font-mono);font-size:13px;">
+                <label for="pixel-color" style="font-weight:500;">Color</label>
+                <div style="display:flex;gap:var(--space-sm);align-items:center;">
+                    <input type="color" id="pixel-color" value="#7c3aed" style="width:48px;height:40px;padding:2px;border-radius:var(--radius-sm);cursor:pointer;">
+                    <input type="text" id="pixel-color-hex" value="#7c3aed" style="flex:1;font-family:var(--font-mono);font-size:13px;margin:0;">
+                </div>
             </div>
-            <div class="form-group" style="font-size:14px;">
+            <div style="font-size:14px;margin:var(--space-md) 0;color:var(--text-secondary);">
                 Cost: <span id="panel-cost" class="currency">5 💰</span>
             </div>
             <button id="place-pixel-btn" class="btn-primary" style="width:100%;">Place Pixel</button>
-            <div id="panel-error" class="form-error"></div>
+            <div id="panel-error" class="form-error" style="margin-top:var(--space-sm);"></div>
         </div>
     </div>
 
-    <div style="display:flex;justify-content:center;gap:12px;margin-top:16px;">
+    <div style="display:flex;justify-content:center;gap:var(--space-sm);margin-top:var(--space-md);flex-wrap:wrap;">
         <button id="toggle-territory" class="btn-secondary btn-sm">Territory View</button>
         <button id="toggle-mypixels" class="btn-secondary btn-sm">My Pixels</button>
     </div>

@@ -15,30 +15,32 @@ if (!$is_ajax) {
     require_once __DIR__ . '/includes/header.php';
     ?>
     <div class="page-content">
-        <div class="page-header">
+        <div class="page-header" style="text-align:center;">
             <h1>Leaderboard</h1>
             <p>Top players of <?= APP_NAME ?></p>
         </div>
-        <div class="tabs">
-            <button class="tab-btn <?= $period === 'all' ? 'active' : '' ?>" data-lb="all">All-Time</button>
-            <button class="tab-btn <?= $period === 'week' ? 'active' : '' ?>" data-lb="week">This Week</button>
-            <button class="tab-btn <?= $period === 'today' ? 'active' : '' ?>" data-lb="today">Today</button>
-            <button class="tab-btn <?= $period === 'pixels' ? 'active' : '' ?>" data-lb="pixels">Most Pixels</button>
-            <button class="tab-btn <?= $period === 'xp' ? 'active' : '' ?>" data-lb="xp">Most XP</button>
-        </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Player</th>
-                    <th>Level</th>
-                    <th id="lb-col-score">Score</th>
-                    <th id="lb-col-mult">Multiplier</th>
-                    <th id="lb-col-earned">Earned</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody id="lb-body">
+
+        <div class="card">
+            <div class="tabs" style="margin:0 0 var(--space-md) 0;border:none;">
+                <button class="tab-btn <?= $period === 'all' ? 'active' : '' ?>" data-lb="all">All-Time</button>
+                <button class="tab-btn <?= $period === 'week' ? 'active' : '' ?>" data-lb="week">This Week</button>
+                <button class="tab-btn <?= $period === 'today' ? 'active' : '' ?>" data-lb="today">Today</button>
+                <button class="tab-btn <?= $period === 'pixels' ? 'active' : '' ?>" data-lb="pixels">Most Pixels</button>
+                <button class="tab-btn <?= $period === 'xp' ? 'active' : '' ?>" data-lb="xp">Most XP</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:60px;">Rank</th>
+                        <th>Player</th>
+                        <th style="width:80px;">Level</th>
+                        <th id="lb-col-score" style="text-align:right;">Score</th>
+                        <th id="lb-col-mult" style="text-align:right;">Mult</th>
+                        <th id="lb-col-earned" style="text-align:right;">Earned</th>
+                        <th style="width:100px;">Date</th>
+                    </tr>
+                </thead>
+                <tbody id="lb-body">
     <?php
 }
 
@@ -138,8 +140,9 @@ foreach ($rows_data as $row) {
 
 if (!$is_ajax) {
     ?>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
     <script nonce="<?= $GLOBALS['csp_nonce'] ?>">
     document.querySelectorAll('.tab-btn').forEach(function(btn) {
