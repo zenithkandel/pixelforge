@@ -140,6 +140,7 @@
             if (pipesSinceLastPowerUp >= 8 && powerUps.length === 0 && Math.random() < 0.5) {
                 pipesSinceLastPowerUp = 0;
             }
+            spawnCoins(pipes[pipes.length - 1]);
         }
 
         var actualSpeed = activePowerUp && activePowerUp.type === 'slowmo' ? pipeSpeed * 0.5 : pipeSpeed;
@@ -177,8 +178,6 @@
                     spawnPowerUp(p);
                     pipesSinceLastPowerUp = 0;
                 }
-
-                spawnCoins(p);
             }
 
             if (p.x + PIPE_WIDTH < -10) pipes.splice(i, 1);

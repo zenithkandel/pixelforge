@@ -1631,3 +1631,138 @@
 [2026-05-20 16:49:38] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
 [2026-05-20 16:49:38] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":10,"multiplier":1.5,"coins":0}
 [2026-05-20 16:49:38] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":10,"currency":30,"xp":10,"balance":139}
+[2026-05-20 16:52:08] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:52:08] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:52:19] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:52:19] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":4,"multiplier":1,"coins":0}
+[2026-05-20 16:52:19] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":4,"currency":8,"xp":4,"balance":147}
+[2026-05-20 16:52:20] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:52:21] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:52:23] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:52:23] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:52:26] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:52:26] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":0,"multiplier":1,"coins":0}
+[2026-05-20 16:52:26] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":0,"currency":0,"xp":0,"balance":147}
+[2026-05-20 16:52:26] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:52:26] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:52:27] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:52:27] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:52:28] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:52:28] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:52:28] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:52:28] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:52:34] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:52:34] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:52:50] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:52:50] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":7,"multiplier":1,"coins":15}
+[2026-05-20 16:52:50] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":7,"currency":89,"xp":37,"balance":236}
+[2026-05-20 16:52:52] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:52:52] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:53:02] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:53:02] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":3,"multiplier":1,"coins":3}
+[2026-05-20 16:53:02] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":3,"currency":21,"xp":9,"balance":257}
+[2026-05-20 16:53:04] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:53:04] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:53:09] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:53:09] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":0,"multiplier":1,"coins":1}
+[2026-05-20 16:53:09] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":0,"currency":5,"xp":2,"balance":262}
+[2026-05-20 16:53:11] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:53:11] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:53:18] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:53:18] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":1,"multiplier":1,"coins":4}
+[2026-05-20 16:53:18] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":1,"currency":22,"xp":9,"balance":284}
+[2026-05-20 16:53:19] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:53:19] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:53:29] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:53:29] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":3,"multiplier":1,"coins":8}
+[2026-05-20 16:53:29] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":3,"currency":46,"xp":19,"balance":330}
+[2026-05-20 16:53:34] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:53:34] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:53:51] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:53:51] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":8,"multiplier":1,"coins":15}
+[2026-05-20 16:53:51] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":8,"currency":91,"xp":38,"balance":421}
+[2026-05-20 16:53:56] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:53:56] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:54:00] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:54:00] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":0,"multiplier":1,"coins":0}
+[2026-05-20 16:54:00] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":0,"currency":0,"xp":0,"balance":421}
+[2026-05-20 16:54:00] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:54:00] [SECURITY] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score rejected — invalid/used token | {"token":"d134228c"}
+[2026-05-20 16:54:01] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:54:01] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:54:10] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:54:10] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":2,"multiplier":1,"coins":3}
+[2026-05-20 16:54:10] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":2,"currency":19,"xp":8,"balance":440}
+[2026-05-20 16:54:12] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:54:12] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:54:18] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:54:18] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":1,"multiplier":1,"coins":2}
+[2026-05-20 16:54:18] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":1,"currency":12,"xp":5,"balance":452}
+[2026-05-20 16:54:21] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:54:21] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:54:32] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:54:32] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":4,"multiplier":1,"coins":8}
+[2026-05-20 16:54:32] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":4,"currency":48,"xp":20,"balance":500}
+[2026-05-20 16:54:34] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:54:34] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:54:36] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:54:36] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":0,"multiplier":1,"coins":0}
+[2026-05-20 16:54:36] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":0,"currency":0,"xp":0,"balance":500}
+[2026-05-20 16:54:38] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:54:38] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:55:06] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:55:06] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":16,"multiplier":1.5,"coins":28}
+[2026-05-20 16:55:06] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":16,"currency":188,"xp":72,"balance":688}
+[2026-05-20 16:55:10] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:55:10] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:55:11] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/canvas.php] Page request received
+[2026-05-20 16:55:11] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 16:55:11] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":74}
+[2026-05-20 16:55:13] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 16:55:13] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":57,"y":8,"color":"#7c3aed"}
+[2026-05-20 16:55:13] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":57,"y":8,"color":"#7c3aed","new_balance":683}
+[2026-05-20 16:55:14] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 16:55:14] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":59,"y":8,"color":"#7c3aed"}
+[2026-05-20 16:55:14] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":59,"y":8,"color":"#7c3aed","new_balance":678}
+[2026-05-20 16:55:15] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 16:55:15] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":72,"y":20,"color":"#7c3aed"}
+[2026-05-20 16:55:15] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":72,"y":20,"color":"#7c3aed","new_balance":673}
+[2026-05-20 16:55:16] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 16:55:16] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":96,"y":29,"color":"#7c3aed"}
+[2026-05-20 16:55:16] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":96,"y":29,"color":"#7c3aed","new_balance":668}
+[2026-05-20 16:55:16] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 16:55:16] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":78}
+[2026-05-20 16:55:17] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 16:55:17] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":81,"y":36,"color":"#7c3aed"}
+[2026-05-20 16:55:17] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":81,"y":36,"color":"#7c3aed","new_balance":663}
+[2026-05-20 16:55:18] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 16:55:18] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":83,"y":53,"color":"#7c3aed"}
+[2026-05-20 16:55:18] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":83,"y":53,"color":"#7c3aed","new_balance":658}
+[2026-05-20 16:55:21] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 16:55:21] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":97,"y":42,"color":"#7c3aed"}
+[2026-05-20 16:55:21] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":97,"y":42,"color":"#7c3aed","new_balance":653}
+[2026-05-20 16:55:21] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 16:55:21] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":81}
+[2026-05-20 16:55:21] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 16:55:21] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":87,"y":39,"color":"#7c3aed"}
+[2026-05-20 16:55:21] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":87,"y":39,"color":"#7c3aed","new_balance":648}
+[2026-05-20 16:55:22] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 16:55:22] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":88,"y":47,"color":"#7c3aed"}
+[2026-05-20 16:55:22] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":88,"y":47,"color":"#7c3aed","new_balance":643}
+[2026-05-20 16:55:26] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 16:55:26] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":83}
+[2026-05-20 16:55:29] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 16:55:29] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":82,"y":12,"color":"#7c3aed"}
+[2026-05-20 16:55:29] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":82,"y":12,"color":"#7c3aed","new_balance":638}
+[2026-05-20 16:55:31] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 16:55:31] [SECURITY] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel rejected — rate limit | {"count":10}
+[2026-05-20 16:55:31] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 16:55:31] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-20 16:55:32] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 16:55:32] [SECURITY] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel rejected — rate limit | {"count":10}
+[2026-05-20 16:55:34] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-20 16:55:34] [SECURITY] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel rejected — rate limit | {"count":10}
+[2026-05-20 16:55:36] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 16:55:36] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-20 16:55:41] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 16:55:41] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
