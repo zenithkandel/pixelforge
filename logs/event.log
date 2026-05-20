@@ -9,3 +9,18 @@
 [2026-05-20 10:47:55] [ERROR] [PHP] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/admin/] FATAL: Cannot redeclare get_current_user() | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\includes\\auth.php","line":71}
 [2026-05-20 10:48:10] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/] Page request received
 [2026-05-20 10:48:10] [ERROR] [PHP] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/] FATAL: Cannot redeclare get_current_user() | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\includes\\auth.php","line":71}
+[2026-05-20 10:51:17] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 10:51:22] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/admin/] Page request received
+[2026-05-20 10:51:22] [SECURITY] [ADMIN] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/admin/] Unauthorized admin access attempt
+[2026-05-20 10:51:29] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/login.php] Page request received
+[2026-05-20 10:52:17] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 10:52:19] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/login.php] Page request received
+[2026-05-20 10:52:28] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [POST /codes/pixelforge/login.php] Page request received
+[2026-05-20 10:52:28] [INFO] [AUTH] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/login.php] Daily streak bonus awarded | {"streak":1,"bonus":10}
+[2026-05-20 10:52:28] [INFO] [AUTH] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/login.php] User logged in | {"username":"admin"}
+[2026-05-20 10:52:28] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 10:52:28] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Uncaught Exception: Cannot access offset of type string on string | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\includes\\header.php","line":31,"trace":"#0 C:\\xampp\\htdocs\\codes\\pixelforge\\index.php(11): require_once()\n#1 {main}"}
+[2026-05-20 10:52:45] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 10:52:45] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Uncaught Exception: Cannot access offset of type string on string | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\includes\\header.php","line":31,"trace":"#0 C:\\xampp\\htdocs\\codes\\pixelforge\\index.php(11): require_once()\n#1 {main}"}
+[2026-05-20 10:52:49] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 10:52:49] [ERROR] [PHP] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Uncaught Exception: Cannot access offset of type string on string | {"file":"C:\\xampp\\htdocs\\codes\\pixelforge\\includes\\header.php","line":31,"trace":"#0 C:\\xampp\\htdocs\\codes\\pixelforge\\index.php(11): require_once()\n#1 {main}"}
