@@ -284,15 +284,13 @@
         document.getElementById('go-coins').textContent = coinsCollected + ' coins';
         document.getElementById('go-best').textContent = '';
 
-        if (typeof BASE_URL === 'undefined') BASE_URL = '';
-
         var body = 'game_token=' + encodeURIComponent(gameToken) +
             '&score=' + score +
             '&multiplier=' + multiplier +
             '&coins_collected=' + coinsCollected +
             '&csrf_token=' + encodeURIComponent(csrfToken);
 
-        fetch(BASE_URL + '/api/save_score.php', {
+        fetch('api/save_score.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: body
@@ -302,6 +300,9 @@
                   if (typeof window.queueAchievements === 'function') {
                       window.queueAchievements(data.new_achievements);
                   }
+              }
+          }).catch(function() {});
+    }
               }
           }).catch(function() {});
     }
@@ -438,10 +439,7 @@
         var lbRank = document.getElementById('lb-your-rank');
         if (!lbBody) return;
 
-        var baseUrl = typeof BASE_URL !== 'undefined' ? BASE_URL : '';
-
-        var params = new URLSearchParams({ ajax: '1', period: period });
-        fetch(baseUrl + '/leaderboard.php?' + params.toString(), { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        fetch('leaderboard.php?ajax=1&period=' + encodeURIComponent(period), { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
             .then(function(res) { return res.text(); })
             .then(function(html) {
                 if (html.trim().startsWith('<tr') || html.trim().startsWith('<td')) {
@@ -462,9 +460,8 @@
         });
     });
 
-    gameToken = typeof GAME_TOKEN !== 'undefined' ? GAME_TOKEN : '';
-    csrfToken = typeof CSRF_TOKEN !== 'undefined' ? CSRF_TOKEN : '';
-    if (typeof BASE_URL === 'undefined') BASE_URL = '';
+    gameToken = GAME_TOKEN;
+    csrfToken = CSRF_TOKEN;
 
     reset();
     startPregame();

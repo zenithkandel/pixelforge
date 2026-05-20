@@ -36,7 +36,7 @@ require_once __DIR__ . '/includes/header.php';
     <?php endif; ?>
 </div>
 
-<script>
+<script nonce="<?= $GLOBALS['csp_nonce'] ?>">
 const CANVAS = {
     pollingInterval: null,
     pixels: [],
@@ -215,7 +215,7 @@ canvas.addEventListener('touchend', function() { CANVAS.isDragging = false; });
 canvas.style.cursor = 'grab';
 
 function fetchCanvas() {
-    fetch('<?= BASE_URL ?>/api/get_canvas.php')
+    fetch('api/get_canvas.php')
         .then(function(res) { if (!res.ok) throw new Error('Network error'); return res.json(); })
         .then(function(data) {
             CANVAS.pixels = data.pixels;

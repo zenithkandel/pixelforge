@@ -127,7 +127,7 @@ require_once __DIR__ . '/../includes/header.php';
     </div>
 </div>
 
-<script>
+<script nonce="<?= $GLOBALS['csp_nonce'] ?>">
 (function() {
     var canvas = document.getElementById('admin-canvas');
     if (!canvas) return;
@@ -168,7 +168,7 @@ require_once __DIR__ . '/../includes/header.php';
         form.submit();
     });
 
-    fetch('<?= BASE_URL ?>/api/get_canvas.php')
+    fetch('api/get_canvas.php')
         .then(function(res) { return res.json(); })
         .then(function(data) { pixels = data.pixels; render(); })
         .catch(function() {});

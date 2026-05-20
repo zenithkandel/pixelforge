@@ -51,7 +51,7 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </div>
 
-<script>
+<script nonce="<?= $GLOBALS['csp_nonce'] ?>">
 (function() {
     const CANVAS_STATE = {
         pollingInterval: null,
@@ -282,7 +282,7 @@ require_once __DIR__ . '/includes/header.php';
         formData.append('color', colorInput.value);
         formData.append('csrf_token', '<?= csrf_token() ?>');
 
-        fetch('<?= BASE_URL ?>/api/place_pixel.php', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: formData })
+        fetch('api/place_pixel.php', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: formData })
             .then(function(res) { return res.json().then(function(data) { return { ok: res.ok, data: data }; }); })
             .then(function(result) {
                 if (result.ok && result.data.success) {
@@ -325,7 +325,7 @@ require_once __DIR__ . '/includes/header.php';
     });
 
     function fetchCanvas() {
-        fetch('<?= BASE_URL ?>/api/get_canvas.php')
+        fetch('api/get_canvas.php')
             .then(function(res) { if (!res.ok) throw new Error('Network error'); return res.json(); })
             .then(function(data) { CANVAS_STATE.pixels = data.pixels; renderCanvas(); })
             .catch(function(err) { console.error('Poll failed:', err); });

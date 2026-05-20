@@ -79,7 +79,7 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </div>
 
-<script>
+<script nonce="<?= $GLOBALS['csp_nonce'] ?>">
 var GAME_TOKEN = '<?= $game_token ?>';
 var CSRF_TOKEN = '<?= csrf_token() ?>';
 var BASE_URL = '<?= BASE_URL ?>';

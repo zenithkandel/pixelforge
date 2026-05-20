@@ -141,10 +141,10 @@ if (!$is_ajax) {
             </tbody>
         </table>
     </div>
-    <script>
+    <script nonce="<?= $GLOBALS['csp_nonce'] ?>">
     document.querySelectorAll('.tab-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
-            window.location.href = '<?= BASE_URL ?>/leaderboard.php?period=' + this.dataset.lb;
+            window.location.href = 'leaderboard.php?period=' + encodeURIComponent(this.dataset.lb);
         });
     });
     </script>

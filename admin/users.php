@@ -149,7 +149,7 @@ require_once __DIR__ . '/../includes/header.php';
                 <td><?= (int)$u['streak_days'] ?>d</td>
                 <td style="font-size:12px;color:var(--text-muted);"><?= date('M j, Y', strtotime($u['created_at'])) ?></td>
                 <td>
-                    <button class="btn-secondary btn-sm" onclick="openUserModal(<?= (int)$u['id'] ?>, '<?= htmlspecialchars($u['username']) ?>', <?= (int)$u['balance'] ?>, '<?= $u['role'] ?>')">Manage</button>
+                    <button class="btn-secondary btn-sm manage-btn" data-uid="<?= (int)$u['id'] ?>" data-uname="<?= htmlspecialchars($u['username']) ?>" data-balance="<?= (int)$u['balance'] ?>" data-role="<?= $u['role'] ?>">Manage</button>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -177,7 +177,7 @@ require_once __DIR__ . '/../includes/header.php';
                 <label>Set Balance (absolute)</label>
                 <div style="display:flex;gap:8px;">
                     <input type="number" name="amount" id="modal-balance" min="0" value="0">
-                    <button type="button" class="btn-secondary btn-sm" onclick="setAction('set_balance')">Set</button>
+                    <button type="button" class="btn-secondary btn-sm modal-action-btn" data-action="set_balance">Set</button>
                 </div>
             </div>
 
@@ -185,7 +185,7 @@ require_once __DIR__ . '/../includes/header.php';
                 <label>Adjust Balance (delta)</label>
                 <div style="display:flex;gap:8px;">
                     <input type="number" name="delta" id="modal-delta" value="0">
-                    <button type="button" class="btn-secondary btn-sm" onclick="setAction('adjust_balance')">Adjust</button>
+                    <button type="button" class="btn-secondary btn-sm modal-action-btn" data-action="adjust_balance">Adjust</button>
                 </div>
             </div>
 
@@ -195,21 +195,21 @@ require_once __DIR__ . '/../includes/header.php';
                     <option value="user">User</option>
                     <option value="admin">Admin</option>
                 </select>
-                <button type="button" class="btn-secondary btn-sm" onclick="setAction('change_role')" style="margin-top:8px;">Change Role</button>
+                <button type="button" class="btn-secondary btn-sm modal-action-btn" data-action="change_role" style="margin-top:8px;">Change Role</button>
             </div>
 
             <div style="display:flex;gap:8px;margin-top:16px;">
-                <button type="button" class="btn-secondary btn-sm" onclick="setAction('reset_streak')">Reset Streak</button>
-                <button type="button" class="btn-danger btn-sm" onclick="if(confirm('Delete this user?')){setAction('delete_user');}">Delete</button>
+                <button type="button" class="btn-secondary btn-sm modal-action-btn" data-action="reset_streak">Reset Streak</button>
+                <button type="button" class="btn-danger btn-sm modal-delete-btn">Delete</button>
             </div>
         </form>
         <div style="text-align:right;margin-top:16px;">
-            <button class="btn-secondary btn-sm" onclick="document.getElementById('user-modal').style.display='none'">Close</button>
+            <button class="btn-secondary btn-sm modal-close-btn">Close</button>
         </div>
     </div>
 </div>
 
-<script>
+<script nonce="<?= $GLOBALS['csp_nonce'] ?>">
 function openUserModal(id, username, balance, role) {
     document.getElementById('modal-user-id').value = id;
     document.getElementById('modal-username').textContent = username;
