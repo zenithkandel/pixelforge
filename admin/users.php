@@ -210,18 +210,41 @@ require_once __DIR__ . '/../includes/header.php';
 </div>
 
 <script nonce="<?= $GLOBALS['csp_nonce'] ?>">
-function openUserModal(id, username, balance, role) {
-    document.getElementById('modal-user-id').value = id;
-    document.getElementById('modal-username').textContent = username;
-    document.getElementById('modal-balance').value = balance;
-    document.getElementById('modal-role').value = role;
-    document.getElementById('user-modal').style.display = 'flex';
-}
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.manage-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.getElementById('modal-user-id').value = this.dataset.uid;
+            document.getElementById('modal-username').textContent = this.dataset.uname;
+            document.getElementById('modal-balance').value = this.dataset.balance;
+            document.getElementById('modal-role').value = this.dataset.role;
+            document.getElementById('user-modal').style.display = 'flex';
+        });
+    });
 
-function setAction(action) {
-    document.getElementById('modal-action').value = action;
-    document.getElementById('modal-form').submit();
-}
+    document.querySelectorAll('.modal-action-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.getElementById('modal-action').value = this.dataset.action;
+            document.getElementById('modal-form').submit();
+        });
+    });
+
+    var deleteBtn = document.querySelector('.modal-delete-btn');
+    if (deleteBtn) {
+        deleteBtn.addEventListener('click', function() {
+            if (confirm('Delete this user?')) {
+                document.getElementById('modal-action').value = 'delete_user';
+                document.getElementById('modal-form').submit();
+            }
+        });
+    }
+
+    var closeBtn = document.querySelector('.modal-close-btn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            document.getElementById('user-modal').style.display = 'none';
+        });
+    }
+});
 </script>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

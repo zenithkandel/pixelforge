@@ -73,8 +73,8 @@ require_once __DIR__ . '/../includes/header.php';
             <p><?= number_format($total_pixels) ?> / 10,000 pixels claimed</p>
         </div>
         <div style="display:flex;gap:8px;">
-            <button class="btn-secondary btn-sm" onclick="document.getElementById('fill-modal').style.display='flex'">Fill Unclaimed</button>
-            <button class="btn-danger btn-sm" onclick="document.getElementById('reset-modal').style.display='flex'">Reset Canvas</button>
+            <button class="btn-secondary btn-sm" id="btn-fill-unclaimed">Fill Unclaimed</button>
+            <button class="btn-danger btn-sm" id="btn-reset-canvas">Reset Canvas</button>
         </div>
     </div>
 
@@ -101,7 +101,7 @@ require_once __DIR__ . '/../includes/header.php';
                 <input type="text" name="confirm_text" placeholder="Type RESET" autocomplete="off">
             </div>
             <div class="modal-actions">
-                <button type="button" class="btn-secondary" onclick="document.getElementById('reset-modal').style.display='none'">Cancel</button>
+                <button type="button" class="btn-secondary modal-cancel-btn" data-modal="reset-modal">Cancel</button>
                 <button type="submit" class="btn-danger">Reset Canvas</button>
             </div>
         </form>
@@ -120,7 +120,7 @@ require_once __DIR__ . '/../includes/header.php';
                 <input type="color" name="fill_color" value="#333355" style="width:100px;">
             </div>
             <div class="modal-actions">
-                <button type="button" class="btn-secondary" onclick="document.getElementById('fill-modal').style.display='none'">Cancel</button>
+                <button type="button" class="btn-secondary modal-cancel-btn" data-modal="fill-modal">Cancel</button>
                 <button type="submit" class="btn-primary">Fill Unclaimed</button>
             </div>
         </form>
@@ -166,6 +166,20 @@ require_once __DIR__ . '/../includes/header.php';
         form.innerHTML = '<input name="csrf_token" value="<?= csrf_token() ?>"><input name="action" value="erase_pixel"><input name="x" value="' + col + '"><input name="y" value="' + row + '">';
         document.body.appendChild(form);
         form.submit();
+    });
+
+    document.getElementById('btn-fill-unclaimed').addEventListener('click', function() {
+        document.getElementById('fill-modal').style.display = 'flex';
+    });
+
+    document.getElementById('btn-reset-canvas').addEventListener('click', function() {
+        document.getElementById('reset-modal').style.display = 'flex';
+    });
+
+    document.querySelectorAll('.modal-cancel-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.getElementById(this.dataset.modal).style.display = 'none';
+        });
     });
 
     fetch('api/get_canvas.php')
