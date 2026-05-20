@@ -1,5 +1,6 @@
 <?php
 
+if (!function_exists('get_achievements')) {
 function get_achievements() {
     return [
         ['slug' => 'first_flight', 'name' => 'First Flight', 'description' => 'Complete your first game', 'icon' => '🎮', 'reward' => 10],
@@ -19,7 +20,9 @@ function get_achievements() {
         ['slug' => 'multiplier_3x', 'name' => 'Combo King', 'description' => 'Reach 3x multiplier in one run', 'icon' => '⚡', 'reward' => 100],
     ];
 }
+}
 
+if (!function_exists('check_achievement')) {
 function check_achievement($user_id, $slug) {
     $existing = Database::fetch(
         "SELECT ua.id FROM user_achievements ua
@@ -38,7 +41,9 @@ function check_achievement($user_id, $slug) {
 
     return $achievement;
 }
+}
 
+if (!function_exists('check_score_achievements')) {
 function check_score_achievements($user_id, $score, $multiplier) {
     $new_achievements = [];
 
@@ -65,7 +70,9 @@ function check_score_achievements($user_id, $score, $multiplier) {
 
     return $new_achievements;
 }
+}
 
+if (!function_exists('check_streak_achievements')) {
 function check_streak_achievements($user_id, $streak_days) {
     $new_achievements = [];
 
@@ -84,7 +91,9 @@ function check_streak_achievements($user_id, $streak_days) {
 
     return $new_achievements;
 }
+}
 
+if (!function_exists('check_level_achievements')) {
 function check_level_achievements($user_id, $level) {
     $new_achievements = [];
 
@@ -103,7 +112,9 @@ function check_level_achievements($user_id, $level) {
 
     return $new_achievements;
 }
+}
 
+if (!function_exists('check_pixel_achievements')) {
 function check_pixel_achievements($user_id) {
     $new_achievements = [];
 
@@ -128,7 +139,9 @@ function check_pixel_achievements($user_id) {
 
     return $new_achievements;
 }
+}
 
+if (!function_exists('get_user_achievements')) {
 function get_user_achievements($user_id) {
     return Database::fetchAll(
         "SELECT a.*, ua.earned_at FROM achievements a
@@ -136,4 +149,5 @@ function get_user_achievements($user_id) {
          ORDER BY ua.earned_at DESC",
         [$user_id]
     );
+}
 }

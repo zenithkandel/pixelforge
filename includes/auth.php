@@ -1,22 +1,29 @@
 <?php
 
+if (!function_exists('is_logged_in')) {
 function is_logged_in() {
     return isset($_SESSION['user_id']);
 }
+}
 
+if (!function_exists('is_admin')) {
 function is_admin() {
     if (!is_logged_in()) return false;
     $user = Database::fetch("SELECT role FROM users WHERE id = ?", [$_SESSION['user_id']]);
     return $user && $user['role'] === 'admin';
 }
+}
 
+if (!function_exists('require_login')) {
 function require_login() {
     if (!is_logged_in()) {
         header('Location: ' . APP_URL . '/login.php');
         exit;
     }
 }
+}
 
+if (!function_exists('require_admin')) {
 function require_admin() {
     require_login();
     if (!is_admin()) {
@@ -25,26 +32,34 @@ function require_admin() {
         exit;
     }
 }
+}
 
+if (!function_exists('get_current_user')) {
 function get_current_user() {
     if (!is_logged_in()) return null;
     return Database::fetch("SELECT * FROM users WHERE id = ?", [$_SESSION['user_id']]);
 }
+}
 
+if (!function_exists('login_user')) {
 function login_user($user) {
     session_regenerate_id(true);
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['role'] = $user['role'];
     $_SESSION['username'] = $user['username'];
 }
+}
 
+if (!function_exists('logout_user')) {
 function logout_user() {
     session_unset();
     session_destroy();
     header('Location: ' . APP_URL . '/index.php');
     exit;
 }
+}
 
+if (!function_exists('check_login_attempts')) {
 function check_login_attempts($ip) {
     Database::query("DELETE FROM login_attempts WHERE attempted_at < DATE_SUB(NOW(), INTERVAL 15 MINUTE)");
     $attempts = Database::fetch(
@@ -53,11 +68,15 @@ function check_login_attempts($ip) {
     );
     return $attempts['cnt'] >= 5;
 }
+}
 
+if (!function_exists('record_failed_login')) {
 function record_failed_login($ip) {
     Database::query("INSERT INTO login_attempts (ip_address) VALUES (?)", [$ip]);
 }
+}
 
+if (!function_exists('get_streak_bonus')) {
 function get_streak_bonus($day) {
     $bonuses = [
         1 => 10, 2 => 20, 3 => 35, 5 => 60, 7 => 150, 14 => 400, 30 => 800
@@ -67,7 +86,9 @@ function get_streak_bonus($day) {
     }
     return 0;
 }
+}
 
+if (!function_exists('process_login')) {
 function process_login($username_or_email, $password) {
     $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 
@@ -118,24 +139,34 @@ function process_login($username_or_email, $password) {
 
     return ['success' => true, 'user' => $user];
 }
+}
 
+if (!function_exists('validate_username')) {
 function validate_username($username) {
     return preg_match('/^[a-zA-Z0-9_]{3,30}$/', $username);
 }
+}
 
+if (!function_exists('validate_email')) {
 function validate_email($email) {
     return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
+}
 
+if (!function_exists('validate_password')) {
 function validate_password($password) {
     return strlen($password) >= 8 && preg_match('/[0-9]/', $password) && preg_match('/[a-zA-Z]/', $password);
 }
+}
 
+if (!isset($AVATAR_COLORS)) {
 $AVATAR_COLORS = [
     '#7c3aed', '#ef4444', '#3b82f6', '#22c55e', '#f59e0b',
     '#ec4899', '#06b6d4', '#8b5cf6', '#f97316', '#14b8a6'
 ];
+}
 
+if (!function_exists('register_user')) {
 function register_user($username, $email, $password) {
     global $AVATAR_COLORS;
 
@@ -176,4 +207,5 @@ function register_user($username, $email, $password) {
     );
 
     return ['success' => true];
+}
 }

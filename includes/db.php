@@ -1,5 +1,6 @@
 <?php
 
+if (!class_exists('Database')) {
 class Database {
     private static $pdo = null;
 
@@ -37,4 +38,5 @@ class Database {
     public static function lastInsertId() {
         return self::getInstance()->lastInsertId();
     }
+}
 }
