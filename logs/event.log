@@ -86,3 +86,6 @@
 [2026-05-20 11:09:31] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/canvas.php] Page request received
 [2026-05-20 11:11:36] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
 [2026-05-20 11:15:03] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 11:21:40] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 11:37:57] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-20 11:37:59] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Page request received

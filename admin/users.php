@@ -223,5 +223,6 @@ function setAction(action) {
     document.getElementById('modal-form').submit();
 }
 </script>
+<script src="<?= BASE_URL ?>/assets/js/admin-users.js"></script>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

@@ -127,4 +127,6 @@ require_once __DIR__ . '/../includes/header.php';
     </div>
 </div>
 
+<script src="<?= BASE_URL ?>/assets/js/admin-canvas.js"></script>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
