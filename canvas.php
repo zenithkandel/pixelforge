@@ -17,11 +17,11 @@ require_once __DIR__ . '/includes/header.php';
 <div class="page-content">
     <div class="page-header" style="text-align:center;">
         <h1>Interactive Canvas</h1>
-        <p>Click a cell to place or repaint a pixel. Cost: <span class="currency">5 💰</span> for unclaimed cells.</p>
+        <p>Click to paint directly on the canvas. Cost: <span class="currency">5 💰</span> for unclaimed cells.</p>
     </div>
 
     <div style="display:flex;gap:var(--space-lg);flex-wrap:wrap;justify-content:center;align-items:flex-start;">
-        <div id="canvas-container" style="position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);">
+        <div id="canvas-container" style="position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);cursor:crosshair;">
             <canvas id="pixel-canvas" width="800" height="800" style="display:block;"></canvas>
             <div id="canvas-status" style="position:absolute;top:12px;right:12px;display:flex;align-items:center;gap:6px;font-size:12px;background:rgba(0,0,0,0.6);padding:6px 10px;border-radius:var(--radius-pill);backdrop-filter:blur(8px);">
                 <span style="width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse-dot 2s ease infinite;"></span> <span style="color:#fff;">Live</span>
@@ -29,27 +29,44 @@ require_once __DIR__ . '/includes/header.php';
             <div id="zoom-indicator" style="position:absolute;bottom:12px;left:12px;font-size:12px;background:rgba(0,0,0,0.6);padding:6px 10px;border-radius:var(--radius-pill);backdrop-filter:blur(8px);color:#fff;">1×</div>
         </div>
 
-        <div id="pixel-panel" class="card" style="width:280px;align-self:flex-start;display:none;position:sticky;top:80px;">
-            <h3 style="margin:0 0 var(--space-md);font-size:16px;font-weight:600;">Pixel <span id="panel-coords" style="font-family:var(--font-mono);font-weight:400;"></span></h3>
-            <div id="panel-owner" style="font-size:13px;color:var(--text-muted);margin-bottom:var(--space-md);padding:var(--space-sm) var(--space-md);background:var(--bg-elevated);border-radius:var(--radius-sm);"></div>
+        <div class="card" style="width:200px;align-self:flex-start;position:sticky;top:80px;">
+            <h3 style="margin:0 0 var(--space-md);font-size:16px;font-weight:600;">Paint Tools</h3>
+
             <div class="form-group">
-                <label for="pixel-color" style="font-weight:500;">Color</label>
-                <div style="display:flex;gap:var(--space-sm);align-items:center;">
-                    <input type="color" id="pixel-color" value="#7c3aed" style="width:48px;height:40px;padding:2px;border-radius:var(--radius-sm);cursor:pointer;">
-                    <input type="text" id="pixel-color-hex" value="#7c3aed" style="flex:1;font-family:var(--font-mono);font-size:13px;margin:0;">
+                <label style="font-weight:500;display:block;margin-bottom:8px;">Current Color</label>
+                <div style="display:flex;gap:var(--space-sm);align-items:center;margin-bottom:8px;">
+                    <input type="color" id="paint-color" value="#7c3aed" style="width:48px;height:40px;padding:2px;border-radius:var(--radius-sm);cursor:pointer;border:1px solid var(--border-default);">
+                    <input type="text" id="paint-color-hex" value="#7c3aed" style="flex:1;font-family:var(--font-mono);font-size:13px;margin:0;">
+                </div>
+                <div style="display:flex;gap:4px;flex-wrap:wrap;">
+                    <button class="color-preset" data-color="#7c3aed" style="width:24px;height:24px;background:#7c3aed;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
+                    <button class="color-preset" data-color="#db2777" style="width:24px;height:24px;background:#db2777;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
+                    <button class="color-preset" data-color="#0891b2" style="width:24px;height:24px;background:#0891b2;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
+                    <button class="color-preset" data-color="#059669" style="width:24px;height:24px;background:#059669;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
+                    <button class="color-preset" data-color="#d97706" style="width:24px;height:24px;background:#d97706;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
+                    <button class="color-preset" data-color="#dc2626" style="width:24px;height:24px;background:#dc2626;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
+                    <button class="color-preset" data-color="#4f46e5" style="width:24px;height:24px;background:#4f46e5;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
+                    <button class="color-preset" data-color="#0d9488" style="width:24px;height:24px;background:#0d9488;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
+                    <button class="color-preset" data-color="#ffffff" style="width:24px;height:24px;background:#ffffff;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
+                    <button class="color-preset" data-color="#1a1a1a" style="width:24px;height:24px;background:#1a1a1a;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
                 </div>
             </div>
-            <div style="font-size:14px;margin:var(--space-md) 0;color:var(--text-secondary);">
-                Cost: <span id="panel-cost" class="currency">5 💰</span>
+
+            <div style="padding:var(--space-sm);background:var(--bg-elevated);border-radius:var(--radius-md);margin-top:var(--space-md);">
+                <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px;">Balance</div>
+                <div id="paint-balance" class="currency" style="font-size:18px;"></div>
             </div>
-            <button id="place-pixel-btn" class="btn-primary" style="width:100%;">Place Pixel</button>
-            <div id="panel-error" class="form-error" style="margin-top:var(--space-sm);"></div>
+
+            <div style="margin-top:var(--space-md);">
+                <button id="toggle-territory" class="btn-secondary btn-sm" style="width:100%;margin-bottom:8px;">Territory View</button>
+                <button id="toggle-mypixels" class="btn-secondary btn-sm" style="width:100%;">My Pixels</button>
+            </div>
         </div>
     </div>
 
-    <div style="display:flex;justify-content:center;gap:var(--space-sm);margin-top:var(--space-md);flex-wrap:wrap;">
-        <button id="toggle-territory" class="btn-secondary btn-sm">Territory View</button>
-        <button id="toggle-mypixels" class="btn-secondary btn-sm">My Pixels</button>
+    <div id="paint-toast" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--bg-elevated);border:1px solid var(--purple-core);border-radius:var(--radius-lg);padding:12px 20px;box-shadow:var(--shadow-lg);z-index:9999;display:none;align-items:center;gap:10px;">
+        <span id="paint-toast-icon">🎨</span>
+        <span id="paint-toast-text" style="font-size:14px;"></span>
     </div>
 </div>
 
@@ -58,6 +75,114 @@ require_once __DIR__ . '/includes/header.php';
     const CANVAS_STATE = {
         pollingInterval: null,
         pixels: [],
+        pendingPixels: new Set(),
+        lastPaintTime: 0,
+        paintCooldown: 300,
+        currentUserId: <?= (int)$_SESSION['user_id'] ?>,
+    };
+
+    const colorInput = document.getElementById('paint-color');
+    const colorHexInput = document.getElementById('paint-color-hex');
+    const balanceDisplay = document.getElementById('paint-balance');
+    const paintToast = document.getElementById('paint-toast');
+    const toastIcon = document.getElementById('paint-toast-icon');
+    const toastText = document.getElementById('paint-toast-text');
+
+    const currentUserBalance = <?= (int)($nav_user['balance'] ?? 0) ?>;
+    balanceDisplay.textContent = currentUserBalance.toLocaleString() + ' 💰';
+
+    colorInput.addEventListener('input', function() { colorHexInput.value = this.value; });
+    colorHexInput.addEventListener('input', function() {
+        if (/^#[0-9A-Fa-f]{6}$/.test(this.value)) colorInput.value = this.value;
+    });
+
+    document.querySelectorAll('.color-preset').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var c = this.dataset.color;
+            colorInput.value = c;
+            colorHexInput.value = c;
+        });
+    });
+
+    function showToast(msg, icon, duration) {
+        toastText.textContent = msg;
+        toastIcon.textContent = icon || '🎨';
+        paintToast.style.display = 'flex';
+        paintToast.style.animation = 'toastIn 0.3s ease';
+        setTimeout(function() {
+            paintToast.style.animation = 'toastOut 0.3s ease';
+            setTimeout(function() { paintToast.style.display = 'none'; }, 300);
+        }, duration || 2000);
+    }
+
+    function updateCurrencyDisplay(balance) {
+        if (balance === null || balance === undefined) return;
+        balanceDisplay.textContent = Math.round(balance).toLocaleString() + ' 💰';
+        var navCurr = document.querySelectorAll('nav .currency');
+        navCurr.forEach(function(el) { el.textContent = Math.round(balance).toLocaleString() + ' 💰'; });
+    }
+
+    function paintPixel(col, row, color, isOwn) {
+        var key = col + ',' + row;
+        if (CANVAS_STATE.pendingPixels.has(key)) return;
+
+        var now = Date.now();
+        if (now - CANVAS_STATE.lastPaintTime < CANVAS_STATE.paintCooldown) return;
+        CANVAS_STATE.lastPaintTime = now;
+
+        CANVAS_STATE.pendingPixels.add(key);
+
+        var localPixel = {
+            x: col, y: row, color: color,
+            owner_id: CANVAS_STATE.currentUserId,
+            username: '<?= htmlspecialchars($_SESSION['username']) ?>',
+            level: null, placed_at: new Date().toISOString(), expires_at: null
+        };
+
+        var existingIdx = -1;
+        for (var i = 0; i < CANVAS_STATE.pixels.length; i++) {
+            if (CANVAS_STATE.pixels[i].x === col && CANVAS_STATE.pixels[i].y === row) {
+                existingIdx = i;
+                break;
+            }
+        }
+        if (existingIdx >= 0) {
+            CANVAS_STATE.pixels[existingIdx] = localPixel;
+        } else {
+            CANVAS_STATE.pixels.push(localPixel);
+        }
+        renderCanvas();
+
+        var formData = new URLSearchParams();
+        formData.append('x', col);
+        formData.append('y', row);
+        formData.append('color', color);
+        formData.append('csrf_token', '<?= csrf_token() ?>');
+
+        fetch('api/place_pixel.php', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: formData })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                CANVAS_STATE.pendingPixels.delete(key);
+                if (data.success) {
+                    if (data.new_balance !== undefined) updateCurrencyDisplay(data.new_balance);
+                    showToast('Pixel placed!', '✅', 1500);
+                } else {
+                    showToast(data.error || 'Failed to place', '❌', 2000);
+                    var idx = -1;
+                    for (var i = 0; i < CANVAS_STATE.pixels.length; i++) {
+                        if (CANVAS_STATE.pixels[i].x === col && CANVAS_STATE.pixels[i].y === row) { idx = i; break; }
+                    }
+                    if (idx >= 0 && !isOwn) CANVAS_STATE.pixels.splice(idx, 1);
+                    renderCanvas();
+                }
+            })
+            .catch(function() {
+                CANVAS_STATE.pendingPixels.delete(key);
+                showToast('Network error', '❌', 2000);
+            });
+    }
+
+    CANVAS_STATE = {
         zoom: 1,
         offsetX: 0,
         offsetY: 0,

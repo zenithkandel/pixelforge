@@ -1495,3 +1495,46 @@
 [2026-05-20 16:31:09] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":65}
 [2026-05-20 16:31:14] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
 [2026-05-20 16:31:14] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":65}
+[2026-05-20 16:31:18] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] Page request received
+[2026-05-20 16:31:18] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] Admin panel accessed | {"page":"logs.php"}
+[2026-05-20 16:31:19] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 16:31:19] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":65}
+[2026-05-20 16:31:20] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Page request received
+[2026-05-20 16:31:20] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-20 16:31:22] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Page request received
+[2026-05-20 16:31:22] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-20 16:31:24] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-20 16:31:24] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":65}
+[2026-05-20 16:31:27] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:31:27] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:31:29] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:31:29] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":0,"multiplier":1,"coins":0}
+[2026-05-20 16:31:29] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":0,"currency":0,"xp":0,"balance":124}
+[2026-05-20 16:31:31] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:31:31] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:31:37] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:31:37] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":1,"multiplier":1,"coins":0}
+[2026-05-20 16:31:37] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":1,"currency":2,"xp":1,"balance":126}
+[2026-05-20 16:31:39] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:31:39] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:31:54] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:31:54] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":7,"multiplier":1,"coins":0}
+[2026-05-20 16:31:54] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":7,"currency":14,"xp":7,"balance":140}
+[2026-05-20 16:31:56] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:31:56] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:32:07] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:32:07] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":4,"multiplier":1,"coins":0}
+[2026-05-20 16:32:07] [INFO] [XP] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] User levelled up | {"new_level":4,"total_xp":450}
+[2026-05-20 16:32:07] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":4,"currency":8,"xp":4,"balance":148}
+[2026-05-20 16:32:08] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:32:08] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:32:11] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:32:11] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":0,"multiplier":1,"coins":0}
+[2026-05-20 16:32:11] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":0,"currency":0,"xp":0,"balance":148}
+[2026-05-20 16:32:13] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:32:13] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-20 16:32:22] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-20 16:32:22] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":3,"multiplier":1,"coins":0}
+[2026-05-20 16:32:22] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":3,"currency":6,"xp":3,"balance":154}
+[2026-05-20 16:32:32] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-20 16:32:32] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
