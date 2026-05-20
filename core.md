@@ -1,769 +1,762 @@
-PixelForge — Node.js Edition
-A Communal Pixel Canvas + Arcade Game Platform
-Full System Build Prompt (Node.js / MySQL / Standalone)
-AGENT INSTRUCTIONS: This is a complete, end‑to‑end specification for a Node.js application.
-Follow it exactly. Do NOT skip sections, do NOT simplify described systems.
-Every section must be implemented precisely. Security is non‑negotiable.
-Read the entire document before writing a single line of code.
-The final system must run with zero configuration beyond a MySQL server and SMTP credentials — the application itself must handle schema creation, admin seeding, and all automations.
-
-TABLE OF CONTENTS
-Project Overview
-
-Technology Stack
-
-Game Design Document — PIXEL DASH (Enhanced)
-
-Enhanced Canvas & Social Features
-
-PXL Currency & Economy Design
-
-Grid Architecture & Rendering
-
-Database Schema (Full)
-
-API Specification (REST + SSE)
-
-Real-Time Update System (SSE)
-
-Security Architecture
-
-Anti-Cheat System
-
-Conflict Resolution & Concurrency
-
-File & Folder Structure
-
-Frontend Architecture
-
-UI/UX Design Specification
-
-Node.js Backend Architecture
-
-Cron Jobs & Scheduled Tasks
-
-Configuration & Environment
-
-Complete Implementation Details & Code Examples
-
-Robustness Guarantees & Mandatory Practices
-
-Automated Setup & Deployment
-
-1. PROJECT OVERVIEW
-   PixelForge is a browser‑based platform combining three pillars:
-
-PIXEL DASH — A fast‑paced, skill‑based arcade game where players earn PXL (in‑platform currency).
-
-The Forge — A massive 800×800 communal pixel canvas where players spend PXL to paint pixels and participate in weekly creative challenges.
-
-Community Features — Real‑time collaborative drawing events, weekly themed “Pixel Wars” with voting, hidden collectibles on the canvas, and a time‑lapse replay of each week’s artwork.
-
-Core Loop
-text
-Play PIXEL DASH → Earn PXL → Spend PXL on The Forge → Collaborate / compete in weekly themes → Canvas resets every Sunday → Repeat
-Design Philosophy
-Fair competition: PXL earned only through gameplay and community achievements — no pay‑to‑win.
-
-Creative freedom: Users can paint anything non‑offensive. A moderation queue flags inappropriate content (see admin panel).
-
-Community driven: Weekly themes, voting systems, and collaborative events make the canvas a living artwork.
-
-Security first: Every user action is validated, rate‑limited, and authenticated. The game server validates scores cryptographically.
-
-2. TECHNOLOGY STACK
-   Layer Technology
-   Backend Node.js (v20+), Express.js, mysql2/promise, jsonwebtoken, bcrypt, nodemailer
-   Frontend Pure HTML5, CSS3 (custom properties), Vanilla JavaScript ES6 modules
-   Canvas Rendering HTML5 Canvas API (2D context + OffscreenCanvas)
-   Database MySQL 8.0+ (InnoDB) – single schema, auto‑created on first run
-   Caching & Locks In‑memory (Node.js Map for chunk cache, simple mutex with Promises for pixel locks – see details)
-   Real‑time Updates Server‑Sent Events (SSE) via Express, in‑memory EventEmitter
-   Authentication JWT (access token in memory, refresh token in httpOnly cookie)
-   Session / State Stateless API, no server‑side session store
-   CSRF Protection Double Submit Cookie pattern (since we use JWT in header)
-   Task Scheduling node-cron (in‑process)
-   Email Sending nodemailer using user‑provided SMTP
-   Frameworks allowed: Express.js is used for routing. No other large frameworks. All game logic is custom.
-   No external services except the MySQL database and SMTP server. Everything else runs in‑process.
-
-3. GAME DESIGN DOCUMENT — PIXEL DASH (ENHANCED)
-   (Preserved and expanded from the original specification. The following is the full game design with new elements marked as ✨ NEW.)
-
-3.1 Concept
-(unchanged – PXLR in a digital mainframe)
-
-3.2 Controls
-(unchanged)
-
-3.3 Character — PXLR
-(unchanged)
-
-3.4 World Generation
-(unchanged)
-
-3.5 Obstacle System
-✨ NEW Obstacle – “Virus Swarm”: At speed tier 5+, occasionally a swarm of 3–5 small virus particles fly in a sine wave pattern from the right. The player must time jumps precisely or slide under.
-✨ NEW Obstacle – “Corrupted Data Wall”: At speed tier 6+, a tall moving wall with a gap that shifts vertically. Player must be at correct height.
-
-All spawn rules remain.
-
-3.6 Collectible System
-✨ NEW Power Cell Type – “Canvas Boost” (extremely rare, 1 per ~3 minutes): When collected, the next pixel placed on the canvas is free (cost 0 PXL). Adds a sparkle trail.
-
-3.7 Power‑Up System
-(unchanged, but include the new Canvas Boost effect)
-
-3.8 Combo System
-(unchanged)
-
-3.9 Lives System
-(unchanged)
-
-3.10 Speed Progression
-(unchanged)
-
-3.11 Game Session Flow
-(unchanged, but now implemented with JWT‑based session token)
-
-3.12 Audio Design
-(unchanged)
-
-3.13 HUD Layout
-(unchanged)
-
-3.14 Game Over Screen
-(unchanged)
-
-4. ENHANCED CANVAS & SOCIAL FEATURES
-   4.1 Weekly Pixel Wars
-   Each Sunday after the grid resets, a theme is announced (e.g., “Space”, “Underwater”, “Forest”). Players paint accordingly.
-
-Voting phase: From Friday to Saturday, a voting panel appears on the canvas. Players can vote for their favourite section (e.g., best 128×128 area).
-
-Winners: The top 3 artists (by total pixels in winning areas) receive bonus PXL (50, 30, 20).
-
-Theme announcement and winner calculation are automated by cron jobs.
-
-4.2 Hidden Collectibles (Canvas Gems)
-Every hour, 5 random unowned (white) pixels become hidden gems. When a player purchases that exact pixel, they instantly earn +3 PXL (in addition to spending 1).
-
-Gems are only revealed after purchase (toast notification).
-
-The gem positions are stored server‑side and refreshed on a timer.
-
-4.3 Real‑Time Collaboration Events
-Once a day (random hour), a “Power Hour” event starts: for 10 minutes, pixel cost is reduced to 0 PXL, but each player can only place 5 free pixels.
-
-Announced via SSE event and a site‑wide banner.
-
-Server‑side flag ensures correct cost calculation.
-
-4.4 Time‑Lapse Replay
-When a canvas week ends, a GIF/MP4 time‑lapse is generated from the pixel_history table (all purchases ordered by time) and saved.
-
-Visible from the archive page.
-
-Implemented as a cron task that uses a headless canvas (Node.js canvas package) to compile frames and output a GIF (using gifencoder).
-
-4.5 Canvas Eraser Tool
-Users can spend 5 PXL to erase a pixel they own, returning it to white. (Optional – implementation can be added, but the core purchase system stays.)
-
-5. PXL CURRENCY & ECONOMY DESIGN
-   (Same earning/spending rules as original, plus the new Canvas Boost and Gem bonuses.)
-
-All transactions are recorded in the ledger table. Economy balance is preserved exactly as specified.
-
-6. GRID ARCHITECTURE & RENDERING
-   (Entire section remains identical, but note that chunk caching is in‑memory Node.js Map, not Redis.)
-
-Chunk binary format same: 12,288 bytes.
-
-Chunk version tracked in MySQL table chunks.
-
-In‑memory cache: Use a Map with key "cx_cy" and value { buffer: Buffer, version: number, lastAccess: number }.
-
-LRU eviction: when cache size exceeds 200, delete the least recently accessed entry.
-
-TTL: entries older than 30 seconds are refreshed from DB on next read.
-
-7. DATABASE SCHEMA (FULL)
-   Identical to the original schema, with these additions for new features:
-
-Table weekly_themes: id, week_start_date, theme_name, description, created_at
-
-Table theme_votes: user_id, week_start_date, area_x, area_y, voted_at (primary key on user + week)
-
-Table canvas_gems: id, x, y, expires_at (cleared by cron)
-
-Table events_log for power hour tracking.
-
-The agent must output the full CREATE TABLE SQL in a migration file that is executed automatically on startup if tables don’t exist. Include IF NOT EXISTS and seed initial data (admin user, achievements).
-
-Note: Because we use MySQL as the single data store, replace Redis‑only operations with MySQL equivalents (e.g., rate limiting via a dedicated rate_limits table with INSERT … ON DUPLICATE KEY plus periodic cleanup).
-
-8. API SPECIFICATION (REST + SSE)
-   All endpoints return JSON. Protected endpoints require Authorization: Bearer <access_token>. CSRF protection via double submit cookie (see Security).
-
-8.1 Auth Endpoints
-Replace PHP session with JWT:
-
-POST /api/auth/register
-
-POST /api/auth/login → returns { accessToken, refreshToken (httpOnly cookie) }
-
-POST /api/auth/refresh → uses httpOnly refresh token cookie to issue new access token
-
-POST /api/auth/logout → clears refresh cookie, adds access token to short‑lived blacklist (in‑memory Set with TTL equal to access token expiry)
-
-GET /api/auth/verify-email?token=...
-
-POST /api/auth/forgot-password
-
-POST /api/auth/reset-password
-
-All token signing uses a random secret generated at first run (stored in a config file).
-
-8.2 Game Endpoints
-/api/game/start, /api/game/checkpoint, /api/game/submit — implement identically, but using JWT user ID from decoded token. The game HMAC key is derived from SERVER_HMAC_SECRET (auto‑generated).
-
-8.3 Grid Endpoints
-GET /api/grid/chunk/:cx/:cy – returns binary data as application/octet-stream, with headers X-Chunk-Version.
-
-POST /api/grid/buy – pixel purchase with concurrency control using MySQL row‑level locks ( SELECT … FOR UPDATE ) and optimistic concurrency via chunk version.
-
-GET /api/grid/pixel-info/:x/:y
-
-GET /api/grid/updates – SSE endpoint (long‑lived).
-
-POST /api/grid/vote (for weekly theme)
-
-GET /api/canvas/gems (get current hidden gem list – only locations, not exact coords)
-
-8.4 User & Leaderboard
-Same as original, adapted to JWT auth.
-
-8.5 Admin Endpoints (Behind admin middleware)
-/api/admin/\* for user management, grid snapshot, theme announcement, etc.
-
-9. REAL-TIME UPDATE SYSTEM (SSE)
-   SSE uses in‑memory EventEmitter (single‑process). When a pixel purchase is committed, emit an event on a shared emitter.
-   The SSE route subscribes to the emitter, filtering for chunks the client requested.
-   Heartbeat every 30 seconds.
-   Connection per user limit: track in a Map, drop oldest if exceeded.
-
-Implementation details in code examples section.
-
-10. SECURITY ARCHITECTURE
-    All original security rules apply, with Node.js equivalents:
-
-Helmet (Express middleware) to set CSP, HSTS, etc.
-
-Rate limiting via a custom middleware using MySQL table rate_limits (see code example).
-
-Input validation with a shared validation module (regex, sanitization).
-
-SQL injection: Use parameterised queries (? placeholders). Never concatenate.
-
-XSS: Always escape output with escape-html or equivalent.
-
-Password hashing: bcrypt with 12 rounds.
-
-JWT: Use jsonwebtoken with RS256 or HS256; access token expiry 15 minutes, refresh token 7 days. Blacklist used for logout.
-
-CORS: Only allow the site origin.
-
-File access: All sensitive files outside /public.
-
-11. ANTI-CHEAT SYSTEM
-    Identical to original, but HMAC verification is done in Node.js using the crypto module.
-    The game client uses Web Crypto API to compute HMAC with a per‑session key derived from the server HMAC secret.
-
-Plausibility checks and one‑active‑session rule implemented via MySQL (game_sessions table and active_session column).
-
-12. CONFLICT RESOLUTION & CONCURRENCY
-    Because we don’t have Redis locks, we use MySQL row locks:
-
-Begin transaction.
-
-SELECT \* FROM pixels WHERE x=? AND y=? FOR UPDATE
-
-If the pixel is already owned and chunk_version matches client expectation, update; otherwise reject.
-
-Debit user (with FOR UPDATE on user row).
-
-Increment chunk version.
-
-Commit.
-
-No distributed lock needed for a single Node.js process. If scaling to multiple processes, use a dedicated locking table (GET_LOCK() / RELEASE_LOCK()), but for now assume single‑process. The prompt should instruct the agent to use MySQL’s GET_LOCK() for extra safety.
-
-13. FILE & FOLDER STRUCTURE
-    text
-    pixelforge-node/
-    ├── public/ # Static files served by Express
-    │ ├── index.html
-    │ ├── game.html
-    │ ├── canvas.html
-    │ ├── profile.html
-    │ ├── leaderboard.html
-    │ ├── assets/
-    │ │ ├── css/
-    │ │ │ ├── main.css
-    │ │ │ ├── game.css
-    │ │ │ └── canvas.css
-    │ │ ├── js/
-    │ │ │ ├── api.js
-    │ │ │ ├── auth.js
-    │ │ │ ├── game/ (engine, renderer, prng, obstacles, collectibles, audio, hud, game-main)
-    │ │ │ ├── canvas/ (grid-renderer, chunk-cache, sse-client, pixel-buyer, mini-map, canvas-main)
-    │ │ │ ├── ui.js
-    │ │ │ └── utils.js
-    │ │ ├── fonts/
-    │ │ ├── sounds/
-    │ │ └── sprites/
-    ├── src/ # Backend source
-    │ ├── app.js # Express app setup
-    │ ├── config.js # Reads env / auto‑generates secrets
-    │ ├── database.js # MySQL connection pool
-    │ ├── migrations/
-    │ │ └── 001_initial.js # Full schema creation + seeds
-    │ ├── middleware/
-    │ │ ├── auth.js # JWT verification
-    │ │ ├── rateLimiter.js # MySQL‑based rate limiting
-    │ │ ├── csrf.js # Double submit cookie
-    │ │ └── validate.js # Input validation helpers
-    │ ├── routes/
-    │ │ ├── auth.js
-    │ │ ├── game.js
-    │ │ ├── grid.js
-    │ │ ├── user.js
-    │ │ ├── leaderboard.js
-    │ │ └── admin.js
-    │ ├── services/
-    │ │ ├── gameValidator.js # Anti‑cheat checks
-    │ │ ├── pxlService.js # PXL credit/debit
-    │ │ ├── achievementService.js
-    │ │ ├── chunkService.js # Build & cache chunk binary
-    │ │ ├── sseManager.js # In‑memory event emitter + connections
-    │ │ ├── emailService.js # Nodemailer wrapper
-    │ │ └── scheduling.js # Node‑cron tasks
-    │ └── utils/
-    │ ├── logger.js
-    │ └── response.js # JSON response helpers
-    ├── tasks/ # Standalone scripts (e.g., time‑lapse generation)
-    │ └── generateTimelapse.js
-    ├── .env.example # Shows only SMTP variables
-    ├── package.json
-    └── server.js # Entry point (startup, migration, listen)
-    All backend files are inside src/ and never directly exposed. The public/ folder is served as static by Express.
-
-14. FRONTEND ARCHITECTURE
-    Identical to original but using ES modules. No React/Vue. The game engine, renderer, PRNG, SSE client etc. remain exactly as specified, but now communicate with JWT‑authenticated APIs.
-
-The PRNG must be the Mulberry32 algorithm exactly. Provide the class code in the prompt (already shown earlier) and require the agent to include it verbatim.
-
-15. UI/UX DESIGN SPECIFICATION
-    (Entire design language, color system, typography, components, layout remain as described. Ensure the CSS is fully implemented with the :root variables and classes from the original prompt. No shortcuts.)
-
-16. NODE.JS BACKEND ARCHITECTURE
-    16.1 Express App Configuration
-    js
-    // app.js
-    const express = require('express');
-    const helmet = require('helmet');
-    const cookieParser = require('cookie-parser');
-    const cors = require('cors');
-    const { doubleCsrf } = require('csrf-csrf');
-    // ... import routes
-
-const app = express();
-
-app.use(helmet({
-contentSecurityPolicy: { /_ exact same CSP as original _/ },
-// ... other headers
-}));
-app.use(cors({ origin: 'https://yourdomain.com', credentials: true }));
-app.use(cookieParser());
-app.use(express.json());
-
-// Apply CSRF protection (double submit cookie)
-const { generateToken, doubleCsrfProtection } = doubleCsrf({
-getSecret: () => process.env.CSRF_SECRET, // auto‑generated at startup
-cookieName: 'x-csrf-token',
-cookieOptions: { httpOnly: false, secure: true, sameSite: 'strict' },
-size: 64,
-ignoredMethods: ['GET', 'HEAD', 'OPTIONS'],
-});
-app.use((req, res, next) => {
-// Attach CSRF token to response locals for initial page render
-req.csrfToken = () => generateToken(req, res);
-next();
-});
-// Export app, use in server.js
-16.2 Database Connection
-js
-// database.js
-const mysql = require('mysql2/promise');
-const pool = mysql.createPool({
-host: process.env.DB_HOST,
-user: process.env.DB_USER,
-password: process.env.DB_PASS,
-database: process.env.DB_NAME,
-waitForConnections: true,
-connectionLimit: 20,
-multipleStatements: false, // strictly one statement per query
-});
-module.exports = pool;
-16.3 Migration Runner
-On startup, server.js runs the initial migration if needed. The migration script checks for the existence of the users table; if not, executes the full schema creation SQL (including all tables, indexes, foreign keys, and seed data for achievements and a default admin account).
-The admin password is hashed with bcrypt and stored in the DB; the plain password is printed once to the console for the user.
-
-16.4 Rate Limiter (MySQL‑Based)
-js
-// middleware/rateLimiter.js
-async function rateLimiter(limitKey, maxRequests, windowSeconds) {
-return async (req, res, next) => {
-const pool = req.app.get('db');
-const now = Date.now();
-const windowStart = now - windowSeconds _ 1000;
-// Clean old entries, then count and insert
-await pool.execute(
-`DELETE FROM rate_limits WHERE key_name = ? AND window_start < ?`,
-[limitKey, windowStart]
+# Full Agent Prompt — Flappy Bird Pixel Canvas Game
+
+**Stack: PHP (no frameworks), HTML, CSS, Vanilla JS, MySQL**
+
+---
+
+## PROJECT OVERVIEW
+
+Build a full web application with four interconnected systems:
+
+1. A Flappy Bird arcade game that earns in-game currency
+2. A collaborative 100×100 live pixel canvas
+3. A player progression system (XP, levels, achievements, leaderboards, profiles)
+4. A secure admin panel
+
+---
+
+## FILE & FOLDER STRUCTURE
+
+```
+/index.php                  → Public canvas view (read-only, no login required)
+/game.php                   → Flappy Bird game (login required)
+/canvas.php                 → Interactive canvas (login required to draw)
+/login.php                  → Login page
+/register.php               → Registration page
+/logout.php                 → Logout handler
+/profile.php                → Public profile page (/profile.php?user=username)
+/leaderboard.php            → Leaderboard page (public)
+
+/admin/
+  index.php                 → Admin dashboard
+  canvas.php                → Canvas management
+  users.php                 → User management
+  logs.php                  → Admin action logs
+
+/api/
+  save_score.php            → Validate and save Flappy Bird score
+  place_pixel.php           → Place a pixel on the canvas
+  get_canvas.php            → Return all placed pixels (JSON)
+  get_canvas_snapshot.php   → Return canvas state at a given time
+  get_territory.php         → Return pixel ownership map (JSON)
+  admin_action.php          → Handle admin canvas/user actions
+
+/includes/
+  db.php                    → PDO connection singleton
+  auth.php                  → Session/auth helpers
+  csrf.php                  → CSRF token generation & validation
+  xp.php                    → XP/level calculation helpers
+  achievements.php          → Achievement check & award logic
+
+/assets/
+  css/
+    style.css               → Global dark theme styles
+    game.css
+    canvas.css
+    admin.css
+  js/
+    game.js                 → Flappy Bird game engine
+    canvas.js               → Canvas render, interaction, polling
+    territory.js            → Territory overlay logic
+    achievements.js         → Toast notification system
+```
+
+---
+
+## DATABASE SCHEMA
+
+### `users`
+
+```sql
+CREATE TABLE users (
+  id              INT AUTO_INCREMENT PRIMARY KEY,
+  username        VARCHAR(30) NOT NULL UNIQUE,
+  email           VARCHAR(100) NOT NULL UNIQUE,
+  password_hash   VARCHAR(255) NOT NULL,
+  balance         INT NOT NULL DEFAULT 0,
+  xp              INT NOT NULL DEFAULT 0,
+  level           INT NOT NULL DEFAULT 1,
+  role            ENUM('user', 'admin') NOT NULL DEFAULT 'user',
+  streak_days     INT NOT NULL DEFAULT 0,
+  last_login_date DATE DEFAULT NULL,
+  avatar_color    VARCHAR(7) NOT NULL DEFAULT '#7c3aed',
+  created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-const [rows] = await pool.execute(
-`SELECT COUNT(_) as cnt FROM rate_limits WHERE key_name = ?`,
-      [limitKey]
-    );
-    if (rows[0].cnt >= maxRequests) {
-      return res.status(429).json({ ok: false, error: 'rate_limited', retryAfter: windowSeconds });
-    }
-    await pool.execute(
-      `INSERT INTO rate_limits (key_name, window_start, request_time) VALUES (?, ?, NOW())`,
-      [limitKey, windowStart]
-    );
-    next();
-  };
-}
-// For per‑user/per‑IP keys, pass dynamic function that generates key from req.
-16.5 JWT Auth Middleware
-js
-const jwt = require('jsonwebtoken');
-function authRequired(req, res, next) {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) return res.status(401).json({ ok: false, error: 'unauthorized' });
-  try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = payload; // { userId, username }
-    next();
-  } catch (err) {
-    res.status(401).json({ ok: false, error: 'token_expired' });
-  }
-}
-// Also implement `authOptional`for public canvas view.
-16.6 SSE Manager
-js
-// services/sseManager.js
-const EventEmitter = require('events');
-class SSEManager extends EventEmitter {
-  constructor() {
-    super();
-    this.connections = new Map(); // key: userId or sessionId, value: { req, res }
-  }
-  addConnection(id, res) {
-    if (this.connections.size >= 500) { /* drop oldest */ }
-    res.writeHead(200, {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive',
-      'X-Accel-Buffering': 'no',
-    });
-    res.write(':ok\n\n');
-    this.connections.set(id, res);
-    res.on('close', () => this.connections.delete(id));
-  }
-  broadcast(event, data) {
-    const payload =`data: ${JSON.stringify({ type: event, ...data })}\n\n`;
-    for (const res of this.connections.values()) {
-      res.write(payload);
-    }
-  }
-}
-// In grid buy route, after successful purchase, call sseManager.broadcast('pixel', {x,y,color,...}).
-// In SSE route: subscribe to events only for chunks the client requested (client passes `?chunks=0,1,2,3`).
-// Filter in the connection handler: store subscribed chunks per connection, then only write if the event's chunk matches.
-16.7 Chunk Service
-js
-// services/chunkService.js
-const chunkCache = new Map();
+```
 
-async function getChunk(cx, cy, pool) {
-const key = `${cx}_${cy}`;
-const cached = chunkCache.get(key);
-if (cached && Date.now() - cached.lastAccess < 30000) {
-cached.lastAccess = Date.now();
-return cached;
-}
-// else query DB
-const xMin = cx _ 64, xMax = xMin + 63, yMin = cy _ 64, yMax = yMin + 63;
-const [pixels] = await pool.execute(
-`SELECT x, y, color FROM pixels WHERE x BETWEEN ? AND ? AND y BETWEEN ? AND ? AND grid_session_id = (SELECT id FROM grid_sessions WHERE is_current = 1)`,
-[xMin, xMax, yMin, yMax]
+### `pixels`
+
+```sql
+CREATE TABLE pixels (
+  id          INT AUTO_INCREMENT PRIMARY KEY,
+  x           INT NOT NULL,
+  y           INT NOT NULL,
+  color       VARCHAR(7) NOT NULL,
+  owner_id    INT DEFAULT NULL,
+  placed_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  expires_at  TIMESTAMP DEFAULT NULL,
+  UNIQUE KEY uq_pixel (x, y),
+  FOREIGN KEY (owner_id) REFERENCES users(id) ON DELETE SET NULL
 );
-const buffer = Buffer.alloc(64*64*3, 255); // white
-for (const p of pixels) {
-const lx = p.x - xMin, ly = p.y - yMin;
-const offset = (ly _ 64 + lx) _ 3;
-const hex = p.color; // "#RRGGBB"
-buffer[offset] = parseInt(hex.slice(1,3), 16);
-buffer[offset+1] = parseInt(hex.slice(3,5), 16);
-buffer[offset+2] = parseInt(hex.slice(5,7), 16);
-}
-const [verRows] = await pool.execute('SELECT version FROM chunks WHERE chunk_x=? AND chunk_y=?', [cx, cy]);
-const version = verRows[0]?.version || 0;
-const entry = { buffer, version, lastAccess: Date.now() };
-// LRU eviction if cache size > 200
-if (chunkCache.size >= 200) {
-let oldestKey, oldestTime = Infinity;
-for (const [k, v] of chunkCache.entries()) {
-if (v.lastAccess < oldestTime) {
-oldestTime = v.lastAccess;
-oldestKey = k;
-}
-}
-chunkCache.delete(oldestKey);
-}
-chunkCache.set(key, entry);
-return entry;
-}
-16.8 Pixel Purchase with Concurrency
-js
-// routes/grid.js (buy handler)
-router.post('/buy', authRequired, async (req, res) => {
-const { x, y, color } = req.body;
-// validation ...
-const pool = req.app.get('db');
-const conn = await pool.getConnection();
-try {
-await conn.beginTransaction();
-// Lock user row
-const [userRows] = await conn.execute('SELECT id, pxl_balance FROM users WHERE id=? FOR UPDATE', [req.user.userId]);
-if (userRows[0].pxl_balance < 1) { throw new AppError('insufficient_pxl', 400); }
-// Lock pixel row
-const [pixelRows] = await conn.execute('SELECT owner_id FROM pixels WHERE x=? AND y=? FOR UPDATE', [x,y]);
-// If pixel already owned by someone else, reject (unless we allow overwrite? – original allows overwriting, so we proceed)
-// Deduct PXL
-await conn.execute('UPDATE users SET pxl_balance = pxl_balance - 1, total_pxl_spent = total_pxl_spent + 1 WHERE id=?', [req.user.userId]);
-// Insert pixel (upsert)
-const sessionRes = await conn.execute('SELECT id FROM grid_sessions WHERE is_current=1');
-const sessionId = sessionRes[0][0].id;
-await conn.execute(
-`INSERT INTO pixels (x, y, color, owner_id, grid_session_id) VALUES (?,?,?,?,?)
-       ON DUPLICATE KEY UPDATE color=VALUES(color), owner_id=VALUES(owner_id), purchased_at=NOW()`,
-[x, y, color, req.user.userId, sessionId]
+```
+
+- `expires_at` = placed_at + 14 days. A cron job (or check on canvas load) marks pixels as reclaimable when `NOW() > expires_at`.
+- Pixels with `owner_id = NULL` are unclaimed (default white).
+- Dimming state (7–14 day warning) is computed in real-time from `placed_at`, not stored.
+
+### `score_log`
+
+```sql
+CREATE TABLE score_log (
+  id              INT AUTO_INCREMENT PRIMARY KEY,
+  user_id         INT NOT NULL,
+  score           INT NOT NULL,
+  multiplier      DECIMAL(3,1) NOT NULL DEFAULT 1.0,
+  currency_earned INT NOT NULL,
+  xp_earned       INT NOT NULL,
+  played_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
-// Record history and transaction, update chunk version...
-await conn.commit();
-// Broadcast SSE
-sseManager.broadcast('pixel', {x,y,color,username: req.user.username, cx: Math.floor(x/64), cy: Math.floor(y/64)});
-res.json({ ok: true, data: { x,y,color, new_balance: userRows[0].pxl_balance - 1 } });
-} catch (err) {
-await conn.rollback();
-throw err;
-} finally {
-conn.release();
-}
-}); 17. CRON JOBS & SCHEDULED TASKS
-Using node-cron (started inside server.js after migrations):
+```
+
+### `game_tokens`
+
+```sql
+CREATE TABLE game_tokens (
+  id         INT AUTO_INCREMENT PRIMARY KEY,
+  user_id    INT NOT NULL,
+  token      VARCHAR(64) NOT NULL UNIQUE,
+  used       TINYINT NOT NULL DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+```
+
+### `achievements`
+
+```sql
+CREATE TABLE achievements (
+  id          INT AUTO_INCREMENT PRIMARY KEY,
+  slug        VARCHAR(50) NOT NULL UNIQUE,
+  name        VARCHAR(100) NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  icon        VARCHAR(50) NOT NULL,
+  reward      INT NOT NULL DEFAULT 0
+);
+```
+
+### `user_achievements`
+
+```sql
+CREATE TABLE user_achievements (
+  id             INT AUTO_INCREMENT PRIMARY KEY,
+  user_id        INT NOT NULL,
+  achievement_id INT NOT NULL,
+  earned_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_user_achievement (user_id, achievement_id),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (achievement_id) REFERENCES achievements(id) ON DELETE CASCADE
+);
+```
+
+### `login_attempts`
+
+```sql
+CREATE TABLE login_attempts (
+  id         INT AUTO_INCREMENT PRIMARY KEY,
+  ip_address VARCHAR(45) NOT NULL,
+  attempted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### `pixel_placements`
+
+```sql
+CREATE TABLE pixel_placements (
+  id         INT AUTO_INCREMENT PRIMARY KEY,
+  user_id    INT NOT NULL,
+  placed_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+```
+
+Used for rate limiting (max 10 placements per user per minute).
+
+### `canvas_snapshots`
+
+```sql
+CREATE TABLE canvas_snapshots (
+  id           INT AUTO_INCREMENT PRIMARY KEY,
+  snapshot     LONGTEXT NOT NULL,
+  captured_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+Store hourly JSON snapshots of the canvas for the profile mini-canvas and history features.
+
+### `admin_log`
+
+```sql
+CREATE TABLE admin_log (
+  id          INT AUTO_INCREMENT PRIMARY KEY,
+  admin_id    INT NOT NULL,
+  action      VARCHAR(100) NOT NULL,
+  target_type VARCHAR(50) DEFAULT NULL,
+  target_id   INT DEFAULT NULL,
+  details     TEXT DEFAULT NULL,
+  performed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (admin_id) REFERENCES users(id) ON DELETE CASCADE
+);
+```
+
+---
+
+## AUTHENTICATION SYSTEM
+
+### Registration (`/register.php`)
+
+- Fields: `username` (3–30 chars, alphanumeric + underscore only), `email` (valid format), `password` (min 8 chars, must include at least one number and one letter), `confirm password`.
+- On success: hash with `password_hash($pass, PASSWORD_BCRYPT)`. Start with `balance = 0`, `xp = 0`, `level = 1`. Assign a random `avatar_color` from a preset palette of 10 colors.
+- Show inline validation errors per field (not a full-page refresh).
+
+### Login (`/login.php`)
 
-Grid reset (every Sunday 00:00): snapshot → save → truncate pixels → insert new grid session → clear chunk cache → broadcast reset event.
+- Login with username OR email + password.
+- Rate limit: max 5 failed attempts per IP in 15 minutes (check `login_attempts` table, delete records older than 15 min on each check). Show countdown timer if locked.
+- On success: `session_regenerate_id(true)`. Store `$_SESSION['user_id']`, `$_SESSION['role']`, `$_SESSION['username']`.
+- Update `last_login_date`. If it's a new calendar day vs yesterday, increment `streak_days`. If gap > 1 day, reset `streak_days = 1`. Award daily streak bonus currency:
+  - Day 1: +10, Day 2: +20, Day 3: +35, Day 5: +60, Day 7: +150, Day 14: +400, Day 30+: +800
+  - Award streak bonus silently on login; surface it as a toast on the next page load.
 
-Daily gem reset (every hour): randomly select 5 white pixels and insert into canvas_gems, remove old.
+### Session Security
 
-Theme announcement (Sunday after reset): insert new theme row, notify clients.
+- `session_start()` on every PHP page.
+- `session_regenerate_id(true)` on login and privilege escalation.
+- All protected pages check `$_SESSION['user_id']` on every request — not just on first load.
+- Admin pages additionally re-query `role` from the DB on every request.
+- On logout: `session_unset()`, `session_destroy()`, redirect to `/index.php`.
+
+---
 
-Voting phase open/close (Friday/Saturday).
+## XP & LEVEL SYSTEM
 
-Power Hour (random hour daily): set flag, broadcast, unset after 10 minutes.
+### XP Sources
 
-Cleanup: delete old rate limits, expired sessions, etc.
+| Action                    | XP Earned     |
+| ------------------------- | ------------- |
+| Complete a game           | score × 1 XP  |
+| Place a pixel (unclaimed) | 5 XP          |
+| Repaint own pixel         | 1 XP          |
+| Earn an achievement       | 20 XP         |
+| Daily login streak bonus  | 10 XP per day |
+
+### Level Formula
+
+```
+Level = floor(1 + sqrt(xp / 50))
+```
+
+- Level 1: 0 XP
+- Level 2: 50 XP
+- Level 5: 800 XP
+- Level 10: 4050 XP
+
+### Level Perks (cosmetic only, no pay-to-win)
+
+| Level | Perk                                    |
+| ----- | --------------------------------------- |
+| 3     | Unlock 5 extra bird skin colors         |
+| 5     | Unlock animated pixel placement sparkle |
+| 10    | Gold username badge on canvas tooltip   |
+| 20    | Custom avatar border on profile page    |
+| 50    | Legend badge — permanent canvas tooltip |
+
+Show a level-up toast whenever the level increases. Include a subtle animated XP progress bar in the navbar.
+
+---
+
+## ACHIEVEMENTS SYSTEM
+
+Seed the `achievements` table with at least the following on first install:
+
+| Slug           | Name                | Trigger                            | Reward |
+| -------------- | ------------------- | ---------------------------------- | ------ |
+| first_flight   | First Flight        | Complete first game                | 10     |
+| score_10       | Getting Somewhere   | Score 10 in one run                | 20     |
+| score_50       | Flap Master         | Score 50 in one run                | 75     |
+| score_100      | Sky Ruler           | Score 100 in one run               | 200    |
+| first_pixel    | Mark Your Territory | Place first pixel                  | 15     |
+| pixel_5        | Growing Empire      | Own 5 pixels                       | 30     |
+| pixel_25       | Canvas Veteran      | Own 25 pixels                      | 100    |
+| pixel_100      | Canvas Legend       | Own 100 pixels                     | 500    |
+| streak_3       | On a Roll           | 3-day login streak                 | 50     |
+| streak_7       | Dedicated           | 7-day login streak                 | 150    |
+| streak_30      | Obsessed            | 30-day login streak                | 1000   |
+| level_5        | Rising Star         | Reach level 5                      | 50     |
+| level_10       | Veteran             | Reach level 10                     | 150    |
+| level_20       | Elite               | Reach level 20                     | 500    |
+| multiplier_3x  | Combo King          | Reach 3x multiplier in one run     | 100    |
+| broke_the_bank | Broke the Bank      | Spend 500 currency total on pixels | 200    |
+
+### Achievement Check Flow
+
+- After every game saved: check score achievements, streak achievements, level achievements.
+- After every pixel placed: check pixel-count achievements.
+- Achievement checks run server-side in `includes/achievements.php`.
+- Any newly earned achievements are returned in the API response JSON as `"new_achievements": [{slug, name, icon, reward}]`.
+- The front-end reads this array and fires a toast for each one (sequential, 3s apart).
+
+### Achievement Toast UI
+
+- Appears bottom-right, slides in from right.
+- Shows achievement icon, name, description, and `+{reward} currency` in gold.
+- Auto-dismisses after 4 seconds. Stackable (queue multiple).
+- Non-blocking — doesn't interrupt gameplay.
+
+---
+
+## FLAPPY BIRD GAME (`/game.php` + `assets/js/game.js`)
+
+### Game Engine (HTML5 Canvas)
+
+- Render on a `<canvas>` element, 480×640px.
+- Bird: smooth gravity + flap physics. Click, tap, or spacebar to flap.
+- Pipes: scroll left. Gap between top/bottom pipe = 150px at start.
+- Score: increments by 1 each time bird clears a pipe pair.
+
+### Dynamic Difficulty Curve
+
+Every 15 pipes cleared, trigger a difficulty tier increase:
+| Tier | Pipe speed | Gap size | Notes |
+|------|-----------|----------|---------------------------------|
+| 1 | 2.5 px/f | 150px | Beginner |
+| 2 | 3.0 px/f | 140px | Slightly faster |
+| 3 | 3.5 px/f | 130px | Noticeably harder |
+| 4 | 4.0 px/f | 120px | Expert territory |
+| 5+ | 4.5 px/f | 115px | Capped — never gets easier |
+
+Show a brief on-screen flash ("Speed up!") when difficulty increases. Never reduce difficulty once increased.
+
+### Score Multiplier System
+
+- Every 10 pipes passed without dying increases the multiplier:
+  - Pipes 1–9: ×1.0
+  - Pipes 10–19: ×1.5
+  - Pipes 20–29: ×2.0
+  - Pipes 30–39: ×2.5
+  - Pipes 40+: ×3.0
+- Display current multiplier prominently in-game (top-right, large text, gold color when above ×1.0).
+- Flash the multiplier badge when it increases.
+- `Currency earned = score × multiplier × 2` (base: 1 point = 2 currency).
+- The multiplier value is sent to the server with the score. Server independently recalculates and validates it from the score — if they don't match, reject the submission.
+
+### Mid-Game Power-Ups
+
+Power-ups spawn as collectible glowing orbs between pipe pairs. Spawn rate: one power-up every 8–12 pipes (random). Only one active power-up at a time.
+
+| Power-up | Icon color | Effect                                              | Duration   |
+| -------- | ---------- | --------------------------------------------------- | ---------- |
+| Shield   | Blue       | Survive the next pipe collision without dying       | One-time   |
+| Slow-Mo  | Purple     | Pipes slow to 50% speed                             | 5 seconds  |
+| Magnet   | Gold       | Automatically collects nearby coin orbs (see below) | 8 seconds  |
+| ×2 Coin  | Green      | All coins worth double for the duration             | 10 seconds |
+
+Additionally, small **coin orbs** (worth 5 currency each) spawn randomly in the flight path at a rate of 2–4 per pipe gap. These are separate from power-ups. The Magnet power-up auto-collects any coin within 120px radius.
+
+Coin collection is tracked server-side: include `coins_collected` in the score payload.
+
+### Anti-Cheat
+
+1. When `game.php` loads, generate a `game_token` (64 chars, `bin2hex(random_bytes(32))`). Store in `$_SESSION['game_token']` and also insert into `game_tokens` table with `used = 0`.
+2. Embed the token in a hidden `<input>` in the page.
+3. On game over, JS sends a POST to `/api/save_score.php` with: `game_token`, `score` (int), `multiplier` (float, 1 step per 10 pipes), `coins_collected` (int, max 50 per session), CSRF token.
+4. Server validates:
+   - CSRF token matches session
+   - `game_token` exists in DB, belongs to this user, `used = 0`
+   - `score` is int ≥ 0 and ≤ 500 (hard cap)
+   - `multiplier` matches what the score would produce (score ÷ 10 = tier, cap at ×3.0)
+   - `coins_collected` ≤ 50
+   - Token `created_at` is within the last 10 minutes
+5. If valid: mark token `used = 1`, update balance, save to `score_log`.
+6. Rate limit: max 1 unresolved token per user at a time. Generating a new game destroys the previous token.
+
+### Game Over Screen (overlay, not new page)
+
+Show over the game canvas:
+
+- Final score (large, animated count-up)
+- Multiplier used
+- Currency earned (animated count-up, gold)
+- Coins collected (if any)
+- XP earned
+- Personal best (if beaten, show confetti animation)
+- "Play Again" button (generates new token, resets game)
+- "Go to Canvas" button
+- Achievement toasts fire after 500ms delay (so they don't overlap the score reveal)
+
+### In-Game HUD
+
+- Top-left: current score (white, large)
+- Top-right: multiplier badge (hidden at ×1.0, shows gold when above)
+- Active power-up shown with timer bar (bottom-center)
+- Pause button (top-right corner, ESC also works)
+
+### Leaderboard (below game canvas)
+
+Three tabs: **All-time** | **This week** | **Today**
+Columns: rank, avatar, username, level badge, score, currency earned, date.
+Your own row is always highlighted even if outside top 10.
+Limit: top 10 shown. "Your rank: #42" shown below if not in top 10.
+
+---
+
+## LIVE PIXEL CANVAS
+
+### Canvas Rendering (`canvas.php`, `index.php`, `assets/js/canvas.js`)
 
-All cron tasks must be robust, wrapped in try/catch, and logged.
+- Grid: 100×100 pixels. Each cell = 8×8 browser pixels = 800×800px base size.
+- Render using HTML5 Canvas element.
+- **Zoom**: scroll wheel, range 1×–6×. Zoom is centered on cursor position.
+- **Pan**: click-and-drag (cursor changes to grab/grabbing). Panning is clamped so canvas never fully leaves viewport.
+- Unclaimed pixels: `#1a1a1a` (near-black, dark theme) with subtle `#2a2a2a` gridlines every 10 cells.
+- Claimed pixels: show their stored hex color.
+- **Pixel decay**: pixels with `placed_at` between 7–14 days ago are rendered at 70% opacity (dimmed). Past 14 days, they revert to unclaimed.
 
-18. CONFIGURATION & ENVIRONMENT
-    The .env file is created automatically by the setup script (server.js on first run) with the following variables that the user can override:
+### Real-Time Polling
 
-env
+- Poll `/api/get_canvas.php` every 5 seconds.
+- API returns JSON: `{pixels: [{x, y, color, owner_id, username, placed_at, expires_at}], timestamp}`.
+- Front-end diffs against local state: only re-draw changed cells.
+- Show a subtle "live" pulse indicator top-right of canvas (green dot, breathing animation).
 
-# Database (user must provide MySQL credentials)
+### Placing a Pixel (logged-in users on `canvas.php` only)
 
-DB_HOST=localhost
-DB_PORT=3306
-DB_USER=pixelforge
-DB_PASS=strongpassword
-DB_NAME=pixelforge
+On click (not drag):
 
-# SMTP (user provides their own server details)
+1. Identify the grid cell from canvas coordinates (account for zoom/pan offset).
+2. Show a floating **Pixel Panel** (fixed to right of canvas on desktop, below on mobile):
+   - Coordinates: `(x, y)`
+   - Owner: "Unclaimed" or username + level badge + placed_at time
+   - Decay status: if owned by you and expiring in < 3 days, show warning
+   - Color picker: native `<input type="color">` + hex input field (synced)
+   - Cost display: "5 currency" (or "Free — your pixel" if already owned by you)
+   - Your balance: shown with live update
+   - "Place Pixel" button (disabled if insufficient balance or pixel owned by another)
+   - Error messages inline, never `alert()`
 
-SMTP_HOST=smtp.example.com
-SMTP_PORT=587
-SMTP_USER=noreply@example.com
-SMTP_PASS=password
-SMTP_FROM=noreply@example.com
-SMTP_FROM_NAME=PixelForge
+3. POST to `/api/place_pixel.php`: `{x, y, color, csrf_token}`.
+4. Server validates:
+   - Session valid
+   - CSRF token valid
+   - `x`, `y` are ints between 0–99
+   - `color` matches regex `^#[0-9A-Fa-f]{6}$`
+   - Pixel is unclaimed OR owned by this user (re-painting own pixel: free)
+   - User has ≥ 5 balance (if unclaimed pixel)
+   - Rate limit: ≤ 10 placements per user per 60 seconds (check `pixel_placements` table)
+   - Race condition: use `INSERT ... ON DUPLICATE KEY UPDATE` guarded by owner check; return error if a different user claimed it between client check and insert
+5. On success: deduct 5 currency (if unclaimed), update pixel, award 5 XP, record in `pixel_placements`, check achievements, return `{success: true, new_balance, new_xp, new_level, new_achievements}`.
+6. Immediately update the local canvas state without waiting for next poll.
 
-# Application secrets – AUTO‑GENERATED by the system on first run if not provided
+### Hover Tooltip
 
-JWT_SECRET=
-REFRESH_TOKEN_SECRET=
-CSRF_SECRET=
-GAME_HMAC_SECRET=
+- On mouseover (desktop) / long-press (mobile), show a tooltip near cursor:
+  - If unclaimed: "Unclaimed — 5 currency to claim"
+  - If owned by you: "Your pixel — free to repaint (X days left)"
+  - If owned by another: "Owned by [username] · Level [N] · [X days ago]"
+- Decay warning: if expires in < 3 days: "⚠ Expires in X days"
 
-# Server port
+### Territory Overlay (`assets/js/territory.js`)
 
-PORT=3000
-The application will generate random 64‑character hex strings for each secret and write them to .env. The user is instructed not to modify them.
+A toggle button ("Territory view" / "Art view") switches between two render modes:
 
-The mail service is the only external dependency the user must configure. The agent must provide a clear guide.
+- **Art view**: pixels shown in their actual placed color (default).
+- **Territory view**: each pixel is colored by the owner's `avatar_color`. Unclaimed pixels are dark gray. This makes ownership patterns immediately visible across the whole canvas.
+  In territory view, a small legend appears showing the top 5 pixel owners with their color swatch and username.
 
-19. COMPLETE IMPLEMENTATION DETAILS & CODE EXAMPLES
-    In this section, the prompt should include complete, copy‑paste‑able code snippets for the following critical parts to reduce errors:
+### Canvas Full State
 
-server.js with auto‑migration and startup
+When all 10,000 pixels are claimed and none have decayed:
 
-database.js pool configuration
+- Show a banner: "Canvas is full — pixels will open up as others expire. Check back soon!"
+- Disable the "Place Pixel" button.
+- Still show hover tooltips and territory overlay.
 
-migrations/001_initial.js (entire SQL as a string)
+### Public View (`index.php`)
 
-middleware/auth.js
+- Same canvas render and polling, no click-to-place.
+- Show a sticky banner: "Log in to draw on the canvas →"
+- Territory overlay toggle still works.
+- No pixel panel.
 
-middleware/rateLimiter.js
+---
 
-routes/game/submit.js (full anti‑cheat validation)
+## PIXEL DECAY SYSTEM
 
-services/sseManager.js
+- When a pixel is placed, set `expires_at = placed_at + INTERVAL 14 DAY`.
+- **Repainting** (owner updates own pixel): reset `placed_at = NOW()` and `expires_at = NOW() + 14 DAYS`.
+- The canvas polling API filters out expired pixels from the response (treats them as unclaimed).
+- A daily cleanup: in `/api/get_canvas.php`, delete rows where `expires_at < NOW()` as a side effect (or via a separate cron job).
+- Visual decay stages:
+  - 0–7 days: full opacity
+  - 7–14 days: 70% opacity + subtle shimmer CSS animation
+  - 14+ days: removed from DB, shown as unclaimed
+- If the user re-paints before expiry, the decay resets fully.
 
-services/chunkService.js
+---
 
-public/assets/js/prng.js (Mulberry32)
+## LEADERBOARD (`/leaderboard.php`)
 
-public/assets/js/api.js (JWT handling, CSRF token inclusion)
+Three independent leaderboards, displayed as tabs:
 
-Nginx configuration template (optional, but recommended)
+### Tab 1: Top Scores
 
-The agent is forbidden from deviating from these implementations. They must be included verbatim.
+Columns: Rank, Player (avatar + username + level), Score, Multiplier Used, Currency Earned, Date
+Filters: All-time / This Week / Today
 
-(Because of length, I’ll summarise here but the full prompt would contain them.)
+### Tab 2: Most Pixels Owned
 
-20. ROBUSTNESS GUARANTEES & MANDATORY PRACTICES
-    The agent must adhere to these rules:
+Columns: Rank, Player, Pixels Owned, Pixels Placed All-Time, Joined Date
+Query: `SELECT owner_id, COUNT(*) as pixel_count FROM pixels WHERE owner_id IS NOT NULL GROUP BY owner_id ORDER BY pixel_count DESC`
 
-No implicit error swallowing: Every async function must have proper error handling. Unhandled promise rejections crash the process (with restart via PM2/systemd).
+### Tab 3: Most XP
 
-All SQL queries parameterised – use ? placeholders. No string concatenation.
+Columns: Rank, Player, Level, Total XP, Achievements Count
+Shows overall progression leaders.
 
-All user input validated – use a shared validation schema (regex, lengths, ranges).
+- All tabs show top 50.
+- Logged-in user's own row is highlighted with a subtle border accent, regardless of position.
+- Clicking a username links to their public profile.
 
-All API responses must be wrapped in { ok: true/false, data/error }.
+---
 
-Transactions used for any multi‑table write (purchase, score submit).
+## PUBLIC PROFILE PAGE (`/profile.php?user=username`)
 
-Logging: All errors logged to file with timestamps. Use winston or simple fs.appendFile.
+Layout (single-column, centered, max-width 700px):
 
-Rate limiting applied on every endpoint (see table in original spec).
+### Header
 
-CSRF applied on every POST/PUT/DELETE.
+- Large avatar circle (letter initial + `avatar_color` background)
+- Username (large) + level badge (e.g. "Level 12")
+- Achievement badges (grid of earned icons, grayed out if locked)
+- Stats row: Total Score (all-time best), Pixels Owned, XP, Member Since
 
-Email verification enforced before pixel purchase and game score submission.
+### Mini Canvas
 
-Game score validation cannot be bypassed; server must re‑check plausibility and HMAC.
+- 200×200px canvas showing ONLY this user's owned pixels highlighted in their `avatar_color`.
+- All other pixels are dark/transparent.
+- Shows their territory at a glance.
 
-Chunk binary data must be exactly 12,288 bytes; malformed requests rejected.
+### Achievement Showcase
 
-No client secrets – the HMAC signing key for the game is derived using HKDF on server and a per‑session signing key sent to client (never expose the master secret).
+- Grid of all achievement slots (earned = colored, unearned = gray + locked icon).
+- Hover tooltip shows achievement name, description, and earned date (or "Locked").
 
-The app must be self‑contained – all tables created automatically, admin seeded, secrets generated. The user only provides MySQL connection info and SMTP.
+### Recent Activity
 
-All external packages listed in package.json with exact versions. Use only well‑known, maintained packages.
+- Last 10 score submissions: date, score, multiplier, currency earned.
+- Last 10 pixels placed: coordinate, color swatch, date.
 
-21. AUTOMATED SETUP & DEPLOYMENT
-    The server.js file must:
+### Privacy
 
-Check if .env exists; if not, generate one with random secrets and stop with a message “Edit .env with your SMTP settings, then run again.”
+- Profile is public — anyone can view it (no login required).
+- Email is never shown.
 
-On start, connect to MySQL and run the migration script if needed.
+---
 
-Create the admin user if not present (using bcrypt hash), print credentials to console once.
+## ADMIN PANEL (`/admin/`)
 
-Start cron jobs.
+### Access Control
 
-Listen on the configured port.
+- Middleware check on every admin page: re-query `role` from DB using session `user_id`.
+- If `role !== 'admin'`: return HTTP 403, show a plain error page. Do not redirect to login (leaks that `/admin/` exists).
+- Admin login uses the same login system — no separate credentials.
 
-The user only needs to:
+### Admin Dashboard (`/admin/index.php`)
 
-Install Node.js and MySQL.
+Overview cards:
 
-Run npm install then node server.js.
+- Total users, total pixels placed, canvas fill % (claimed / 10,000), total currency in circulation, active users today.
+- Recent admin log (last 20 actions, paginated).
 
-The agent must produce a README.md with these exact steps.
+### Canvas Management (`/admin/canvas.php`)
 
-IMPLEMENTATION ORDER (Node.js)
-Project setup: package.json, .env generation, database connection.
+- Full canvas render (same as canvas.php).
+- **Single erase**: click a pixel → confirm dialog → delete from DB.
+- **Multi-select mode**: toggle button activates selection mode. Click pixels to select (red outline). "Erase Selected (N)" button bulk-deletes after confirmation.
+- **Area select**: click-and-drag to select a rectangular region.
+- **Reset Entire Canvas**: button → modal with text field. User must type `RESET` exactly to confirm. Truncates `pixels` table. Log: `{action: 'canvas_reset', details: 'Full canvas reset'}`.
+- **Fill Canvas**: choose a color → fills all UNCLAIMED pixels only (does not overwrite existing claimed pixels). Confirm required.
+- Admin canvas actions do NOT deduct currency or XP (admin actions are free and bypass economy).
 
-Database migration: All tables, indexes, seed data.
+### User Management (`/admin/users.php`)
 
-Auth system: Registration, login, email verification, JWT refresh, logout blacklist.
+- Paginated table (25 per page): avatar, username, email, level, balance, pixels owned, role, streak, joined.
+- Search: filter by username or email (live JS filter, no page reload).
+- Per-user action row (expand on click):
+  - **Edit Balance**: input (integer ≥ 0, absolute value). Saves to DB. Logs action.
+  - **Add/Subtract Balance**: delta input (e.g. +100 or -50) as an alternative. Saves to DB. Logs action.
+  - **Change Role**: toggle user ↔ admin. Cannot demote yourself if you are the only admin.
+  - **Delete User**: confirm dialog ("This will remove the user and release their pixels"). On confirm: delete user, set `owner_id = NULL` on their pixels (keep colors, reset `expires_at = NOW()`).
+  - **View Profile**: link to `/profile.php?user=username`.
+  - **Pixel Count**: shown in table column, click to highlight their pixels on the admin canvas.
+  - **Reset Streak**: set `streak_days = 0`.
+- Guard: admin cannot delete or demote themselves.
 
-Express middleware: Security headers, CSRF, rate limiter, auth.
+### Admin Log (`/admin/logs.php`)
 
-Frontend shell: HTML pages, sidebar layout, CSS (all styles exact as per UI spec).
+- Full paginated log of all admin actions.
+- Columns: timestamp, admin username, action type, target (user/pixel), details.
+- Filter by action type and date range.
 
-Canvas grid viewer: Chunk service, SSE manager, static canvas page (read-only).
+---
 
-Game engine: PRNG, physics, obstacles, collectibles, HUD, audio.
+## SECURITY REQUIREMENTS
 
-Game API: Start, checkpoint, submit, anti‑cheat.
+### Database
 
-PXL system: Credit/debit, transaction logging.
+- All queries use PDO with prepared statements and bound parameters. No string interpolation in SQL ever.
+- Use a single PDO connection via `includes/db.php` (singleton pattern).
+- Database user has minimal privileges: SELECT, INSERT, UPDATE, DELETE only on the app database. No DROP, CREATE, etc.
 
-Pixel purchase: Buy route with locking, SSE broadcast.
+### Input/Output
 
-Achievement system: Definition, grant, claim.
+- All user-supplied output escaped with `htmlspecialchars($val, ENT_QUOTES, 'UTF-8')`.
+- JSON responses use `json_encode()` (safe by default).
+- All color inputs validated server-side with regex `^#[0-9A-Fa-f]{6}$`.
+- All integer inputs cast with `(int)` and range-checked server-side.
 
-Leaderboard & profile.
+### CSRF Protection
 
-Cron jobs: Grid reset, themes, gems, power hour, cleanup.
+- Generate a token on session start: `$_SESSION['csrf_token'] = bin2hex(random_bytes(32))`.
+- Embed in every form as `<input type="hidden" name="csrf_token" value="...">`.
+- AJAX requests send it in the POST body (`csrf_token` field).
+- Every POST endpoint validates: `hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])`. Fail = 403.
 
-Time‑lapse generation (can be a separate script).
+### Rate Limiting
 
-Admin panel (basic).
+| Endpoint           | Limit                                    |
+| ------------------ | ---------------------------------------- |
+| Login              | 5 failed attempts per IP per 15 minutes  |
+| `/api/place_pixel` | 10 placements per user per 60 seconds    |
+| `/api/save_score`  | 1 submission per game token (single-use) |
+| Register           | 3 registrations per IP per hour          |
 
-Final hardening: Add all security headers, CSP, input sanitization, test every error path.
+### Session Security
 
-CRITICAL REMINDERS FOR AGENT
-Escape all HTML output using a function escapeHtml.
+- `session.cookie_httponly = 1`
+- `session.cookie_samesite = Strict`
+- `session.use_strict_mode = 1`
+- Set via `ini_set()` or `php.ini`.
+- Session lifetime: 2 hours of inactivity.
 
-Use parameterised SQL everywhere. Not a single + variable + in SQL.
+### HTTP Security Headers
 
-Double submit CSRF for all POST requests; attach x-csrf-token header on client.
+Set on every response (in a shared `includes/headers.php` included at top of every page):
 
-Rate limit everything as defined.
+```php
+header('X-Frame-Options: DENY');
+header('X-Content-Type-Options: nosniff');
+header('X-XSS-Protection: 1; mode=block');
+header('Referrer-Policy: strict-origin-when-cross-origin');
+header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;");
+```
 
-Never trust client game score; validate HMAC and plausibility server‑side.
+### Admin Extra Security
 
-Pixel purchase must be atomic using MySQL transactions and row locks.
+- Admin role is re-checked from DB on every admin page load (not from session).
+- Admin actions are idempotent and logged before execution.
+- No admin action is triggered by a GET request — all mutations are POST only.
 
-JWT tokens short‑lived (15 min), refresh tokens in httpOnly cookie.
+---
 
-Secrets auto‑generated and never exposed.
+## UI / UX DESIGN
 
-Chunk data always exactly 12,288 bytes, served as binary.
+### Global Theme
 
-SSE endpoint must disable Nginx buffering (if used) and set proper headers.
+- Background: `#0a0a0a`
+- Surface (cards, panels): `#111111`
+- Border: `#222222`
+- Primary accent: `#7c3aed` (purple)
+- Secondary accent: `#a855f7` (lighter purple)
+- Gold (currency, multiplier): `#f59e0b`
+- Text primary: `#f5f5f5`
+- Text secondary: `#9ca3af`
+- Danger: `#ef4444`
+- Success: `#22c55e`
+- Font: system-ui stack (`-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`)
 
-All email functions use nodemailer with the provided SMTP; implement a mail queue for reliability.
+### Navigation Bar (all pages)
 
-End of PixelForge Node.js Specification
-Total: ~12,000 words of detailed technical specification
-Version: 2.0 | Build Target: Production, Standalone, Error‑Free
+- Left: logo + app name ("PixelFlap")
+- Center (desktop): Home Canvas | Play Game | Leaderboard
+- Right: if logged out: Login | Register. If logged in: XP progress bar (mini, 120px wide) + Level badge + Balance (💰 gold) + Username (links to profile) + Logout.
+- On mobile: hamburger menu collapses center + right items.
+- Balance updates via fetch after game and pixel placement — no page reload.
+
+### Micro-interactions & Feedback
+
+- All buttons have hover scale (1.02) and active scale (0.97) transitions.
+- Balance counter animates up/down when it changes (CSS counter animation or JS number tween).
+- XP bar fills smoothly on level/xp gain.
+- Level-up: full-screen brief flash + toast ("Level up! You're now level N").
+- Pixel placement: brief ripple animation on the placed pixel.
+- Insufficient balance: shake animation on the "Place Pixel" button + red flash.
+- Game over: score counts up from 0 over 1.2 seconds.
+- All error messages appear inline (red text below the relevant input/action). Never `alert()` or `confirm()` except for destructive admin actions.
+- Loading states on all async actions (spinner on button, disabled state).
+
+### Canvas UX
+
+- Zoom level indicator shown in canvas corner (e.g. "2×").
+- Minimap in bottom-right corner: 100×100 scaled-down canvas, shows current viewport rectangle. Clicking minimap pans to that area.
+- Color picker panel slides in from right (desktop) or up from bottom (mobile).
+- "My Pixels" button: highlights all pixels you own with a white outline overlay.
+
+### Responsive Design
+
+- All pages fully usable on mobile (minimum 375px width).
+- Canvas on mobile: touch to select pixel (single tap), pinch-to-zoom, two-finger pan.
+- Game on mobile: tap to flap.
+- Admin panel: collapses to single-column on mobile with collapsible sidebar.
+
+### Accessibility
+
+- All interactive elements have focus styles.
+- Canvas tooltip accessible via `aria-live` region.
+- Color contrast ratio ≥ 4.5:1 for all text.
+- Images and icons have `alt` or `aria-label`.
+
+---
+
+## EDGE CASES & VALIDATION
+
+| Scenario                                         | Handling                                                                                                                             |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Two users claim same pixel simultaneously        | DB UNIQUE KEY on (x, y) causes second insert to fail; return `{error: "Pixel just claimed by another user — refresh and try again"}` |
+| User submits score with expired/used token       | Return `{error: "Invalid or expired game session. Please start a new game."}` with HTTP 400                                          |
+| Canvas is 100% claimed and no pixels expiring    | Show banner; disable Place button; still allow territory view and hover                                                              |
+| User tries to overwrite another's valid pixel    | Server rejects; return `{error: "This pixel is owned by [username]"}` with HTTP 403                                                  |
+| Admin deletes a user who is currently logged in  | Their session becomes invalid on next request (user_id no longer in DB); redirect to login                                           |
+| Admin is the only admin and tries to demote self | Block with error: "You are the only admin. Promote another user first."                                                              |
+| Invalid color submitted                          | Regex validate server-side; return `{error: "Invalid color format"}` with HTTP 400                                                   |
+| Score exceeds hard cap (500)                     | Return `{error: "Score rejected — exceeds maximum allowed value"}` with HTTP 400                                                     |
+| Pixel decay race: expired pixel claimed same ms  | DB handles via UNIQUE KEY; whoever inserts first wins                                                                                |
+| Achievement already earned, triggered again      | `INSERT IGNORE` into `user_achievements` — silently skip duplicates                                                                  |
+| XP overflow / level formula edge cases           | Cap level at 100 display-wise; XP continues accumulating                                                                             |
+
+---
+
+## INSTALL & SETUP NOTES FOR THE AGENT
+
+1. Provide a single `/install.php` script that:
+   - Creates all tables (with `CREATE TABLE IF NOT EXISTS`)
+   - Seeds the `achievements` table
+   - Creates a default admin account: username `admin`, email `admin@pixelflap.local`, password `Admin1234!` (force-change on first login)
+   - Deletes itself after successful run
+2. Provide a `/config.php` file at root with DB credentials (host, name, user, pass) and app settings (app name, base URL).
+3. All DB calls import `/includes/db.php` which reads from `/config.php`.
+4. Include a `README.md` with setup steps: create DB, configure `/config.php`, run `/install.php`, set up cron for decay cleanup.
+
+```
+
+```
