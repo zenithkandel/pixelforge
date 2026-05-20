@@ -44,7 +44,7 @@ function get_current_user() {
 
 if (!function_exists('login_user')) {
 function login_user($user) {
-    session_regenerate_id(true);
+    // session_regenerate_id(true);
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['role'] = $user['role'];
     $_SESSION['username'] = $user['username'];
