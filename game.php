@@ -80,10 +80,9 @@ require_once __DIR__ . '/includes/header.php';
 </div>
 
 <script>
-var GAME_TOKEN = '<?= $game_token ?>';
-var CSRF_TOKEN = '<?= csrf_token() ?>';
-var BASE_URL = '<?= BASE_URL ?>';
-var CURRENT_USER = { id: <?= (int)$_SESSION['user_id'] ?>, username: '<?= htmlspecialchars($_SESSION['username']) ?>' };
+var GAME_TOKEN = '';
+var CSRF_TOKEN = '';
+var CURRENT_USER = null;
 </script>
 <script src="<?= BASE_URL ?>/assets/js/game.js"></script>
 <script src="<?= BASE_URL ?>/assets/js/achievements.js"></script>
