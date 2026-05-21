@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $db->prepare('DELETE FROM users WHERE id = ?')->execute([$target_id]);
             log_admin('USER_MGMT', "Admin deleted user #$target_id", ['user_id' => $target_id]);
-            $messages[] = ['type' => 'success', 'text' => 'User permanentely removed.'];
+            $messages[] = ['type' => 'success', 'text' => 'User permanently removed.'];
         }
     } elseif ($action === 'reset_streak' && $target_id > 0) {
         $db->prepare('UPDATE users SET streak_days = 0 WHERE id = ?')->execute([$target_id]);
@@ -420,7 +420,7 @@ require_once __DIR__ . '/header.php';
                                                 <input type="hidden" name="action" value="delete_user">
                                                 <button type="submit" class="btn-danger"
                                                     style="height:38px; border-radius:10px; font-weight:700; font-size:12px; flex:1; background:rgba(239, 68, 68, 0.1); color:var(--red); border:1px solid rgba(239, 68, 68, 0.2);"
-                                                    onclick="return confirm('DESTRUCT SEQUENCE: Remove <?= addslashes($u['username']) ?> permanentely?')">TERMINATE</button>
+                                                    onclick="return confirm('DESTRUCT SEQUENCE: Remove <?= addslashes($u['username']) ?> permanently?')">TERMINATE</button>
                                             </form>
                                         </div>
                                     </div>

@@ -23,7 +23,8 @@ $action_options = [
 
 try {
     $search_q = $filter_action ? "WHERE action = ?" : "";
-    $stmt = $db->prepare("SELECT a.*, u.username FROM admin_log a JOIN users u ON a.admin_id = u.id $search_q ORDER BY performed_at DESC LIMIT $per_page OFFSET $offset");
+    $sql = "SELECT a.*, u.username FROM admin_log a JOIN users u ON a.admin_id = u.id $search_q ORDER BY performed_at DESC LIMIT " . (int) $per_page . " OFFSET " . (int) $offset;
+    $stmt = $db->prepare($sql);
     if ($filter_action)
         $stmt->execute([$filter_action]);
     else
@@ -74,7 +75,8 @@ require_once __DIR__ . '/header.php';
                 <?php foreach ($logs as $log): ?>
                     <tr>
                         <td style="color:var(--text-muted); font-family: monospace; font-size: 13px;">
-                            <?= $log['performed_at'] ?></td>
+                            <?= $log['performed_at'] ?>
+                        </td>
                         <td>
                             <div style="display:flex; align-items:center; gap:10px;">
                                 <div

@@ -1876,3 +1876,5 @@
 [2026-05-21 06:46:44] [ERROR] [DB] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/admin/] Database connection failed: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it | {"code":2002}
 [2026-05-21 06:46:45] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Page request received
 [2026-05-21 06:46:49] [ERROR] [DB] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Database connection failed: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it | {"code":2002}
+[2026-05-21 06:47:13] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-21 06:47:17] [ERROR] [DB] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Database connection failed: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it | {"code":2002}
