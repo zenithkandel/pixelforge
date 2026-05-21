@@ -78,7 +78,7 @@ require_once __DIR__ . '/header.php';
                         <td>
                             <div style="display:flex; align-items:center; gap:10px;">
                                 <div
-                                    style="width:28px; height:28px; border-radius:8px; background:var(--purple); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:900;">
+                                    style="width:28px; height:28px; border-radius:var(--radius-sm); background:var(--accent); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:900;">
                                     <?= strtoupper(substr($log['username'], 0, 1)) ?>
                                 </div>
                                 <strong><?= htmlspecialchars($log['username']) ?></strong>

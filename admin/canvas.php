@@ -135,18 +135,19 @@ require_once __DIR__ . '/header.php';
     </div>
 
     <div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 14px;">
-        <i class="fas fa-mouse-pointer" style="margin-right: 8px;"></i> Click any data point (pixel) to intercept and
+        <i class="fad fa-thin fa-mouse-pointer" style="margin-right: 8px;"></i> Click any data point (pixel) to
+        intercept and
         erase its registry entry.
     </div>
 </div>
 
 <!-- Modals with Pro Aesthetic -->
-<div id="reset-modal" class="modal-overlay" style="display:none; backdrop-filter: blur(10px);">
-    <div class="glass-panel" style="width: 450px; padding: 40px; position:relative;">
+<div id="reset-modal" class="modal-overlay" style="display:none; backdrop-filter: none; background:rgba(0,0,0,0.85);">
+    <div class="section-card" style="width: 450px; padding: 40px; position:relative; border-radius:var(--radius);">
         <div style="text-align:center; margin-bottom: 25px;">
             <div
-                style="width:60px; height:60px; background:rgba(239, 68, 68, 0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 15px;">
-                <i class="fas fa-exclamation-triangle" style="color:var(--red); font-size:24px;"></i>
+                style="width:60px; height:60px; background:rgba(239, 68, 68, 0.1); border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; margin:0 auto 15px;">
+                <i class="fad fa-thin fa-exclamation-triangle" style="color:var(--red); font-size:24px;"></i>
             </div>
             <h3 style="font-family:var(--font-game); font-size:24px; color:white;">Total Matrix Purge</h3>
         </div>
@@ -176,12 +177,12 @@ require_once __DIR__ . '/header.php';
     </div>
 </div>
 
-<div id="fill-modal" class="modal-overlay" style="display:none; backdrop-filter: blur(10px);">
-    <div class="glass-panel" style="width: 450px; padding: 40px; position:relative;">
+<div id="fill-modal" class="modal-overlay" style="display:none; backdrop-filter: none; background:rgba(0,0,0,0.85);">
+    <div class="section-card" style="width: 450px; padding: 40px; position:relative; border-radius:var(--radius);">
         <div style="text-align:center; margin-bottom: 25px;">
             <div
-                style="width:60px; height:60px; background:rgba(124, 58, 237, 0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 15px;">
-                <i class="fas fa-paint-brush" style="color:var(--purple-bright); font-size:24px;"></i>
+                style="width:60px; height:60px; background:var(--bg-active); border-radius:var(--radius-sm); border:1px solid var(--border-default); display:flex; align-items:center; justify-content:center; margin:0 auto 15px;">
+                <i class="fad fa-thin fa-paint-brush" style="color:var(--accent-bright); font-size:24px;"></i>
             </div>
             <h2 style="font-family:var(--font-game); font-size:24px; color:white;">Matrix Infill</h2>
         </div>

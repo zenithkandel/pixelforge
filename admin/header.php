@@ -296,15 +296,15 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
                         <i class="fad fa-thin fa-fingerprint"></i> Admin Activity
                     </a>
                     <a href="<?= BASE_URL ?>/includes/logger.php?view=1" target="_blank">
-                        <i class="fas fa-dna"></i> System Logs
+                        <i class="fad fa-thin fa-dna"></i> System Logs
                     </a>
                 </nav>
             </div>
 
             <div style="margin-top:auto; padding:30px;">
                 <a href="<?= BASE_URL ?>/logout.php"
-                    style="display:flex; align-items:center; gap:12px; color:rgba(239, 68, 68, 0.8); text-decoration:none; font-weight:700; font-size:14px; padding:15px; border-radius:15px; background:rgba(239, 68, 68, 0.05); transition: background 0.2s;">
-                    <i class="fas fa-power-off"></i> Terminate Session
+                    style="display:flex; align-items:center; gap:12px; color:rgba(239, 68, 68, 0.8); text-decoration:none; font-weight:700; font-size:14px; padding:15px; border-radius:var(--radius-sm); background:rgba(239, 68, 68, 0.05); transition: background 0.2s; border:1px solid rgba(239, 68, 68, 0.1);">
+                    <i class="fad fa-thin fa-power-off"></i> Terminate Session
                 </a>
             </div>
         </aside>

@@ -15,23 +15,23 @@ if (!$is_ajax) {
     require_once __DIR__ . '/includes/header.php';
     ?>
     <div class="leaderboard-app" style="display:flex; flex-direction:column; gap:20px;">
-        <div class="widget" style="padding:30px;">
+        <div class="section-card" style="padding:30px; border-radius:var(--radius);">
             <div
                 style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; border-bottom:1px solid var(--border-dim); padding-bottom:20px;">
-                <h1 style="font-size:32px; font-weight:900; letter-spacing:-1px;"><i class="fas fa-trophy"
-                        style="color:var(--gold); margin-right:15px;"></i>Global Rankings</h1>
+                <h1 style="font-size:32px; font-weight:900; letter-spacing:-1px; color:white;"><i
+                        class="fad fa-thin fa-trophy" style="color:var(--gold); margin-right:15px;"></i>Global Rankings</h1>
                 <div class="tabs"
-                    style="display:flex; gap:10px; background:var(--bg-input); padding:6px; border-radius:10px;">
+                    style="display:flex; gap:10px; background:var(--bg-active); padding:6px; border-radius:var(--radius-sm); border:1px solid var(--border-default);">
                     <button class="tab-btn <?= $period === 'all' ? 'active' : '' ?>" data-lb="all"
-                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:6px; font-weight:bold; cursor:pointer;">All-Time</button>
+                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:var(--radius-sm); font-weight:bold; cursor:pointer;">All-Time</button>
                     <button class="tab-btn <?= $period === 'week' ? 'active' : '' ?>" data-lb="week"
-                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:6px; font-weight:bold; cursor:pointer;">Weekly</button>
+                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:var(--radius-sm); font-weight:bold; cursor:pointer;">Weekly</button>
                     <button class="tab-btn <?= $period === 'today' ? 'active' : '' ?>" data-lb="today"
-                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:6px; font-weight:bold; cursor:pointer;">Today</button>
+                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:var(--radius-sm); font-weight:bold; cursor:pointer;">Today</button>
                     <button class="tab-btn <?= $period === 'pixels' ? 'active' : '' ?>" data-lb="pixels"
-                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:6px; font-weight:bold; cursor:pointer;">Pixels</button>
+                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:var(--radius-sm); font-weight:bold; cursor:pointer;">Pixels</button>
                     <button class="tab-btn <?= $period === 'xp' ? 'active' : '' ?>" data-lb="xp"
-                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:6px; font-weight:bold; cursor:pointer;">XP</button>
+                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:var(--radius-sm); font-weight:bold; cursor:pointer;">XP</button>
                 </div>
             </div>
 
@@ -123,13 +123,14 @@ foreach ($rows_data as $row) {
         $rank_style = 'color:#fb923c;';
     ?>
                     <tr
-                        style="<?= $is_me ? 'background:rgba(124, 58, 237, 0.1);' : '' ?> border-bottom:1px solid var(--border-dim);">
+                        style="<?= $is_me ? 'background:var(--bg-active); border:1px solid var(--accent);' : '' ?> border-bottom:1px solid var(--border-dim);">
                         <td style="<?= $rank_style ?> font-weight:bold; padding:18px 15px; font-size:18px;">
-                            <?= $rank_icon ?: $rank ?></td>
+                            <?= $rank_icon ?: $rank ?>
+                        </td>
                         <td>
                             <div style="display:flex; align-items:center; gap:12px;">
                                 <div
-                                    style="width:32px; height:32px; border-radius:6px; background:<?= htmlspecialchars($row['avatar_color']) ?>; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; color:black; border:1px solid rgba(255,255,255,0.2);">
+                                    style="width:32px; height:32px; border-radius:var(--radius-sm); background:<?= htmlspecialchars($row['avatar_color']) ?>; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; color:black; border:1px solid rgba(255,255,255,0.2);">
                                     <?= strtoupper(substr($row['username'], 0, 1)) ?>
                                 </div>
                                 <a href="<?= BASE_URL ?>/profile.php?user=<?= urlencode($row['username']) ?>"
@@ -139,27 +140,34 @@ foreach ($rows_data as $row) {
                         <td style="color:var(--text-muted);">Lv<?= (int) $row['level'] ?></td>
                         <?php if ($period === 'pixels'): ?>
                             <td style="text-align:right; font-family:var(--font-game); color:white;">
-                                <?= (int) ($row['pixel_count'] ?? 0) ?></td>
+                                <?= (int) ($row['pixel_count'] ?? 0) ?>
+                            </td>
                             <td style="text-align:right; color:var(--text-muted);"><?= (int) ($row['total_placed'] ?? 0) ?></td>
                             <td style="text-align:right; color:var(--gold); font-weight:bold;">
-                                <?= (int) ($row['ach_count'] ?? 0) ?> <i class="fas fa-medal"></i></td>
+                                <?= (int) ($row['ach_count'] ?? 0) ?> <i class="fad fa-thin fa-medal"></i>
+                            </td>
                             <td style="text-align:right; padding-right:15px; font-size:12px; color:var(--text-muted);">—</td>
                         <?php elseif ($period === 'xp'): ?>
                             <td style="text-align:right; font-family:var(--font-game); color:white;">
-                                <?= number_format((int) $row['xp'] ?? 0) ?></td>
+                                <?= number_format((int) $row['xp'] ?? 0) ?>
+                            </td>
                             <td style="text-align:right; color:var(--text-muted);">—</td>
                             <td style="text-align:right; color:var(--gold); font-weight:bold;">
-                                <?= (int) ($row['ach_count'] ?? 0) ?> <i class="fas fa-medal"></i></td>
+                                <?= (int) ($row['ach_count'] ?? 0) ?> <i class="fad fa-thin fa-medal"></i>
+                            </td>
                             <td style="text-align:right; padding-right:15px; font-size:12px; color:var(--text-muted);">—</td>
                         <?php else: ?>
                             <td style="text-align:right; font-family:var(--font-game); color:white;">
-                                <?= number_format((int) $row['score']) ?></td>
+                                <?= number_format((int) $row['score']) ?>
+                            </td>
                             <td style="text-align:right; color:var(--text-muted); font-size:12px;">
-                                <?= number_format((float) $row['multiplier'], 1) ?>×</td>
+                                <?= number_format((float) $row['multiplier'], 1) ?>×
+                            </td>
                             <td style="text-align:right; color:var(--gold); font-weight:bold;">
                                 +<?= number_format((int) $row['currency_earned']) ?></td>
                             <td style="text-align:right; padding-right:15px; font-size:12px; color:var(--text-muted);">
-                                <?= date('M j, H:i', strtotime($row['played_at'])) ?></td>
+                                <?= date('M j, H:i', strtotime($row['played_at'])) ?>
+                            </td>
                         <?php endif; ?>
                     </tr>
                     <?php

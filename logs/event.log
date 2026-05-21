@@ -2200,3 +2200,63 @@
 [2026-05-21 07:14:45] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
 [2026-05-21 07:14:49] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Page request received
 [2026-05-21 07:14:49] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:16:18] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Page request received
+[2026-05-21 07:16:18] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:16:20] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Page request received
+[2026-05-21 07:16:20] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:16:23] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php] Page request received
+[2026-05-21 07:16:25] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/canvas.php] Page request received
+[2026-05-21 07:16:25] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:16:25] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:16:27] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:16:27] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":13,"y":18,"color":"#7c3aed"}
+[2026-05-21 07:16:27] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":13,"y":18,"color":"#7c3aed","new_balance":1134}
+[2026-05-21 07:16:27] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:16:27] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":26,"y":17,"color":"#7c3aed"}
+[2026-05-21 07:16:27] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":26,"y":17,"color":"#7c3aed","new_balance":1129}
+[2026-05-21 07:16:28] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:16:28] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":29,"y":12,"color":"#7c3aed"}
+[2026-05-21 07:16:28] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":29,"y":12,"color":"#7c3aed","new_balance":1124}
+[2026-05-21 07:16:29] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:16:29] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":42,"y":13,"color":"#7c3aed"}
+[2026-05-21 07:16:29] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":42,"y":13,"color":"#7c3aed","new_balance":1119}
+[2026-05-21 07:16:29] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:16:29] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":40,"y":22,"color":"#7c3aed"}
+[2026-05-21 07:16:29] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":40,"y":22,"color":"#7c3aed","new_balance":1114}
+[2026-05-21 07:16:30] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:16:30] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":59,"y":18,"color":"#7c3aed"}
+[2026-05-21 07:16:30] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":59,"y":18,"color":"#7c3aed","new_balance":1109}
+[2026-05-21 07:16:30] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:16:30] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":91}
+[2026-05-21 07:16:31] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:16:31] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":57,"y":27,"color":"#7c3aed"}
+[2026-05-21 07:16:31] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":57,"y":27,"color":"#7c3aed","new_balance":1104}
+[2026-05-21 07:16:31] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:16:31] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":56,"y":37,"color":"#7c3aed"}
+[2026-05-21 07:16:31] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":56,"y":37,"color":"#7c3aed","new_balance":1099}
+[2026-05-21 07:16:32] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:16:32] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":35,"y":39,"color":"#7c3aed"}
+[2026-05-21 07:16:32] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":35,"y":39,"color":"#7c3aed","new_balance":1094}
+[2026-05-21 07:16:32] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:16:32] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":36,"y":20,"color":"#7c3aed"}
+[2026-05-21 07:16:32] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":36,"y":20,"color":"#7c3aed","new_balance":1089}
+[2026-05-21 07:16:33] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:16:33] [SECURITY] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel rejected — rate limit | {"count":10}
+[2026-05-21 07:16:34] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:16:34] [SECURITY] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel rejected — rate limit | {"count":10}
+[2026-05-21 07:16:36] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:16:36] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":95}
+[2026-05-21 07:16:41] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:16:41] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":95}
+[2026-05-21 07:16:46] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:16:46] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":95}
+[2026-05-21 07:16:51] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:16:51] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":95}
+[2026-05-21 07:16:56] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:16:56] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":95}
+[2026-05-21 07:17:01] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:17:01] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":95}
+[2026-05-21 07:17:06] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:17:06] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":95}
+[2026-05-21 07:17:11] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:17:11] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":95}

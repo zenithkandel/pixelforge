@@ -128,7 +128,7 @@ require_once __DIR__ . '/header.php';
 
     .status-pill {
         padding: 4px 12px;
-        border-radius: 50px;
+        border-radius: var(--radius-sm);
         font-size: 11px;
         font-weight: 800;
         text-transform: uppercase;
@@ -204,9 +204,10 @@ require_once __DIR__ . '/header.php';
     }
 
     .btn-action:hover {
-        background: var(--purple);
+        background: var(--bg-active);
         color: white;
         transform: translateY(-2px);
+        border-color: var(--border-bright);
     }
 
     .btn-action.btn-delete:hover {
@@ -215,13 +216,15 @@ require_once __DIR__ . '/header.php';
 
     .alert {
         padding: 15px 25px;
-        border-radius: 15px;
+        border-radius: var(--radius-sm);
         margin-bottom: 30px;
         display: flex;
         align-items: center;
         gap: 15px;
         font-weight: 600;
         font-size: 14px;
+        background: var(--bg-panel);
+        border: 1px solid var(--border-default);
     }
 
     .alert-success {
@@ -239,7 +242,7 @@ require_once __DIR__ . '/header.php';
 
 <?php foreach ($messages as $msg): ?>
     <div class="alert alert-<?= $msg['type'] ?>">
-        <i class="fas fa-<?= $msg['type'] === 'success' ? 'check-circle' : 'exclamation-circle' ?>"></i>
+        <i class="fad fa-thin fa-<?= $msg['type'] === 'success' ? 'check-circle' : 'exclamation-circle' ?>"></i>
         <?= htmlspecialchars($msg['text']) ?>
     </div>
 <?php endforeach; ?>
@@ -249,7 +252,7 @@ require_once __DIR__ . '/header.php';
         <div style="display:flex; align-items:center; gap:20px;">
             <h2 class="section-title">Verified Population</h2>
             <span
-                style="background:rgba(255,255,255,0.03); padding:4px 12px; border-radius:50px; font-size:12px; font-weight:700; color:var(--text-muted); border:1px solid rgba(255,255,255,0.05);">
+                style="background:rgba(255,255,255,0.03); padding:4px 12px; border-radius:var(--radius-sm); font-size:12px; font-weight:700; color:var(--text-muted); border:1px solid rgba(255,255,255,0.05);">
                 <?= number_format((int) ($total ?? 0)) ?> TOTAL
             </span>
         </div>
@@ -287,7 +290,7 @@ require_once __DIR__ . '/header.php';
                 <?php if (empty($users)): ?>
                     <tr>
                         <td colspan="6" style="text-align:center; padding:60px 0; color:var(--text-muted);">
-                            <i class="fas fa-ghost"
+                            <i class="fad fa-thin fa-ghost"
                                 style="font-size:40px; margin-bottom:15px; display:block; opacity:0.2;"></i>
                             No matching entities found in the grid.
                         </td>
@@ -374,8 +377,8 @@ require_once __DIR__ . '/header.php';
                                             <input type="number" name="amount" value="<?= (int) $u['balance'] ?>" min="0"
                                                 style="width:100px;">
                                             <button type="submit" class="btn-primary"
-                                                style="padding:0 15px; height:38px; border-radius:10px;"><i
-                                                    class="fas fa-check"></i></button>
+                                                style="padding:0 15px; height:38px; border-radius:var(--radius-sm);"><i
+                                                    class="fad fa-thin fa-check"></i></button>
                                         </form>
                                     </div>
                                     <div class="manage-group">
@@ -386,8 +389,8 @@ require_once __DIR__ . '/header.php';
                                             <input type="hidden" name="action" value="adjust_balance">
                                             <input type="number" name="delta" placeholder="± Amount" style="width:100px;">
                                             <button type="submit" class="btn-secondary"
-                                                style="padding:0 15px; height:38px; border-radius:10px;"><i
-                                                    class="fas fa-plus-minus"></i></button>
+                                                style="padding:0 15px; height:38px; border-radius:var(--radius-sm);"><i
+                                                    class="fad fa-thin fa-plus-minus"></i></button>
                                         </form>
                                     </div>
                                     <div class="manage-group">
@@ -414,7 +417,7 @@ require_once __DIR__ . '/header.php';
                                                 <input type="hidden" name="user_id" value="<?= (int) $u['id'] ?>">
                                                 <input type="hidden" name="action" value="reset_streak">
                                                 <button type="submit" class="btn-secondary"
-                                                    style="height:38px; border-radius:10px; font-weight:700; font-size:12px; flex:1;"
+                                                    style="height:38px; border-radius:var(--radius-sm); font-weight:700; font-size:12px; flex:1;"
                                                     onclick="return confirm('Kill streak for <?= addslashes($u['username']) ?>?')">RESET
                                                     STREAK</button>
                                             </form>
@@ -423,7 +426,7 @@ require_once __DIR__ . '/header.php';
                                                 <input type="hidden" name="user_id" value="<?= (int) $u['id'] ?>">
                                                 <input type="hidden" name="action" value="delete_user">
                                                 <button type="submit" class="btn-danger"
-                                                    style="height:38px; border-radius:10px; font-weight:700; font-size:12px; flex:1; background:rgba(239, 68, 68, 0.1); color:var(--red); border:1px solid rgba(239, 68, 68, 0.2);"
+                                                    style="height:38px; border-radius:var(--radius-sm); font-weight:700; font-size:12px; flex:1; background:rgba(239, 68, 68, 0.1); color:var(--red); border:1px solid rgba(239, 68, 68, 0.2);"
                                                     onclick="return confirm('DESTRUCT SEQUENCE: Remove <?= addslashes($u['username']) ?> permanently?')">TERMINATE</button>
                                             </form>
                                         </div>
