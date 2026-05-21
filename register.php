@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$_SERVER['REMOTE_ADDR']]);
             $reg_attempts = (int) $stmt->fetchColumn();
 
-            if ($reg_attempts >= 3) {
+            if ($reg_attempts >= 10) {
                 log_sec('AUTH', 'Registration rate limit — IP blocked', ['ip' => $_SERVER['REMOTE_ADDR']]);
                 $errors[] = 'Too many registration attempts. Please try again later.';
             } else {
@@ -61,11 +61,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $hash = password_hash($password, PASSWORD_BCRYPT);
                     $stmt = $db->prepare('INSERT INTO users (username, email, password_hash, avatar_color) VALUES (?, ?, ?, ?)');
                     $stmt->execute([$username, $email, $hash, $avatar]);
+                    $new_user_id = (int) $db->lastInsertId();
 
                     $db->prepare('INSERT INTO login_attempts (ip_address) VALUES (?)')->execute([$_SERVER['REMOTE_ADDR']]);
                     log_info('AUTH', 'New user registered', ['username' => $username, 'email' => $email]);
 
-                    $_SESSION['user_id'] = (int) $db->lastInsertId();
+                    $_SESSION['user_id'] = $new_user_id;
                     $_SESSION['username'] = $username;
                     $_SESSION['role'] = 'user';
 
@@ -192,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <?php if (!empty($errors)): ?>
             <div class="alert">
-                <i class="fas fa-exclamation-circle" style="margin-right:8px;"></i>
+                <i class="fad fa-thin fa-exclamation-circle" style="margin-right:8px;"></i>
                 <?= htmlspecialchars($errors[0]) ?>
             </div>
         <?php endif; ?>
@@ -226,9 +227,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit" class="auth-btn">CREATE YOUR ACCOUNT</button>
         </form>
 
-        <div style="text-align:center; margin-top:30px; font-size:14px; color:rgba(255,255,255,0.3);">
+        <div style="text-align:center; margin-top:30px; font-size:14px; color:var(--text-muted);">
             Already a builder?
-            <a href="<?= BASE_URL ?>/login.php" style="color: #a78bfa; text-decoration:none; font-weight:bold;">Sign
+            <a href="<?= BASE_URL ?>/login.php" style="color: var(--accent); text-decoration:none; font-weight:bold;">Sign
                 In</a>
         </div>
     </div>

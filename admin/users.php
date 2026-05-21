@@ -97,31 +97,6 @@ require_once __DIR__ . '/header.php';
 ?>
 
 <style>
-    .section-card {
-        background: var(--bg-panel);
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius);
-        overflow: hidden;
-        margin-bottom: 30px;
-    }
-
-    .section-header {
-        padding: 25px 30px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    .section-title {
-        font-size: 18px;
-        font-weight: 800;
-        color: white;
-        margin: 0;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-    }
-
     .pro-table-wrapper {
         overflow-x: auto;
     }

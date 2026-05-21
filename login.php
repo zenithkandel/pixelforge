@@ -107,38 +107,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login — PixelForge</title>
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://zenithkandel.com.np/fontawesome/zenith-icons.js"></script>
     <style>
         body {
-            background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a0c 100%);
+            background: var(--bg-base);
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: var(--font);
         }
 
         .auth-card {
-            background: #11111a;
+            background: var(--bg-panel);
             width: 100%;
             max-width: 400px;
             padding: 40px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-default);
             position: relative;
             overflow: hidden;
-        }
-
-        .auth-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(to right, #7c3aed, #fbbf24);
+            border-top: 4px solid var(--accent);
         }
 
         .auth-logo {
@@ -151,15 +140,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .auth-logo span {
-            color: #7c3aed;
+            color: var(--accent);
         }
 
         .auth-btn {
             width: 100%;
             padding: 15px;
-            background: #7c3aed;
+            background: var(--accent);
             border: none;
-            border-radius: 10px;
             color: white;
             font-weight: 900;
             font-size: 16px;
@@ -171,9 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .auth-btn:hover {
-            background: #8b5cf6;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.4);
+            background: var(--accent-bright);
         }
 
         .input-group {
@@ -182,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .input-group label {
             display: block;
-            color: rgba(255, 255, 255, 0.4);
+            color: var(--text-muted);
             font-size: 11px;
             font-weight: bold;
             margin-bottom: 8px;
@@ -193,9 +179,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .input-group input {
             width: 100%;
             padding: 12px 15px;
-            background: #0a0a0f;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-default);
             color: white;
             font-size: 15px;
             outline: none;
@@ -204,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .input-group input:focus {
-            border-color: #7c3aed;
+            border-color: var(--accent);
         }
 
         .alert {
@@ -217,14 +202,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .alert-error {
             background: rgba(220, 38, 38, 0.1);
-            border: 1px solid #dc2626;
-            color: #f87171;
+            border: 1px solid var(--red);
+            color: var(--red);
         }
 
         .alert-success {
             background: rgba(5, 150, 105, 0.1);
-            border: 1px solid #059669;
-            color: #34d399;
+            border: 1px solid var(--green);
+            color: var(--green);
         }
     </style>
 </head>
@@ -236,14 +221,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <?php if (!empty($errors)): ?>
             <div class="alert alert-error">
-                <i class="fas fa-exclamation-circle" style="margin-right:8px;"></i>
+                <i class="fad fa-thin fa-exclamation-circle" style="margin-right:8px;"></i>
                 <?= htmlspecialchars($errors[0]) ?>
             </div>
         <?php endif; ?>
 
         <?php if (!empty($success)): ?>
             <div class="alert alert-success">
-                <i class="fas fa-check-circle" style="margin-right:8px;"></i>
+                <i class="fad fa-thin fa-check-circle" style="margin-right:8px;"></i>
                 <?= htmlspecialchars($success) ?>
             </div>
         <?php endif; ?>
@@ -265,9 +250,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit" class="auth-btn">LOGIN TO DASHBOARD</button>
         </form>
 
-        <div style="text-align:center; margin-top:30px; font-size:14px; color:rgba(255,255,255,0.3);">
+        <div style="text-align:center; margin-top:30px; font-size:14px; color:var(--text-muted);">
             Don't have an account?
-            <a href="<?= BASE_URL ?>/register.php" style="color: #a78bfa; text-decoration:none; font-weight:bold;">Join
+            <a href="<?= BASE_URL ?>/register.php" style="color: var(--accent); text-decoration:none; font-weight:bold;">Join
                 the Forge</a>
         </div>
     </div>
