@@ -1,50 +1,56 @@
 :root {
   /* Core Colors - Professional Dark Game Theme */
-  --bg-base: #0c0c14;
-  --bg-app: #12121e;
-  --bg-panel: #1a1a2e;
-  --bg-card: #20203a;
-  --bg-input: #151525;
-  --bg-active: #2a2a4a;
-  --bg-hover: #252540;
+  --bg-base: #06060a;
+  --bg-app: #0d0d14;
+  --bg-panel: #11111d;
+  --bg-card: #161625;
+  --bg-input: #0a0a0f;
+  --bg-active: #202035;
+  --bg-hover: #1b1b2e;
 
-  --border-dim: rgba(255, 255, 255, 0.05);
-  --border-default: rgba(255, 255, 255, 0.1);
-  --border-bright: rgba(255, 255, 255, 0.2);
+  --border-dim: rgba(255, 255, 255, 0.03);
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-bright: rgba(255, 255, 255, 0.15);
   --border-accent: #7c3aed;
 
   /* Accent Colors */
   --purple: #7c3aed;
-  --purple-bright: #a78bfa;
+  --purple-bright: #8b5cf6;
+  --purple-glow: rgba(124, 58, 237, 0.4);
   --gold: #fbbf24;
-  --gold-dark: #d97706;
-  --green: #22c55e;
-  --green-bright: #4ade80;
+  --gold-glow: rgba(251, 191, 36, 0.3);
+  --green: #10b981;
+  --green-glow: rgba(16, 185, 129, 0.3);
   --red: #ef4444;
   --blue: #3b82f6;
   --cyan: #06b6d4;
 
   /* Text Colors */
-  --text-primary: #ffffff;
+  --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-muted: #475569;
+  --text-dim: #334155;
   --text-inv: #000000;
 
   /* Spacing & Sizing */
-  --header-h: 70px;
-  --sidebar-w: 240px;
-  --widget-w: 320px;
-  --radius: 8px;
-  --radius-sm: 4px;
+  --header-h: 64px;
+  --sidebar-w: 260px;
+  --widget-w: 340px;
+  --radius: 12px;
+  --radius-sm: 6px;
+  --radius-lg: 20px;
+  --radius-pill: 50px;
 
   /* Shadows & Effects */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
-  --pixel-border: 4px solid var(--bg-base);
-  --glass: rgba(255, 255, 255, 0.03);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 20px var(--purple-glow);
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.05);
 
-  --font: 'Inter', -apple-system, sans-serif;
-  --font-game: 'Courier New', Courier, monospace;
+  --font: 'Inter', -apple-system, system-ui, sans-serif;
+  --font-game: 'Rajdhani', 'JetBrains Mono', 'Courier New', monospace;
 }
 
 [data-theme="light"] {
@@ -72,8 +78,72 @@ body {
   color: var(--text-primary);
   font-family: var(--font);
   overflow-x: hidden;
-  line-height: 1.4;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* Typography Overrides */
+h1, h2, h3, h4, .font-game {
+  font-family: var(--font-game);
+  letter-spacing: -0.02em;
+}
+
+/* Glass Panels */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+}
+
+/* Data Tables - Pro Profile */
+.pro-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.pro-table th {
+  padding: 16px;
+  background: var(--bg-app);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 2px solid var(--border-dim);
+}
+
+.pro-table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--border-dim);
+  color: var(--text-secondary);
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.pro-table tr:hover td {
+  background: rgba(255, 255, 255, 0.015);
+  color: var(--text-primary);
+}
+
+/* Pro Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-purple { background: rgba(124, 58, 237, 0.15); color: var(--purple-bright); border: 1px solid rgba(124, 58, 237, 0.2); }
+.badge-gold { background: rgba(251, 191, 36, 0.15); color: var(--gold); border: 1px solid rgba(251, 191, 36, 0.2); }
+.badge-green { background: rgba(16, 185, 129, 0.15); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.2); }
+.badge-red { background: rgba(239, 68, 68, 0.15); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.2); }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
