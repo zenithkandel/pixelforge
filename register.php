@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     log_warn('AUTH', 'Registration failed — already exists', ['username' => $username]);
                     $errors[] = 'Username or email already in use.';
                 } else {
-                    $palette = ['#7c3aed', '#db2777', '#0891b2', '#059669', '#d97706', '#dc2626', '#4f46e5', '#0d9488', '#65a30d'];
+                    $palette = ['#3b82f6', '#f59e0b', '#10b981', '#ef4444', '#06b6d4', '#6366f1', '#8b5cf6', '#ec4899', '#f43f5e'];
                     $avatar = $palette[array_rand($palette)];
 
                     $hash = password_hash($password, PASSWORD_BCRYPT);

@@ -16,7 +16,7 @@ require_once __DIR__ . '/includes/header.php';
 
 <div class="canvas-app" style="display:flex; flex-direction:column; gap:20px; height:auto; min-height:100%;">
     <div class="canvas-window"
-        style="flex:1; background:#111; border-radius:12px; border:4px solid var(--bg-panel); position:relative; overflow:hidden; display:flex; flex-direction:column; min-height:500px; aspect-ratio:1;">
+        style="flex:1; background:#000; border-radius:0; border:1px solid var(--border-default); position:relative; overflow:hidden; display:flex; flex-direction:column; min-height:500px; aspect-ratio:1;">
         <!-- Canvas Area -->
         <div id="canvas-container" style="flex:1; cursor:crosshair; position:relative;">
             <canvas id="pixel-canvas" width="800" height="800"
@@ -24,37 +24,37 @@ require_once __DIR__ . '/includes/header.php';
 
             <!-- Indicators -->
             <div id="canvas-status"
-                style="position:absolute; top:20px; right:20px; background:rgba(0,0,0,0.7); padding:6px 15px; border-radius:20px; border:1px solid var(--border-dim); color:var(--green); font-size:12px; font-weight:bold; display:flex; align-items:center; gap:8px;">
+                style="position:absolute; top:20px; right:20px; background:rgba(0,0,0,0.8); padding:6px 15px; border-radius:0; border:1px solid var(--accent-green); color:var(--accent-green); font-size:11px; font-weight:900; display:flex; align-items:center; gap:8px; font-family:var(--font-game); letter-spacing:1px;">
                 <div
-                    style="width:8px; height:8px; background:var(--green); border-radius:50%; animation:pulse 1.5s infinite;">
+                    style="width:6px; height:6px; background:var(--accent-green); border-radius:0; animation:pulse 1.5s infinite;">
                 </div>
-                LIVE FEED
+                LIVE_FEED
             </div>
 
             <div id="zoom-indicator"
-                style="position:absolute; bottom:20px; right:20px; background:rgba(0,0,0,0.7); padding:6px 15px; border-radius:20px; border:1px solid var(--border-dim); color:white; font-size:12px; font-weight:bold;">
-                1.0x ZOOM
+                style="position:absolute; bottom:20px; right:20px; background:rgba(0,0,0,0.8); padding:6px 15px; border-radius:0; border:1px solid var(--border-default); color:white; font-size:11px; font-weight:900; font-family:var(--font-game); letter-spacing:1px;">
+                1.0x_ZOOM
             </div>
         </div>
 
         <!-- Toolbar -->
         <div class="canvas-controls"
-            style="background:var(--bg-panel); padding:15px; border-top:1px solid var(--border-dim); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:15px;">
+            style="background:var(--bg-panel); padding:15px; border-top:1px solid var(--border-default); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:15px;">
             <div style="display:flex; align-items:center; gap:15px;">
                 <div
-                    style="display:flex; align-items:center; gap:8px; background:var(--bg-input); padding:5px 10px; border-radius:8px; border:1px solid var(--border-dim);">
-                    <input type="color" id="paint-color" value="#7c3aed"
-                        style="width:30px; height:30px; border:none; border-radius:4px; background:none; cursor:pointer;">
-                    <input type="text" id="paint-color-hex" value="#7c3aed"
-                        style="background:none; border:none; color:white; font-family:var(--font-game); font-size:14px; width:80px; outline:none;">
+                    style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.03); padding:5px 10px; border-radius:0; border:1px solid var(--border-default);">
+                    <input type="color" id="paint-color" value="#3b82f6"
+                        style="width:30px; height:30px; border:none; border-radius:0; background:none; cursor:pointer;">
+                    <input type="text" id="paint-color-hex" value="#3B82F6"
+                        style="background:none; border:none; color:white; font-family:var(--font-game); font-size:14px; width:80px; outline:none; text-transform:uppercase;">
                 </div>
 
                 <div style="display:flex; gap:5px;">
                     <?php
-                    $colors = ['#7c3aed', '#db2777', '#0891b2', '#059669', '#d97706', '#dc2626', '#4f46e5', '#0d9488'];
+                    $colors = ['#3b82f6', '#f59e0b', '#10b981', '#ef4444', '#06b6d4', '#6366f1', '#8b5cf6', '#ffffff'];
                     foreach ($colors as $color): ?>
                         <button class="color-preset" data-color="<?= $color ?>"
-                            style="width:24px; height:24px; background:<?= $color ?>; border:none; border-radius:4px; cursor:pointer; transition:transform 0.1s;"></button>
+                            style="width:24px; height:24px; background:<?= $color ?>; border:1px solid rgba(255,255,255,0.1); border-radius:0; cursor:pointer; transition:none;"></button>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -62,23 +62,23 @@ require_once __DIR__ . '/includes/header.php';
             <div style="display:flex; align-items:center; gap:15px;">
                 <div style="display:flex; flex-direction:column; align-items:flex-end;">
                     <span
-                        style="font-size:10px; color:var(--text-muted); font-weight:bold; text-transform:uppercase;">Balance</span>
+                        style="font-size:10px; color:var(--text-muted); font-weight:bold; text-transform:uppercase; letter-spacing:1px;">CREDITS</span>
                     <span id="paint-balance" class="currency"
-                        style="font-family:var(--font-game); color:var(--gold); font-weight:bold;">0</span>
+                        style="font-family:var(--font-game); color:var(--accent-yellow); font-weight:900; font-size:18px;">0</span>
                 </div>
-                <div style="height:30px; width:1px; background:var(--border-dim);"></div>
+                <div style="height:30px; width:1px; background:var(--border-default);"></div>
                 <button id="toggle-territory" class="btn-pixel"
-                    style="font-size:11px; padding:8px 15px; background:var(--bg-card);">TERRITORY</button>
+                    style="font-size:11px; padding:8px 15px; background:rgba(255,255,255,0.03);">TERRITORY</button>
                 <button id="toggle-mypixels" class="btn-pixel"
-                    style="font-size:11px; padding:8px 15px; background:var(--bg-card);">OWNERSHIP</button>
+                    style="font-size:11px; padding:8px 15px; background:rgba(255,255,255,0.03);">OWNERSHIP</button>
             </div>
         </div>
     </div>
 
     <!-- Toast Notification -->
     <div id="paint-toast"
-        style="position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--bg-panel); border:2px solid var(--purple); border-radius:12px; padding:15px 25px; box-shadow:0 10px 30px rgba(0,0,0,0.5); z-index:10000; display:none; align-items:center; gap:15px; color:white; font-weight:bold;">
-        <span id="paint-toast-icon" style="font-size:20px;">🎨</span>
+        style="position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--bg-panel); border:1px solid var(--accent-blue); border-radius:0; padding:15px 25px; box-shadow:8px 8px 0px rgba(0,0,0,0.5); z-index:10000; display:none; align-items:center; gap:15px; color:white; font-weight:bold; font-family:var(--font-game); text-transform:uppercase; letter-spacing:1px;">
+        <span id="paint-toast-icon" style="font-size:20px;"></span>
         <span id="paint-toast-text"></span>
     </div>
 </div>
