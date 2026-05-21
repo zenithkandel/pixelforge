@@ -14,61 +14,59 @@ $extra_css = '';
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="page-content" style="padding:40px;">
-    <div class="page-header" style="text-align:center; margin-bottom:40px;">
-        <h1>Interactive Canvas</h1>
-        <p>Click to paint directly on the canvas. Cost: <span class="currency">5 💰</span> for unclaimed cells.</p>
-    </div>
-
-    <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;align-items:flex-start;">
-        <div id="canvas-container" style="position:relative;border-radius:18px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.8);cursor:crosshair;">
-            <canvas id="pixel-canvas" width="800" height="800" style="display:block;"></canvas>
-            <div id="canvas-status" style="position:absolute;top:12px;right:12px;display:flex;align-items:center;gap:6px;font-size:12px;background:rgba(0,0,0,0.6);padding:6px 10px;border-radius:999px;backdrop-filter:blur(8px);">
-                <span style="width:8px;height:8px;border-radius:50%;background:#22c55e;animation:pulse-dot 2s ease infinite;"></span> <span style="color:#fff;">Live</span>
+<div class="canvas-app" style="display:flex; flex-direction:column; gap:20px; height:100%;">
+    <div class="canvas-window" style="flex:1; background:#111; border-radius:12px; border:4px solid var(--bg-panel); position:relative; overflow:hidden; display:flex; flex-direction:column;">
+        <!-- Canvas Area -->
+        <div id="canvas-container" style="flex:1; cursor:crosshair; position:relative;">
+            <canvas id="pixel-canvas" width="800" height="800" style="width:100%; height:100%; object-fit:contain; display:block;"></canvas>
+            
+            <!-- Indicators -->
+            <div id="canvas-status" style="position:absolute; top:20px; right:20px; background:rgba(0,0,0,0.7); padding:6px 15px; border-radius:20px; border:1px solid var(--border-dim); color:var(--green); font-size:12px; font-weight:bold; display:flex; align-items:center; gap:8px;">
+                <div style="width:8px; height:8px; background:var(--green); border-radius:50%; animation:pulse 1.5s infinite;"></div>
+                LIVE FEED
             </div>
-            <div id="zoom-indicator" style="position:absolute;bottom:12px;left:12px;font-size:12px;background:rgba(0,0,0,0.6);padding:6px 10px;border-radius:999px;backdrop-filter:blur(8px);color:#fff;">1x</div>
+            
+            <div id="zoom-indicator" style="position:absolute; bottom:20px; right:20px; background:rgba(0,0,0,0.7); padding:6px 15px; border-radius:20px; border:1px solid var(--border-dim); color:white; font-size:12px; font-weight:bold;">
+                1.0x ZOOM
+            </div>
         </div>
 
-        <div class="card" style="width:200px;align-self:flex-start;position:sticky;top:80px;background:#1a1a2e;border:1px solid rgba(255,255,255,0.06);border-radius:18px;padding:24px;">
-            <h3 style="margin:0 0 16px;font-size:16px;font-weight:600;color:#f0f0ff;">Paint Tools</h3>
-
-            <div style="margin-bottom:16px;">
-                <label style="font-weight:500;display:block;margin-bottom:8px;color:#9090b0;">Current Color</label>
-                <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
-                    <input type="color" id="paint-color" value="#7c3aed" style="width:48px;height:40px;padding:2px;border-radius:6px;cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:#12121f;">
-                    <input type="text" id="paint-color-hex" value="#7c3aed" style="flex:1;font-family:monospace;font-size:13px;margin:0;background:#12121f;border:1px solid rgba(255,255,255,0.1);color:#f0f0ff;">
+        <!-- Toolbar -->
+        <div class="canvas-controls" style="background:var(--bg-panel); padding:15px; border-top:1px solid var(--border-dim); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:15px;">
+            <div style="display:flex; align-items:center; gap:15px;">
+                <div style="display:flex; align-items:center; gap:8px; background:var(--bg-input); padding:5px 10px; border-radius:8px; border:1px solid var(--border-dim);">
+                    <input type="color" id="paint-color" value="#7c3aed" style="width:30px; height:30px; border:none; border-radius:4px; background:none; cursor:pointer;">
+                    <input type="text" id="paint-color-hex" value="#7c3aed" style="background:none; border:none; color:white; font-family:var(--font-game); font-size:14px; width:80px; outline:none;">
                 </div>
-                <div style="display:flex;gap:4px;flex-wrap:wrap;">
-                    <button class="color-preset" data-color="#7c3aed" style="width:24px;height:24px;background:#7c3aed;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
-                    <button class="color-preset" data-color="#db2777" style="width:24px;height:24px;background:#db2777;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
-                    <button class="color-preset" data-color="#0891b2" style="width:24px;height:24px;background:#0891b2;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
-                    <button class="color-preset" data-color="#059669" style="width:24px;height:24px;background:#059669;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
-                    <button class="color-preset" data-color="#d97706" style="width:24px;height:24px;background:#d97706;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
-                    <button class="color-preset" data-color="#dc2626" style="width:24px;height:24px;background:#dc2626;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
-                    <button class="color-preset" data-color="#4f46e5" style="width:24px;height:24px;background:#4f46e5;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
-                    <button class="color-preset" data-color="#0d9488" style="width:24px;height:24px;background:#0d9488;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
-                    <button class="color-preset" data-color="#ffffff" style="width:24px;height:24px;background:#ffffff;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
-                    <button class="color-preset" data-color="#1a1a1a" style="width:24px;height:24px;background:#1a1a1a;border:none;border-radius:4px;cursor:pointer;border:2px solid transparent;"></button>
+                
+                <div style="display:flex; gap:5px;">
+                    <?php 
+                    $colors = ['#7c3aed', '#db2777', '#0891b2', '#059669', '#d97706', '#dc2626', '#4f46e5', '#0d9488'];
+                    foreach($colors as $color): ?>
+                        <button class="color-preset" data-color="<?= $color ?>" style="width:24px; height:24px; background:<?= $color ?>; border:none; border-radius:4px; cursor:pointer; transition:transform 0.1s;"></button>
+                    <?php endforeach; ?>
                 </div>
             </div>
 
-            <div style="padding:8px;background:#161625;border-radius:12px;margin-top:16px;">
-                <div style="font-size:13px;color:#50506a;margin-bottom:4px;">Balance</div>
-                <div id="paint-balance" class="currency" style="font-size:18px;color:#fbbf24;"></div>
-            </div>
-
-            <div style="margin-top:16px;">
-                <button id="toggle-territory" class="btn-secondary btn-sm" style="width:100%;margin-bottom:8px;background:transparent;border:1px solid rgba(255,255,255,0.1);color:#f0f0ff;padding:7px 14px;border-radius:999px;font-weight:500;cursor:pointer;">Territory View</button>
-                <button id="toggle-mypixels" class="btn-secondary btn-sm" style="width:100%;background:transparent;border:1px solid rgba(255,255,255,0.1);color:#f0f0ff;padding:7px 14px;border-radius:999px;font-weight:500;cursor:pointer;">My Pixels</button>
+            <div style="display:flex; align-items:center; gap:15px;">
+                <div style="display:flex; flex-direction:column; align-items:flex-end;">
+                    <span style="font-size:10px; color:var(--text-muted); font-weight:bold; text-transform:uppercase;">Balance</span>
+                    <span id="paint-balance" class="currency" style="font-family:var(--font-game); color:var(--gold); font-weight:bold;">0</span>
+                </div>
+                <div style="height:30px; width:1px; background:var(--border-dim);"></div>
+                <button id="toggle-territory" class="btn-pixel" style="font-size:11px; padding:8px 15px; background:var(--bg-card);">TERRITORY</button>
+                <button id="toggle-mypixels" class="btn-pixel" style="font-size:11px; padding:8px 15px; background:var(--bg-card);">OWNERSHIP</button>
             </div>
         </div>
     </div>
 
-    <div id="paint-toast" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#161625;border:1px solid #7c3aed;border-radius:18px;padding:12px 20px;box-shadow:0 8px 40px rgba(0,0,0,0.8);z-index:9999;display:none;align-items:center;gap:10px;color:#f0f0ff;">
-        <span id="paint-toast-icon">🎨</span>
-        <span id="paint-toast-text" style="font-size:14px;"></span>
+    <!-- Toast Notification -->
+    <div id="paint-toast" style="position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--bg-panel); border:2px solid var(--purple); border-radius:12px; padding:15px 25px; box-shadow:0 10px 30px rgba(0,0,0,0.5); z-index:10000; display:none; align-items:center; gap:15px; color:white; font-weight:bold;">
+        <span id="paint-toast-icon" style="font-size:20px;">🎨</span>
+        <span id="paint-toast-text"></span>
     </div>
 </div>
+
 
 <script nonce="<?= $GLOBALS['csp_nonce'] ?>">
 (function() {

@@ -11,34 +11,69 @@ $page_title = 'Canvas';
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="page-content">
-    <div class="page-header" style="text-align:center;">
-        <h1>Live Pixel Canvas</h1>
-        <p>Watch the community build in real-time. 100×100 grid.</p>
-        <?php if (!is_logged_in()): ?>
-            <div style="margin-top:var(--space-md);">
-                <a href="<?= BASE_URL ?>/login.php" class="btn-primary">Log in to draw</a>
+<div class="dashboard-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+    <div class="dash-hero" style="grid-column:span 2; background:linear-gradient(135deg, var(--purple), var(--cyan)); padding:40px; border-radius:12px; display:flex; justify-content:space-between; align-items:center; color:white; overflow:hidden; position:relative;">
+        <div style="z-index:1;">
+            <h1 style="font-size:36px; font-weight:900; line-height:1.2; margin-bottom:10px;">WELCOME TO<br>PIXEL FLAP</h1>
+            <p style="opacity:0.9; margin-bottom:20px;">The community-driven world where every flight builds a masterpiece.</p>
+            <div style="display:flex; gap:10px;">
+                <a href="<?= BASE_URL ?>/game.php" class="btn-pixel" style="background:white; color:var(--purple); box-shadow:0 4px 0 #ddd;">PLAY NOW</a>
+                <a href="<?= BASE_URL ?>/canvas.php" class="btn-pixel" style="background:rgba(0,0,0,0.2); color:white; box-shadow:0 4px 0 rgba(0,0,0,0.4);">START DRAWING</a>
             </div>
-        <?php endif; ?>
+        </div>
+        <div class="hero-bird" style="font-size:120px; opacity:0.3; transform:rotate(-15deg); user-select:none;">🐦</div>
     </div>
 
-    <div style="display:flex;justify-content:center;">
-        <div id="canvas-container" style="position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);">
-            <canvas id="pixel-canvas" width="800" height="800" style="display:block;"></canvas>
-            <div id="canvas-status" style="position:absolute;top:12px;right:12px;display:flex;align-items:center;gap:6px;font-size:12px;background:rgba(0,0,0,0.6);padding:6px 10px;border-radius:var(--radius-pill);backdrop-filter:blur(8px);">
-                <span style="width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse-dot 2s ease infinite;"></span> <span style="color:#fff;">Live</span>
+    <div class="dash-card widget">
+        <div class="widget-title">Live Preview</div>
+        <div id="canvas-container" style="position:relative; width:100%; aspect-ratio:1; background:#111; border-radius:8px; overflow:hidden; border:1px solid var(--border-dim);">
+            <canvas id="pixel-canvas" width="800" height="800" style="width:100%; height:100%; display:block;"></canvas>
+            <div id="canvas-status" style="position:absolute; top:10px; right:10px; background:rgba(0,0,0,0.7); padding:4px 10px; border-radius:20px; font-size:10px; color:var(--green); font-weight:bold; display:flex; align-items:center; gap:5px;">
+                <div style="width:6px; height:6px; background:var(--green); border-radius:50%; animation:pulse 1s infinite;"></div> LIVE
             </div>
-            <div id="zoom-indicator" style="position:absolute;bottom:12px;left:12px;font-size:12px;background:rgba(0,0,0,0.6);padding:6px 10px;border-radius:var(--radius-pill);backdrop-filter:blur(8px);color:#fff;">1×</div>
+            <div id="zoom-indicator" style="display:none;"></div>
+        </div>
+    </div>
+
+    <div class="dash-card widget">
+        <div class="widget-title">Recent Activity</div>
+        <div class="recent-list" style="display:flex; flex-direction:column; gap:12px;">
+            <?php if ($nav_user): ?>
+                <div class="activity-item" style="display:flex; align-items:center; gap:12px; padding:12px; background:var(--bg-input); border-radius:8px;">
+                    <div style="width:36px; height:36px; background:var(--purple); border-radius:50%; display:flex; align-items:center; justify-content:center;"><i class="fas fa-play"></i></div>
+                    <div>
+                        <div style="font-size:14px; font-weight:bold;">Ready for flight?</div>
+                        <div style="font-size:11px; color:var(--text-muted);">Your last score was <b><?= number_format($nav_user['best_score'] ?? 0) ?></b></div>
+                    </div>
+                </div>
+                <div class="activity-item" style="display:flex; align-items:center; gap:12px; padding:12px; background:var(--bg-input); border-radius:8px;">
+                    <div style="width:36px; height:36px; background:var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center;"><i class="fas fa-coins"></i></div>
+                    <div>
+                        <div style="font-size:14px; font-weight:bold;">Bank Balance</div>
+                        <div style="font-size:11px; color:var(--text-muted);">You currently hold <b><?= number_format($nav_user['balance']) ?></b> credits</div>
+                    </div>
+                </div>
+            <?php else: ?>
+                <div style="text-align:center; padding:40px; color:var(--text-muted);">
+                    <i class="fas fa-lock" style="font-size:24px; margin-bottom:10px;"></i>
+                    <p>LogIn to see your stats</p>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 
     <?php if (is_logged_in()): ?>
-        <div style="display:flex;justify-content:center;gap:var(--space-sm);margin-top:var(--space-md);flex-wrap:wrap;">
-            <button id="toggle-territory" class="btn-secondary btn-sm">Territory View</button>
-            <button id="toggle-mypixels" class="btn-secondary btn-sm" style="display:none;">My Pixels</button>
+        <div style="display:none;">
+            <button id="toggle-territory"></button>
+            <button id="toggle-mypixels"></button>
         </div>
     <?php endif; ?>
 </div>
+
+<style>
+@keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+</style>
+
 
 <script nonce="<?= $GLOBALS['csp_nonce'] ?>">
 const CANVAS = {

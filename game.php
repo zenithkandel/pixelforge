@@ -22,69 +22,82 @@ $page_title = 'Flappy Bird';
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="page-content" style="display:flex;flex-direction:column;align-items:center;">
-    <div class="page-header" style="text-align:center;">
-        <h1 style="display:flex;align-items:center;justify-content:center;gap:var(--space-sm);margin:0;">
-            <span style="font-size:36px;">🐦</span> <span>PixelFlap</span>
-        </h1>
-        <p>Tap, click, or press space to flap. Avoid the pipes!</p>
-    </div>
+<div class="game-view-container" style="display:flex; flex-direction:column; gap:20px; height:100%;">
+    <div class="game-window" style="flex:1; min-height:600px; position:relative; background:#111; border:4px solid var(--bg-panel); box-shadow:0 0 40px rgba(0,0,0,0.5);">
+        <div id="game-container" style="width:100%; height:100%; position:relative; overflow:hidden;">
+            <canvas id="game-canvas" width="480" height="640" style="width:100%; height:100%; object-fit:contain; display:block; margin:0 auto;"></canvas>
 
-    <div style="margin-bottom:var(--space-lg);">
-        <div id="game-container" class="game-wrap" style="position:relative;">
-            <canvas id="game-canvas" width="480" height="640" style="display:block;"></canvas>
+            <!-- HUD Overlay -->
+            <div class="game-hud" style="position:absolute; inset:0; pointer-events:none; padding:24px;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <div id="game-hud-score" style="font-family:var(--font-game); font-size:48px; font-weight:900; color:white; text-shadow:3px 3px 0 #000, 0 0 20px rgba(0,0,0,0.5);">0</div>
+                    <div id="game-hud-multiplier" style="background:var(--gold); color:black; font-weight:900; font-size:14px; padding:6px 14px; border-radius:4px; display:none; box-shadow:3px 3px 0 #000;">1.0×</div>
+                </div>
 
-            <div id="game-hud-score" style="position:absolute;top:16px;left:16px;color:#fff;font-size:28px;font-weight:700;letter-spacing:0.02em;text-shadow:0 2px 8px rgba(0,0,0,0.6);">0</div>
-            <div id="game-hud-multiplier" style="position:absolute;top:16px;right:16px;background:var(--gold-mid);color:#000;font-weight:700;font-size:12px;padding:4px 10px;border-radius:var(--radius-pill);display:none;letter-spacing:0.02em;">1×</div>
-            <div id="game-hud-powerup" style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-size:12px;color:#fff;display:none;gap:8px;align-items:center;background:rgba(0,0,0,0.5);padding:8px 12px;border-radius:var(--radius-pill);backdrop-filter:blur(8px);">
-                <span id="powerup-icon"></span>
-                <div style="width:100px;height:4px;background:rgba(255,255,255,0.2);border-radius:2px;overflow:hidden;">
-                    <div id="powerup-bar" style="height:100%;background:var(--purple-bright);width:100%;border-radius:2px;transition:width 0.1s linear;"></div>
+                <div id="game-hud-powerup" style="position:absolute; bottom:30px; left:50%; transform:translateX(-50%); width:200px; background:rgba(0,0,0,0.7); padding:10px; border-radius:8px; display:none; flex-direction:column; gap:5px; border:2px solid var(--purple);">
+                    <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:bold; color:var(--purple-bright);">
+                        <span>POWER UP ACTIVE</span>
+                        <span id="powerup-icon"></span>
+                    </div>
+                    <div style="width:100%; height:6px; background:rgba(255,255,255,0.1); border-radius:3px; overflow:hidden;">
+                        <div id="powerup-bar" style="height:100%; background:var(--purple-bright); width:100%;"></div>
+                    </div>
                 </div>
             </div>
 
-            <div id="game-overlay" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.88);backdrop-filter:blur(4px);flex-direction:column;align-items:center;justify-content:center;color:#fff;gap:var(--space-sm);padding:var(--space-lg);">
-                <div style="font-size:14px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">Game Over</div>
-                <div id="go-score" style="font-size:56px;font-weight:700;letter-spacing:-0.02em;line-height:1;">0</div>
-                <div id="go-multiplier" style="font-size:14px;color:var(--gold-bright);font-weight:600;">1× multiplier</div>
-                <div id="go-currency" style="font-size:22px;color:var(--gold-bright);font-weight:700;margin-top:var(--space-xs);">+0 💰</div>
-                <div id="go-xp" style="font-size:14px;color:var(--purple-bright);font-weight:500;">+0 XP</div>
-                <div id="go-coins" style="font-size:13px;opacity:0.8;">0 coins collected</div>
-                <div id="go-best" style="font-size:13px;color:var(--green);font-weight:600;"></div>
-                <div style="display:flex;gap:var(--space-sm);margin-top:var(--space-lg);flex-wrap:wrap;justify-content:center;">
-                    <button id="btn-play-again" class="btn-primary">Play Again</button>
-                    <a href="<?= BASE_URL ?>/canvas.php" class="btn-secondary">Canvas</a>
+            <!-- Game Over Screen -->
+            <div id="game-overlay" style="display:none; position:absolute; inset:0; background:rgba(0,0,0,0.9); backdrop-filter:blur(8px); flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:40px; border:4px solid var(--purple); margin:20px; border-radius:12px;">
+                <div style="font-size:12px; font-weight:bold; color:var(--text-muted); text-transform:uppercase; letter-spacing:3px;">Simulation Terminated</div>
+                <div id="go-score" style="font-size:80px; font-weight:900; color:white; line-height:1; margin:10px 0;">0</div>
+                <div id="go-best" style="font-size:14px; color:var(--green); font-weight:bold; margin-bottom:20px;"></div>
+                
+                <div class="go-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:15px; width:100%; max-width:300px; margin-bottom:30px;">
+                    <div class="go-stat-box" style="background:var(--bg-input); padding:15px; border-radius:8px; border:1px solid var(--border-dim);">
+                        <div style="font-size:11px; color:var(--text-muted);">EARNED</div>
+                        <div id="go-currency" style="font-size:20px; font-weight:bold; color:var(--gold);">+0</div>
+                    </div>
+                    <div class="go-stat-box" style="background:var(--bg-input); padding:15px; border-radius:8px; border:1px solid var(--border-dim);">
+                        <div style="font-size:11px; color:var(--text-muted);">XP Gained</div>
+                        <div id="go-xp" style="font-size:20px; font-weight:bold; color:var(--cyan);">+0</div>
+                    </div>
                 </div>
+                
+                <div style="display:flex; gap:15px;">
+                    <button id="btn-play-again" class="btn-pixel" style="min-width:160px;">REDEPLOY</button>
+                    <a href="<?= BASE_URL ?>/leaderboard.php" class="btn-pixel" style="background:var(--bg-card); min-width:160px;">RANKINGS</a>
+                </div>
+                
+                <div id="go-multiplier" style="margin-top:20px; font-size:12px; color:var(--text-muted);"></div>
+                <div id="go-coins" style="display:none;"></div>
             </div>
         </div>
     </div>
 
-    <div id="leaderboard-section" style="width:100%;max-width:560px;">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title" style="margin:0;">Top Scores</h3>
+    <!-- Leaderboard Preview -->
+    <div id="leaderboard-section" class="widget" style="background:var(--bg-panel); border-radius:var(--radius); padding:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h3 style="margin:0; font-size:18px;"><i class="fas fa-trophy" style="color:var(--gold); margin-right:10px;"></i>Top Pilots</h3>
+            <div class="tabs" style="display:flex; gap:5px; background:var(--bg-input); padding:4px; border-radius:6px;">
+                <button class="tab-btn active" data-lb="all" style="background:none; border:none; color:var(--text-muted); padding:6px 12px; border-radius:4px; font-size:12px; cursor:pointer;">All-Time</button>
+                <button class="tab-btn" data-lb="week" style="background:none; border:none; color:var(--text-muted); padding:6px 12px; border-radius:4px; font-size:12px; cursor:pointer;">Weekly</button>
+                <button class="tab-btn" data-lb="today" style="background:none; border:none; color:var(--text-muted); padding:6px 12px; border-radius:4px; font-size:12px; cursor:pointer;">Today</button>
             </div>
-            <div class="tabs" style="margin:0 0 var(--space-md) 0;border:none;padding:0;">
-                <button class="tab-btn active" data-lb="all">All-Time</button>
-                <button class="tab-btn" data-lb="week">This Week</button>
-                <button class="tab-btn" data-lb="today">Today</button>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width:50px;">Rank</th>
-                        <th>Player</th>
-                        <th style="text-align:right;">Score</th>
-                        <th style="text-align:right;">Mult</th>
-                        <th style="text-align:right;">Earned</th>
-                    </tr>
-                </thead>
-                <tbody id="lb-body"></tbody>
-            </table>
-            <div id="lb-your-rank" style="text-align:center;margin-top:var(--space-md);color:var(--text-muted);font-size:13px;"></div>
         </div>
+        <table style="width:100%; border-collapse:collapse; font-size:14px;">
+            <thead>
+                <tr style="text-align:left; color:var(--text-muted); border-bottom:1px solid var(--border-dim);">
+                    <th style="padding:10px;">#</th>
+                    <th>PLAYER</th>
+                    <th style="text-align:right;">SCORE</th>
+                    <th style="text-align:right;">EARNED</th>
+                </tr>
+            </thead>
+            <tbody id="lb-body"></tbody>
+        </table>
+        <div id="lb-your-rank" style="margin-top:15px; padding-top:15px; border-top:1px solid var(--border-dim); text-align:center; color:var(--purple-bright); font-weight:bold; font-size:13px;"></div>
     </div>
 </div>
+
 
 <script nonce="<?= $GLOBALS['csp_nonce'] ?>">
 var GAME_TOKEN = '<?= $game_token ?>';

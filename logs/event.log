@@ -1766,3 +1766,36 @@
 [2026-05-20 16:55:36] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
 [2026-05-20 16:55:41] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
 [2026-05-20 16:55:41] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-21 06:24:06] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-21 06:24:06] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 06:24:06] [DEBUG] [CANVAS] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-21 06:24:08] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-21 06:24:08] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 06:24:08] [DEBUG] [CANVAS] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-21 06:24:11] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/login.php] Page request received
+[2026-05-21 06:24:13] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/register.php] Page request received
+[2026-05-21 06:24:14] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/index.php] Page request received
+[2026-05-21 06:24:14] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 06:24:14] [DEBUG] [CANVAS] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-21 06:24:20] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 06:24:20] [DEBUG] [CANVAS] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-21 06:24:25] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 06:24:25] [DEBUG] [CANVAS] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-21 06:24:30] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 06:24:30] [DEBUG] [CANVAS] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-21 06:24:35] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 06:24:35] [DEBUG] [CANVAS] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-21 06:24:40] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 06:24:40] [DEBUG] [CANVAS] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-21 06:24:45] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 06:24:45] [DEBUG] [CANVAS] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-21 06:24:49] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 06:24:49] [DEBUG] [CANVAS] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-21 06:24:50] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/index.php] Page request received
+[2026-05-21 06:24:50] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 06:24:50] [DEBUG] [CANVAS] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-21 06:24:52] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/index.php] Page request received
+[2026-05-21 06:24:52] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 06:24:52] [DEBUG] [CANVAS] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-21 06:24:57] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 06:24:57] [DEBUG] [CANVAS] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
