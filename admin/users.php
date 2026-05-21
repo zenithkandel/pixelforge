@@ -98,9 +98,9 @@ require_once __DIR__ . '/header.php';
 
 <style>
     .section-card {
-        background: #11111a;
-        border: 1px solid rgba(255, 255, 255, 0.04);
-        border-radius: 24px;
+        background: var(--bg-panel);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius);
         overflow: hidden;
         margin-bottom: 30px;
     }
@@ -141,9 +141,9 @@ require_once __DIR__ . '/header.php';
     }
 
     .pill-admin {
-        background: rgba(124, 58, 237, 0.15);
-        color: var(--purple-bright);
-        border: 1px solid rgba(124, 58, 237, 0.2);
+        background: var(--bg-active);
+        color: var(--accent-bright);
+        border: 1px solid var(--border-bright);
     }
 
     .manage-row {
@@ -180,10 +180,10 @@ require_once __DIR__ . '/header.php';
 
     .inline-form input,
     .inline-form select {
-        background: #09090e;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        background: var(--bg-input);
+        border: 1px solid var(--border-default);
         padding: 10px 15px;
-        border-radius: 12px;
+        border-radius: var(--radius-sm);
         color: white;
         font-size: 13px;
     }
@@ -191,13 +191,13 @@ require_once __DIR__ . '/header.php';
     .btn-action {
         width: 32px;
         height: 32px;
-        border-radius: 8px;
+        border-radius: var(--radius-sm);
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background: rgba(255, 255, 255, 0.03);
+        background: var(--bg-card);
         color: var(--text-secondary);
-        border: 1px solid transparent;
+        border: 1px solid var(--border-default);
         cursor: pointer;
         transition: all 0.2s;
         text-decoration: none;
@@ -255,18 +255,18 @@ require_once __DIR__ . '/header.php';
         </div>
         <form method="GET" style="display:flex; gap:10px;">
             <div style="position:relative;">
-                <i class="fas fa-search"
+                <i class="fad fa-thin fa-search"
                     style="position:absolute; left:15px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:12px;"></i>
                 <input type="text" name="search" placeholder="Filter by name or identity..."
                     value="<?= htmlspecialchars($search) ?>"
-                    style="padding-left:40px; width:300px; height:44px; background:#09090e; border:1px solid rgba(255,255,255,0.05); border-radius:12px; color:white;">
+                    style="padding-left:40px; width:300px; height:44px; background:var(--bg-input); border:1px solid var(--border-default); border-radius:var(--radius-sm); color:white;">
             </div>
             <button type="submit" class="btn-primary"
-                style="height:44px; padding:0 25px; border-radius:12px;">Filter</button>
+                style="height:44px; padding:0 25px; border-radius:var(--radius-sm);">Filter</button>
             <?php if (!empty($search)): ?>
                 <a href="users.php" class="btn-secondary"
-                    style="height:44px; width:44px; padding:0; display:flex; align-items:center; justify-content:center; border-radius:12px;"><i
-                        class="fas fa-times"></i></a>
+                    style="height:44px; width:44px; padding:0; display:flex; align-items:center; justify-content:center; border-radius:var(--radius-sm);"><i
+                        class="fad fa-thin fa-times"></i></a>
             <?php endif; ?>
         </form>
     </div>
@@ -317,7 +317,7 @@ require_once __DIR__ . '/header.php';
                             </td>
                             <td>
                                 <?php if ($u['role'] === 'admin'): ?>
-                                    <span class="status-pill pill-admin"><i class="fas fa-crown"
+                                    <span class="status-pill pill-admin"><i class="fad fa-thin fa-crown"
                                             style="font-size:9px; margin-right:4px;"></i> SYSTEM ADMIN</span>
                                 <?php else: ?>
                                     <span class="status-pill pill-user">STANDARD ENTITY</span>
@@ -326,12 +326,12 @@ require_once __DIR__ . '/header.php';
                             <td>
                                 <div style="display:flex; flex-direction:column; gap:6px;">
                                     <div style="display:flex; align-items:center; gap:8px;">
-                                        <i class="fas fa-coins" style="color:var(--gold); font-size:11px;"></i>
+                                        <i class="fad fa-thin fa-coins" style="color:var(--gold); font-size:11px;"></i>
                                         <span
                                             style="font-size:13px; font-weight:800; color:var(--gold);"><?= number_format((int) $u['balance']) ?></span>
                                     </div>
                                     <div style="display:flex; align-items:center; gap:8px;">
-                                        <i class="fas fa-paint-brush" style="color:var(--purple-bright); font-size:11px;"></i>
+                                        <i class="fad fa-thin fa-paint-brush" style="color:var(--accent-bright); font-size:11px;"></i>
                                         <span
                                             style="font-size:12px; font-weight:600; color:var(--text-secondary);"><?= (int) $u['pixel_count'] ?>
                                             PIXELS</span>
@@ -345,7 +345,7 @@ require_once __DIR__ . '/header.php';
                                     </div>
                                     <div
                                         style="display:flex; align-items:center; gap:4px; font-size:12px; color:var(--red); font-weight:700;">
-                                        <i class="fas fa-fire"></i> <?= (int) $u['streak_days'] ?>
+                                        <i class="fad fa-thin fa-fire"></i> <?= (int) $u['streak_days'] ?>
                                     </div>
                                 </div>
                             </td>
@@ -357,7 +357,7 @@ require_once __DIR__ . '/header.php';
                             <td style="text-align:right">
                                 <button class="btn-action toggle-manage" data-target="manage-<?= $u['id'] ?>"
                                     title="Administrative Intervention">
-                                    <i class="fas fa-sliders-h"></i>
+                                    <i class="fad fa-thin fa-sliders-h"></i>
                                 </button>
                             </td>
                         </tr>
@@ -401,8 +401,8 @@ require_once __DIR__ . '/header.php';
                                                 </option>
                                             </select>
                                             <button type="submit" class="btn-secondary"
-                                                style="padding:0 15px; height:38px; border-radius:10px;"><i
-                                                    class="fas fa-sync"></i></button>
+                                                style="padding:0 15px; height:38px; border-radius:var(--radius-sm);"><i
+                                                    class="fad fa-thin fa-sync"></i></button>
                                         </form>
                                     </div>
                                     <div class="manage-group">
@@ -441,7 +441,7 @@ require_once __DIR__ . '/header.php';
     <div style="display:flex; justify-content:center; gap:8px; margin-top:30px;">
         <?php if ($page > 1): ?>
             <a href="?page=<?= $page - 1 ?>&search=<?= urlencode($search) ?>" class="btn-action"
-                style="width:auto; padding:0 15px;"><i class="fas fa-chevron-left"></i></a>
+                style="width:auto; padding:0 15px;"><i class="fad fa-thin fa-chevron-left"></i></a>
         <?php endif; ?>
 
         <?php
@@ -451,14 +451,14 @@ require_once __DIR__ . '/header.php';
             ?>
             <a href="?page=<?= $i ?>&search=<?= urlencode($search) ?>"
                 class="btn-action <?= $i === $page ? 'btn-primary' : '' ?>"
-                style="width:40px; <?= $i === $page ? 'background:var(--purple); color:white; border-color:var(--purple-bright);' : '' ?>">
+                style="width:40px; <?= $i === $page ? 'background:var(--accent); color:white; border-color:var(--accent-bright);' : '' ?>">
                 <?= $i ?>
             </a>
         <?php endfor; ?>
 
         <?php if ($page < $total_pages): ?>
             <a href="?page=<?= $page + 1 ?>&search=<?= urlencode($search) ?>" class="btn-action"
-                style="width:auto; padding:0 15px;"><i class="fas fa-chevron-right"></i></a>
+                style="width:auto; padding:0 15px;"><i class="fad fa-thin fa-chevron-right"></i></a>
         <?php endif; ?>
     </div>
 <?php endif; ?>
@@ -478,10 +478,12 @@ require_once __DIR__ . '/header.php';
                     targetRow.classList.remove('active');
                     this.style.background = '';
                     this.style.color = '';
+                    this.style.borderColor = '';
                 } else {
                     targetRow.classList.add('active');
-                    this.style.background = 'var(--purple)';
-                    this.style.color = 'white';
+                    this.style.background = 'var(--bg-active)';
+                    this.style.color = 'var(--accent-bright)';
+                    this.style.borderColor = 'var(--border-bright)';
                 }
             });
         });

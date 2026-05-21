@@ -56,13 +56,13 @@ require_once __DIR__ . '/header.php';
     <div class="section-header">
         <h2 class="section-title">Operational Audit Stream</h2>
         <form method="GET" style="display:flex; gap:10px;">
-            <select name="action_filter" class="input-pixel" style="background:#050508; width: 200px;">
+            <select name="action_filter" class="input-pixel" style="background:var(--bg-input); width: 200px; border-radius:var(--radius-sm); border-color:var(--border-default);">
                 <option value="">All Vectors</option>
                 <?php foreach ($action_options as $k => $v): ?>
                     <option value="<?= $k ?>" <?= $filter_action == $k ? 'selected' : '' ?>><?= $v ?></option>
                 <?php endforeach; ?>
             </select>
-            <button class="btn-pixel">Search</button>
+            <button class="btn-pixel" style="border-radius:var(--radius-sm);">Search</button>
         </form>
     </div>
 
@@ -86,7 +86,7 @@ require_once __DIR__ . '/header.php';
                         <td>
                             <div style="display:flex; align-items:center; gap:10px;">
                                 <div
-                                    style="width:30px; height:30px; border-radius:8px; background:var(--purple); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:900;">
+                                    style="width:30px; height:30px; border-radius:var(--radius-sm); background:var(--accent); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:900;">
                                     <?= strtoupper(substr($log['username'], 0, 1)) ?>
                                 </div>
                                 <span style="font-weight:700; color:white;"><?= htmlspecialchars($log['username']) ?></span>
