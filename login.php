@@ -127,7 +127,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: 1px solid var(--border-default);
             position: relative;
             overflow: hidden;
-            border-top: 4px solid var(--accent);
+            border-top: 4px solid var(--accent-blue);
+            border-radius: 0;
         }
 
         .auth-logo {
@@ -137,29 +138,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-align: center;
             margin-bottom: 30px;
             letter-spacing: -1px;
+            text-transform: uppercase;
         }
 
         .auth-logo span {
-            color: var(--accent);
+            color: var(--accent-blue);
         }
 
         .auth-btn {
             width: 100%;
             padding: 15px;
-            background: var(--accent);
-            border: none;
+            background: var(--accent-blue);
+            border: 1px solid rgba(255,255,255,0.1);
             color: white;
             font-weight: 900;
             font-size: 16px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: none;
             margin-top: 10px;
             font-family: var(--font-game);
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            border-radius: 0;
         }
 
         .auth-btn:hover {
-            background: var(--accent-bright);
+            background: white;
+            color: black;
+            box-shadow: 4px 4px 0px var(--accent-blue);
         }
 
         .input-group {
@@ -170,34 +175,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             display: block;
             color: var(--text-muted);
             font-size: 11px;
-            font-weight: bold;
+            font-weight: 800;
             margin-bottom: 8px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
 
         .input-group input {
             width: 100%;
             padding: 12px 15px;
-            background: var(--bg-input);
+            background: rgba(255,255,255,0.03);
             border: 1px solid var(--border-default);
             color: white;
             font-size: 15px;
             outline: none;
-            transition: border-color 0.2s;
+            transition: none;
             box-sizing: border-box;
+            border-radius: 0;
         }
 
         .input-group input:focus {
-            border-color: var(--accent);
+            border-color: var(--accent-blue);
         }
 
         .alert {
             padding: 12px 15px;
-            border-radius: 8px;
+            border-radius: 0;
             font-size: 14px;
             margin-bottom: 20px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .alert-error {

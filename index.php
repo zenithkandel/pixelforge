@@ -15,13 +15,16 @@ require_once __DIR__ . '/includes/header.php';
     <div class="dash-hero"
         style="background: #15181e; padding:40px; border-radius:0; border-left: 5px solid var(--accent-blue); display:flex; justify-content:space-between; align-items:center; color:white; overflow:hidden; position:relative; box-shadow: inset 0 0 50px rgba(0,0,0,0.5);">
         <div style="z-index:1;">
-            <h1 style="font-size:36px; font-weight:900; line-height:1.2; margin-bottom:10px; font-family:var(--font-game); text-transform:uppercase;">WELCOME TO<br>PIXEL FORGE
+            <h1
+                style="font-size:36px; font-weight:900; line-height:1.2; margin-bottom:10px; font-family:var(--font-game); text-transform:uppercase;">
+                WELCOME TO<br>PIXEL FORGE
             </h1>
-            <p style="opacity:0.7; margin-bottom:20px; font-weight:500;">THE INDUSTRIAL COMMUNITY CANVAS. FLY. EARN. FORGE.</p>
+            <p style="opacity:0.7; margin-bottom:20px; font-weight:500;">THE INDUSTRIAL COMMUNITY CANVAS. FLY. EARN.
+                FORGE.</p>
             <div style="display:flex; gap:10px;">
                 <a href="<?= BASE_URL ?>/game.php" class="btn-pixel">PLAY NOW</a>
-                <a href="<?= BASE_URL ?>/canvas.php" class="btn-pixel"
-                    style="background:rgba(255,255,255,0.05);">START DRAWING</a>
+                <a href="<?= BASE_URL ?>/canvas.php" class="btn-pixel" style="background:rgba(255,255,255,0.05);">START
+                    DRAWING</a>
             </div>
         </div>
         <div class="hero-bird" style="font-size:120px; opacity:0.1; transform:rotate(-15deg); user-select:none;">🐦
@@ -58,8 +61,9 @@ require_once __DIR__ . '/includes/header.php';
                         <i class="fad fa-thin fa-jet-fighter"></i>
                     </div>
                     <div>
-                        <div style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1px;">LAST MISSION</div>
-                        <div style="font-size:14px; font-family:var(--font-game); color:var(--text-muted);">SCORE: 
+                        <div style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1px;">LAST
+                            MISSION</div>
+                        <div style="font-size:14px; font-family:var(--font-game); color:var(--text-muted);">SCORE:
                             <b style="color:white;"><?= number_format($nav_user['best_score'] ?? 0) ?></b>
                         </div>
                     </div>
@@ -71,8 +75,9 @@ require_once __DIR__ . '/includes/header.php';
                         <i class="fad fa-thin fa-vault"></i>
                     </div>
                     <div>
-                        <div style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1px;">BANK HOLDINGS</div>
-                        <div style="font-size:14px; font-family:var(--font-game); color:var(--text-muted);">TOTAL: 
+                        <div style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1px;">BANK
+                            HOLDINGS</div>
+                        <div style="font-size:14px; font-family:var(--font-game); color:var(--text-muted);">TOTAL:
                             <b style="color:var(--accent-yellow);"><?= number_format($nav_user['balance']) ?></b> CR
                         </div>
                     </div>
@@ -80,7 +85,8 @@ require_once __DIR__ . '/includes/header.php';
             <?php else: ?>
                 <div style="text-align:center; padding:40px; color:var(--text-muted);">
                     <i class="fad fa-thin fa-lock" style="font-size:24px; margin-bottom:10px; display:block;"></i>
-                    <p style="text-transform:uppercase; font-size:11px; letter-spacing:1px; font-weight:bold;">Authentication Required</p>
+                    <p style="text-transform:uppercase; font-size:11px; letter-spacing:1px; font-weight:bold;">
+                        Authentication Required</p>
                 </div>
             <?php endif; ?>
         </div>

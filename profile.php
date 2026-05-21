@@ -68,7 +68,8 @@ require_once __DIR__ . '/includes/header.php';
     <!-- LEFT: User Info -->
     <div style="display:flex; flex-direction:column; gap:20px;">
         <div class="section-card" style="text-align:center; padding:40px 20px;">
-            <div style="width:120px; height:120px; border-radius:0; background:<?= htmlspecialchars($profile['avatar_color']) ?>; margin:0 auto 20px; display:flex; align-items:center; justify-content:center; font-size:48px; font-weight:900; color:black; border:2px solid white; box-shadow: 4px 4px 0px rgba(0,0,0,0.5);">
+            <div
+                style="width:120px; height:120px; border-radius:0; background:<?= htmlspecialchars($profile['avatar_color']) ?>; margin:0 auto 20px; display:flex; align-items:center; justify-content:center; font-size:48px; font-weight:900; color:black; border:2px solid white; box-shadow: 4px 4px 0px rgba(0,0,0,0.5);">
                 <?= strtoupper(substr($profile['username'], 0, 1)) ?>
             </div>
             <h1 style="font-size:32px; font-weight:900; margin:0; letter-spacing:-1px; text-transform:uppercase;">
@@ -82,19 +83,22 @@ require_once __DIR__ . '/includes/header.php';
             <div style="margin-top:30px; display:flex; flex-direction:column; gap:12px;">
                 <div
                     style="background:rgba(255,255,255,0.03); padding:15px; border-radius:0; border:1px solid var(--border-default); display:flex; justify-content:space-between; align-items:center;">
-                    <span style="color:var(--text-muted); font-size:12px; font-weight:bold; letter-spacing:1px;">BEST SCORE</span>
+                    <span style="color:var(--text-muted); font-size:12px; font-weight:bold; letter-spacing:1px;">BEST
+                        SCORE</span>
                     <span
                         style="font-family:var(--font-game); color:white; font-size:18px;"><?= number_format($profile['best_score'] ?? 0) ?></span>
                 </div>
                 <div
                     style="background:rgba(255,255,255,0.03); padding:15px; border-radius:0; border:1px solid var(--border-default); display:flex; justify-content:space-between; align-items:center;">
-                    <span style="color:var(--text-muted); font-size:12px; font-weight:bold; letter-spacing:1px;">PIXELS OWNED</span>
+                    <span style="color:var(--text-muted); font-size:12px; font-weight:bold; letter-spacing:1px;">PIXELS
+                        OWNED</span>
                     <span
                         style="font-family:var(--font-game); color:var(--accent-blue); font-size:18px;"><?= number_format($profile['pixels_owned'] ?? 0) ?></span>
                 </div>
                 <div
                     style="background:rgba(255,255,255,0.03); padding:15px; border-radius:0; border:1px solid var(--border-default); display:flex; justify-content:space-between; align-items:center;">
-                    <span style="color:var(--text-muted); font-size:12px; font-weight:bold; letter-spacing:1px;">TOTAL XP</span>
+                    <span style="color:var(--text-muted); font-size:12px; font-weight:bold; letter-spacing:1px;">TOTAL
+                        XP</span>
                     <span
                         style="font-family:var(--font-game); color:var(--accent-yellow); font-size:18px;"><?= number_format((int) $profile['xp']) ?></span>
                 </div>
@@ -126,8 +130,8 @@ require_once __DIR__ . '/includes/header.php';
         <div class="section-card" style="padding:0;">
             <div
                 style="padding:20px; border-bottom:1px solid var(--border-default); display:flex; align-items:center; justify-content:space-between;">
-                <h3 style="margin:0; font-size:18px; text-transform:uppercase; letter-spacing:1px;"><i class="fad fa-thin fa-history"
-                        style="opacity:0.5; margin-right:10px;"></i>Recent Matches</h3>
+                <h3 style="margin:0; font-size:18px; text-transform:uppercase; letter-spacing:1px;"><i
+                        class="fad fa-thin fa-history" style="opacity:0.5; margin-right:10px;"></i>Recent Matches</h3>
             </div>
             <div style="padding:10px;">
                 <?php if (empty($games)): ?>
@@ -154,7 +158,8 @@ require_once __DIR__ . '/includes/header.php';
                                     <td style="text-align:right; color:var(--accent-blue);">
                                         <?= number_format($game['multiplier'], 1) ?>×
                                     </td>
-                                    <td style="text-align:right; padding-right:15px; color:var(--accent-yellow); font-weight:bold;">
+                                    <td
+                                        style="text-align:right; padding-right:15px; color:var(--accent-yellow); font-weight:bold;">
                                         +<?= number_format($game['currency_earned']) ?></td>
                                 </tr>
                             <?php endforeach; ?>
@@ -170,7 +175,8 @@ require_once __DIR__ . '/includes/header.php';
 <div class="section-card" style="padding:0;">
     <div
         style="padding:20px; border-bottom:1px solid var(--border-default); display:flex; align-items:center; justify-content:space-between;">
-        <h3 style="margin:0; font-size:18px; text-transform:uppercase; letter-spacing:1px;"><i class="fad fa-thin fa-grid-2" style="opacity:0.5; margin-right:10px;"></i>Captured
+        <h3 style="margin:0; font-size:18px; text-transform:uppercase; letter-spacing:1px;"><i
+                class="fad fa-thin fa-grid-2" style="opacity:0.5; margin-right:10px;"></i>Captured
             Territory</h3>
     </div>
     <div style="padding:10px;">
