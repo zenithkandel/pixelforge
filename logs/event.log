@@ -1870,3 +1870,9 @@
 [2026-05-21 06:33:05] [ERROR] [DB] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Database connection failed: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it | {"code":2002}
 [2026-05-21 06:33:05] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
 [2026-05-21 06:33:05] [WARN] [AUTH] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/game.php] Unauthenticated access attempt | {"page":"/codes/pixelforge/game.php"}
+[2026-05-21 06:34:34] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-21 06:34:38] [ERROR] [DB] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Database connection failed: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it | {"code":2002}
+[2026-05-21 06:46:40] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/admin/] Page request received
+[2026-05-21 06:46:44] [ERROR] [DB] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/admin/] Database connection failed: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it | {"code":2002}
+[2026-05-21 06:46:45] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-21 06:46:49] [ERROR] [DB] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Database connection failed: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it | {"code":2002}

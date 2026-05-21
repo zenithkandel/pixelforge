@@ -83,7 +83,11 @@ body {
 }
 
 /* Typography Overrides */
-h1, h2, h3, h4, .font-game {
+h1,
+h2,
+h3,
+h4,
+.font-game {
   font-family: var(--font-game);
   letter-spacing: -0.02em;
 }
@@ -140,10 +144,29 @@ h1, h2, h3, h4, .font-game {
   letter-spacing: 0.5px;
 }
 
-.badge-purple { background: rgba(124, 58, 237, 0.15); color: var(--purple-bright); border: 1px solid rgba(124, 58, 237, 0.2); }
-.badge-gold { background: rgba(251, 191, 36, 0.15); color: var(--gold); border: 1px solid rgba(251, 191, 36, 0.2); }
-.badge-green { background: rgba(16, 185, 129, 0.15); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.2); }
-.badge-red { background: rgba(239, 68, 68, 0.15); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.2); }
+.badge-purple {
+  background: rgba(124, 58, 237, 0.15);
+  color: var(--purple-bright);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+}
+
+.badge-gold {
+  background: rgba(251, 191, 36, 0.15);
+  color: var(--gold);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.badge-green {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--green);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.badge-red {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--red);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
 
 /* Scrollbar */
 ::-webkit-scrollbar {
