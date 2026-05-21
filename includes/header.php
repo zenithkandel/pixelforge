@@ -1,10 +1,6 @@
 <?php
 require_once __DIR__ . '/xp.php';
-if (!isset($page_title))
-    $page_title = APP_NAME;
-?>
-<?php
-require_once __DIR__ . '/xp.php';
+require_once __DIR__ . '/auth.php';
 if (!isset($page_title))
     $page_title = APP_NAME;
 $nav_user = current_user();
@@ -16,7 +12,7 @@ $nav_user = current_user();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?> — <?= APP_NAME ?></title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://zenithkandel.com.np/fontawesome/zenith-icons.js"></script>
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
     <?php if (isset($extra_css)): ?>
         <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/<?= htmlspecialchars($extra_css, ENT_QUOTES, 'UTF-8') ?>">

@@ -14,6 +14,9 @@ $page = max(1, (int) ($_GET['page'] ?? 1));
 $per_page = 20;
 $offset = ($page - 1) * $per_page;
 $messages = [];
+$users = [];
+$total = 0;
+$total_pages = 1;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_verify();
@@ -247,7 +250,7 @@ require_once __DIR__ . '/header.php';
             <h2 class="section-title">Verified Population</h2>
             <span
                 style="background:rgba(255,255,255,0.03); padding:4px 12px; border-radius:50px; font-size:12px; font-weight:700; color:var(--text-muted); border:1px solid rgba(255,255,255,0.05);">
-                <?= number_format($total) ?> TOTAL
+                <?= number_format((int) ($total ?? 0)) ?> TOTAL
             </span>
         </div>
         <form method="GET" style="display:flex; gap:10px;">

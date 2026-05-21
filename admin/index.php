@@ -31,23 +31,23 @@ require_once __DIR__ . '/header.php';
 
 <div class="stat-grid">
     <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-users"></i></div>
+        <div class="stat-icon"><i class="fad fa-thin fa-users"></i></div>
         <span class="stat-value"><?= number_format($stats['users']) ?></span>
         <span class="stat-label">Verified Citizens</span>
-        <div class="stat-trend trend-up"><i class="fas fa-caret-up"></i> Active: <?= $stats['active'] ?></div>
+        <div class="stat-trend trend-up"><i class="fad fa-thin fa-caret-up"></i> Active: <?= $stats['active'] ?></div>
     </div>
     <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-paint-brush"></i></div>
+        <div class="stat-icon"><i class="fad fa-thin fa-paint-brush"></i></div>
         <span class="stat-value"><?= number_format($stats['pixels']) ?></span>
         <span class="stat-label">Pixels Placed</span>
     </div>
     <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-star"></i></div>
+        <div class="stat-icon"><i class="fad fa-thin fa-star"></i></div>
         <span class="stat-value"><?= number_format($stats['total_xp'] / 1000, 1) ?>k</span>
         <span class="stat-label">Global XP Bloom</span>
     </div>
     <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-coins"></i></div>
+        <div class="stat-icon"><i class="fad fa-thin fa-coins"></i></div>
         <span class="stat-value"><?= number_format($stats['currency']) ?></span>
         <span class="stat-label">Forge Credits</span>
     </div>
@@ -85,7 +85,7 @@ require_once __DIR__ . '/header.php';
                         </td>
                         <td><span class="tag-xp" style="padding: 4px 12px;"><?= htmlspecialchars($log['action']) ?></span>
                         </td>
-                        <td><span style="color:var(--green); font-weight: 700;"><i class="fas fa-shield-alt"></i>
+                        <td><span style="color:var(--green); font-weight: 700;"><i class="fad fa-thin fa-shield-alt"></i>
                                 SUCCESS</span></td>
                     </tr>
                 <?php endforeach; ?>

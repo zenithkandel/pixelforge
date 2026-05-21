@@ -64,7 +64,7 @@ $page_title = htmlspecialchars($profile['username'], ENT_QUOTES, 'UTF-8') . ' �
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="profile-app" style="display:grid; grid-template-columns:300px 1fr; gap:20px; align-items:flex-start;">
+<div class="user-profile profile-grid">
     <!-- LEFT: User Info -->
     <div style="display:flex; flex-direction:column; gap:20px;">
         <div class="widget" style="text-align:center; padding:40px 20px;">
@@ -73,7 +73,8 @@ require_once __DIR__ . '/includes/header.php';
                 <?= strtoupper(substr($profile['username'], 0, 1)) ?>
             </div>
             <h1 style="font-size:32px; font-weight:900; margin:0; letter-spacing:-1px;">
-                <?= htmlspecialchars($profile['username']) ?></h1>
+                <?= htmlspecialchars($profile['username']) ?>
+            </h1>
             <div
                 style="color:var(--purple-bright); font-weight:bold; font-size:14px; margin-top:5px; text-transform:uppercase; letter-spacing:2px;">
                 Survivor Level <?= (int) $profile['level'] ?>
@@ -146,11 +147,14 @@ require_once __DIR__ . '/includes/header.php';
                             <?php foreach ($games as $game): ?>
                                 <tr style="border-bottom:1px solid var(--border-dim); font-size:14px;">
                                     <td style="padding:15px; color:var(--text-muted);">
-                                        <?= date('M j, Y H:i', strtotime($game['played_at'])) ?></td>
+                                        <?= date('M j, Y H:i', strtotime($game['played_at'])) ?>
+                                    </td>
                                     <td style="text-align:right; color:white; font-family:var(--font-game);">
-                                        <?= number_format($game['score']) ?></td>
+                                        <?= number_format($game['score']) ?>
+                                    </td>
                                     <td style="text-align:right; color:var(--text-secondary);">
-                                        <?= number_format($game['multiplier'], 1) ?>×</td>
+                                        <?= number_format($game['multiplier'], 1) ?>×
+                                    </td>
                                     <td style="text-align:right; padding-right:15px; color:var(--gold); font-weight:bold;">
                                         +<?= number_format($game['currency_earned']) ?></td>
                                 </tr>
@@ -187,14 +191,16 @@ require_once __DIR__ . '/includes/header.php';
                     foreach ($shown as $p): ?>
                         <tr style="border-bottom:1px solid var(--border-dim); font-size:14px;">
                             <td style="padding:15px; font-family:var(--font-game); color:var(--purple-bright);">
-                                <?= (int) $p['x'] ?>, <?= (int) $p['y'] ?></td>
+                                <?= (int) $p['x'] ?>, <?= (int) $p['y'] ?>
+                            </td>
                             <td>
                                 <div
                                     style="width:16px; height:16px; border-radius:4px; background:<?= htmlspecialchars($p['color']) ?>; border:1px solid rgba(255,255,255,0.1);">
                                 </div>
                             </td>
                             <td style="text-align:right; padding-right:15px; color:var(--text-muted); font-size:12px;">
-                                <?= date('M j, Y', strtotime($p['placed_at'])) ?></td>
+                                <?= date('M j, Y', strtotime($p['placed_at'])) ?>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

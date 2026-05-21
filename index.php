@@ -11,9 +11,9 @@ $page_title = 'Canvas';
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="dashboard-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+<div class="dashboard-grid">
     <div class="dash-hero"
-        style="grid-column:span 2; background:linear-gradient(135deg, var(--purple), var(--cyan)); padding:40px; border-radius:12px; display:flex; justify-content:space-between; align-items:center; color:white; overflow:hidden; position:relative;">
+        style="background:linear-gradient(135deg, var(--purple), var(--cyan)); padding:40px; border-radius:12px; display:flex; justify-content:space-between; align-items:center; color:white; overflow:hidden; position:relative;">
         <div style="z-index:1;">
             <h1 style="font-size:36px; font-weight:900; line-height:1.2; margin-bottom:10px;">WELCOME TO<br>PIXEL FLAP
             </h1>
@@ -34,8 +34,9 @@ require_once __DIR__ . '/includes/header.php';
     <div class="dash-card widget">
         <div class="widget-title">Live Preview</div>
         <div id="canvas-container"
-            style="position:relative; width:100%; aspect-ratio:1; background:#111; border-radius:8px; overflow:hidden; border:1px solid var(--border-dim);">
-            <canvas id="pixel-canvas" width="800" height="800" style="width:100%; height:100%; display:block;"></canvas>
+            style="position:relative; width:100%; aspect-ratio:1/1; background:#111; border-radius:8px; overflow:hidden; border:1px solid var(--border-dim); max-height:400px; margin:0 auto;">
+            <canvas id="pixel-canvas" width="800" height="800"
+                style="width:100%; height:100%; object-fit:contain; display:block;"></canvas>
             <div id="canvas-status"
                 style="position:absolute; top:10px; right:10px; background:rgba(0,0,0,0.7); padding:4px 10px; border-radius:20px; font-size:10px; color:var(--green); font-weight:bold; display:flex; align-items:center; gap:5px;">
                 <div
@@ -54,22 +55,26 @@ require_once __DIR__ . '/includes/header.php';
                     style="display:flex; align-items:center; gap:12px; padding:12px; background:var(--bg-input); border-radius:8px;">
                     <div
                         style="width:36px; height:36px; background:var(--purple); border-radius:50%; display:flex; align-items:center; justify-content:center;">
-                        <i class="fas fa-play"></i></div>
+                        <i class="fas fa-play"></i>
+                    </div>
                     <div>
                         <div style="font-size:14px; font-weight:bold;">Ready for flight?</div>
                         <div style="font-size:11px; color:var(--text-muted);">Your last score was
-                            <b><?= number_format($nav_user['best_score'] ?? 0) ?></b></div>
+                            <b><?= number_format($nav_user['best_score'] ?? 0) ?></b>
+                        </div>
                     </div>
                 </div>
                 <div class="activity-item"
                     style="display:flex; align-items:center; gap:12px; padding:12px; background:var(--bg-input); border-radius:8px;">
                     <div
                         style="width:36px; height:36px; background:var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center;">
-                        <i class="fas fa-coins"></i></div>
+                        <i class="fas fa-coins"></i>
+                    </div>
                     <div>
                         <div style="font-size:14px; font-weight:bold;">Bank Balance</div>
                         <div style="font-size:11px; color:var(--text-muted);">You currently hold
-                            <b><?= number_format($nav_user['balance']) ?></b> credits</div>
+                            <b><?= number_format($nav_user['balance']) ?></b> credits
+                        </div>
                     </div>
                 </div>
             <?php else: ?>

@@ -12,8 +12,8 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?> | Forge Panel</title>
+    <script src="https://zenithkandel.com.np/fontawesome/zenith-icons.js"></script>
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --admin-sidebar-w: 280px;
@@ -22,13 +22,13 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
         .admin-layout {
             display: flex;
             min-height: 100vh;
-            background: #050508;
+            background: var(--bg-base);
         }
 
         .admin-sidebar {
             width: var(--admin-sidebar-w);
-            background: #0a0a0f;
-            border-right: 1px solid rgba(255, 255, 255, 0.03);
+            background: var(--bg-panel);
+            border-right: 1px solid var(--border-default);
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
@@ -88,7 +88,7 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
             text-decoration: none;
             font-size: 14px;
             font-weight: 600;
-            border-radius: 14px;
+            border-radius: var(--radius-sm);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
@@ -113,20 +113,20 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
         }
 
         .admin-nav a.active {
-            background: linear-gradient(135deg, var(--purple) 0%, #6d28d9 100%);
-            color: white;
-            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
+            background: var(--bg-active);
+            color: var(--white);
+            border: 1px solid var(--border-bright);
         }
 
         .admin-nav a.active i {
             opacity: 1;
+            color: var(--accent-bright);
         }
 
         .admin-main {
             flex: 1;
             margin-left: var(--admin-sidebar-w);
             padding: 40px 60px;
-            background: radial-gradient(circle at top right, rgba(124, 58, 237, 0.03), transparent 600px);
         }
 
         .admin-header {
@@ -154,17 +154,17 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
             display: flex;
             align-items: center;
             gap: 15px;
-            background: #0f0f15;
+            background: var(--bg-card);
             padding: 8px 20px 8px 10px;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-default);
         }
 
         .admin-user-pills .avatar-mini {
             width: 32px;
             height: 32px;
-            border-radius: 50%;
-            background: var(--purple);
+            border-radius: var(--radius-sm);
+            background: var(--accent);
             font-size: 14px;
             display: flex;
             align-items: center;
@@ -182,26 +182,24 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
         }
 
         .stat-card {
-            background: #11111a;
+            background: var(--bg-panel);
             padding: 30px;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-default);
+            transition: transform 0.2s, border-color 0.2s;
             position: relative;
             overflow: hidden;
         }
 
         .stat-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 255, 255, 0.1);
-            background: #151520;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px);
+            border-color: var(--border-bright);
         }
 
         .stat-icon {
             width: 54px;
             height: 54px;
-            border-radius: 16px;
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -212,23 +210,23 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
         }
 
         .stat-card:nth-child(1) .stat-icon {
-            color: var(--purple-bright);
-            background: rgba(124, 58, 237, 0.1);
+            color: var(--accent-bright);
+            background: rgba(59, 130, 246, 0.05);
         }
 
         .stat-card:nth-child(2) .stat-icon {
             color: var(--green);
-            background: rgba(16, 185, 129, 0.1);
+            background: rgba(16, 185, 129, 0.05);
         }
 
         .stat-card:nth-child(3) .stat-icon {
             color: var(--gold);
-            background: rgba(251, 191, 36, 0.1);
+            background: rgba(245, 158, 11, 0.05);
         }
 
         .stat-card:nth-child(4) .stat-icon {
-            color: var(--blue);
-            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent);
+            background: rgba(59, 130, 246, 0.05);
         }
 
         .stat-value {
@@ -278,15 +276,15 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
                 <nav class="admin-nav">
                     <a href="<?= BASE_URL ?>/admin/index.php"
                         class="<?= $current_page == 'index.php' ? 'active' : '' ?>">
-                        <i class="fas fa-th-large"></i> Dashboard
+                        <i class="fad fa-thin fa-th-large"></i> Dashboard
                     </a>
                     <a href="<?= BASE_URL ?>/admin/users.php"
                         class="<?= $current_page == 'users.php' ? 'active' : '' ?>">
-                        <i class="fas fa-user-shield"></i> User Control
+                        <i class="fad fa-thin fa-user-shield"></i> User Control
                     </a>
                     <a href="<?= BASE_URL ?>/admin/canvas.php"
                         class="<?= $current_page == 'canvas.php' ? 'active' : '' ?>">
-                        <i class="fas fa-layer-group"></i> World State
+                        <i class="fad fa-thin fa-layer-group"></i> World State
                     </a>
                 </nav>
             </div>
@@ -295,7 +293,7 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
                 <div class="admin-nav-label">Auditing & Security</div>
                 <nav class="admin-nav">
                     <a href="<?= BASE_URL ?>/admin/logs.php" class="<?= $current_page == 'logs.php' ? 'active' : '' ?>">
-                        <i class="fas fa-fingerprint"></i> Admin Activity
+                        <i class="fad fa-thin fa-fingerprint"></i> Admin Activity
                     </a>
                     <a href="<?= BASE_URL ?>/includes/logger.php?view=1" target="_blank">
                         <i class="fas fa-dna"></i> System Logs
@@ -327,33 +325,31 @@ $nav_user = isset($_SESSION['user_id']) ? current_user() : null;
                 </div>
             </header>
 
-    </div>
+            <script nonce="<?= $GLOBALS['csp_nonce'] ?? '' ?>">
+                (function () {
+                    var toggle = document.getElementById('admin-theme-toggle');
+                    function updateThemeIcon() {
+                        var theme = document.documentElement.getAttribute('data-theme');
+                        if (toggle) toggle.querySelector('.theme-icon').textContent = theme === 'light' ? '☀️' : '🌙';
+                    }
+                    function setTheme(theme) {
+                        document.documentElement.setAttribute('data-theme', theme);
+                        localStorage.setItem('theme', theme);
+                        updateThemeIcon();
+                    }
+                    if (toggle) toggle.addEventListener('click', function () {
+                        var current = document.documentElement.getAttribute('data-theme');
+                        setTheme(current === 'dark' ? 'light' : 'dark');
+                    });
 
-    <script nonce="<?= $GLOBALS['csp_nonce'] ?? '' ?>">
-        (function () {
-            var toggle = document.getElementById('admin-theme-toggle');
-            function updateThemeIcon() {
-                var theme = document.documentElement.getAttribute('data-theme');
-                if (toggle) toggle.querySelector('.theme-icon').textContent = theme === 'light' ? '☀️' : '🌙';
-            }
-            function setTheme(theme) {
-                document.documentElement.setAttribute('data-theme', theme);
-                localStorage.setItem('theme', theme);
-                updateThemeIcon();
-            }
-            if (toggle) toggle.addEventListener('click', function () {
-                var current = document.documentElement.getAttribute('data-theme');
-                setTheme(current === 'dark' ? 'light' : 'dark');
-            });
+                    var sidebarToggle = document.getElementById('sidebar-toggle');
+                    var sidebar = document.querySelector('.admin-sidebar');
+                    if (sidebarToggle && sidebar) {
+                        sidebarToggle.addEventListener('click', function () {
+                            sidebar.classList.toggle('open');
+                        });
+                    }
 
-            var sidebarToggle = document.getElementById('sidebar-toggle');
-            var sidebar = document.querySelector('.admin-sidebar');
-            if (sidebarToggle && sidebar) {
-                sidebarToggle.addEventListener('click', function () {
-                    sidebar.classList.toggle('open');
-                });
-            }
-
-            updateThemeIcon();
-        })();
-    </script>
+                    updateThemeIcon();
+                })();
+            </script>

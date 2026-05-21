@@ -12,6 +12,9 @@ $filter_action = trim($_GET['action_filter'] ?? '');
 $page = max(1, (int) ($_GET['page'] ?? 1));
 $per_page = 25;
 $offset = ($page - 1) * $per_page;
+$logs = [];
+$total = 0;
+$total_pages = 1;
 
 $action_options = [
     'SET_BALANCE' => 'Set Balance',
@@ -37,9 +40,12 @@ try {
     else
         $stmt_count->execute();
     $total = $stmt_count->fetchColumn();
-    $total_pages = ceil($total / $per_page);
+    $total_pages = ceil((int) $total / $per_page);
 } catch (PDOException $e) {
-    die("Audit stream offline.");
+    log_error('DB', 'Audit log query error: ' . $e->getMessage());
+    $logs = [];
+    $total = 0;
+    $total_pages = 0;
 }
 
 $page_title = 'Audit Logs';

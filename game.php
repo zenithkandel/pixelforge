@@ -22,9 +22,9 @@ $page_title = 'Flappy Bird';
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="game-view-container" style="display:flex; flex-direction:column; gap:20px; height:100%;">
+<div class="game-view-container" style="display:flex; flex-direction:column; gap:20px; height:auto; min-height:100%;">
     <div class="game-window"
-        style="flex:1; min-height:600px; position:relative; background:#111; border:4px solid var(--bg-panel); box-shadow:0 0 40px rgba(0,0,0,0.5);">
+        style="flex:1; position:relative; background:#111; border:4px solid var(--bg-panel); box-shadow:0 0 40px rgba(0,0,0,0.5); aspect-ratio:480/640; max-height:80vh; margin:0 auto; width:100%; max-width:600px;">
         <div id="game-container" style="width:100%; height:100%; position:relative; overflow:hidden;">
             <canvas id="game-canvas" width="480" height="640"
                 style="width:100%; height:100%; object-fit:contain; display:block; margin:0 auto;"></canvas>

@@ -1878,3 +1878,285 @@
 [2026-05-21 06:46:49] [ERROR] [DB] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Database connection failed: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it | {"code":2002}
 [2026-05-21 06:47:13] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Page request received
 [2026-05-21 06:47:17] [ERROR] [DB] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Database connection failed: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it | {"code":2002}
+[2026-05-21 06:50:31] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-21 06:50:35] [ERROR] [DB] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Database connection failed: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it | {"code":2002}
+[2026-05-21 06:50:38] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-21 06:50:42] [ERROR] [DB] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Database connection failed: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it | {"code":2002}
+[2026-05-21 07:03:49] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-21 07:03:53] [ERROR] [DB] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Database connection failed: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it | {"code":2002}
+[2026-05-21 07:04:22] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-21 07:04:22] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:04:22] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-21 07:04:27] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:04:27] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-21 07:04:27] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-21 07:04:27] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-21 07:04:37] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-21 07:04:37] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":0,"multiplier":1,"coins":0}
+[2026-05-21 07:04:37] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":0,"currency":0,"xp":0,"balance":658}
+[2026-05-21 07:05:06] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-21 07:05:06] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-21 07:05:07] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-21 07:05:07] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":0,"multiplier":1,"coins":0}
+[2026-05-21 07:05:07] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":0,"currency":0,"xp":0,"balance":658}
+[2026-05-21 07:05:09] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-21 07:05:10] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-21 07:05:14] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-21 07:05:14] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":0,"multiplier":1,"coins":0}
+[2026-05-21 07:05:14] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":0,"currency":0,"xp":0,"balance":658}
+[2026-05-21 07:05:15] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-21 07:05:15] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-21 07:05:18] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-21 07:05:18] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":0,"multiplier":1,"coins":0}
+[2026-05-21 07:05:18] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":0,"currency":0,"xp":0,"balance":658}
+[2026-05-21 07:05:20] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-21 07:05:20] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-21 07:05:29] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-21 07:05:29] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":3,"multiplier":1,"coins":5}
+[2026-05-21 07:05:29] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":3,"currency":31,"xp":13,"balance":689}
+[2026-05-21 07:05:31] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-21 07:05:31] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-21 07:05:33] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-21 07:05:33] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":0,"multiplier":1,"coins":0}
+[2026-05-21 07:05:33] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":0,"currency":0,"xp":0,"balance":689}
+[2026-05-21 07:05:33] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-21 07:05:33] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-21 07:05:39] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-21 07:05:39] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":0,"multiplier":1,"coins":0}
+[2026-05-21 07:05:39] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":0,"currency":0,"xp":0,"balance":689}
+[2026-05-21 07:05:41] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-21 07:05:41] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-21 07:05:50] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-21 07:05:50] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":3,"multiplier":1,"coins":5}
+[2026-05-21 07:05:50] [INFO] [XP] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] User levelled up | {"new_level":5,"total_xp":808}
+[2026-05-21 07:05:50] [INFO] [ACHIEVEMENT] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Achievement unlocked | {"slug":"level_5","reward":50}
+[2026-05-21 07:05:50] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":3,"currency":31,"xp":13,"balance":720}
+[2026-05-21 07:05:52] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-21 07:05:53] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-21 07:05:58] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-21 07:05:58] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":0,"multiplier":1,"coins":1}
+[2026-05-21 07:05:58] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":0,"currency":5,"xp":2,"balance":775}
+[2026-05-21 07:05:59] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-21 07:05:59] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-21 07:06:02] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-21 07:06:02] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":0,"multiplier":1,"coins":0}
+[2026-05-21 07:06:02] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":0,"currency":0,"xp":0,"balance":775}
+[2026-05-21 07:06:14] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-21 07:06:14] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-21 07:06:17] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/game.php] Page request received
+[2026-05-21 07:06:17] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?ajax=1&period=all] Page request received
+[2026-05-21 07:06:24] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Page request received
+[2026-05-21 07:06:24] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score submission received | {"score":1,"multiplier":1,"coins":4}
+[2026-05-21 07:06:24] [INFO] [GAME] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/save_score.php] Score saved | {"score":1,"currency":22,"xp":9,"balance":797}
+[2026-05-21 07:06:27] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/canvas.php] Page request received
+[2026-05-21 07:06:27] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:06:27] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-21 07:06:32] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:06:32] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":84}
+[2026-05-21 07:06:33] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:06:33] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":22,"y":24,"color":"#7c3aed"}
+[2026-05-21 07:06:33] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":22,"y":24,"color":"#7c3aed","new_balance":792}
+[2026-05-21 07:06:37] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:06:37] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:06:41] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php] Page request received
+[2026-05-21 07:06:44] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?period=pixels] Page request received
+[2026-05-21 07:06:46] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/leaderboard.php?period=xp] Page request received
+[2026-05-21 07:06:48] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/profile.php?user=zenithkandel] Page request received
+[2026-05-21 07:06:58] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/index.php] Page request received
+[2026-05-21 07:06:58] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:06:58] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:07:03] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:07:03] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:07:08] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:07:08] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:07:14] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:07:14] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:07:19] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:07:19] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:07:24] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:07:24] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:07:29] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:07:29] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:07:34] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:07:34] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:07:39] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:07:39] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:07:44] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:07:44] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:07:49] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:07:49] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:07:53] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:07:53] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:07:56] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/index.php] Page request received
+[2026-05-21 07:07:56] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:07:56] [DEBUG] [CANVAS] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:07:59] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:07:59] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:08:04] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:08:04] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:08:09] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:08:09] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:08:14] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:08:14] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:08:19] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:08:19] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:08:24] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:08:24] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:08:29] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:08:29] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:08:34] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:08:34] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:08:35] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [GET /codes/pixelforge/login.php] Page request received
+[2026-05-21 07:08:39] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:08:39] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:08:42] [DEBUG] [SYSTEM] [user:guest(guest)] [ip:::1] [POST /codes/pixelforge/login.php] Page request received
+[2026-05-21 07:08:42] [INFO] [AUTH] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/login.php] Daily streak bonus awarded | {"streak":2,"bonus":20}
+[2026-05-21 07:08:42] [INFO] [AUTH] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/login.php] User logged in | {"username":"admin"}
+[2026-05-21 07:08:42] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/] Page request received
+[2026-05-21 07:08:42] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:08:42] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:08:44] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:08:44] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:08:47] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:08:47] [DEBUG] [CANVAS] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:08:48] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Page request received
+[2026-05-21 07:08:48] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/] Admin panel accessed | {"page":"index.php"}
+[2026-05-21 07:08:49] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:08:49] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:08:50] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Page request received
+[2026-05-21 07:08:50] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:08:54] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:08:54] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:08:55] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] Page request received
+[2026-05-21 07:08:55] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] Admin panel accessed | {"page":"canvas.php"}
+[2026-05-21 07:08:57] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] Page request received
+[2026-05-21 07:08:57] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] Admin panel accessed | {"page":"logs.php"}
+[2026-05-21 07:08:59] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:08:59] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:09:04] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:09:04] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:09:09] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:09:09] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:09:09] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/index.php] Page request received
+[2026-05-21 07:09:09] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:09:09] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:09:14] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:09:14] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:09:20] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:09:20] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:09:25] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:09:25] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:09:30] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:09:30] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:09:35] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:09:35] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:09:40] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:09:40] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:09:45] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:09:45] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:09:50] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:09:50] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:09:55] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:09:55] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:10:00] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:10:00] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:10:05] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:10:05] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:10:10] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:10:10] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:10:11] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] Page request received
+[2026-05-21 07:10:11] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] Admin panel accessed | {"page":"canvas.php"}
+[2026-05-21 07:10:11] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Page request received
+[2026-05-21 07:10:12] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:10:15] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:10:15] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:10:20] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:10:20] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:10:25] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:10:25] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:10:29] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Page request received
+[2026-05-21 07:10:29] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:10:30] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:10:30] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:10:30] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/index.php] Page request received
+[2026-05-21 07:10:30] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/index.php] Admin panel accessed | {"page":"index.php"}
+[2026-05-21 07:10:34] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/index.php] Page request received
+[2026-05-21 07:10:34] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/index.php] Admin panel accessed | {"page":"index.php"}
+[2026-05-21 07:10:35] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:10:35] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:10:35] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Page request received
+[2026-05-21 07:10:35] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:10:37] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] Page request received
+[2026-05-21 07:10:37] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] Admin panel accessed | {"page":"canvas.php"}
+[2026-05-21 07:10:38] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] Page request received
+[2026-05-21 07:10:38] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] Admin panel accessed | {"page":"logs.php"}
+[2026-05-21 07:10:40] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:10:40] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:10:43] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/index.php] Page request received
+[2026-05-21 07:10:43] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/index.php] Admin panel accessed | {"page":"index.php"}
+[2026-05-21 07:10:44] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Page request received
+[2026-05-21 07:10:44] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:10:45] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:10:45] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:10:50] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:10:50] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:10:55] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:10:55] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:11:00] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:11:00] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:11:05] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:11:05] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:11:10] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:11:10] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:11:15] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:11:15] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:11:20] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:11:20] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:11:25] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:11:25] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:11:30] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:11:30] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:11:35] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:11:35] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:11:40] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:11:40] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:11:45] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:11:45] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:11:50] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:11:50] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:11:55] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:11:55] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:12:00] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:12:00] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:12:05] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:12:05] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:12:09] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/index.php] Page request received
+[2026-05-21 07:12:09] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:12:09] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:12:09] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/index.php] Page request received
+[2026-05-21 07:12:09] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:12:09] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:12:13] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Page request received
+[2026-05-21 07:12:13] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:12:15] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:12:15] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:12:15] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/index.php] Page request received
+[2026-05-21 07:12:15] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/index.php] Admin panel accessed | {"page":"index.php"}
+[2026-05-21 07:12:17] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Page request received
+[2026-05-21 07:12:17] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:12:18] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] Page request received
+[2026-05-21 07:12:18] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/canvas.php] Admin panel accessed | {"page":"canvas.php"}
+[2026-05-21 07:12:20] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:12:20] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:12:25] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:12:25] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:12:28] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] Page request received
+[2026-05-21 07:12:28] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/logs.php] Admin panel accessed | {"page":"logs.php"}
+[2026-05-21 07:12:30] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:12:30] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:12:35] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:12:35] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:12:40] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:12:40] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}
+[2026-05-21 07:12:45] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:12:45] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":85}

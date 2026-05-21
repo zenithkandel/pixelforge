@@ -14,9 +14,9 @@ $extra_css = '';
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="canvas-app" style="display:flex; flex-direction:column; gap:20px; height:100%;">
+<div class="canvas-app" style="display:flex; flex-direction:column; gap:20px; height:auto; min-height:100%;">
     <div class="canvas-window"
-        style="flex:1; background:#111; border-radius:12px; border:4px solid var(--bg-panel); position:relative; overflow:hidden; display:flex; flex-direction:column;">
+        style="flex:1; background:#111; border-radius:12px; border:4px solid var(--bg-panel); position:relative; overflow:hidden; display:flex; flex-direction:column; min-height:500px; aspect-ratio:1;">
         <!-- Canvas Area -->
         <div id="canvas-container" style="flex:1; cursor:crosshair; position:relative;">
             <canvas id="pixel-canvas" width="800" height="800"
