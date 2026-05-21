@@ -298,9 +298,130 @@ aside.app-widgets {
 }
 
 .stat-box .label {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.stat-box .value {
   display: block;
+  font-size: 16px;
+  font-weight: 900;
+  margin-top: 4px;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.33);
+  }
+
+  80%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Dashboard Hero */
+.hero-card {
+  background: linear-gradient(135deg, var(--purple) 0%, #4c1d95 100%);
+  padding: 40px;
+  border-radius: var(--radius);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-card::after {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+/* Game Elements */
+.btn-pixel {
+  background: var(--purple);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--radius);
+  font-family: var(--font-game);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-pixel:hover {
+  background: var(--purple-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.btn-pixel.gold {
+  background: var(--gold);
+  color: #000;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .app-container {
+    grid-template-areas:
+      "header header"
+      "sidebar main"
+      "footer footer";
+    grid-template-columns: var(--sidebar-w) 1fr;
+    grid-template-rows: var(--header-h) 1fr auto;
+  }
+
+  aside.app-widgets {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    grid-template-areas:
+      "header"
+      "main"
+      "footer";
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--header-h) 1fr auto;
+    padding: 0 8px 8px 8px;
+  }
+
+  aside.app-sidebar {
+    display: none;
+  }
+}
+
+font-size: 11px;
+color: var(--text-muted);
+display: block;
 }
 
 .stat-box .value {
