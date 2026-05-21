@@ -67,54 +67,53 @@ require_once __DIR__ . '/includes/header.php';
 <div class="user-profile profile-grid">
     <!-- LEFT: User Info -->
     <div style="display:flex; flex-direction:column; gap:20px;">
-        <div class="widget" style="text-align:center; padding:40px 20px;">
-            <div style="width:120px; height:120px; border-radius:30px; background:<?= htmlspecialchars($profile['avatar_color']) ?>; margin:0 auto 20px; display:flex; align-items:center; justify-content:center; font-size:48px; font-weight:900; color:black; border:4px solid var(--bg-panel); box-shadow:0 10px 30px rgba(0,0,0,0.5); transform:rotate(-3deg); transition:transform 0.3s;"
-                onmouseover="this.style.transform='rotate(0deg)'" onmouseout="this.style.transform='rotate(-3deg)'">
+        <div class="section-card" style="text-align:center; padding:40px 20px;">
+            <div style="width:120px; height:120px; border-radius:0; background:<?= htmlspecialchars($profile['avatar_color']) ?>; margin:0 auto 20px; display:flex; align-items:center; justify-content:center; font-size:48px; font-weight:900; color:black; border:2px solid white; box-shadow: 4px 4px 0px rgba(0,0,0,0.5);">
                 <?= strtoupper(substr($profile['username'], 0, 1)) ?>
             </div>
-            <h1 style="font-size:32px; font-weight:900; margin:0; letter-spacing:-1px;">
+            <h1 style="font-size:32px; font-weight:900; margin:0; letter-spacing:-1px; text-transform:uppercase;">
                 <?= htmlspecialchars($profile['username']) ?>
             </h1>
             <div
-                style="color:var(--purple-bright); font-weight:bold; font-size:14px; margin-top:5px; text-transform:uppercase; letter-spacing:2px;">
-                Survivor Level <?= (int) $profile['level'] ?>
+                style="color:var(--accent-blue); font-weight:800; font-size:14px; margin-top:5px; text-transform:uppercase; letter-spacing:2px; font-family:var(--font-game);">
+                OPERATIVE LEVEL <?= (int) $profile['level'] ?>
             </div>
 
             <div style="margin-top:30px; display:flex; flex-direction:column; gap:12px;">
                 <div
-                    style="background:var(--bg-card); padding:15px; border-radius:15px; border:1px solid var(--border-dim); display:flex; justify-content:space-between; align-items:center;">
-                    <span style="color:var(--text-muted); font-size:12px; font-weight:bold;">BEST SCORE</span>
+                    style="background:rgba(255,255,255,0.03); padding:15px; border-radius:0; border:1px solid var(--border-default); display:flex; justify-content:space-between; align-items:center;">
+                    <span style="color:var(--text-muted); font-size:12px; font-weight:bold; letter-spacing:1px;">BEST SCORE</span>
                     <span
                         style="font-family:var(--font-game); color:white; font-size:18px;"><?= number_format($profile['best_score'] ?? 0) ?></span>
                 </div>
                 <div
-                    style="background:var(--bg-card); padding:15px; border-radius:15px; border:1px solid var(--border-dim); display:flex; justify-content:space-between; align-items:center;">
-                    <span style="color:var(--text-muted); font-size:12px; font-weight:bold;">PIXELS OWNED</span>
+                    style="background:rgba(255,255,255,0.03); padding:15px; border-radius:0; border:1px solid var(--border-default); display:flex; justify-content:space-between; align-items:center;">
+                    <span style="color:var(--text-muted); font-size:12px; font-weight:bold; letter-spacing:1px;">PIXELS OWNED</span>
                     <span
-                        style="font-family:var(--font-game); color:var(--purple-bright); font-size:18px;"><?= number_format($profile['pixels_owned'] ?? 0) ?></span>
+                        style="font-family:var(--font-game); color:var(--accent-blue); font-size:18px;"><?= number_format($profile['pixels_owned'] ?? 0) ?></span>
                 </div>
                 <div
-                    style="background:var(--bg-card); padding:15px; border-radius:15px; border:1px solid var(--border-dim); display:flex; justify-content:space-between; align-items:center;">
-                    <span style="color:var(--text-muted); font-size:12px; font-weight:bold;">TOTAL XP</span>
+                    style="background:rgba(255,255,255,0.03); padding:15px; border-radius:0; border:1px solid var(--border-default); display:flex; justify-content:space-between; align-items:center;">
+                    <span style="color:var(--text-muted); font-size:12px; font-weight:bold; letter-spacing:1px;">TOTAL XP</span>
                     <span
-                        style="font-family:var(--font-game); color:var(--gold); font-size:18px;"><?= number_format((int) $profile['xp']) ?></span>
+                        style="font-family:var(--font-game); color:var(--accent-yellow); font-size:18px;"><?= number_format((int) $profile['xp']) ?></span>
                 </div>
             </div>
         </div>
 
-        <div class="widget" style="padding:20px;">
+        <div class="section-card" style="padding:20px;">
             <h3
-                style="font-size:14px; color:var(--text-muted); font-weight:bold; margin:0 0 15px; display:flex; align-items:center; gap:8px;">
-                <i class="fas fa-medal" style="color:var(--gold);"></i> ACHIEVEMENTS
+                style="font-size:14px; color:var(--text-muted); font-weight:bold; margin:0 0 15px; display:flex; align-items:center; gap:8px; text-transform:uppercase; letter-spacing:1px;">
+                <i class="fad fa-thin fa-medal" style="color:var(--accent-yellow);"></i> ACHIEVEMENTS
                 <span
-                    style="margin-left:auto; font-size:11px; color:var(--purple-bright); background:rgba(124,58,237,0.1); padding:2px 8px; border-radius:4px;"><?= count($user_achievements) ?>
+                    style="margin-left:auto; font-size:11px; color:var(--accent-blue); background:rgba(59,130,246,0.1); padding:2px 8px; border-radius:0; border:1px solid rgba(59,130,246,0.2);"><?= count($user_ach_slugs) ?>
                     / <?= count($all_achievements) ?></span>
             </h3>
             <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:8px;">
                 <?php foreach ($all_achievements as $ach): ?>
                     <?php $earned = in_array($ach['slug'], $user_ach_slugs); ?>
                     <div title="<?= htmlspecialchars($ach['name']) ?>"
-                        style="aspect-ratio:1; background:<?= $earned ? 'var(--bg-panel)' : 'var(--bg-card)' ?>; border:1px solid <?= $earned ? 'var(--purple)' : 'var(--border-dim)' ?>; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:18px; opacity:<?= $earned ? '1' : '0.2' ?>; filter: <?= $earned ? 'none' : 'grayscale(1)' ?>;">
+                        style="aspect-ratio:1; background:<?= $earned ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.02)' ?>; border:1px solid <?= $earned ? 'var(--accent-blue)' : 'var(--border-default)' ?>; border-radius:0; display:flex; align-items:center; justify-content:center; font-size:18px; opacity:<?= $earned ? '1' : '0.1' ?>; filter: <?= $earned ? 'none' : 'grayscale(1)' ?>;">
                         <?= $earned ? htmlspecialchars($ach['icon']) : '🔒' ?>
                     </div>
                 <?php endforeach; ?>
@@ -124,10 +123,10 @@ require_once __DIR__ . '/includes/header.php';
 
     <!-- RIGHT: Activity -->
     <div style="display:flex; flex-direction:column; gap:20px;">
-        <div class="widget" style="padding:0;">
+        <div class="section-card" style="padding:0;">
             <div
-                style="padding:20px; border-bottom:1px solid var(--border-dim); display:flex; align-items:center; justify-content:space-between;">
-                <h3 style="margin:0; font-size:18px;"><i class="fas fa-history"
+                style="padding:20px; border-bottom:1px solid var(--border-default); display:flex; align-items:center; justify-content:space-between;">
+                <h3 style="margin:0; font-size:18px; text-transform:uppercase; letter-spacing:1px;"><i class="fad fa-thin fa-history"
                         style="opacity:0.5; margin-right:10px;"></i>Recent Matches</h3>
             </div>
             <div style="padding:10px;">
@@ -137,25 +136,25 @@ require_once __DIR__ . '/includes/header.php';
                     <table style="width:100%; border-collapse:collapse;">
                         <thead>
                             <tr style="text-align:left; color:var(--text-muted); font-size:11px; text-transform:uppercase;">
-                                <th style="padding:15px;">DATE</th>
-                                <th style="text-align:right;">SCORE</th>
-                                <th style="text-align:right;">MULT</th>
-                                <th style="text-align:right; padding-right:15px;">REWARD</th>
+                                <th style="padding:15px; letter-spacing:1px;">DATE</th>
+                                <th style="text-align:right; letter-spacing:1px;">SCORE</th>
+                                <th style="text-align:right; letter-spacing:1px;">MULT</th>
+                                <th style="text-align:right; padding-right:15px; letter-spacing:1px;">REWARD</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($games as $game): ?>
-                                <tr style="border-bottom:1px solid var(--border-dim); font-size:14px;">
+                                <tr style="border-bottom:1px solid var(--border-default); font-size:14px;">
                                     <td style="padding:15px; color:var(--text-muted);">
                                         <?= date('M j, Y H:i', strtotime($game['played_at'])) ?>
                                     </td>
                                     <td style="text-align:right; color:white; font-family:var(--font-game);">
                                         <?= number_format($game['score']) ?>
                                     </td>
-                                    <td style="text-align:right; color:var(--text-secondary);">
+                                    <td style="text-align:right; color:var(--accent-blue);">
                                         <?= number_format($game['multiplier'], 1) ?>×
                                     </td>
-                                    <td style="text-align:right; padding-right:15px; color:var(--gold); font-weight:bold;">
+                                    <td style="text-align:right; padding-right:15px; color:var(--accent-yellow); font-weight:bold;">
                                         +<?= number_format($game['currency_earned']) ?></td>
                                 </tr>
                             <?php endforeach; ?>
@@ -168,10 +167,10 @@ require_once __DIR__ . '/includes/header.php';
 </div>
 
 
-<div class="widget" style="padding:0;">
+<div class="section-card" style="padding:0;">
     <div
-        style="padding:20px; border-bottom:1px solid var(--border-dim); display:flex; align-items:center; justify-content:space-between;">
-        <h3 style="margin:0; font-size:18px;"><i class="fas fa-th" style="opacity:0.5; margin-right:10px;"></i>Captured
+        style="padding:20px; border-bottom:1px solid var(--border-default); display:flex; align-items:center; justify-content:space-between;">
+        <h3 style="margin:0; font-size:18px; text-transform:uppercase; letter-spacing:1px;"><i class="fad fa-thin fa-grid-2" style="opacity:0.5; margin-right:10px;"></i>Captured
             Territory</h3>
     </div>
     <div style="padding:10px;">
@@ -181,21 +180,21 @@ require_once __DIR__ . '/includes/header.php';
             <table style="width:100%; border-collapse:collapse;">
                 <thead>
                     <tr style="text-align:left; color:var(--text-muted); font-size:11px; text-transform:uppercase;">
-                        <th style="padding:15px;">COORD</th>
-                        <th>COLOR</th>
-                        <th style="text-align:right; padding-right:15px;">PLACED</th>
+                        <th style="padding:15px; letter-spacing:1px;">COORD</th>
+                        <th style="letter-spacing:1px;">COLOR</th>
+                        <th style="text-align:right; padding-right:15px; letter-spacing:1px;">PLACED</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $shown = array_slice($pixels, 0, 10);
                     foreach ($shown as $p): ?>
-                        <tr style="border-bottom:1px solid var(--border-dim); font-size:14px;">
-                            <td style="padding:15px; font-family:var(--font-game); color:var(--purple-bright);">
+                        <tr style="border-bottom:1px solid var(--border-default); font-size:14px;">
+                            <td style="padding:15px; font-family:var(--font-game); color:var(--accent-blue);">
                                 <?= (int) $p['x'] ?>, <?= (int) $p['y'] ?>
                             </td>
                             <td>
                                 <div
-                                    style="width:16px; height:16px; border-radius:4px; background:<?= htmlspecialchars($p['color']) ?>; border:1px solid rgba(255,255,255,0.1);">
+                                    style="width:16px; height:16px; border-radius:0; background:<?= htmlspecialchars($p['color']) ?>; border:1px solid rgba(255,255,255,0.1);">
                                 </div>
                             </td>
                             <td style="text-align:right; padding-right:15px; color:var(--text-muted); font-size:12px;">

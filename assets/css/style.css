@@ -17,8 +17,14 @@
 
   /* Accent Colors - High Contrast */
   --accent: #3b82f6;
+  --accent-blue: #3b82f6;
   --accent-bright: #60a5fa;
   --accent-glow: rgba(59, 130, 246, 0.2);
+
+  --accent-yellow: #f59e0b;
+  --accent-green: #10b981;
+  --accent-red: #ef4444;
+  --accent-cyan: #06b6d4;
 
   --gold: #f59e0b;
   --green: #10b981;
@@ -485,27 +491,28 @@ overflow: hidden;
 
 /* Game Elements */
 .btn-pixel {
-  background: var(--purple);
+  background: var(--accent-blue);
   color: white;
   border: none;
   padding: 12px 24px;
-  border-radius: var(--radius);
+  border-radius: 0;
   font-family: var(--font-game);
-  font-weight: bold;
+  font-weight: 800;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: none;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .btn-pixel:hover {
-  background: var(--purple-bright);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+  background: white;
+  color: black;
+  box-shadow: 4px 4px 0px var(--accent-blue);
 }
 
 .btn-pixel.gold {
-  background: var(--gold);
+  background: var(--accent-yellow);
   color: #000;
 }
 

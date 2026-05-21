@@ -252,7 +252,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div style="text-align:center; margin-top:30px; font-size:14px; color:var(--text-muted);">
             Don't have an account?
-            <a href="<?= BASE_URL ?>/register.php" style="color: var(--accent); text-decoration:none; font-weight:bold;">Join
+            <a href="<?= BASE_URL ?>/register.php"
+                style="color: var(--accent); text-decoration:none; font-weight:bold;">Join
                 the Forge</a>
         </div>
     </div>

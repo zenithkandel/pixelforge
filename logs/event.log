@@ -2475,3 +2475,95 @@
 [2026-05-21 07:25:46] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":115}
 [2026-05-21 07:25:51] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
 [2026-05-21 07:25:51] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":115}
+[2026-05-21 07:25:56] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:25:56] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Page request received
+[2026-05-21 07:25:56] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":115}
+[2026-05-21 07:25:56] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [GET /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:26:01] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:26:01] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":115}
+[2026-05-21 07:26:04] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Page request received
+[2026-05-21 07:26:04] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:26:04] [ADMIN] [USER_MGMT] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Admin adjusted balance by -1200 for user #3 | {"user_id":3}
+[2026-05-21 07:26:06] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:26:06] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":115}
+[2026-05-21 07:26:11] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:26:11] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":115}
+[2026-05-21 07:26:16] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:26:16] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":115}
+[2026-05-21 07:26:29] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Page request received
+[2026-05-21 07:26:29] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:26:29] [ADMIN] [USER_MGMT] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Admin adjusted balance by 0 for user #3 | {"user_id":3}
+[2026-05-21 07:26:31] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Page request received
+[2026-05-21 07:26:31] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:26:31] [ADMIN] [USER_MGMT] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Admin adjusted balance by 0 for user #3 | {"user_id":3}
+[2026-05-21 07:26:34] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Page request received
+[2026-05-21 07:26:34] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:26:34] [ADMIN] [USER_MGMT] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Admin adjusted balance by 0 for user #3 | {"user_id":3}
+[2026-05-21 07:26:43] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Page request received
+[2026-05-21 07:26:43] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:26:43] [ADMIN] [USER_MGMT] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Admin set balance to 10 for user #3 | {"user_id":3}
+[2026-05-21 07:26:46] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:26:46] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":115}
+[2026-05-21 07:26:47] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/canvas.php] Page request received
+[2026-05-21 07:26:47] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:26:47] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":115}
+[2026-05-21 07:26:51] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:26:51] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":80,"y":84,"color":"#7c3aed"}
+[2026-05-21 07:26:51] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":80,"y":84,"color":"#7c3aed","new_balance":5}
+[2026-05-21 07:26:52] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:26:52] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":116}
+[2026-05-21 07:26:52] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:26:52] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":81,"y":84,"color":"#7c3aed"}
+[2026-05-21 07:26:52] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":81,"y":84,"color":"#7c3aed","new_balance":0}
+[2026-05-21 07:26:54] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:26:54] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":82,"y":84,"color":"#7c3aed"}
+[2026-05-21 07:26:54] [WARN] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel rejected — insufficient balance | {"balance":0}
+[2026-05-21 07:26:55] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/canvas.php] Page request received
+[2026-05-21 07:26:55] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:26:55] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":117}
+[2026-05-21 07:26:57] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:26:57] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":82,"y":81,"color":"#7c3aed"}
+[2026-05-21 07:26:57] [WARN] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel rejected — insufficient balance | {"balance":0}
+[2026-05-21 07:26:57] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:26:57] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":82,"y":72,"color":"#7c3aed"}
+[2026-05-21 07:26:57] [WARN] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel rejected — insufficient balance | {"balance":0}
+[2026-05-21 07:27:00] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:27:00] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":117}
+[2026-05-21 07:27:05] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:27:05] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":117}
+[2026-05-21 07:27:08] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:27:08] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":56,"y":80,"color":"#7c3aed"}
+[2026-05-21 07:27:08] [WARN] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel rejected — insufficient balance | {"balance":0}
+[2026-05-21 07:27:10] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:27:10] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":117}
+[2026-05-21 07:27:12] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Page request received
+[2026-05-21 07:27:12] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:27:12] [ADMIN] [USER_MGMT] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Admin set balance to 10 for user #3 | {"user_id":3}
+[2026-05-21 07:27:13] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/canvas.php] Page request received
+[2026-05-21 07:27:14] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:27:14] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":117}
+[2026-05-21 07:27:15] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:27:15] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":72,"y":80,"color":"#7c3aed"}
+[2026-05-21 07:27:15] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":72,"y":80,"color":"#7c3aed","new_balance":5}
+[2026-05-21 07:27:16] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:27:16] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":73,"y":83,"color":"#7c3aed"}
+[2026-05-21 07:27:16] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":73,"y":83,"color":"#7c3aed","new_balance":0}
+[2026-05-21 07:27:18] [DEBUG] [SYSTEM] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Page request received
+[2026-05-21 07:27:18] [ADMIN] [ADMIN] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Admin panel accessed | {"page":"users.php"}
+[2026-05-21 07:27:18] [ADMIN] [USER_MGMT] [user:1(admin)] [ip:::1] [POST /codes/pixelforge/admin/users.php] Admin set balance to 10 for user #3 | {"user_id":3}
+[2026-05-21 07:27:19] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:27:19] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":119}
+[2026-05-21 07:27:19] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:27:19] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":79,"y":72,"color":"#7c3aed"}
+[2026-05-21 07:27:19] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":79,"y":72,"color":"#7c3aed","new_balance":5}
+[2026-05-21 07:27:20] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:27:20] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":70,"y":72,"color":"#7c3aed"}
+[2026-05-21 07:27:20] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel claimed | {"x":70,"y":72,"color":"#7c3aed","new_balance":0}
+[2026-05-21 07:27:21] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Page request received
+[2026-05-21 07:27:21] [INFO] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel placement request | {"x":82,"y":63,"color":"#7c3aed"}
+[2026-05-21 07:27:21] [WARN] [PIXEL] [user:3(zenithkandel)] [ip:::1] [POST /codes/pixelforge/api/place_pixel.php] Pixel rejected — insufficient balance | {"balance":0}
+[2026-05-21 07:27:21] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/canvas.php] Page request received
+[2026-05-21 07:27:22] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:27:22] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":121}
+[2026-05-21 07:27:27] [DEBUG] [SYSTEM] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Page request received
+[2026-05-21 07:27:27] [DEBUG] [CANVAS] [user:3(zenithkandel)] [ip:::1] [GET /codes/pixelforge/api/get_canvas.php] Canvas data served | {"pixel_count":121}

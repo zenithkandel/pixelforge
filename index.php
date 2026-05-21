@@ -13,74 +13,74 @@ require_once __DIR__ . '/includes/header.php';
 
 <div class="dashboard-grid">
     <div class="dash-hero"
-        style="background:linear-gradient(135deg, var(--purple), var(--cyan)); padding:40px; border-radius:12px; display:flex; justify-content:space-between; align-items:center; color:white; overflow:hidden; position:relative;">
+        style="background: #15181e; padding:40px; border-radius:0; border-left: 5px solid var(--accent-blue); display:flex; justify-content:space-between; align-items:center; color:white; overflow:hidden; position:relative; box-shadow: inset 0 0 50px rgba(0,0,0,0.5);">
         <div style="z-index:1;">
-            <h1 style="font-size:36px; font-weight:900; line-height:1.2; margin-bottom:10px;">WELCOME TO<br>PIXEL FLAP
+            <h1 style="font-size:36px; font-weight:900; line-height:1.2; margin-bottom:10px; font-family:var(--font-game); text-transform:uppercase;">WELCOME TO<br>PIXEL FORGE
             </h1>
-            <p style="opacity:0.9; margin-bottom:20px;">The community-driven world where every flight builds a
-                masterpiece.</p>
+            <p style="opacity:0.7; margin-bottom:20px; font-weight:500;">THE INDUSTRIAL COMMUNITY CANVAS. FLY. EARN. FORGE.</p>
             <div style="display:flex; gap:10px;">
-                <a href="<?= BASE_URL ?>/game.php" class="btn-pixel"
-                    style="background:white; color:var(--purple); box-shadow:0 4px 0 #ddd;">PLAY NOW</a>
+                <a href="<?= BASE_URL ?>/game.php" class="btn-pixel">PLAY NOW</a>
                 <a href="<?= BASE_URL ?>/canvas.php" class="btn-pixel"
-                    style="background:rgba(0,0,0,0.2); color:white; box-shadow:0 4px 0 rgba(0,0,0,0.4);">START
-                    DRAWING</a>
+                    style="background:rgba(255,255,255,0.05);">START DRAWING</a>
             </div>
         </div>
-        <div class="hero-bird" style="font-size:120px; opacity:0.3; transform:rotate(-15deg); user-select:none;">🐦
+        <div class="hero-bird" style="font-size:120px; opacity:0.1; transform:rotate(-15deg); user-select:none;">🐦
         </div>
     </div>
 
-    <div class="dash-card widget">
-        <div class="widget-title">Live Preview</div>
+    <div class="dash-card section-card">
+        <div class="section-header">
+            <h3 class="section-title">Live Preview</h3>
+        </div>
         <div id="canvas-container"
-            style="position:relative; width:100%; aspect-ratio:1/1; background:#111; border-radius:8px; overflow:hidden; border:1px solid var(--border-dim); max-height:400px; margin:0 auto;">
+            style="position:relative; width:100%; aspect-ratio:1/1; background:#000; border-radius:0; overflow:hidden; border:1px solid var(--border-default); max-height:400px; margin:0 auto;">
             <canvas id="pixel-canvas" width="800" height="800"
                 style="width:100%; height:100%; object-fit:contain; display:block;"></canvas>
             <div id="canvas-status"
-                style="position:absolute; top:10px; right:10px; background:rgba(0,0,0,0.7); padding:4px 10px; border-radius:20px; font-size:10px; color:var(--green); font-weight:bold; display:flex; align-items:center; gap:5px;">
+                style="position:absolute; top:10px; right:10px; background:rgba(0,0,0,0.8); padding:5px 12px; border:1px solid var(--accent-green); font-size:10px; color:var(--accent-green); font-weight:900; display:flex; align-items:center; gap:8px; font-family:var(--font-game);">
                 <div
-                    style="width:6px; height:6px; background:var(--green); border-radius:50%; animation:pulse 1s infinite;">
-                </div> LIVE
+                    style="width:6px; height:6px; background:var(--accent-green); border-radius:0; animation:pulse 1s infinite;">
+                </div> SYS_ONLINE
             </div>
-            <div id="zoom-indicator" style="display:none;"></div>
         </div>
     </div>
 
-    <div class="dash-card widget">
-        <div class="widget-title">Recent Activity</div>
-        <div class="recent-list" style="display:flex; flex-direction:column; gap:12px;">
+    <div class="dash-card section-card">
+        <div class="section-header">
+            <h3 class="section-title">Terminal Access</h3>
+        </div>
+        <div class="recent-list" style="display:flex; flex-direction:column; gap:12px; padding:20px;">
             <?php if ($nav_user): ?>
                 <div class="activity-item"
-                    style="display:flex; align-items:center; gap:12px; padding:12px; background:var(--bg-input); border-radius:8px;">
+                    style="display:flex; align-items:center; gap:12px; padding:15px; background:rgba(255,255,255,0.03); border:1px solid var(--border-default);">
                     <div
-                        style="width:36px; height:36px; background:var(--purple); border-radius:50%; display:flex; align-items:center; justify-content:center;">
-                        <i class="fas fa-play"></i>
+                        style="width:36px; height:36px; border:1px solid var(--accent-blue); display:flex; align-items:center; justify-content:center; color:var(--accent-blue);">
+                        <i class="fad fa-thin fa-jet-fighter"></i>
                     </div>
                     <div>
-                        <div style="font-size:14px; font-weight:bold;">Ready for flight?</div>
-                        <div style="font-size:11px; color:var(--text-muted);">Your last score was
-                            <b><?= number_format($nav_user['best_score'] ?? 0) ?></b>
+                        <div style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1px;">LAST MISSION</div>
+                        <div style="font-size:14px; font-family:var(--font-game); color:var(--text-muted);">SCORE: 
+                            <b style="color:white;"><?= number_format($nav_user['best_score'] ?? 0) ?></b>
                         </div>
                     </div>
                 </div>
                 <div class="activity-item"
-                    style="display:flex; align-items:center; gap:12px; padding:12px; background:var(--bg-input); border-radius:8px;">
+                    style="display:flex; align-items:center; gap:12px; padding:15px; background:rgba(255,255,255,0.03); border:1px solid var(--border-default);">
                     <div
-                        style="width:36px; height:36px; background:var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center;">
-                        <i class="fas fa-coins"></i>
+                        style="width:36px; height:36px; border:1px solid var(--accent-yellow); display:flex; align-items:center; justify-content:center; color:var(--accent-yellow);">
+                        <i class="fad fa-thin fa-vault"></i>
                     </div>
                     <div>
-                        <div style="font-size:14px; font-weight:bold;">Bank Balance</div>
-                        <div style="font-size:11px; color:var(--text-muted);">You currently hold
-                            <b><?= number_format($nav_user['balance']) ?></b> credits
+                        <div style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1px;">BANK HOLDINGS</div>
+                        <div style="font-size:14px; font-family:var(--font-game); color:var(--text-muted);">TOTAL: 
+                            <b style="color:var(--accent-yellow);"><?= number_format($nav_user['balance']) ?></b> CR
                         </div>
                     </div>
                 </div>
             <?php else: ?>
                 <div style="text-align:center; padding:40px; color:var(--text-muted);">
-                    <i class="fas fa-lock" style="font-size:24px; margin-bottom:10px;"></i>
-                    <p>LogIn to see your stats</p>
+                    <i class="fad fa-thin fa-lock" style="font-size:24px; margin-bottom:10px; display:block;"></i>
+                    <p style="text-transform:uppercase; font-size:11px; letter-spacing:1px; font-weight:bold;">Authentication Required</p>
                 </div>
             <?php endif; ?>
         </div>

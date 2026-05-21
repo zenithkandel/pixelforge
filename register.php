@@ -229,7 +229,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div style="text-align:center; margin-top:30px; font-size:14px; color:var(--text-muted);">
             Already a builder?
-            <a href="<?= BASE_URL ?>/login.php" style="color: var(--accent); text-decoration:none; font-weight:bold;">Sign
+            <a href="<?= BASE_URL ?>/login.php"
+                style="color: var(--accent); text-decoration:none; font-weight:bold;">Sign
                 In</a>
         </div>
     </div>
