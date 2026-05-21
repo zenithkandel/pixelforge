@@ -80,51 +80,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$page_title = 'Register';
-require_once __DIR__ . '/includes/header.php';
-?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join — PixelForge</title>
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a0c 100%); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        .auth-card { background: #11111a; width: 100%; max-width: 450px; padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative; overflow: hidden; }
+        .auth-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, #7c3aed, #fbbf24); }
+        .auth-logo { font-family: var(--font-game); font-size: 32px; color: white; text-align: center; margin-bottom: 30px; letter-spacing: -1px; }
+        .auth-logo span { color: #7c3aed; }
+        .auth-btn { width: 100%; padding: 15px; background: #7c3aed; border: none; border-radius: 10px; color: white; font-weight: 900; font-size: 16px; cursor: pointer; transition: all 0.2s; margin-top: 10px; font-family: var(--font-game); letter-spacing: 1px; }
+        .auth-btn:hover { background: #8b5cf6; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(124,58,237,0.4); }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; color: rgba(255,255,255,0.4); font-size: 11px; font-weight: bold; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .input-group input { width: 100%; padding: 12px 15px; background: #0a0a0f; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white; font-size: 15px; outline: none; transition: border-color 0.2s; box-sizing: border-box; }
+        .input-group input:focus { border-color: #7c3aed; }
+        .alert { padding: 12px 15px; border-radius: 8px; font-size: 14px; margin-bottom: 20px; font-weight: 500; background: rgba(220,38,38,0.1); border: 1px solid #dc2626; color: #f87171; }
+    </style>
+</head>
+<body>
 
-<div class="page-center">
-    <div class="card auth-card">
-        <div style="text-align:center;margin-bottom:var(--space-lg);">
-            <div style="font-size:48px;margin-bottom:var(--space-sm);">🎨</div>
-            <h2>Join <?= APP_NAME ?></h2>
-            <p style="color:var(--text-secondary);margin:0;">Create your account and start building.</p>
+<div class="auth-card">
+    <div class="auth-logo">PIXEL<span>FORGE</span></div>
+
+    <?php if (!empty($errors)): ?>
+        <div class="alert">
+            <i class="fas fa-exclamation-circle" style="margin-right:8px;"></i>
+            <?= htmlspecialchars($errors[0]) ?>
+        </div>
+    <?php endif; ?>
+
+    <form method="POST">
+        <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+        
+        <div class="input-group">
+            <label>Username</label>
+            <input type="text" name="username" value="<?= htmlspecialchars($username ?? '') ?>" required autofocus placeholder="Choose a unique name">
         </div>
 
-        <?php if (!empty($errors)): ?>
-            <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);padding:12px 16px;border-radius:var(--radius-md);margin-bottom:var(--space-md);">
-                <?php foreach ($errors as $err): ?>
-                    <div style="color:var(--red);font-size:14px;"><?= htmlspecialchars($err) ?></div>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
+        <div class="input-group">
+            <label>Email Address</label>
+            <input type="email" name="email" value="<?= htmlspecialchars($email ?? '') ?>" required placeholder="you@example.com">
+        </div>
 
-        <form method="POST">
-            <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required maxlength="30" placeholder="Choose a username" value="<?= htmlspecialchars($username ?? '') ?>" autocomplete="username">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" name="password" required placeholder="••••••••">
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required placeholder="you@example.com" value="<?= htmlspecialchars($email ?? '') ?>" autocomplete="email">
+            <div class="input-group">
+                <label>Confirm</label>
+                <input type="password" name="confirm_password" required placeholder="••••••••">
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required minlength="8" placeholder="At least 8 characters">
-                <div class="form-hint">Must contain at least one letter and one number</div>
-            </div>
-            <div class="form-group">
-                <label for="confirm_password">Confirm Password</label>
-                <input type="password" id="confirm_password" name="confirm_password" required placeholder="Repeat your password">
-            </div>
-            <button type="submit" class="btn-primary" style="width:100%;margin-top:var(--space-sm);">Create Account</button>
-        </form>
-        <p style="text-align:center;margin-top:var(--space-lg);margin-bottom:0;color:var(--text-muted);font-size:14px;">
-            Already have an account? <a href="<?= BASE_URL ?>/login.php" style="font-weight:600;">Sign in</a>
-        </p>
+        </div>
+
+        <button type="submit" class="auth-btn">CREATE YOUR ACCOUNT</button>
+    </form>
+
+    <div style="text-align:center; margin-top:30px; font-size:14px; color:rgba(255,255,255,0.3);">
+        Already a builder? 
+        <a href="<?= BASE_URL ?>/login.php" style="color: #a78bfa; text-decoration:none; font-weight:bold;">Sign In</a>
     </div>
 </div>
 
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+</body>
+</html>
+<?php exit(); ?>
+

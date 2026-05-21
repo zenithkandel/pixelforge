@@ -14,33 +14,33 @@ if (!$is_ajax) {
     $page_title = 'Leaderboard';
     require_once __DIR__ . '/includes/header.php';
     ?>
-    <div class="page-content">
-        <div class="page-header" style="text-align:center;">
-            <h1>Leaderboard</h1>
-            <p>Top players of <?= APP_NAME ?></p>
-        </div>
-
-        <div class="card">
-            <div class="tabs" style="margin:0 0 var(--space-md) 0;border:none;">
-                <button class="tab-btn <?= $period === 'all' ? 'active' : '' ?>" data-lb="all">All-Time</button>
-                <button class="tab-btn <?= $period === 'week' ? 'active' : '' ?>" data-lb="week">This Week</button>
-                <button class="tab-btn <?= $period === 'today' ? 'active' : '' ?>" data-lb="today">Today</button>
-                <button class="tab-btn <?= $period === 'pixels' ? 'active' : '' ?>" data-lb="pixels">Most Pixels</button>
-                <button class="tab-btn <?= $period === 'xp' ? 'active' : '' ?>" data-lb="xp">Most XP</button>
+    <div class="leaderboard-app" style="display:flex; flex-direction:column; gap:20px;">
+        <div class="widget" style="padding:30px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; border-bottom:1px solid var(--border-dim); padding-bottom:20px;">
+                <h1 style="font-size:32px; font-weight:900; letter-spacing:-1px;"><i class="fas fa-trophy" style="color:var(--gold); margin-right:15px;"></i>Global Rankings</h1>
+                <div class="tabs" style="display:flex; gap:10px; background:var(--bg-input); padding:6px; border-radius:10px;">
+                    <button class="tab-btn <?= $period === 'all' ? 'active' : '' ?>" data-lb="all" style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:6px; font-weight:bold; cursor:pointer;">All-Time</button>
+                    <button class="tab-btn <?= $period === 'week' ? 'active' : '' ?>" data-lb="week" style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:6px; font-weight:bold; cursor:pointer;">Weekly</button>
+                    <button class="tab-btn <?= $period === 'today' ? 'active' : '' ?>" data-lb="today" style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:6px; font-weight:bold; cursor:pointer;">Today</button>
+                    <button class="tab-btn <?= $period === 'pixels' ? 'active' : '' ?>" data-lb="pixels" style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:6px; font-weight:bold; cursor:pointer;">Pixels</button>
+                    <button class="tab-btn <?= $period === 'xp' ? 'active' : '' ?>" data-lb="xp" style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:6px; font-weight:bold; cursor:pointer;">XP</button>
+                </div>
             </div>
-            <table>
+
+            <table style="width:100%; border-collapse:collapse; font-size:15px;">
                 <thead>
-                    <tr>
-                        <th style="width:60px;">Rank</th>
-                        <th>Player</th>
-                        <th style="width:80px;">Level</th>
-                        <th id="lb-col-score" style="text-align:right;">Score</th>
-                        <th id="lb-col-mult" style="text-align:right;">Mult</th>
-                        <th id="lb-col-earned" style="text-align:right;">Earned</th>
-                        <th style="width:100px;">Date</th>
+                    <tr style="text-align:left; color:var(--text-muted); border-bottom:1px solid var(--border-dim);">
+                        <th style="padding:15px; width:80px;">RANK</th>
+                        <th>PLAYER</th>
+                        <th style="width:100px;">LEVEL</th>
+                        <th id="lb-col-score" style="text-align:right; width:120px;">SCORE</th>
+                        <th id="lb-col-mult" style="text-align:right; width:80px;">MULT</th>
+                        <th id="lb-col-earned" style="text-align:right; width:120px;">EARNED</th>
+                        <th style="width:140px; text-align:right; padding-right:15px;">DATE</th>
                     </tr>
                 </thead>
-                <tbody id="lb-body">
+                <tbody id="lb-body" style="color:var(--text-secondary);">
+
     <?php
 }
 
@@ -99,39 +99,41 @@ foreach ($rows_data as $row) {
     $user_id = (int)$row['id'];
     $is_me = $current_user_id === $user_id;
     $rank_icon = '';
-    if ($rank === 1) $rank_icon = '🥇 ';
-    elseif ($rank === 2) $rank_icon = '🥈 ';
-    elseif ($rank === 3) $rank_icon = '🥉 ';
+    if ($rank === 1) $rank_icon = '🥇';
+    elseif ($rank === 2) $rank_icon = '🥈';
+    elseif ($rank === 3) $rank_icon = '🥉';
 
     $rank_style = '';
-    if ($rank === 1) $rank_style = 'color:var(--gold-bright);';
-    elseif ($rank === 2) $rank_style = 'color:#c0c0c0;';
-    elseif ($rank === 3) $rank_style = 'color:#cd7f32;';
+    if ($rank === 1) $rank_style = 'color:var(--gold);';
+    elseif ($rank === 2) $rank_style = 'color:#e2e8f0;';
+    elseif ($rank === 3) $rank_style = 'color:#fb923c;';
     ?>
-    <tr class="<?= $is_me ? 'highlighted' : '' ?>">
-        <td style="<?= $rank_style ?>font-weight:700;"><?= $rank_icon . $rank ?></td>
+    <tr style="<?= $is_me ? 'background:rgba(124, 58, 237, 0.1);' : '' ?> border-bottom:1px solid var(--border-dim);">
+        <td style="<?= $rank_style ?> font-weight:bold; padding:18px 15px; font-size:18px;"><?= $rank_icon ?: $rank ?></td>
         <td>
-            <div style="display:flex;align-items:center;gap:10px;">
-                <span class="avatar-circle" style="background:<?= htmlspecialchars($row['avatar_color']) ?>;width:32px;height:32px;font-size:13px;"><?= strtoupper(substr($row['username'], 0, 1)) ?></span>
-                <a href="<?= BASE_URL ?>/profile.php?user=<?= urlencode($row['username']) ?>" style="color:var(--text-primary);text-decoration:none;font-weight:600;"><?= htmlspecialchars($row['username']) ?></a>
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:32px; height:32px; border-radius:6px; background:<?= htmlspecialchars($row['avatar_color']) ?>; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; color:black; border:1px solid rgba(255,255,255,0.2);">
+                    <?= strtoupper(substr($row['username'], 0, 1)) ?>
+                </div>
+                <a href="<?= BASE_URL ?>/profile.php?user=<?= urlencode($row['username']) ?>" style="color:var(--text-secondary); text-decoration:none; font-weight:<?= $is_me ? 'bold' : 'normal' ?>;"><?= htmlspecialchars($row['username']) ?></a>
             </div>
         </td>
-        <td><span class="level-badge">Lv<?= (int)$row['level'] ?></span></td>
+        <td style="color:var(--text-muted);">Lv<?= (int)$row['level'] ?></td>
         <?php if ($period === 'pixels'): ?>
-            <td><?= (int)($row['pixel_count'] ?? 0) ?> owned</td>
-            <td><?= (int)($row['total_placed'] ?? 0) ?> placed</td>
-            <td><span class="currency"><?= (int)($row['ach_count'] ?? 0) ?> 🏆</span></td>
-            <td>—</td>
+            <td style="text-align:right; font-family:var(--font-game); color:white;"><?= (int)($row['pixel_count'] ?? 0) ?></td>
+            <td style="text-align:right; color:var(--text-muted);"><?= (int)($row['total_placed'] ?? 0) ?></td>
+            <td style="text-align:right; color:var(--gold); font-weight:bold;"><?= (int)($row['ach_count'] ?? 0) ?> <i class="fas fa-medal"></i></td>
+            <td style="text-align:right; padding-right:15px; font-size:12px; color:var(--text-muted);">—</td>
         <?php elseif ($period === 'xp'): ?>
-            <td><?= number_format((int)$row['xp']) ?> XP</td>
-            <td>—</td>
-            <td><span class="currency"><?= (int)($row['ach_count'] ?? 0) ?> 🏆</span></td>
-            <td>—</td>
+            <td style="text-align:right; font-family:var(--font-game); color:white;"><?= number_format((int)$row['xp'] ?? 0) ?></td>
+            <td style="text-align:right; color:var(--text-muted);">—</td>
+            <td style="text-align:right; color:var(--gold); font-weight:bold;"><?= (int)($row['ach_count'] ?? 0) ?> <i class="fas fa-medal"></i></td>
+            <td style="text-align:right; padding-right:15px; font-size:12px; color:var(--text-muted);">—</td>
         <?php else: ?>
-            <td style="font-weight:600;"><?= number_format((int)$row['score']) ?></td>
-            <td><?= number_format((float)$row['multiplier'], 1) ?>×</td>
-            <td><span class="currency">+<?= number_format((int)$row['currency_earned']) ?> 💰</span></td>
-            <td style="color:var(--text-muted);font-size:13px;"><?= date('M j, Y', strtotime($row['played_at'])) ?></td>
+            <td style="text-align:right; font-family:var(--font-game); color:white;"><?= number_format((int)$row['score']) ?></td>
+            <td style="text-align:right; color:var(--text-muted); font-size:12px;"><?= number_format((float)$row['multiplier'], 1) ?>×</td>
+            <td style="text-align:right; color:var(--gold); font-weight:bold;">+<?= number_format((int)$row['currency_earned']) ?></td>
+            <td style="text-align:right; padding-right:15px; font-size:12px; color:var(--text-muted);"><?= date('M j, H:i', strtotime($row['played_at'])) ?></td>
         <?php endif; ?>
     </tr>
     <?php
@@ -154,3 +156,4 @@ if (!$is_ajax) {
     <?php
     require_once __DIR__ . '/includes/footer.php';
 }
+

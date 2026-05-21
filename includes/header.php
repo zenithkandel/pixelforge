@@ -1,14 +1,17 @@
 <?php
 require_once __DIR__ . '/xp.php';
-if (!isset($page_title)) $page_title = APP_NAME;
+if (!isset($page_title))
+    $page_title = APP_NAME;
 ?>
 <?php
 require_once __DIR__ . '/xp.php';
-if (!isset($page_title)) $page_title = APP_NAME;
+if (!isset($page_title))
+    $page_title = APP_NAME;
 $nav_user = current_user();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,17 +22,18 @@ $nav_user = current_user();
         <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/<?= htmlspecialchars($extra_css, ENT_QUOTES, 'UTF-8') ?>">
     <?php endif; ?>
 </head>
+
 <body data-theme="dark">
     <div class="app-container">
         <header class="app-header">
             <div class="user-summary">
-                <?php if ($nav_user): 
-                    $nav_level = (int)$nav_user['level'];
-                    $nav_xp = (int)$nav_user['xp'];
-                    $nav_balance = (int)$nav_user['balance'];
+                <?php if ($nav_user):
+                    $nav_level = (int) $nav_user['level'];
+                    $nav_xp = (int) $nav_user['xp'];
+                    $nav_balance = (int) $nav_user['balance'];
                     $nav_progress = xp_progress_in_level($nav_xp);
                     $nav_initial = strtoupper(substr($nav_user['username'], 0, 1));
-                ?>
+                    ?>
                     <div class="avatar-mini" style="background:<?= htmlspecialchars($nav_user['avatar_color']) ?>">
                         <?= $nav_initial ?>
                     </div>
@@ -40,7 +44,8 @@ $nav_user = current_user();
                         </div>
                     </div>
                 <?php else: ?>
-                    <a href="<?= BASE_URL ?>/" class="nav-brand" style="color:var(--purple-bright); font-weight:800; text-decoration:none;">PIXEL FLAP</a>
+                    <a href="<?= BASE_URL ?>/" class="nav-brand"
+                        style="color:var(--purple-bright); font-weight:800; text-decoration:none;">PIXEL FLAP</a>
                 <?php endif; ?>
             </div>
 
@@ -56,37 +61,48 @@ $nav_user = current_user();
                     </div>
                     <div class="resource-item streak" title="Streak">
                         <i class="fas fa-fire"></i>
-                        <span><?= (int)$nav_user['streak_days'] ?></span>
+                        <span><?= (int) $nav_user['streak_days'] ?></span>
                     </div>
                 <?php endif; ?>
             </div>
 
             <div class="header-actions" style="display:flex; gap:12px; align-items:center;">
-                <button class="btn-icon" style="background:none; border:none; color:var(--text-secondary); font-size:18px; cursor:pointer;"><i class="fas fa-bell"></i></button>
-                <button class="btn-icon" style="background:none; border:none; color:var(--text-secondary); font-size:18px; cursor:pointer;"><i class="fas fa-envelope"></i></button>
-                <button class="btn-icon" id="theme-toggle" style="background:none; border:none; color:var(--text-secondary); font-size:18px; cursor:pointer;"><i class="fas fa-moon"></i></button>
+                <button class="btn-icon"
+                    style="background:none; border:none; color:var(--text-secondary); font-size:18px; cursor:pointer;"><i
+                        class="fas fa-bell"></i></button>
+                <button class="btn-icon"
+                    style="background:none; border:none; color:var(--text-secondary); font-size:18px; cursor:pointer;"><i
+                        class="fas fa-envelope"></i></button>
+                <button class="btn-icon" id="theme-toggle"
+                    style="background:none; border:none; color:var(--text-secondary); font-size:18px; cursor:pointer;"><i
+                        class="fas fa-moon"></i></button>
             </div>
         </header>
 
         <aside class="app-sidebar">
-            <a href="<?= BASE_URL ?>/index.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) === 'index.php' ? 'active' : '' ?>">
+            <a href="<?= BASE_URL ?>/index.php"
+                class="nav-link <?= basename($_SERVER['PHP_SELF']) === 'index.php' ? 'active' : '' ?>">
                 <i class="fas fa-home"></i>
                 <span>Home</span>
             </a>
             <?php if ($nav_user): ?>
-                <a href="<?= BASE_URL ?>/game.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) === 'game.php' ? 'active' : '' ?>">
+                <a href="<?= BASE_URL ?>/game.php"
+                    class="nav-link <?= basename($_SERVER['PHP_SELF']) === 'game.php' ? 'active' : '' ?>">
                     <i class="fas fa-gamepad"></i>
                     <span>Play Game</span>
                 </a>
-                <a href="<?= BASE_URL ?>/canvas.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) === 'canvas.php' ? 'active' : '' ?>">
+                <a href="<?= BASE_URL ?>/canvas.php"
+                    class="nav-link <?= basename($_SERVER['PHP_SELF']) === 'canvas.php' ? 'active' : '' ?>">
                     <i class="fas fa-palette"></i>
                     <span>Pixel Canvas</span>
                 </a>
-                <a href="<?= BASE_URL ?>/leaderboard.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) === 'leaderboard.php' ? 'active' : '' ?>">
+                <a href="<?= BASE_URL ?>/leaderboard.php"
+                    class="nav-link <?= basename($_SERVER['PHP_SELF']) === 'leaderboard.php' ? 'active' : '' ?>">
                     <i class="fas fa-trophy"></i>
                     <span>Leaderboard</span>
                 </a>
-                <a href="<?= BASE_URL ?>/profile.php?user=<?= urlencode($nav_user['username']) ?>" class="nav-link <?= basename($_SERVER['PHP_SELF']) === 'profile.php' ? 'active' : '' ?>">
+                <a href="<?= BASE_URL ?>/profile.php?user=<?= urlencode($nav_user['username']) ?>"
+                    class="nav-link <?= basename($_SERVER['PHP_SELF']) === 'profile.php' ? 'active' : '' ?>">
                     <i class="fas fa-user-circle"></i>
                     <span>Profile</span>
                 </a>
@@ -118,4 +134,3 @@ $nav_user = current_user();
         </aside>
 
         <main class="app-main">
-

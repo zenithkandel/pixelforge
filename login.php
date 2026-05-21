@@ -97,46 +97,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$page_title = 'Login';
-require_once __DIR__ . '/includes/header.php';
-?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — PixelForge</title>
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a0c 100%); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        .auth-card { background: #11111a; width: 100%; max-width: 400px; padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative; overflow: hidden; }
+        .auth-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, #7c3aed, #fbbf24); }
+        .auth-logo { font-family: var(--font-game); font-size: 32px; color: white; text-align: center; margin-bottom: 30px; letter-spacing: -1px; }
+        .auth-logo span { color: #7c3aed; }
+        .auth-btn { width: 100%; padding: 15px; background: #7c3aed; border: none; border-radius: 10px; color: white; font-weight: 900; font-size: 16px; cursor: pointer; transition: all 0.2s; margin-top: 10px; font-family: var(--font-game); letter-spacing: 1px; }
+        .auth-btn:hover { background: #8b5cf6; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(124,58,237,0.4); }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; color: rgba(255,255,255,0.4); font-size: 11px; font-weight: bold; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .input-group input { width: 100%; padding: 12px 15px; background: #0a0a0f; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white; font-size: 15px; outline: none; transition: border-color 0.2s; box-sizing: border-box; }
+        .input-group input:focus { border-color: #7c3aed; }
+        .alert { padding: 12px 15px; border-radius: 8px; font-size: 14px; margin-bottom: 20px; font-weight: 500; }
+        .alert-error { background: rgba(220,38,38,0.1); border: 1px solid #dc2626; color: #f87171; }
+        .alert-success { background: rgba(5,150,105,0.1); border: 1px solid #059669; color: #34d399; }
+    </style>
+</head>
+<body>
 
-<div class="page-center">
-    <div class="card auth-card">
-        <div style="text-align:center;margin-bottom:var(--space-lg);">
-            <div style="font-size:48px;margin-bottom:var(--space-sm);">🎨</div>
-            <h2>Welcome Back</h2>
-            <p style="color:var(--text-secondary);margin:0;">Log in to your <?= APP_NAME ?> account.</p>
+<div class="auth-card">
+    <div class="auth-logo">PIXEL<span>FORGE</span></div>
+
+    <?php if (!empty($errors)): ?>
+        <div class="alert alert-error">
+            <i class="fas fa-exclamation-circle" style="margin-right:8px;"></i>
+            <?= htmlspecialchars($errors[0]) ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (!empty($success)): ?>
+        <div class="alert alert-success">
+            <i class="fas fa-check-circle" style="margin-right:8px;"></i>
+            <?= htmlspecialchars($success) ?>
+        </div>
+    <?php endif; ?>
+
+    <form method="POST">
+        <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+        
+        <div class="input-group">
+            <label>Username or Email</label>
+            <input type="text" name="login" value="<?= htmlspecialchars($login ?? '') ?>" required autofocus placeholder="Enter your credentials">
         </div>
 
-        <?php if ($success): ?>
-            <div class="form-success" style="background:rgba(34,197,94,0.1);padding:12px 16px;border-radius:var(--radius-md);margin-bottom:var(--space-md);text-align:center;"><?= htmlspecialchars($success) ?></div>
-        <?php endif; ?>
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" name="password" required placeholder="••••••••">
+        </div>
 
-        <?php if ($errors): ?>
-            <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);padding:12px 16px;border-radius:var(--radius-md);margin-bottom:var(--space-md);">
-                <?php foreach ($errors as $err): ?>
-                    <div style="color:var(--red);font-size:14px;"><?= htmlspecialchars($err) ?></div>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
+        <button type="submit" class="auth-btn">LOGIN TO DASHBOARD</button>
+    </form>
 
-        <form method="POST">
-            <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
-            <div class="form-group">
-                <label for="login">Username or Email</label>
-                <input type="text" id="login" name="login" required placeholder="Enter username or email" value="<?= htmlspecialchars($login ?? '') ?>" autocomplete="username">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required placeholder="Enter password" autocomplete="current-password">
-            </div>
-            <button type="submit" class="btn-primary" style="width:100%;margin-top:var(--space-sm);">Sign In</button>
-        </form>
-        <p style="text-align:center;margin-top:var(--space-lg);margin-bottom:0;color:var(--text-muted);font-size:14px;">
-            Don't have an account? <a href="<?= BASE_URL ?>/register.php" style="font-weight:600;">Create one</a>
-        </p>
+    <div style="text-align:center; margin-top:30px; font-size:14px; color:rgba(255,255,255,0.3);">
+        Don't have an account? 
+        <a href="<?= BASE_URL ?>/register.php" style="color: #a78bfa; text-decoration:none; font-weight:bold;">Join the Forge</a>
     </div>
 </div>
 
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+</body>
+</html>
+<?php exit(); ?>
+
