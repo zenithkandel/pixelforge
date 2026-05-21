@@ -56,7 +56,8 @@ require_once __DIR__ . '/header.php';
     <div class="section-header">
         <h2 class="section-title">Operational Audit Stream</h2>
         <form method="GET" style="display:flex; gap:10px;">
-            <select name="action_filter" class="input-pixel" style="background:var(--bg-input); width: 200px; border-radius:var(--radius-sm); border-color:var(--border-default);">
+            <select name="action_filter" class="input-pixel"
+                style="background:var(--bg-input); width: 200px; border-radius:var(--radius-sm); border-color:var(--border-default);">
                 <option value="">All Vectors</option>
                 <?php foreach ($action_options as $k => $v): ?>
                     <option value="<?= $k ?>" <?= $filter_action == $k ? 'selected' : '' ?>><?= $v ?></option>
@@ -101,7 +102,7 @@ require_once __DIR__ . '/header.php';
                         </td>
                         <td>
                             <div
-                                style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05); padding:8px 15px; border-radius:8px; font-size:12px; color:var(--text-secondary);">
+                                style="background:var(--bg-input); border:1px solid var(--border-default); padding:8px 15px; border-radius:var(--radius-sm); font-size:12px; color:var(--text-secondary);">
                                 <?= htmlspecialchars($log['details']) ?>
                             </div>
                         </td>
@@ -131,7 +132,7 @@ require_once __DIR__ . '/header.php';
             for ($i = $start_page; $i <= $end_page; $i++):
                 ?>
                 <a href="?page=<?= $i ?>&action_filter=<?= urlencode($filter_action) ?>" class="btn-secondary btn-sm"
-                    style="<?= $i === $page ? 'border-color:var(--purple-core);color:var(--purple-bright);' : '' ?>">
+                    style="<?= $i === $page ? 'border-color:var(--accent);color:var(--accent-bright);' : '' ?>">
                     <?= $i ?>
                 </a>
                 <?php

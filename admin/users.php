@@ -331,7 +331,8 @@ require_once __DIR__ . '/header.php';
                                             style="font-size:13px; font-weight:800; color:var(--gold);"><?= number_format((int) $u['balance']) ?></span>
                                     </div>
                                     <div style="display:flex; align-items:center; gap:8px;">
-                                        <i class="fad fa-thin fa-paint-brush" style="color:var(--accent-bright); font-size:11px;"></i>
+                                        <i class="fad fa-thin fa-paint-brush"
+                                            style="color:var(--accent-bright); font-size:11px;"></i>
                                         <span
                                             style="font-size:12px; font-weight:600; color:var(--text-secondary);"><?= (int) $u['pixel_count'] ?>
                                             PIXELS</span>

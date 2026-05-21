@@ -73,30 +73,30 @@ require_once __DIR__ . '/header.php';
 
 <div class="stat-grid" style="margin-bottom: var(--space-lg);">
     <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-grid-4"></i></div>
+        <div class="stat-icon"><i class="fad fa-thin fa-grid-4"></i></div>
         <span class="stat-value"><?= number_format($total_pixels) ?></span>
         <span class="stat-label">Registry Load</span>
-        <div class="stat-trend"><i class="fas fa-microchip"></i> 10,000 capacity</div>
+        <div class="stat-trend"><i class="fad fa-thin fa-microchip"></i> 10,000 capacity</div>
     </div>
     <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-users"></i></div>
+        <div class="stat-icon"><i class="fad fa-thin fa-users"></i></div>
         <span class="stat-value"><?= number_format($unique_owners) ?></span>
         <span class="stat-label">Active Architects</span>
     </div>
     <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-chart-pie"></i></div>
+        <div class="stat-icon"><i class="fad fa-thin fa-chart-pie"></i></div>
         <span class="stat-value"><?= round(($total_pixels / 10000) * 100, 1) ?>%</span>
         <span class="stat-label">Canvas Occupation</span>
     </div>
     <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-eraser"></i></div>
+        <div class="stat-icon"><i class="fad fa-thin fa-eraser"></i></div>
         <span class="stat-value"><?= number_format(10000 - $total_pixels) ?></span>
         <span class="stat-label">Void Fragments</span>
     </div>
 </div>
 
 <?php foreach ($messages as $msg): ?>
-    <div class="glass-panel"
+    <div class="section-card"
         style="padding: 15px 25px; border-left: 4px solid var(--green); margin-bottom: 30px; display: flex; align-items: center; gap: 15px;">
         <i class="fas fa-check-circle" style="color: var(--green); font-size: 20px;"></i>
         <span style="font-weight: 600; color: var(--text-primary);"><?= htmlspecialchars($msg) ?></span>
@@ -121,7 +121,7 @@ require_once __DIR__ . '/header.php';
         </div>
     </div>
 
-    <div class="glass-panel"
+    <div class="section-card"
         style="display:flex; justify-content:center; padding: 40px; margin: 20px 0; background: rgba(0,0,0,0.2);">
         <div
             style="position:relative; border: 4px solid var(--border-bright); border-radius: 4px; box-shadow: 0 0 40px rgba(0,0,0,0.5);">
