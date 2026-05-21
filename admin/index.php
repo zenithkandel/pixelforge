@@ -73,7 +73,8 @@ require_once __DIR__ . '/header.php';
                 <?php foreach ($admin_logs as $log): ?>
                     <tr>
                         <td style="color:var(--text-muted); font-size: 13px; font-family: monospace;">
-                            <?= $log['performed_at'] ?></td>
+                            <?= $log['performed_at'] ?>
+                        </td>
                         <td>
                             <div style="display:flex; align-items:center; gap:10px;">
                                 <div
