@@ -149,6 +149,65 @@
         </div>
     </div>
 
+    <!-- Tutorial Modal -->
+    <div class="tutorial-overlay hidden" id="tutorial-overlay">
+        <div class="tutorial-card">
+            <div class="tutorial-progress">
+                <div class="tutorial-progress-bar" id="tutorial-progress-bar"></div>
+            </div>
+
+            <div class="tutorial-steps" id="tutorial-steps">
+                <!-- Step 1 -->
+                <div class="tutorial-step active" data-step="0">
+                    <div class="tutorial-icon">&#128302;</div>
+                    <h3 class="tutorial-title">Welcome to Gem Forge!</h3>
+                    <p class="tutorial-text">Match 3 or more identical gems by swapping adjacent ones. Earn gems and spend them to place pixels on the shared canvas.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="tutorial-step" data-step="1">
+                    <div class="tutorial-icon">&#128256;</div>
+                    <h3 class="tutorial-title">How to Swap</h3>
+                    <p class="tutorial-text">Click a gem to select it, then click an adjacent gem to swap them. If the swap creates a match of 3+, the gems break and you score points!</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="tutorial-step" data-step="2">
+                    <div class="tutorial-icon">&#128293;</div>
+                    <h3 class="tutorial-title">Combos & Specials</h3>
+                    <p class="tutorial-text">Chain reactions trigger combos for multiplied scores. Match 4+ gems to create special gems like Rockets, Bombs, and Color Blasts!</p>
+                </div>
+                <!-- Step 4 -->
+                <div class="tutorial-step" data-step="3">
+                    <div class="tutorial-icon">&#128640;</div>
+                    <h3 class="tutorial-title">Special Gems</h3>
+                    <p class="tutorial-text">
+                        <strong>4-match:</strong> Rocket — clears entire row or column<br>
+                        <strong>5-match:</strong> Bomb — destroys 3&times;3 area<br>
+                        <strong>L/T-shape:</strong> Color Blast — removes all gems of that color<br>
+                        <strong>6+-match:</strong> Nova — devastating 5&times;5 blast
+                    </p>
+                </div>
+                <!-- Step 5 -->
+                <div class="tutorial-step" data-step="4">
+                    <div class="tutorial-icon">&#128142;</div>
+                    <h3 class="tutorial-title">Boosters</h3>
+                    <p class="tutorial-text">Spend gems on powerful boosters: Hammer destroys a single gem, Shuffle rearranges the board, +5 Moves gives extra turns, and more!</p>
+                </div>
+                <!-- Step 6 -->
+                <div class="tutorial-step" data-step="5">
+                    <div class="tutorial-icon">&#127912;</div>
+                    <h3 class="tutorial-title">Earn & Create</h3>
+                    <p class="tutorial-text">Score points to earn gems and XP. Use gems on the <strong>Canvas</strong> page to place pixels on the shared 200&times;200 grid. Create art together!</p>
+                </div>
+            </div>
+
+            <div class="tutorial-nav">
+                <button class="tutorial-btn tutorial-skip" id="tutorial-skip">Skip</button>
+                <div class="tutorial-dots" id="tutorial-dots"></div>
+                <button class="tutorial-btn tutorial-next" id="tutorial-next">Next</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Application Scripts -->
     <script src="/codes/pixelforge/assets/js/utils.js"></script>
     <script src="/codes/pixelforge/assets/js/game-animations.js"></script>

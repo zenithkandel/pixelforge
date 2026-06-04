@@ -89,7 +89,10 @@ class GemForge {
             this.movesLeft--;
             this.combo = 0;
             this.events.emit('swap', { r1, c1, r2, c2, valid: true });
-            this._processCascade();
+            this._processCascade().catch(() => {
+                this.isProcessing = false;
+                this.events.emit('stateChange', this.getState());
+            });
             return true;
         }
 
@@ -224,6 +227,7 @@ class GemForge {
      * Processes special gem activations, scoring, and emits events for the renderer.
      */
     async _processCascade() {
+        try {
         let matches = this.findAllMatches();
 
         while (matches.length > 0) {
@@ -291,8 +295,12 @@ class GemForge {
         }
 
         this.combo = 0;
-        this.isProcessing = false;
-        this.events.emit('stateChange', this.getState());
+        } catch (e) {
+            console.error('Cascade error:', e);
+        } finally {
+            this.isProcessing = false;
+            this.events.emit('stateChange', this.getState());
+        }
     }
 
     /**
