@@ -119,8 +119,6 @@ function handleSubmitScore()
         jsonResponse(['success' => false, 'message' => 'POST request required'], 405);
     }
 
-    requireCsrf();
-
     $input = json_decode(file_get_contents('php://input'), true);
     if (!$input) {
         jsonResponse(['success' => false, 'message' => 'Invalid request body'], 400);
@@ -247,8 +245,6 @@ function handleBuyBooster()
         jsonResponse(['success' => false, 'message' => 'POST request required'], 405);
     }
 
-    requireCsrf();
-
     $input = json_decode(file_get_contents('php://input'), true);
     if (!$input) {
         jsonResponse(['success' => false, 'message' => 'Invalid request body'], 400);
@@ -327,8 +323,6 @@ function handleUseBooster()
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         jsonResponse(['success' => false, 'message' => 'POST request required'], 405);
     }
-
-    requireCsrf();
 
     $input = json_decode(file_get_contents('php://input'), true);
     if (!$input) {
