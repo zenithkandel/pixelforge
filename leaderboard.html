@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/pixelforge/assets/css/main.css">
+    <link rel="stylesheet" href="/codes/pixelforge/assets/css/main.css">
     <style>
         .leaderboard-container {
             max-width: 800px;
@@ -151,17 +151,17 @@
 </head>
 <body>
     <nav class="site-nav">
-        <a href="/pixelforge/" class="nav-logo">
+        <a href="/codes/pixelforge/" class="nav-logo">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 2L2 9L12 22L22 9L12 2Z"/>
             </svg>
             PixelForge
         </a>
         <div class="nav-links">
-            <a href="/pixelforge/">Home</a>
-            <a href="/pixelforge/game.html">Game</a>
-            <a href="/pixelforge/canvas.html">Canvas</a>
-            <a href="/pixelforge/leaderboard.html" class="active">Leaderboard</a>
+            <a href="/codes/pixelforge/">Home</a>
+            <a href="/codes/pixelforge/game.html">Game</a>
+            <a href="/codes/pixelforge/canvas.html">Canvas</a>
+            <a href="/codes/pixelforge/leaderboard.html" class="active">Leaderboard</a>
         </div>
         <div class="nav-user">
             <span class="nav-balance">💎 <span id="nav-balance">0</span></span>
@@ -208,7 +208,7 @@
             content.innerHTML = '<div class="loading">Loading...</div>';
 
             try {
-                var res = await fetch('/pixelforge/api/auth.php?action=leaderboard&tab=' + currentTab);
+                var res = await fetch('/codes/pixelforge/api/auth.php?action=leaderboard&tab=' + currentTab);
                 var data = await res.json();
 
                 if (data.success && data.leaderboard.length > 0) {
@@ -258,7 +258,7 @@
 
         async function loadUserData() {
             try {
-                var res = await fetch('/pixelforge/api/auth.php?action=me');
+                var res = await fetch('/codes/pixelforge/api/auth.php?action=me');
                 var data = await res.json();
                 if (data.success) {
                     currentUserId = data.user.id;

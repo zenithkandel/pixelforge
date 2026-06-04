@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/pixelforge/assets/css/main.css">
-    <link rel="stylesheet" href="/pixelforge/assets/css/canvas.css">
+    <link rel="stylesheet" href="/codes/pixelforge/assets/css/main.css">
+    <link rel="stylesheet" href="/codes/pixelforge/assets/css/canvas.css">
 
     <style>
         .site-nav {
@@ -116,7 +116,7 @@
 
     <!-- Navigation -->
     <nav class="site-nav">
-        <a href="/pixelforge/" class="nav-logo">
+        <a href="/codes/pixelforge/" class="nav-logo">
             <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <rect x="2" y="2" width="24" height="24" rx="6" fill="url(#cg)"/>
                 <path d="M14 7l5 4.5v7L14 23l-5-4.5v-7L14 7z" fill="#fff" fill-opacity="0.9"/>
@@ -131,9 +131,9 @@
             PixelForge
         </a>
         <div class="nav-links">
-            <a href="/pixelforge/">Home</a>
-            <a href="/pixelforge/game.html">Game</a>
-            <a href="/pixelforge/canvas.html" class="active">Canvas</a>
+            <a href="/codes/pixelforge/">Home</a>
+            <a href="/codes/pixelforge/game.html">Game</a>
+            <a href="/codes/pixelforge/canvas.html" class="active">Canvas</a>
         </div>
         <div class="nav-user">
             <span class="nav-balance">💎 <span id="nav-balance">0</span></span>
@@ -230,7 +230,7 @@
         </div>
     </div>
 
-    <script src="/pixelforge/assets/js/utils.js"></script>
+    <script src="/codes/pixelforge/assets/js/utils.js"></script>
     <script>
     (function() {
         'use strict';
@@ -281,7 +281,7 @@
         }
 
         function loadCanvas() {
-            fetch('/pixelforge/api/canvas.php')
+            fetch('/codes/pixelforge/api/canvas.php')
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
                     if (data.success) {
@@ -553,7 +553,7 @@
             render();
             renderMinimap();
 
-            fetch('/pixelforge/api/pixels.php?action=place', {
+            fetch('/codes/pixelforge/api/pixels.php?action=place', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ x: gridX, y: gridY, color: selectedColor })
@@ -637,7 +637,7 @@
         }
 
         function loadUserData() {
-            fetch('/pixelforge/api/auth.php?action=me')
+            fetch('/codes/pixelforge/api/auth.php?action=me')
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
                     if (data.success) {

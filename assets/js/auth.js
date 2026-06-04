@@ -84,7 +84,7 @@
     setLoading(loginSubmit, true);
 
     try {
-      var response = await fetch('/pixelforge/api/auth.php?action=login', {
+      var response = await fetch('/codes/pixelforge/api/auth.php?action=login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -96,7 +96,7 @@
       var data = await response.json();
 
       if (data.success) {
-        window.location.href = data.redirect || '/pixelforge/';
+        window.location.href = data.redirect || '/codes/pixelforge/';
       } else {
         showError('login', data.message || 'Login failed');
       }
@@ -137,7 +137,7 @@
     setLoading(registerSubmit, true);
 
     try {
-      var response = await fetch('/pixelforge/api/auth.php?action=register', {
+      var response = await fetch('/codes/pixelforge/api/auth.php?action=register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -151,7 +151,7 @@
       if (data.success) {
         showSuccess('register', 'Account created! Redirecting...');
         setTimeout(function () {
-          window.location.href = data.redirect || '/pixelforge/';
+          window.location.href = data.redirect || '/codes/pixelforge/';
         }, 1000);
       } else {
         showError('register', data.message || 'Registration failed');

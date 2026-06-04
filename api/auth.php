@@ -136,7 +136,7 @@ function handleLogin()
 
         jsonResponse([
             'success' => true,
-            'redirect' => '/pixelforge/',
+            'redirect' => '/codes/pixelforge/',
             'user' => [
                 'id' => (int) $user['id'],
                 'username' => $user['username'],
@@ -224,7 +224,7 @@ function handleRegister()
 
         jsonResponse([
             'success' => true,
-            'redirect' => '/pixelforge/',
+            'redirect' => '/codes/pixelforge/',
             'user' => [
                 'id' => (int) $userId,
                 'username' => $username,

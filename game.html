@@ -14,13 +14,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Application CSS -->
-    <link rel="stylesheet" href="/pixelforge/assets/css/main.css">
-    <link rel="stylesheet" href="/pixelforge/assets/css/game.css">
+    <link rel="stylesheet" href="/codes/pixelforge/assets/css/main.css">
+    <link rel="stylesheet" href="/codes/pixelforge/assets/css/game.css">
 </head>
 <body>
     <!-- Fixed Navbar -->
     <nav class="site-nav">
-        <a href="/pixelforge/" class="nav-logo">
+        <a href="/codes/pixelforge/" class="nav-logo">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L2 9L12 22L22 9L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M12 2L7 9H17L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -30,14 +30,14 @@
             PixelForge
         </a>
         <div class="nav-links">
-            <a href="/pixelforge/">Home</a>
-            <a href="/pixelforge/game.html" class="active">Game</a>
-            <a href="/pixelforge/canvas.html">Canvas</a>
+            <a href="/codes/pixelforge/">Home</a>
+            <a href="/codes/pixelforge/game.html" class="active">Game</a>
+            <a href="/codes/pixelforge/canvas.html">Canvas</a>
         </div>
         <div class="nav-user">
             <span class="nav-balance">💎 <span id="nav-balance">0</span></span>
             <span class="nav-level">Lv.<span id="nav-level">1</span></span>
-            <a href="/pixelforge/" class="btn btn-sm btn-ghost" id="nav-logout">Logout</a>
+            <a href="/codes/pixelforge/" class="btn btn-sm btn-ghost" id="nav-logout">Logout</a>
         </div>
     </nav>
 
@@ -133,7 +133,7 @@
             </div>
             <div class="game-over-actions">
                 <button class="btn-play-again" id="btn-play-again">Play Again</button>
-                <a href="/pixelforge/canvas.html" class="btn-go-canvas">Go to Canvas</a>
+                <a href="/codes/pixelforge/canvas.html" class="btn-go-canvas">Go to Canvas</a>
             </div>
         </div>
     </div>
@@ -150,11 +150,11 @@
     </div>
 
     <!-- Application Scripts -->
-    <script src="/pixelforge/assets/js/utils.js"></script>
-    <script src="/pixelforge/assets/js/game-animations.js"></script>
-    <script src="/pixelforge/assets/js/game-renderer.js"></script>
-    <script src="/pixelforge/assets/js/game.js"></script>
-    <script src="/pixelforge/assets/js/game-powerups.js"></script>
+    <script src="/codes/pixelforge/assets/js/utils.js"></script>
+    <script src="/codes/pixelforge/assets/js/game-animations.js"></script>
+    <script src="/codes/pixelforge/assets/js/game-renderer.js"></script>
+    <script src="/codes/pixelforge/assets/js/game.js"></script>
+    <script src="/codes/pixelforge/assets/js/game-powerups.js"></script>
 
     <!-- Inline Game Controller -->
     <script>
@@ -182,7 +182,7 @@
 
         async function startNewGame() {
             try {
-                const res = await fetch('/pixelforge/api/game.php?action=start_game');
+                const res = await fetch('/codes/pixelforge/api/game.php?action=start_game');
                 const data = await res.json();
                 if (data.success) {
                     sessionId = data.session_id;
@@ -381,7 +381,7 @@
             if (!sessionId) return;
 
             try {
-                var res = await fetch('/pixelforge/api/game.php?action=submit_score', {
+                var res = await fetch('/codes/pixelforge/api/game.php?action=submit_score', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -430,7 +430,7 @@
 
         async function loadUserData() {
             try {
-                var res = await fetch('/pixelforge/api/auth.php?action=me');
+                var res = await fetch('/codes/pixelforge/api/auth.php?action=me');
                 var data = await res.json();
                 if (data.success) {
                     document.getElementById('nav-balance').textContent = data.user.balance;

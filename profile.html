@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/pixelforge/assets/css/main.css">
+    <link rel="stylesheet" href="/codes/pixelforge/assets/css/main.css">
     <style>
         .profile-container {
             max-width: 800px;
@@ -179,16 +179,16 @@
 </head>
 <body>
     <nav class="site-nav">
-        <a href="/pixelforge/" class="nav-logo">
+        <a href="/codes/pixelforge/" class="nav-logo">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 2L2 9L12 22L22 9L12 2Z"/>
             </svg>
             PixelForge
         </a>
         <div class="nav-links">
-            <a href="/pixelforge/">Home</a>
-            <a href="/pixelforge/game.html">Game</a>
-            <a href="/pixelforge/canvas.html">Canvas</a>
+            <a href="/codes/pixelforge/">Home</a>
+            <a href="/codes/pixelforge/game.html">Game</a>
+            <a href="/codes/pixelforge/canvas.html">Canvas</a>
         </div>
         <div class="nav-user">
             <span class="nav-balance">💎 <span id="nav-balance">0</span></span>
@@ -231,7 +231,7 @@
 
         async function loadProfile() {
             try {
-                const res = await fetch('/pixelforge/api/auth.php?action=profile');
+                const res = await fetch('/codes/pixelforge/api/auth.php?action=profile');
                 const data = await res.json();
                 
                 if (data.success) {
@@ -240,7 +240,7 @@
                     renderAchievements(data.achievements || []);
                     renderRecentGames(data.recent_games || []);
                 } else {
-                    window.location.href = '/pixelforge/';
+                    window.location.href = '/codes/pixelforge/';
                 }
             } catch (err) {
                 document.getElementById('profile-username').textContent = 'Failed to load profile';
@@ -320,7 +320,7 @@
             const container = document.getElementById('recent-games');
             
             if (games.length === 0) {
-                container.innerHTML = '<div class="empty-state">No games played yet. <a href="/pixelforge/game.html" style="color: #7c3aed;">Play now!</a></div>';
+                container.innerHTML = '<div class="empty-state">No games played yet. <a href="/codes/pixelforge/game.html" style="color: #7c3aed;">Play now!</a></div>';
                 return;
             }
             

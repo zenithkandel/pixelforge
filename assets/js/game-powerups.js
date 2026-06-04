@@ -26,7 +26,7 @@ class PowerUpManager {
 
     async loadBoosters() {
         try {
-            const response = await fetch('/pixelforge/api/game.php?action=get_boosters');
+            const response = await fetch('/codes/pixelforge/api/game.php?action=get_boosters');
             const data = await response.json();
             if (data.success) {
                 Object.keys(this.boosters).forEach(key => {
@@ -46,7 +46,7 @@ class PowerUpManager {
         if (!booster) return false;
 
         try {
-            const response = await fetch('/pixelforge/api/game.php?action=buy_booster', {
+            const response = await fetch('/codes/pixelforge/api/game.php?action=buy_booster', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ type })
@@ -132,7 +132,7 @@ class PowerUpManager {
         const booster = this.boosters.hammer;
 
         try {
-            const response = await fetch('/pixelforge/api/game.php?action=use_booster', {
+            const response = await fetch('/codes/pixelforge/api/game.php?action=use_booster', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ type: 'hammer', target: { row, col } })
@@ -184,7 +184,7 @@ class PowerUpManager {
         const booster = this.boosters.shuffle;
 
         try {
-            const response = await fetch('/pixelforge/api/game.php?action=use_booster', {
+            const response = await fetch('/codes/pixelforge/api/game.php?action=use_booster', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ type: 'shuffle' })
@@ -240,7 +240,7 @@ class PowerUpManager {
         const booster = this.boosters.extraMoves;
 
         try {
-            const response = await fetch('/pixelforge/api/game.php?action=use_booster', {
+            const response = await fetch('/codes/pixelforge/api/game.php?action=use_booster', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ type: 'extraMoves' })
@@ -275,7 +275,7 @@ class PowerUpManager {
         const booster = this.boosters.colorBurst;
 
         try {
-            const response = await fetch('/pixelforge/api/game.php?action=use_booster', {
+            const response = await fetch('/codes/pixelforge/api/game.php?action=use_booster', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ type: 'colorBurst', target: { type: targetType } })
@@ -340,7 +340,7 @@ class PowerUpManager {
         const booster = this.boosters.lightning;
 
         try {
-            const response = await fetch('/pixelforge/api/game.php?action=use_booster', {
+            const response = await fetch('/codes/pixelforge/api/game.php?action=use_booster', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ type: 'lightning' })
