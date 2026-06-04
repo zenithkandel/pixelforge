@@ -4,6 +4,11 @@ require_once __DIR__ . '/db.php';
 function start_safe_session() {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
+    }
+}
+
+function regenerate_session() {
+    if (session_status() === PHP_SESSION_ACTIVE) {
         session_regenerate_id(true);
     }
 }
@@ -54,6 +59,7 @@ function login_user($user_id, $username) {
     start_safe_session();
     $_SESSION['user_id'] = $user_id;
     $_SESSION['username'] = $username;
+    regenerate_session();
     
     $stmt = db()->prepare("UPDATE users SET last_login = NOW() WHERE id = ?");
     $stmt->execute([$user_id]);
@@ -62,10 +68,7 @@ function login_user($user_id, $username) {
 }
 
 function logout_user() {
+    session_start();
     session_destroy();
     $_SESSION = [];
-    session_start();
-    session_regenerate_id(true);
-    header('Location: /');
-    exit;
 }
