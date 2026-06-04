@@ -1,5 +1,37 @@
 <?php
-require __DIR__ . '/../../vendor/autoload.php';
+$autoloadPaths = [
+    __DIR__ . '/vendor/autoload.php',
+    __DIR__ . '/../../vendor/autoload.php',
+    __DIR__ . '/../../../vendor/autoload.php',
+];
+
+$autoloaded = false;
+foreach ($autoloadPaths as $path) {
+    if (file_exists($path)) {
+        require $path;
+        $autoloaded = true;
+        break;
+    }
+}
+
+if (!$autoloaded) {
+    echo "ERROR: Composer autoloader not found.\n\n";
+    echo "Please install Ratchet first:\n";
+    echo "  cd " . dirname(__DIR__) . "\n";
+    echo "  composer require cboden/ratchet\n\n";
+    echo "Or install globally:\n";
+    echo "  composer global require cboden/ratchet\n";
+    exit(1);
+}
+
+if (!class_exists('Ratchet\Server\IoServer')) {
+    echo "ERROR: Ratchet library not found.\n\n";
+    echo "Please install it:\n";
+    echo "  cd " . dirname(__DIR__) . "\n";
+    echo "  composer require cboden/ratchet\n";
+    exit(1);
+}
+
 require __DIR__ . '/ChatServer.php';
 
 use Ratchet\Server\IoServer;

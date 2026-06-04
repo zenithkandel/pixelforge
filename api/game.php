@@ -206,9 +206,7 @@ function handleSubmitScore()
             'new_level' => $newLevel
         ]);
     } catch (PDOException $e) {
-        if ($pdo->inTransaction()) {
-            $pdo->rollBack();
-        }
+        try { db()->rollBack(); } catch (\Exception $ignore) {}
         jsonResponse(['success' => false, 'message' => 'Failed to submit score'], 500);
     }
 }
@@ -317,9 +315,7 @@ function handleBuyBooster()
             'boosters' => $boosters
         ]);
     } catch (PDOException $e) {
-        if ($pdo->inTransaction()) {
-            $pdo->rollBack();
-        }
+        try { db()->rollBack(); } catch (\Exception $ignore) {}
         jsonResponse(['success' => false, 'message' => 'Failed to buy booster'], 500);
     }
 }
