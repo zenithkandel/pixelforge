@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelForge - Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/pixelforge/assets/css/main.css">
+    <style>
+        .profile-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 100px 24px 48px;
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 40px;
+            background: #12121a;
+            border-radius: 20px;
+            padding: 32px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+            flex-shrink: 0;
+        }
+        .profile-info h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .profile-info .join-date {
+            font-size: 13px;
+            color: #64748b;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .stat-card {
+            background: #12121a;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+        .stat-card .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: #e2e8f0;
+        }
+        .stat-card .stat-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        .stat-card.gold .stat-value { color: #fbbf24; }
+        .stat-card.purple .stat-value { color: #a855f7; }
+        .stat-card.green .stat-value { color: #22c55e; }
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #e2e8f0;
+        }
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+        .achievement-card {
+            background: #12121a;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid rgba(255,255,255,0.04);
+            opacity: 0.4;
+        }
+        .achievement-card.earned {
+            opacity: 1;
+            border-color: rgba(251, 191, 36, 0.2);
+        }
+        .achievement-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(251, 191, 36, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .achievement-card.earned .achievement-icon {
+            background: rgba(251, 191, 36, 0.2);
+        }
+        .achievement-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        .achievement-desc {
+            font-size: 11px;
+            color: #64748b;
+        }
+        .recent-games {
+            margin-bottom: 32px;
+        }
+        .games-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .games-table th {
+            text-align: left;
+            padding: 10px 12px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .games-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-size: 13px;
+            color: #94a3b8;
+        }
+        .games-table .score-cell {
+            font-weight: 600;
+            color: #fbbf24;
+        }
+        .games-table .coins-cell {
+            color: #22c55e;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+        }
+        .xp-bar {
+            width: 100%;
+            height: 8px;
+            background: #0a0a0f;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        .xp-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #7c3aed, #a855f7);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        @media (max-width: 600px) {
+            .profile-header { flex-direction: column; text-align: center; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .achievements-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="site-nav">
+        <a href="/pixelforge/" class="nav-logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 9L12 22L22 9L12 2Z"/>
+            </svg>
+            PixelForge
+        </a>
+        <div class="nav-links">
+            <a href="/pixelforge/">Home</a>
+            <a href="/pixelforge/game.html">Game</a>
+            <a href="/pixelforge/canvas.html">Canvas</a>
+        </div>
+        <div class="nav-user">
+            <span class="nav-balance">💎 <span id="nav-balance">0</span></span>
+            <span class="nav-level">Lv.<span id="nav-level">1</span></span>
+        </div>
+    </nav>
+
+    <main class="profile-container">
+        <div class="profile-header" id="profile-header">
+            <div class="profile-avatar" id="profile-avatar">?</div>
+            <div class="profile-info">
+                <h1 id="profile-username">Loading...</h1>
+                <div class="join-date" id="profile-join-date"></div>
+                <div class="xp-bar">
+                    <div class="xp-bar-fill" id="xp-bar-fill" style="width: 0%"></div>
+                </div>
+                <div style="font-size: 12px; color: #64748b; margin-top: 4px;">
+                    <span id="profile-xp">0</span> XP · Level <span id="profile-level">1</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid" id="stats-grid"></div>
+
+        <h2 class="section-title">Achievements</h2>
+        <div class="achievements-grid" id="achievements-grid"></div>
+
+        <h2 class="section-title">Recent Games</h2>
+        <div class="recent-games" id="recent-games"></div>
+    </main>
+
+    <script>
+    (function() {
+        const achievementIcons = {
+            'spark': '✨', 'chain': '🔗', 'flame': '🔥', 'trophy': '🏆',
+            'crown': '👑', 'diamond': '💎', 'gamepad': '🎮', 'star': '⭐',
+            'lightning': '⚡', 'brush': '🖌️', 'palette': '🎨', 'art': '🖼️',
+            'canvas': '📐', 'fire': '🔥', 'calendar': '📅', 'arrow-up': '📈'
+        };
+
+        async function loadProfile() {
+            try {
+                const res = await fetch('/pixelforge/api/auth.php?action=profile');
+                const data = await res.json();
+                
+                if (data.success) {
+                    renderProfile(data.user);
+                    renderStats(data.user);
+                    renderAchievements(data.achievements || []);
+                    renderRecentGames(data.recent_games || []);
+                } else {
+                    window.location.href = '/pixelforge/';
+                }
+            } catch (err) {
+                document.getElementById('profile-username').textContent = 'Failed to load profile';
+            }
+        }
+
+        function renderProfile(user) {
+            document.getElementById('profile-username').textContent = user.username;
+            document.getElementById('profile-avatar').style.background = user.avatar_color;
+            document.getElementById('profile-avatar').textContent = user.username.charAt(0).toUpperCase();
+            document.getElementById('profile-join-date').textContent = 'Joined ' + new Date(user.created_at).toLocaleDateString();
+            
+            const xpForNextLevel = Math.pow(user.level, 2) * 50;
+            const xpForCurrentLevel = Math.pow(user.level - 1, 2) * 50;
+            const progress = ((user.xp - xpForCurrentLevel) / (xpForNextLevel - xpForCurrentLevel)) * 100;
+            document.getElementById('xp-bar-fill').style.width = Math.min(100, Math.max(0, progress)) + '%';
+            document.getElementById('profile-xp').textContent = user.xp.toLocaleString();
+            document.getElementById('profile-level').textContent = user.level;
+            
+            document.getElementById('nav-balance').textContent = user.balance;
+            document.getElementById('nav-level').textContent = user.level;
+        }
+
+        function renderStats(user) {
+            const stats = [
+                { value: user.total_games_played, label: 'Games Played', color: 'purple' },
+                { value: user.total_score.toLocaleString(), label: 'Total Score', color: 'gold' },
+                { value: user.total_pixels_placed, label: 'Pixels Placed', color: 'green' },
+                { value: user.level, label: 'Level', color: 'purple' }
+            ];
+            
+            const grid = document.getElementById('stats-grid');
+            grid.innerHTML = stats.map(s => 
+                '<div class="stat-card ' + s.color + '">' +
+                '<div class="stat-value">' + s.value + '</div>' +
+                '<div class="stat-label">' + s.label + '</div>' +
+                '</div>'
+            ).join('');
+        }
+
+        function renderAchievements(earned) {
+            const allAchievements = [
+                { slug: 'first_match', name: 'First Spark', desc: 'Complete your first match', icon: 'spark', reward: 10 },
+                { slug: 'combo_5', name: 'Chain Reaction', desc: 'Reach a 5x combo', icon: 'chain', reward: 50 },
+                { slug: 'combo_10', name: 'Unstoppable', desc: 'Reach a 10x combo', icon: 'flame', reward: 150 },
+                { slug: 'score_1000', name: 'Thousand Points', desc: 'Score 1000+ in a game', icon: 'trophy', reward: 75 },
+                { slug: 'score_5000', name: 'Gem Master', desc: 'Score 5000+ in a game', icon: 'crown', reward: 200 },
+                { slug: 'score_10000', name: 'Legendary', desc: 'Score 10000+ in a game', icon: 'diamond', reward: 500 },
+                { slug: 'games_10', name: 'Regular Player', desc: 'Play 10 games', icon: 'gamepad', reward: 30 },
+                { slug: 'games_100', name: 'Dedicated', desc: 'Play 100 games', icon: 'star', reward: 200 },
+                { slug: 'special_gem', name: 'Power Up!', desc: 'Create a special gem', icon: 'lightning', reward: 25 },
+                { slug: 'first_pixel', name: 'First Stroke', desc: 'Place your first pixel', icon: 'brush', reward: 10 },
+                { slug: 'pixels_50', name: 'Painter', desc: 'Place 50 pixels', icon: 'palette', reward: 40 },
+                { slug: 'pixels_500', name: 'Artist', desc: 'Place 500 pixels', icon: 'art', reward: 200 },
+                { slug: 'pixels_2000', name: 'Masterpiece Creator', desc: 'Place 2000 pixels', icon: 'canvas', reward: 500 },
+                { slug: 'streak_3', name: 'On Fire', desc: 'Login 3 days in a row', icon: 'fire', reward: 50 },
+                { slug: 'streak_7', name: 'Weekly Warrior', desc: 'Login 7 days in a row', icon: 'calendar', reward: 150 },
+                { slug: 'level_5', name: 'Rising Star', desc: 'Reach level 5', icon: 'arrow-up', reward: 75 }
+            ];
+            
+            const earnedSlugs = new Set(earned.map(a => a.slug));
+            const grid = document.getElementById('achievements-grid');
+            
+            grid.innerHTML = allAchievements.map(a => {
+                const isEarned = earnedSlugs.has(a.slug);
+                return '<div class="achievement-card ' + (isEarned ? 'earned' : '') + '">' +
+                    '<div class="achievement-icon">' + (achievementIcons[a.icon] || '🏆') + '</div>' +
+                    '<div>' +
+                    '<div class="achievement-name">' + a.name + '</div>' +
+                    '<div class="achievement-desc">' + a.desc + '</div>' +
+                    '</div>' +
+                    '</div>';
+            }).join('');
+        }
+
+        function renderRecentGames(games) {
+            const container = document.getElementById('recent-games');
+            
+            if (games.length === 0) {
+                container.innerHTML = '<div class="empty-state">No games played yet. <a href="/pixelforge/game.html" style="color: #7c3aed;">Play now!</a></div>';
+                return;
+            }
+            
+            let html = '<table class="games-table">';
+            html += '<thead><tr><th>Date</th><th>Score</th><th>Combo</th><th>Coins</th></tr></thead>';
+            html += '<tbody>';
+            
+            games.forEach(g => {
+                html += '<tr>';
+                html += '<td>' + new Date(g.played_at).toLocaleDateString() + '</td>';
+                html += '<td class="score-cell">' + g.score.toLocaleString() + '</td>';
+                html += '<td>' + g.combo_max + 'x</td>';
+                html += '<td class="coins-cell">+' + g.currency_earned + '</td>';
+                html += '</tr>';
+            });
+            
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        loadProfile();
+    })();
+    </script>
+</body>
+</html>
