@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `total_pixels_placed` INT NOT NULL DEFAULT 0,
   `total_games_played` INT NOT NULL DEFAULT 0,
   `total_score` BIGINT NOT NULL DEFAULT 0,
+  `streak_days` INT NOT NULL DEFAULT 0,
+  `last_login_date` DATE DEFAULT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_login` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
