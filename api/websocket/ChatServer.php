@@ -5,6 +5,7 @@ class ChatServer implements \Ratchet\MessageComponentInterface {
     protected $clients;
     protected $users;
     protected $pdo;
+    protected $nextId = 1;
 
     public function __construct() {
         $this->clients = new \SplObjectStorage;
@@ -14,6 +15,7 @@ class ChatServer implements \Ratchet\MessageComponentInterface {
     }
 
     public function onOpen(\Ratchet\ConnectionInterface $conn) {
+        $conn->resourceId = $this->nextId++;
         $this->clients->attach($conn);
         echo "New connection ({$conn->resourceId})\n";
 
