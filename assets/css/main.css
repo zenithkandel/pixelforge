@@ -1107,7 +1107,7 @@ select.form-input {
 .p-lg { padding: var(--space-6); }
 
 /* Display */
-.hidden { display: none; }
+.hidden { display: none !important; }
 .visible { display: block; }
 
 /* Truncate */
