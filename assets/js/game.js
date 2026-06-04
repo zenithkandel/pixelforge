@@ -608,7 +608,9 @@ class GemForge {
         this.maxCombo = state.maxCombo || 0;
         this.stats = state.stats || { ...this.stats };
 
+        this.board = [];
         for (let r = 0; r < this.rows; r++) {
+            this.board[r] = [];
             for (let c = 0; c < this.cols; c++) {
                 const s = state.board[r]?.[c];
                 if (s) {

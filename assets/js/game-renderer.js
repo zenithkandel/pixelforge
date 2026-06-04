@@ -85,6 +85,7 @@ class GameRenderer {
     }
 
     render(timestamp) {
+        if (!this.game.board || !this.game.board.length || !this.game.board[0] || !this.game.board[0].length) return;
         const ctx = this.ctx;
 
         ctx.save();
