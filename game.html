@@ -271,6 +271,12 @@
         }
 
         function setupEventListeners() {
+            document.getElementById('btn-how-to-play').addEventListener('click', function() {
+                tutorialState.step = 0;
+                showTutorialStep(0);
+                document.getElementById('tutorial-overlay').classList.remove('hidden');
+            });
+
             document.getElementById('btn-hint').addEventListener('click', function() {
                 renderer.showHint();
             });
