@@ -1,0 +1,125 @@
+<?php
+header('Content-Type: application/json');
+
+$action = $_GET['action'] ?? $_POST['action'] ?? '';
+$phpBinary = 'C:\\xampp\\php\\php.exe';
+$serverScript = __DIR__ . '\\websocket\\server.php';
+$pidFile = __DIR__ . '\\websocket\\server.pid';
+
+function isRunning() {
+    global $pidFile;
+    if (!file_exists($pidFile)) return false;
+    $pid = trim(file_get_contents($pidFile));
+    if (!$pid) return false;
+
+    $output = [];
+    exec("tasklist /FI \"PID eq $pid\" /NH", $output);
+    return !empty($output) && strpos($output[0], (string)$pid) !== false;
+}
+
+function getPid() {
+    global $pidFile;
+    return file_exists($pidFile) ? trim(file_get_contents($pidFile)) : null;
+}
+
+switch ($action) {
+
+    case 'status':
+        $running = isRunning();
+        echo json_encode([
+            'running' => $running,
+            'port' => 8080,
+            'pid' => getPid()
+        ]);
+        break;
+
+    case 'start':
+        if (isRunning()) {
+            echo json_encode(['success' => true, 'message' => 'Server already running (PID: ' . getPid() . ')']);
+            break;
+        }
+
+        $cmd = "start /B \"\" \"{$phpBinary}\" \"{$serverScript}\" > nul 2>&1";
+        exec($cmd, $output, $code);
+
+        sleep(2);
+
+        // Try to find the PID of the new PHP process
+        $wmiOutput = [];
+        exec('wmic process where "CommandLine like \'%server.php%\' and Name=\'php.exe\'" get ProcessId /value', $wmiOutput);
+        $pid = null;
+        foreach ($wmiOutput as $line) {
+            if (preg_match('/ProcessId=(\d+)/', $line, $m)) {
+                $pid = $m[1];
+                break;
+            }
+        }
+
+        if ($pid) {
+            file_put_contents($pidFile, $pid);
+            echo json_encode([
+                'success' => true,
+                'message' => "WebSocket server started (PID: $pid) on port 8080",
+                'pid' => $pid
+            ]);
+        } else {
+            echo json_encode([
+                'success' => true,
+                'message' => 'WebSocket server started on port 8080 (PID unknown)',
+                'pid' => null
+            ]);
+        }
+        break;
+
+    case 'stop':
+        $pid = getPid();
+
+        if ($pid) {
+            exec("taskkill /PID $pid /F > nul 2>&1", $output, $code);
+            @unlink($pidFile);
+
+            if ($code === 0) {
+                echo json_encode(['success' => true, 'message' => "Server stopped (PID: $pid)"]);
+            } else {
+                echo json_encode(['success' => true, 'message' => "Stop signal sent to PID $pid"]);
+            }
+        } else {
+            // Try to kill by port
+            exec('netstat -ano | findstr :8080 | findstr LISTENING', $netOutput);
+            foreach ($netOutput as $line) {
+                if (preg_match('/(\d+)\s*$/', trim($line), $m)) {
+                    $foundPid = $m[1];
+                    exec("taskkill /PID $foundPid /F > nul 2>&1");
+                }
+            }
+            echo json_encode(['success' => true, 'message' => 'Stopped processes on port 8080']);
+        }
+        break;
+
+    case 'reset_db':
+        try {
+            require_once __DIR__ . '/../api/config.php';
+            require_once __DIR__ . '/../includes/db.php';
+            $pdo = db();
+
+            $tables = ['users', 'pixels', 'game_sessions', 'score_log', 'achievements', 'user_achievements', 'login_attempts', 'transactions'];
+            foreach ($tables as $table) {
+                $pdo->exec("DROP TABLE IF EXISTS `$table`");
+            }
+
+            $schema = file_get_contents(__DIR__ . '/../database/schema.sql');
+            if ($schema) {
+                $pdo->exec($schema);
+                echo json_encode(['success' => true, 'message' => 'Database reset: 8 tables recreated, 16 achievements seeded']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Schema file not found']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['success' => false, 'message' => 'Reset failed: ' . $e->getMessage()]);
+        }
+        break;
+
+    default:
+        echo json_encode(['success' => false, 'message' => 'Unknown action: ' . $action]);
+        break;
+}
