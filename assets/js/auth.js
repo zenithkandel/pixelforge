@@ -96,7 +96,7 @@
       var data = await response.json();
 
       if (data.success) {
-        window.location.href = data.redirect || '/codes/pixelforge/';
+        window.location.href = data.redirect || '/codes/pixelforge/game.html';
       } else {
         showError('login', data.message || 'Login failed');
       }
