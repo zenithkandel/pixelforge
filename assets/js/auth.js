@@ -151,7 +151,7 @@
       if (data.success) {
         showSuccess('register', 'Account created! Redirecting...');
         setTimeout(function () {
-          window.location.href = data.redirect || '/codes/pixelforge/';
+        window.location.href = data.redirect || '/codes/pixelforge/game.html';
         }, 1000);
       } else {
         showError('register', data.message || 'Registration failed');

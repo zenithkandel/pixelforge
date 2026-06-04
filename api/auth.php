@@ -136,7 +136,7 @@ function handleLogin()
 
         jsonResponse([
             'success' => true,
-            'redirect' => '/codes/pixelforge/',
+            'redirect' => '/codes/pixelforge/game.html',
             'user' => [
                 'id' => (int) $user['id'],
                 'username' => $user['username'],
@@ -224,7 +224,7 @@ function handleRegister()
 
         jsonResponse([
             'success' => true,
-            'redirect' => '/codes/pixelforge/',
+            'redirect' => '/codes/pixelforge/game.html',
             'user' => [
                 'id' => (int) $userId,
                 'username' => $username,
@@ -279,7 +279,7 @@ function handleLogout()
 
     jsonResponse([
         'success' => true,
-        'redirect' => '/'
+        'redirect' => '/codes/pixelforge/'
     ]);
 }
 
