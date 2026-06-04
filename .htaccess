@@ -2,7 +2,7 @@ RewriteEngine On
 RewriteBase /pixelforge/
 
 # Allow specific API endpoints
-RewriteRule ^(api/auth\.php|api/game\.php|api/pixels\.php|api/canvas\.php)$ - [L]
+RewriteRule ^(api/auth\.php|api/game\.php|api/pixels\.php|api/canvas\.php|api/ws-control\.php)$ - [L]
 
 # Block direct access to api/ directory
 RewriteRule ^api/(.*)$ - [F,L]
