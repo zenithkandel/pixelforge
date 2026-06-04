@@ -300,18 +300,16 @@
             });
 
             renderer.canvas.addEventListener('click', function(e) {
+                if (!powerups.activeBooster) return;
+
                 var rect = renderer.canvas.getBoundingClientRect();
                 var x = e.clientX - rect.left;
                 var y = e.clientY - rect.top;
                 var col = Math.floor(x / (renderer.gemSize + renderer.padding));
                 var row = Math.floor(y / (renderer.gemSize + renderer.padding));
 
-                if (row < 0 || row >= game.rows || col < 0 || col >= game.cols) return;
-
-                if (powerups.activeBooster) {
+                if (row >= 0 && row < game.rows && col >= 0 && col < game.cols) {
                     powerups.handleBoosterClick(row, col);
-                } else {
-                    game.select(row, col);
                 }
             });
         }
