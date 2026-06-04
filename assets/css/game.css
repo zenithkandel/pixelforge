@@ -1,0 +1,554 @@
+/* ============================================================
+   PixelForge — Match-3 Game Page Styles
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. Game Container
+   ------------------------------------------------------------ */
+.game-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-6);
+  padding-top: 88px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-height: 100vh;
+}
+
+
+/* ------------------------------------------------------------
+   2. Game Header (Score + Moves + Level)
+   ------------------------------------------------------------ */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  border: 1px solid var(--color-border);
+}
+
+.game-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--color-text-muted);
+  margin-bottom: 4px;
+}
+
+.game-stat-value {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.game-stat-value.score {
+  color: var(--color-gold);
+}
+
+.game-stat-value.moves {
+  color: var(--color-primary);
+}
+
+.game-stat-value.combo {
+  color: var(--color-error);
+  transition: transform var(--transition-base);
+}
+
+.game-stat-value.combo.pulse {
+  animation: comboPulse 400ms ease;
+}
+
+@keyframes comboPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+}
+
+
+/* ------------------------------------------------------------
+   3. Game Body
+   ------------------------------------------------------------ */
+.game-body {
+  display: flex;
+  gap: var(--space-5);
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.game-board-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.game-canvas-container {
+  position: relative;
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+}
+
+#game-canvas {
+  display: block;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#game-canvas.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+
+/* ------------------------------------------------------------
+   4. Booster Panel (Right Sidebar)
+   ------------------------------------------------------------ */
+.booster-panel {
+  width: 200px;
+  flex-shrink: 0;
+}
+
+.booster-panel-title {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+
+.booster-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.booster-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition:
+    border-color var(--transition-base),
+    background-color var(--transition-base),
+    transform var(--transition-base);
+}
+
+.booster-item:hover {
+  border-color: rgba(124, 58, 237, 0.3);
+  background: var(--color-surface-elevated);
+  transform: translateX(2px);
+}
+
+.booster-item.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.booster-item.active {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+}
+
+.booster-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(124, 58, 237, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.booster-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.booster-name {
+  font-size: 13px;
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+}
+
+.booster-desc {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.booster-cost {
+  font-size: 11px;
+  color: var(--color-gold);
+  font-weight: var(--weight-semibold);
+}
+
+.booster-count {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 11px;
+  font-weight: var(--weight-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+
+/* ------------------------------------------------------------
+   5. Bottom Action Bar
+   ------------------------------------------------------------ */
+.game-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.action-btn {
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    transform var(--transition-base);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-btn:active {
+  transform: scale(0.97);
+}
+
+.action-btn-hint {
+  background: var(--color-gold-bg);
+  color: var(--color-gold);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.action-btn-hint:hover {
+  background: rgba(251, 191, 36, 0.2);
+}
+
+.action-btn-shuffle {
+  background: rgba(124, 58, 237, 0.1);
+  color: #a855f7;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+}
+
+.action-btn-shuffle:hover {
+  background: rgba(124, 58, 237, 0.2);
+}
+
+.action-btn-quit {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.action-btn-quit:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+
+/* ------------------------------------------------------------
+   6. Game Over Overlay
+   ------------------------------------------------------------ */
+.game-over-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-overlay);
+  animation: fadeIn var(--transition-base) ease both;
+}
+
+.game-over-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  padding: var(--space-12);
+  text-align: center;
+  max-width: 420px;
+  width: 90%;
+  border: 1px solid var(--color-border);
+  animation: slideUp var(--transition-slow) ease both;
+}
+
+.game-over-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.game-over-subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-8);
+}
+
+.game-over-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: var(--space-8);
+}
+
+.game-over-stat {
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.game-over-stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text-muted);
+}
+
+.game-over-stat-value {
+  font-size: 24px;
+  font-weight: var(--weight-bold);
+  margin-top: 4px;
+  color: var(--color-text);
+}
+
+.game-over-stat-value.coins {
+  color: var(--color-gold);
+}
+
+.game-over-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+
+/* ------------------------------------------------------------
+   7. Play Again / Canvas Buttons
+   ------------------------------------------------------------ */
+.btn-play-again {
+  padding: 14px 32px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: var(--weight-semibold);
+  border: none;
+  cursor: pointer;
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.btn-play-again:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.4);
+}
+
+.btn-play-again:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.btn-go-canvas {
+  padding: 14px 32px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: var(--weight-semibold);
+  border: 1px solid var(--color-border-strong);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base);
+}
+
+.btn-go-canvas:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+
+/* ------------------------------------------------------------
+   8. Color Picker Modal (Color Burst Booster)
+   ------------------------------------------------------------ */
+.color-picker-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal);
+  animation: fadeIn var(--transition-base) ease both;
+}
+
+.color-picker-panel {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
+  border: 1px solid var(--color-border);
+  animation: scaleIn var(--transition-base) ease both;
+}
+
+.color-picker-title {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: 16px;
+}
+
+.color-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.color-picker-option {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition:
+    border-color var(--transition-base),
+    transform var(--transition-base);
+}
+
+.color-picker-option:hover {
+  border-color: #fff;
+  transform: scale(1.1);
+}
+
+.color-picker-option.selected {
+  border-color: #fff;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+
+/* ------------------------------------------------------------
+   9. Score Popup (floating text on match)
+   ------------------------------------------------------------ */
+.score-popup {
+  position: absolute;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-gold);
+  pointer-events: none;
+  animation: scoreFloat 800ms ease-out forwards;
+  z-index: 10;
+  text-shadow: 0 2px 8px rgba(251, 191, 36, 0.5);
+}
+
+@keyframes scoreFloat {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-48px) scale(1.3);
+  }
+}
+
+
+/* ------------------------------------------------------------
+   10. Responsive
+   ------------------------------------------------------------ */
+@media (max-width: 768px) {
+  .game-body {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .booster-panel {
+    width: 100%;
+  }
+
+  .booster-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .booster-item {
+    flex: 1 1 calc(50% - 4px);
+    min-width: 140px;
+  }
+
+  .game-header {
+    padding: 16px;
+  }
+
+  .game-over-card {
+    padding: var(--space-8);
+  }
+
+  .game-over-title {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-container {
+    padding: 16px;
+    padding-top: 80px;
+  }
+
+  .game-header {
+    padding: 16px;
+    gap: 8px;
+  }
+
+  .game-stat-value {
+    font-size: 22px;
+  }
+
+  .game-actions {
+    flex-wrap: wrap;
+  }
+
+  .action-btn {
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+
+  .game-over-actions {
+    flex-direction: column;
+  }
+
+  .game-over-stat-value {
+    font-size: 20px;
+  }
+}
