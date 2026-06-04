@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteBase /pixelforge/
+RewriteBase /codes/pixelforge/
 
 # Allow specific API endpoints
 RewriteRule ^(api/auth\.php|api/game\.php|api/pixels\.php|api/canvas\.php|api/ws-control\.php)$ - [L]

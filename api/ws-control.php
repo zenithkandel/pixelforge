@@ -8,13 +8,23 @@ $pidFile = __DIR__ . '\\websocket\\server.pid';
 
 function isRunning() {
     global $pidFile;
-    if (!file_exists($pidFile)) return false;
-    $pid = trim(file_get_contents($pidFile));
-    if (!$pid) return false;
 
-    $output = [];
-    exec("tasklist /FI \"PID eq $pid\" /NH", $output);
-    return !empty($output) && strpos($output[0], (string)$pid) !== false;
+    // Check by PID file first
+    if (file_exists($pidFile)) {
+        $pid = trim(file_get_contents($pidFile));
+        if ($pid) {
+            $output = [];
+            exec("tasklist /FI \"PID eq $pid\" /NH 2>nul", $output);
+            if (!empty($output) && strpos($output[0], (string)$pid) !== false) {
+                return true;
+            }
+        }
+    }
+
+    // Fallback: check if port 8080 is listening
+    $netOutput = [];
+    exec('netstat -ano | findstr ":8080 " | findstr LISTENING', $netOutput);
+    return !empty($netOutput);
 }
 
 function getPid() {
