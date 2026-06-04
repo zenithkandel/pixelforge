@@ -1,0 +1,41 @@
+RewriteEngine On
+RewriteBase /pixelforge/
+
+# Allow specific API endpoints
+RewriteRule ^(api/auth\.php|api/game\.php|api/pixels\.php|api/canvas\.php)$ - [L]
+
+# Block direct access to api/ directory
+RewriteRule ^api/(.*)$ - [F,L]
+
+# Block access to includes/ directory
+RewriteRule ^includes/ - [F,L]
+
+# Block access to database/ directory
+RewriteRule ^database/ - [F,L]
+
+# Block access to logs/ directory
+RewriteRule ^logs/ - [F,L]
+
+# Redirect clean URLs
+RewriteRule ^game$ /game.html [L]
+RewriteRule ^canvas$ /canvas.html [L]
+RewriteRule ^login$ /index.html#login [L]
+RewriteRule ^register$ /index.html#register [L]
+RewriteRule ^leaderboard$ /leaderboard.html [L]
+RewriteRule ^profile$ /profile.html [L]
+
+# Security headers
+Header set X-Content-Type-Options "nosniff"
+Header set X-Frame-Options "SAMEORIGIN"
+Header set X-XSS-Protection "1; mode=block"
+Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+# Set default charset
+AddDefaultCharset UTF-8
+
+# Enable compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/javascript
+</IfModule>
