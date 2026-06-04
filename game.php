@@ -60,22 +60,33 @@ require_once __DIR__ . '/includes/header.php';
                 <div
                     style="font-size:11px; font-weight:900; color:var(--text-muted); text-transform:uppercase; letter-spacing:3px;">
                     SYSTEM_FAILURE // SESSION_END</div>
-                <div id="go-score" style="font-size:80px; font-weight:900; color:white; line-height:1; margin:10px 0; font-family:var(--font-game);">0
+                <div id="go-score"
+                    style="font-size:80px; font-weight:900; color:white; line-height:1; margin:10px 0; font-family:var(--font-game);">
+                    0
                 </div>
-                <div id="go-best" style="font-size:14px; color:var(--accent-green); font-weight:900; margin-bottom:20px; font-family:var(--font-game); letter-spacing:1px;">
+                <div id="go-best"
+                    style="font-size:14px; color:var(--accent-green); font-weight:900; margin-bottom:20px; font-family:var(--font-game); letter-spacing:1px;">
                 </div>
 
                 <div class="go-stats"
                     style="display:grid; grid-template-columns:1fr 1fr; gap:15px; width:100%; max-width:300px; margin-bottom:30px;">
                     <div class="go-stat-box"
                         style="background:rgba(255,255,255,0.03); padding:15px; border-radius:0; border:1px solid var(--border-default);">
-                        <div style="font-size:10px; color:var(--text-muted); text-transform:uppercase; font-weight:900; letter-spacing:1px;">EARNED</div>
-                        <div id="go-currency" style="font-size:24px; font-weight:900; color:var(--accent-yellow); font-family:var(--font-game);">+0</div>
+                        <div
+                            style="font-size:10px; color:var(--text-muted); text-transform:uppercase; font-weight:900; letter-spacing:1px;">
+                            EARNED</div>
+                        <div id="go-currency"
+                            style="font-size:24px; font-weight:900; color:var(--accent-yellow); font-family:var(--font-game);">
+                            +0</div>
                     </div>
                     <div class="go-stat-box"
                         style="background:rgba(255,255,255,0.03); padding:15px; border-radius:0; border:1px solid var(--border-default);">
-                        <div style="font-size:10px; color:var(--text-muted); text-transform:uppercase; font-weight:900; letter-spacing:1px;">DATA_SYNC</div>
-                        <div id="go-xp" style="font-size:24px; font-weight:900; color:var(--accent-cyan); font-family:var(--font-game);">+0</div>
+                        <div
+                            style="font-size:10px; color:var(--text-muted); text-transform:uppercase; font-weight:900; letter-spacing:1px;">
+                            DATA_SYNC</div>
+                        <div id="go-xp"
+                            style="font-size:24px; font-weight:900; color:var(--accent-cyan); font-family:var(--font-game);">
+                            +0</div>
                     </div>
                 </div>
 
@@ -85,18 +96,20 @@ require_once __DIR__ . '/includes/header.php';
                         style="background:rgba(255,255,255,0.05); min-width:160px;">LOGS</a>
                 </div>
 
-                <div id="go-multiplier" style="margin-top:20px; font-size:11px; color:var(--text-muted); font-family:var(--font-game); text-transform:uppercase; letter-spacing:1px;"></div>
+                <div id="go-multiplier"
+                    style="margin-top:20px; font-size:11px; color:var(--text-muted); font-family:var(--font-game); text-transform:uppercase; letter-spacing:1px;">
+                </div>
                 <div id="go-coins" style="display:none;"></div>
             </div>
         </div>
     </div>
 
     <!-- Leaderboard Preview -->
-    <div id="leaderboard-section" class="section-card"
-        style="padding:20px;">
+    <div id="leaderboard-section" class="section-card" style="padding:20px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h3 style="margin:0; font-size:18px; text-transform:uppercase; letter-spacing:1px;"><i class="fad fa-thin fa-trophy"
-                    style="color:var(--accent-yellow); margin-right:10px;"></i>Top Operatives</h3>
+            <h3 style="margin:0; font-size:18px; text-transform:uppercase; letter-spacing:1px;"><i
+                    class="fad fa-thin fa-trophy" style="color:var(--accent-yellow); margin-right:10px;"></i>Top
+                Operatives</h3>
             <div class="tabs"
                 style="display:flex; gap:5px; background:var(--bg-input); padding:4px; border-radius:6px;">
                 <button class="tab-btn active" data-lb="all"

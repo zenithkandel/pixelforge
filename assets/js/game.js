@@ -1,4 +1,4 @@
-(function() {
+(function () {
     var canvas = document.getElementById('game-canvas');
     if (!canvas) return;
     var ctx = canvas.getContext('2d');
@@ -50,7 +50,7 @@
     function updateCurrencyDisplay(balance) {
         if (!balance) return;
         var currEls = document.querySelectorAll('nav .currency');
-        currEls.forEach(function(el) { el.textContent = Math.round(balance).toLocaleString() + ' 💰'; });
+        currEls.forEach(function (el) { el.textContent = Math.round(balance).toLocaleString() + ' 💰'; });
     }
 
     function reset() {
@@ -299,21 +299,21 @@
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: body
-        }).then(function(res) { return res.json(); })
-          .then(function(data) {
-              if (data.success && data.new_balance) {
-                  updateCurrencyDisplay(data.new_balance);
-              }
-              if (data.success && data.new_achievements && data.new_achievements.length > 0) {
-                  if (typeof window.queueAchievements === 'function') {
-                      window.queueAchievements(data.new_achievements);
-                  }
-              }
-          }).catch(function() {});
+        }).then(function (res) { return res.json(); })
+            .then(function (data) {
+                if (data.success && data.new_balance) {
+                    updateCurrencyDisplay(data.new_balance);
+                }
+                if (data.success && data.new_achievements && data.new_achievements.length > 0) {
+                    if (typeof window.queueAchievements === 'function') {
+                        window.queueAchievements(data.new_achievements);
+                    }
+                }
+            }).catch(function () { });
     }
 
     function render() {
-        ctx.fillStyle = '#0a0a18';
+        ctx.fillStyle = '#0a0a0c';
         ctx.fillRect(0, 0, 480, 640);
 
         if (gameRunning) {
@@ -321,93 +321,74 @@
                 var s = backgroundStars[i];
                 s.x -= s.speed;
                 if (s.x < 0) s.x = 480;
-                ctx.fillStyle = 'rgba(255,255,255,' + (0.2 + s.r * 0.3) + ')';
+                ctx.fillStyle = 'rgba(255,255,255,' + (0.1 + s.r * 0.2) + ')';
                 ctx.beginPath();
-                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.fillRect(s.x, s.y, s.r, s.r);
             }
         } else {
             for (var i = 0; i < backgroundStars.length; i++) {
                 var s = backgroundStars[i];
-                ctx.fillStyle = 'rgba(255,255,255,' + (0.2 + s.r * 0.3) + ')';
+                ctx.fillStyle = 'rgba(255,255,255,' + (0.1 + s.r * 0.2) + ')';
                 ctx.beginPath();
-                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.fillRect(s.x, s.y, s.r, s.r);
             }
         }
 
         for (var i = 0; i < pipes.length; i++) {
             var p = pipes[i];
             var gradient = ctx.createLinearGradient(p.x, 0, p.x + PIPE_WIDTH, 0);
-            gradient.addColorStop(0, '#1a4a1a');
-            gradient.addColorStop(0.5, '#2d8a2d');
-            gradient.addColorStop(1, '#1a5a1a');
+            gradient.addColorStop(0, '#1f2937');
+            gradient.addColorStop(0.5, '#374151');
+            gradient.addColorStop(1, '#111827');
             ctx.fillStyle = gradient;
             ctx.fillRect(p.x, 0, PIPE_WIDTH, p.gapY);
             ctx.fillRect(p.x, p.gapY + p.gapH, PIPE_WIDTH, 640 - p.gapY - p.gapH);
-            ctx.fillStyle = '#267526';
-            ctx.fillRect(p.x - 3, p.gapY - 20, PIPE_WIDTH + 6, 20);
-            ctx.fillRect(p.x - 3, p.gapY + p.gapH, PIPE_WIDTH + 6, 20);
+
+            ctx.fillStyle = '#3b82f6';
+            ctx.fillRect(p.x - 4, p.gapY - 12, PIPE_WIDTH + 8, 12);
+            ctx.fillRect(p.x - 4, p.gapY + p.gapH, PIPE_WIDTH + 8, 12);
+
+            ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(p.x, 0, PIPE_WIDTH, p.gapY);
+            ctx.strokeRect(p.x, p.gapY + p.gapH, PIPE_WIDTH, 640 - p.gapY - p.gapH);
         }
 
         for (var i = 0; i < coins.length; i++) {
             var c = coins[i];
-            ctx.fillStyle = '#fbbf24';
-            ctx.shadowColor = 'rgba(251,191,36,0.5)';
-            ctx.shadowBlur = 8;
+            ctx.fillStyle = '#f59e0b';
             ctx.beginPath();
-            ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+            ctx.rect(c.x - c.r, c.y - c.r, c.r * 2, c.r * 2);
             ctx.fill();
-            ctx.shadowBlur = 0;
         }
 
         for (var i = 0; i < powerUps.length; i++) {
             var pu = powerUps[i];
             ctx.fillStyle = pu.color;
-            ctx.shadowColor = pu.color;
-            ctx.shadowBlur = 12;
             ctx.beginPath();
-            ctx.arc(pu.x, pu.y, pu.r, 0, Math.PI * 2);
+            ctx.rect(pu.x - pu.r, pu.y - pu.r, pu.r * 2, pu.r * 2);
             ctx.fill();
-            ctx.shadowBlur = 0;
         }
 
-        ctx.fillStyle = '#fbbf24';
-        ctx.shadowColor = 'rgba(251,191,36,0.4)';
-        ctx.shadowBlur = 10;
-        ctx.beginPath();
-        ctx.arc(bird.x, bird.y, BIRD_SIZE / 2, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.shadowBlur = 0;
-        ctx.fillStyle = '#fff';
-        ctx.beginPath();
-        ctx.arc(bird.x - 4, bird.y - 4, 5, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = '#000';
-        ctx.beginPath();
-        ctx.arc(bird.x - 3, bird.y - 5, 2.5, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = '#f97316';
-        ctx.beginPath();
-        ctx.moveTo(bird.x + 10, bird.y);
-        ctx.lineTo(bird.x + 20, bird.y - 5);
-        ctx.lineTo(bird.x + 20, bird.y + 5);
-        ctx.fill();
+        // Industrial Bird (Bot)
+        ctx.fillStyle = '#f59e0b';
+        ctx.fillRect(bird.x - BIRD_SIZE / 2, bird.y - BIRD_SIZE / 2, BIRD_SIZE, BIRD_SIZE);
+
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(bird.x - BIRD_SIZE / 2 + 2, bird.y - BIRD_SIZE / 2 + 2, BIRD_SIZE - 4, BIRD_SIZE - 4);
+
+        ctx.fillStyle = '#3b82f6';
+        ctx.fillRect(bird.x + 4, bird.y - 4, 8, 4); // Eye
 
         if (activeShield) {
             ctx.strokeStyle = '#3b82f6';
-            ctx.shadowColor = 'rgba(59,130,246,0.6)';
-            ctx.shadowBlur = 10;
             ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.arc(bird.x, bird.y, BIRD_SIZE / 2 + 4, 0, Math.PI * 2);
-            ctx.stroke();
-            ctx.shadowBlur = 0;
+            ctx.strokeRect(bird.x - BIRD_SIZE / 2 - 4, bird.y - BIRD_SIZE / 2 - 4, BIRD_SIZE + 8, BIRD_SIZE + 8);
         }
 
         if (flashTimer > 0 && flashMessage) {
-            ctx.fillStyle = 'rgba(255,255,255,' + Math.min(1, flashTimer / 30) + ')';
-            ctx.font = 'bold 24px sans-serif';
+            ctx.fillStyle = 'white';
+            ctx.font = '900 24px Rajdhani';
             ctx.textAlign = 'center';
             ctx.fillText(flashMessage, 240, 320);
         }
@@ -419,11 +400,11 @@
         animFrame = requestAnimationFrame(loop);
     }
 
-    canvas.addEventListener('click', function() { flap(); });
-    document.addEventListener('keydown', function(e) { if (e.code === 'Space') { e.preventDefault(); flap(); } });
-    canvas.addEventListener('touchstart', function(e) { e.preventDefault(); flap(); });
+    canvas.addEventListener('click', function () { flap(); });
+    document.addEventListener('keydown', function (e) { if (e.code === 'Space') { e.preventDefault(); flap(); } });
+    canvas.addEventListener('touchstart', function (e) { e.preventDefault(); flap(); });
 
-    document.getElementById('btn-play-again').addEventListener('click', function() {
+    document.getElementById('btn-play-again').addEventListener('click', function () {
         location.reload();
     });
 
@@ -434,9 +415,9 @@
         gameRunning = false;
         render();
         ctx.fillStyle = 'rgba(255,255,255,0.7)';
-        ctx.font = '20px sans-serif';
+        ctx.font = '900 20px Rajdhani';
         ctx.textAlign = 'center';
-        ctx.fillText('Tap to start', 240, 300);
+        ctx.fillText('COMMAND: INITIATE_SESSION', 240, 300);
     }
 
     function loadLeaderboard(period) {
@@ -445,21 +426,21 @@
         if (!lbBody) return;
 
         fetch('leaderboard.php?ajax=1&period=' + encodeURIComponent(period), { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
-            .then(function(res) { return res.text(); })
-            .then(function(html) {
+            .then(function (res) { return res.text(); })
+            .then(function (html) {
                 if (html.trim().startsWith('<tr') || html.trim().startsWith('<td')) {
                     lbBody.innerHTML = html;
                 } else {
                     lbBody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--text-muted);">No scores yet</td></tr>';
                 }
-            }).catch(function() {
+            }).catch(function () {
                 lbBody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--text-muted);">Could not load leaderboard</td></tr>';
             });
     }
 
-    document.querySelectorAll('.tab-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
             this.classList.add('active');
             loadLeaderboard(this.dataset.lb);
         });

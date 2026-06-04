@@ -15,35 +15,38 @@ if (!$is_ajax) {
     require_once __DIR__ . '/includes/header.php';
     ?>
     <div class="leaderboard-app" style="display:flex; flex-direction:column; gap:20px;">
-        <div class="section-card" style="padding:30px; border-radius:var(--radius);">
+        <div class="section-card" style="padding:30px;">
             <div
-                style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; border-bottom:1px solid var(--border-dim); padding-bottom:20px;">
-                <h1 style="font-size:32px; font-weight:900; letter-spacing:-1px; color:white;"><i
-                        class="fad fa-thin fa-trophy" style="color:var(--gold); margin-right:15px;"></i>Global Rankings</h1>
+                style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; border-bottom:1px solid var(--border-default); padding-bottom:20px;">
+                <h1
+                    style="font-size:32px; font-weight:900; letter-spacing:1px; color:white; text-transform:uppercase; font-family:var(--font-game);">
+                    <i class="fad fa-thin fa-list-ol" style="color:var(--accent-blue); margin-right:15px;"></i>Global
+                    Rankings</h1>
                 <div class="tabs"
-                    style="display:flex; gap:10px; background:var(--bg-active); padding:6px; border-radius:var(--radius-sm); border:1px solid var(--border-default);">
+                    style="display:flex; gap:5px; background:rgba(0,0,0,0.3); padding:4px; border-radius:0; border:1px solid var(--border-default);">
                     <button class="tab-btn <?= $period === 'all' ? 'active' : '' ?>" data-lb="all"
-                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:var(--radius-sm); font-weight:bold; cursor:pointer;">All-Time</button>
+                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:0; font-weight:800; cursor:pointer; font-family:var(--font-game); text-transform:uppercase; letter-spacing:1px;">All-Time</button>
                     <button class="tab-btn <?= $period === 'week' ? 'active' : '' ?>" data-lb="week"
-                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:var(--radius-sm); font-weight:bold; cursor:pointer;">Weekly</button>
+                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:0; font-weight:800; cursor:pointer; font-family:var(--font-game); text-transform:uppercase; letter-spacing:1px;">Weekly</button>
                     <button class="tab-btn <?= $period === 'today' ? 'active' : '' ?>" data-lb="today"
-                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:var(--radius-sm); font-weight:bold; cursor:pointer;">Today</button>
+                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:0; font-weight:800; cursor:pointer; font-family:var(--font-game); text-transform:uppercase; letter-spacing:1px;">Today</button>
                     <button class="tab-btn <?= $period === 'pixels' ? 'active' : '' ?>" data-lb="pixels"
-                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:var(--radius-sm); font-weight:bold; cursor:pointer;">Pixels</button>
+                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:0; font-weight:800; cursor:pointer; font-family:var(--font-game); text-transform:uppercase; letter-spacing:1px;">Pixels</button>
                     <button class="tab-btn <?= $period === 'xp' ? 'active' : '' ?>" data-lb="xp"
-                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:var(--radius-sm); font-weight:bold; cursor:pointer;">XP</button>
+                        style="background:none; border:none; color:var(--text-secondary); padding:8px 20px; border-radius:0; font-weight:800; cursor:pointer; font-family:var(--font-game); text-transform:uppercase; letter-spacing:1px;">XP</button>
                 </div>
             </div>
 
             <table style="width:100%; border-collapse:collapse; font-size:15px;">
                 <thead>
-                    <tr style="text-align:left; color:var(--text-muted); border-bottom:1px solid var(--border-dim);">
+                    <tr
+                        style="text-align:left; color:var(--text-muted); border-bottom:1px solid var(--border-default); text-transform:uppercase; font-size:11px; font-weight:800; letter-spacing:1px;">
                         <th style="padding:15px; width:80px;">RANK</th>
-                        <th>PLAYER</th>
+                        <th>OPERATIVE</th>
                         <th style="width:100px;">LEVEL</th>
                         <th id="lb-col-score" style="text-align:right; width:120px;">SCORE</th>
                         <th id="lb-col-mult" style="text-align:right; width:80px;">MULT</th>
-                        <th id="lb-col-earned" style="text-align:right; width:120px;">EARNED</th>
+                        <th id="lb-col-earned" style="text-align:right; width:120px;">CREDITS</th>
                         <th style="width:140px; text-align:right; padding-right:15px;">DATE</th>
                     </tr>
                 </thead>
