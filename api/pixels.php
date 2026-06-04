@@ -82,8 +82,6 @@ function handlePlacePixel() {
         jsonResponse(['success' => false, 'message' => 'POST request required'], 405);
     }
 
-    requireCsrf();
-
     $input = json_decode(file_get_contents('php://input'), true);
     if (!$input) {
         jsonResponse(['success' => false, 'message' => 'Invalid request body'], 400);
