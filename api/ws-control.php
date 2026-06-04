@@ -49,14 +49,18 @@ switch ($action) {
             break;
         }
 
-        $cmd = "start /B \"\" \"{$phpBinary}\" \"{$serverScript}\" > nul 2>&1";
-        exec($cmd, $output, $code);
+        // Use popen for non-blocking background launch
+        $cmd = "\"{$phpBinary}\" \"{$serverScript}\"";
+        $proc = popen("start /min \"PixelForge WS\" cmd /c \"{$cmd}\" 2>&1", 'r');
+        if ($proc) {
+            pclose($proc);
+        }
 
         sleep(2);
 
-        // Try to find the PID of the new PHP process
+        // Find PID via WMI
         $wmiOutput = [];
-        exec('wmic process where "CommandLine like \'%server.php%\' and Name=\'php.exe\'" get ProcessId /value', $wmiOutput);
+        exec('wmic process where "CommandLine like \'%server.php%\'" get ProcessId,CommandLine /value 2>nul', $wmiOutput);
         $pid = null;
         foreach ($wmiOutput as $line) {
             if (preg_match('/ProcessId=(\d+)/', $line, $m)) {
@@ -75,7 +79,7 @@ switch ($action) {
         } else {
             echo json_encode([
                 'success' => true,
-                'message' => 'WebSocket server started on port 8080 (PID unknown)',
+                'message' => 'WebSocket server started on port 8080 (PID could not be determined)',
                 'pid' => null
             ]);
         }
