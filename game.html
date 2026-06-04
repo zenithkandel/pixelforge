@@ -487,6 +487,66 @@
             document.getElementById('game-over').classList.add('hidden');
         }
 
+        /* ── Tutorial ── */
+        var tutorialState = { step: 0, total: 6 };
+
+        function initTutorial() {
+            var overlay = document.getElementById('tutorial-overlay');
+            var nextBtn = document.getElementById('tutorial-next');
+            var skipBtn = document.getElementById('tutorial-skip');
+            var dotsEl = document.getElementById('tutorial-dots');
+
+            for (var i = 0; i < tutorialState.total; i++) {
+                var dot = document.createElement('div');
+                dot.className = 'tutorial-dot' + (i === 0 ? ' active' : '');
+                dotsEl.appendChild(dot);
+            }
+
+            nextBtn.addEventListener('click', function() {
+                tutorialState.step++;
+                if (tutorialState.step >= tutorialState.total) {
+                    closeTutorial();
+                } else {
+                    showTutorialStep(tutorialState.step);
+                }
+            });
+
+            skipBtn.addEventListener('click', closeTutorial);
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) closeTutorial();
+            });
+        }
+
+        function showTutorialStep(idx) {
+            var steps = document.querySelectorAll('.tutorial-step');
+            steps.forEach(function(s) { s.classList.remove('active'); });
+            steps[idx].classList.add('active');
+
+            var dots = document.querySelectorAll('.tutorial-dot');
+            dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+
+            var bar = document.getElementById('tutorial-progress-bar');
+            bar.style.width = ((idx + 1) / tutorialState.total * 100) + '%';
+
+            var nextBtn = document.getElementById('tutorial-next');
+            nextBtn.textContent = idx === tutorialState.total - 1 ? "Let's Play!" : 'Next';
+        }
+
+        function closeTutorial() {
+            document.getElementById('tutorial-overlay').classList.add('hidden');
+            try { localStorage.setItem('pixelforge_tutorial_seen', '1'); } catch(e) {}
+        }
+
+        function maybeShowTutorial() {
+            try {
+                if (!localStorage.getItem('pixelforge_tutorial_seen')) {
+                    document.getElementById('tutorial-overlay').classList.remove('hidden');
+                }
+            } catch(e) {
+                document.getElementById('tutorial-overlay').classList.remove('hidden');
+            }
+        }
+
         async function loadUserData() {
             try {
                 var res = await fetch('/codes/pixelforge/api/auth.php?action=me');
@@ -502,6 +562,8 @@
             init();
             renderBoosters();
             loadUserData();
+            initTutorial();
+            maybeShowTutorial();
         });
     })();
     </script>

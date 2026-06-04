@@ -552,3 +552,139 @@
     font-size: 20px;
   }
 }
+
+
+/* ------------------------------------------------------------
+   10. Tutorial Overlay
+   ------------------------------------------------------------ */
+.tutorial-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease both;
+}
+
+.tutorial-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 0;
+  max-width: 440px;
+  width: 92%;
+  overflow: hidden;
+  animation: slideUp 0.4s ease both;
+}
+
+.tutorial-progress {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.tutorial-progress-bar {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 0 3px 3px 0;
+  width: 16.67%;
+  transition: width 0.35s ease;
+}
+
+.tutorial-steps {
+  padding: 36px 32px 12px;
+  min-height: 260px;
+}
+
+.tutorial-step {
+  display: none;
+}
+
+.tutorial-step.active {
+  display: block;
+  animation: fadeIn 0.3s ease both;
+}
+
+.tutorial-icon {
+  font-size: 48px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.tutorial-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.tutorial-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.tutorial-text strong {
+  color: var(--color-text);
+}
+
+.tutorial-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px 28px;
+  gap: 12px;
+}
+
+.tutorial-btn {
+  padding: 10px 24px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.tutorial-skip {
+  background: transparent;
+  color: var(--color-text-muted);
+}
+
+.tutorial-skip:hover {
+  color: var(--color-text);
+}
+
+.tutorial-next {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.tutorial-next:hover {
+  background: var(--color-primary-hover, #6d28d9);
+  transform: translateY(-1px);
+}
+
+.tutorial-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.tutorial-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  transition: all 0.3s;
+}
+
+.tutorial-dot.active {
+  background: var(--color-primary);
+  width: 20px;
+  border-radius: 4px;
+}
