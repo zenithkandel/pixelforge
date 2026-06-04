@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelForge - Canvas</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/pixelforge/assets/css/main.css">
+    <link rel="stylesheet" href="/pixelforge/assets/css/canvas.css">
+
+    <style>
+        .site-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            height: 64px;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #a855f7, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            white-space: nowrap;
+        }
+
+        .nav-logo svg {
+            width: 26px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nav-links a {
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #64748b;
+            border-radius: 8px;
+            transition: color 0.15s ease, background 0.15s ease;
+        }
+
+        .nav-links a:hover {
+            color: #e2e8f0;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-links a.active {
+            color: #a855f7;
+            background: rgba(124, 58, 237, 0.1);
+        }
+
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .nav-balance {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 12px;
+            background: rgba(251, 191, 36, 0.08);
+            border: 1px solid rgba(251, 191, 36, 0.15);
+            border-radius: 999px;
+            font-weight: 600;
+            color: #fbbf24;
+        }
+
+        .nav-level {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 4px 10px;
+            background: rgba(124, 58, 237, 0.08);
+            border: 1px solid rgba(124, 58, 237, 0.15);
+            border-radius: 999px;
+            font-weight: 600;
+            color: #a78bfa;
+        }
+
+        @media (max-width: 640px) {
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="site-nav">
+        <a href="/pixelforge/" class="nav-logo">
+            <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="2" y="2" width="24" height="24" rx="6" fill="url(#cg)"/>
+                <path d="M14 7l5 4.5v7L14 23l-5-4.5v-7L14 7z" fill="#fff" fill-opacity="0.9"/>
+                <path d="M14 7v6.5L9 18" stroke="#fff" stroke-width="1.5" stroke-opacity="0.5"/>
+                <defs>
+                    <linearGradient id="cg" x1="2" y1="2" x2="26" y2="26" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#7c3aed"/>
+                        <stop offset="1" stop-color="#3b82f6"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            PixelForge
+        </a>
+        <div class="nav-links">
+            <a href="/pixelforge/">Home</a>
+            <a href="/pixelforge/game.html">Game</a>
+            <a href="/pixelforge/canvas.html" class="active">Canvas</a>
+        </div>
+        <div class="nav-user">
+            <span class="nav-balance">💎 <span id="nav-balance">0</span></span>
+            <span class="nav-level">Lv.<span id="nav-level">1</span></span>
+        </div>
+    </nav>
+
+    <div class="canvas-container">
+        <!-- Color Panel (Left) -->
+        <div class="color-panel">
+            <div class="color-panel-title">COLOR</div>
+
+            <div class="color-swatch active" data-color="#ef4444" style="background:#ef4444"></div>
+            <div class="color-swatch" data-color="#f97316" style="background:#f97316"></div>
+            <div class="color-swatch" data-color="#f59e0b" style="background:#f59e0b"></div>
+            <div class="color-swatch" data-color="#84cc16" style="background:#84cc16"></div>
+            <div class="color-swatch" data-color="#22c55e" style="background:#22c55e"></div>
+            <div class="color-swatch" data-color="#14b8a6" style="background:#14b8a6"></div>
+            <div class="color-swatch" data-color="#06b6d4" style="background:#06b6d4"></div>
+            <div class="color-swatch" data-color="#3b82f6" style="background:#3b82f6"></div>
+            <div class="color-swatch" data-color="#6366f1" style="background:#6366f1"></div>
+            <div class="color-swatch" data-color="#8b5cf6" style="background:#8b5cf6"></div>
+            <div class="color-swatch" data-color="#a855f7" style="background:#a855f7"></div>
+            <div class="color-swatch" data-color="#d946ef" style="background:#d946ef"></div>
+            <div class="color-swatch" data-color="#ec4899" style="background:#ec4899"></div>
+            <div class="color-swatch" data-color="#f43f5e" style="background:#f43f5e"></div>
+            <div class="color-swatch" data-color="#ffffff" style="background:#ffffff"></div>
+            <div class="color-swatch" data-color="#000000" style="background:#000000; border: 1px solid rgba(255,255,255,0.2)"></div>
+
+            <!-- Custom color picker -->
+            <label class="color-custom" title="Custom color">
+                <input type="color" id="custom-color" class="color-custom-input" value="#7c3aed">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                </svg>
+            </label>
+
+            <!-- Hex input -->
+            <div class="hex-display">
+                <input type="text" id="hex-input" class="hex-input" value="#ef4444" maxlength="7">
+            </div>
+
+            <!-- Balance -->
+            <div class="balance-badge">
+                💎 <span id="pixel-balance">0</span>
+            </div>
+        </div>
+
+        <!-- Canvas Viewport -->
+        <div class="canvas-main">
+            <div class="canvas-viewport" id="canvas-viewport">
+                <canvas id="pixel-canvas"></canvas>
+
+                <!-- Coordinate display -->
+                <div class="coord-display" id="coord-display">X: 0 Y: 0</div>
+
+                <!-- Zoom controls -->
+                <div class="zoom-controls">
+                    <button class="zoom-btn" id="zoom-in" title="Zoom in">+</button>
+                    <div class="zoom-level" id="zoom-level">100%</div>
+                    <button class="zoom-btn" id="zoom-out" title="Zoom out">-</button>
+                    <button class="zoom-btn" id="zoom-fit" title="Fit to screen" style="margin-top: 8px; font-size: 12px;">⊞</button>
+                </div>
+
+                <!-- Minimap -->
+                <div class="minimap" id="minimap">
+                    <canvas id="minimap-canvas" width="160" height="160"></canvas>
+                    <div class="minimap-viewport" id="minimap-viewport"></div>
+                </div>
+            </div>
+
+            <!-- Status bar -->
+            <div class="canvas-status">
+                <div class="status-item">
+                    <span class="status-dot" id="ws-status"></span>
+                    <span id="ws-status-text">Connecting...</span>
+                </div>
+                <div class="status-item">
+                    👥 <span class="status-value" id="online-count">0</span> online
+                </div>
+                <div class="status-item">
+                    🎨 <span class="status-value" id="pixel-count">0</span> pixels placed
+                </div>
+                <div class="status-item">
+                    👤 <span class="status-value" id="artist-count">0</span> artists
+                </div>
+                <div style="flex:1"></div>
+                <div class="toggle-group">
+                    <button class="toggle-btn active" id="toggle-ownership">Ownership</button>
+                    <button class="toggle-btn" id="toggle-grid">Grid</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/pixelforge/assets/js/utils.js"></script>
+    <script>
+    (function() {
+        'use strict';
+
+        var GRID_SIZE = 200;
+        var PIXEL_COST = 1;
+        var WS_URL = 'ws://localhost:8080';
+
+        var pixels = {};
+        var selectedColor = '#ef4444';
+        var zoom = 1;
+        var panX = 0;
+        var panY = 0;
+        var isPanning = false;
+        var showOwnership = true;
+        var showGrid = false;
+        var ws = null;
+        var wsReconnectTimer = null;
+        var lastMouse = { x: 0, y: 0 };
+
+        var canvas = document.getElementById('pixel-canvas');
+        var ctx = canvas.getContext('2d');
+        var viewport = document.getElementById('canvas-viewport');
+        var minimapCanvas = document.getElementById('minimap-canvas');
+        var minimapCtx = minimapCanvas.getContext('2d');
+
+        var pixelDisplaySize = 4;
+
+        function init() {
+            resizeCanvas();
+            setupColorPicker();
+            setupCanvasEvents();
+            setupZoomControls();
+            setupToggleButtons();
+            loadCanvas();
+            connectWebSocket();
+            render();
+
+            window.addEventListener('resize', Utils.debounce(resizeCanvas, 200));
+        }
+
+        function resizeCanvas() {
+            var rect = viewport.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            pixelDisplaySize = Math.max(2, Math.min(20, Math.floor(Math.min(canvas.width, canvas.height) / GRID_SIZE * zoom)));
+            render();
+        }
+
+        function loadCanvas() {
+            fetch('/pixelforge/api/canvas.php')
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (data.success) {
+                        data.pixels.forEach(function(p) {
+                            pixels[p.x + ',' + p.y] = { color: p.color, owner_id: p.owner_id };
+                        });
+                        document.getElementById('pixel-count').textContent = data.stats.total_pixels;
+                        document.getElementById('artist-count').textContent = data.stats.total_artists;
+                        render();
+                        renderMinimap();
+                    }
+                })
+                .catch(function(err) {
+                    console.error('Failed to load canvas:', err);
+                });
+        }
+
+        function connectWebSocket() {
+            if (ws && ws.readyState === WebSocket.OPEN) return;
+
+            try {
+                ws = new WebSocket(WS_URL);
+
+                ws.onopen = function() {
+                    document.getElementById('ws-status').className = 'status-dot connected';
+                    document.getElementById('ws-status-text').textContent = 'Connected';
+                    ws.send(JSON.stringify({ type: 'auth', token: getCookie('PHPSESSID') }));
+                };
+
+                ws.onmessage = function(e) {
+                    handleWSMessage(JSON.parse(e.data));
+                };
+
+                ws.onclose = function() {
+                    document.getElementById('ws-status').className = 'status-dot disconnected';
+                    document.getElementById('ws-status-text').textContent = 'Disconnected';
+                    wsReconnectTimer = setTimeout(connectWebSocket, 3000);
+                };
+
+                ws.onerror = function() {
+                    document.getElementById('ws-status-text').textContent = 'Connection error';
+                };
+            } catch (err) {
+                document.getElementById('ws-status-text').textContent = 'WebSocket unavailable';
+                setInterval(loadCanvas, 5000);
+            }
+        }
+
+        function handleWSMessage(data) {
+            switch (data.type) {
+                case 'pixel_placed':
+                    pixels[data.x + ',' + data.y] = { color: data.color, owner_id: data.owner_id };
+                    render();
+                    renderMinimap();
+                    updateStats();
+                    break;
+                case 'user_count':
+                    document.getElementById('online-count').textContent = data.count;
+                    break;
+                case 'canvas_sync':
+                    pixels = {};
+                    data.pixels.forEach(function(p) {
+                        pixels[p.x + ',' + p.y] = { color: p.color, owner_id: p.owner_id };
+                    });
+                    render();
+                    renderMinimap();
+                    break;
+            }
+        }
+
+        function render() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0a0a0f';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            if (showGrid) {
+                var size = pixelDisplaySize;
+                for (var gy = 0; gy < GRID_SIZE; gy++) {
+                    for (var gx = 0; gx < GRID_SIZE; gx++) {
+                        var sx = gx * size + panX;
+                        var sy = gy * size + panY;
+                        if (sx + size < 0 || sx > canvas.width || sy + size < 0 || sy > canvas.height) continue;
+                        ctx.fillStyle = (gx + gy) % 2 === 0 ? '#111118' : '#0e0e15';
+                        ctx.fillRect(sx, sy, size, size);
+                    }
+                }
+            }
+
+            var keys = Object.keys(pixels);
+            for (var i = 0; i < keys.length; i++) {
+                var parts = keys[i].split(',');
+                var px = parseInt(parts[0], 10);
+                var py = parseInt(parts[1], 10);
+                var pixel = pixels[keys[i]];
+                var dsx = px * pixelDisplaySize + panX;
+                var dsy = py * pixelDisplaySize + panY;
+
+                if (dsx + pixelDisplaySize < 0 || dsx > canvas.width || dsy + pixelDisplaySize < 0 || dsy > canvas.height) continue;
+
+                ctx.fillStyle = pixel.color;
+                ctx.fillRect(dsx, dsy, pixelDisplaySize, pixelDisplaySize);
+
+                if (showOwnership && pixel.owner_id) {
+                    ctx.strokeStyle = getUserColor(pixel.owner_id);
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(dsx + 0.5, dsy + 0.5, pixelDisplaySize - 1, pixelDisplaySize - 1);
+                }
+            }
+
+            if (showGrid && pixelDisplaySize >= 4) {
+                ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+                ctx.lineWidth = 0.5;
+
+                for (var gx2 = 0; gx2 <= GRID_SIZE; gx2++) {
+                    var lsx = gx2 * pixelDisplaySize + panX;
+                    ctx.beginPath();
+                    ctx.moveTo(lsx, 0);
+                    ctx.lineTo(lsx, canvas.height);
+                    ctx.stroke();
+                }
+                for (var gy2 = 0; gy2 <= GRID_SIZE; gy2++) {
+                    var lsy = gy2 * pixelDisplaySize + panY;
+                    ctx.beginPath();
+                    ctx.moveTo(0, lsy);
+                    ctx.lineTo(canvas.width, lsy);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        function renderMinimap() {
+            var mw = 160;
+            var mh = 160;
+            var scale = mw / GRID_SIZE;
+
+            minimapCtx.fillStyle = '#0a0a0f';
+            minimapCtx.fillRect(0, 0, mw, mh);
+
+            var keys = Object.keys(pixels);
+            for (var i = 0; i < keys.length; i++) {
+                var parts = keys[i].split(',');
+                var mx = parseInt(parts[0], 10);
+                var my = parseInt(parts[1], 10);
+                minimapCtx.fillStyle = pixels[keys[i]].color;
+                minimapCtx.fillRect(mx * scale, my * scale, Math.ceil(scale), Math.ceil(scale));
+            }
+
+            updateMinimapViewport();
+        }
+
+        function updateMinimapViewport() {
+            var mw = 160;
+            var mh = 160;
+            var scale = mw / GRID_SIZE;
+            var vpEl = document.getElementById('minimap-viewport');
+
+            var vpX = (-panX / pixelDisplaySize) * scale;
+            var vpY = (-panY / pixelDisplaySize) * scale;
+            var vpW = (canvas.width / pixelDisplaySize) * scale;
+            var vpH = (canvas.height / pixelDisplaySize) * scale;
+
+            vpEl.style.left = Math.max(0, vpX) + 'px';
+            vpEl.style.top = Math.max(0, vpY) + 'px';
+            vpEl.style.width = Math.min(mw, vpW) + 'px';
+            vpEl.style.height = Math.min(mh, vpH) + 'px';
+        }
+
+        function getUserColor(userId) {
+            var colors = ['#ef4444', '#3b82f6', '#22c55e', '#f59e0b', '#a855f7', '#06b6d4', '#ec4899', '#f97316'];
+            return colors[userId % colors.length];
+        }
+
+        function setupColorPicker() {
+            document.querySelectorAll('.color-swatch').forEach(function(swatch) {
+                swatch.addEventListener('click', function() {
+                    document.querySelectorAll('.color-swatch').forEach(function(s) { s.classList.remove('active'); });
+                    swatch.classList.add('active');
+                    selectedColor = swatch.dataset.color;
+                    document.getElementById('hex-input').value = selectedColor;
+                    document.getElementById('custom-color').value = selectedColor;
+                });
+            });
+
+            document.getElementById('custom-color').addEventListener('input', function(e) {
+                selectedColor = e.target.value;
+                document.getElementById('hex-input').value = selectedColor;
+                document.querySelectorAll('.color-swatch').forEach(function(s) { s.classList.remove('active'); });
+            });
+
+            document.getElementById('hex-input').addEventListener('change', function(e) {
+                var val = e.target.value;
+                if (/^#[0-9a-fA-F]{6}$/.test(val)) {
+                    selectedColor = val;
+                    document.getElementById('custom-color').value = val;
+                    document.querySelectorAll('.color-swatch').forEach(function(s) { s.classList.remove('active'); });
+                }
+            });
+        }
+
+        function setupCanvasEvents() {
+            var isDragging = false;
+            var dragStart = { x: 0, y: 0 };
+
+            viewport.addEventListener('mousedown', function(e) {
+                if (e.button === 1 || e.button === 2 || e.ctrlKey) {
+                    isDragging = true;
+                    dragStart = { x: e.clientX - panX, y: e.clientY - panY };
+                    viewport.style.cursor = 'grabbing';
+                    e.preventDefault();
+                } else if (e.button === 0) {
+                    placePixelAt(e);
+                }
+            });
+
+            viewport.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    panX = e.clientX - dragStart.x;
+                    panY = e.clientY - dragStart.y;
+                    render();
+                    updateMinimapViewport();
+                } else {
+                    var rect = viewport.getBoundingClientRect();
+                    var mx = e.clientX - rect.left;
+                    var my = e.clientY - rect.top;
+                    var gridX = Math.floor((mx - panX) / pixelDisplaySize);
+                    var gridY = Math.floor((my - panY) / pixelDisplaySize);
+
+                    if (gridX >= 0 && gridX < GRID_SIZE && gridY >= 0 && gridY < GRID_SIZE) {
+                        document.getElementById('coord-display').textContent = 'X: ' + gridX + ' Y: ' + gridY;
+                    }
+                }
+            });
+
+            viewport.addEventListener('mouseup', function() {
+                isDragging = false;
+                viewport.style.cursor = 'crosshair';
+            });
+
+            viewport.addEventListener('mouseleave', function() {
+                isDragging = false;
+                viewport.style.cursor = 'crosshair';
+            });
+
+            viewport.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                var delta = e.deltaY > 0 ? -0.2 : 0.2;
+                zoom = Utils.clamp(zoom + delta, 0.3, 5);
+                pixelDisplaySize = Math.max(2, Math.min(20, Math.floor(Math.min(canvas.width, canvas.height) / GRID_SIZE * zoom)));
+                document.getElementById('zoom-level').textContent = Math.round(zoom * 100) + '%';
+                render();
+                updateMinimapViewport();
+            }, { passive: false });
+
+            viewport.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        }
+
+        function placePixelAt(e) {
+            var rect = viewport.getBoundingClientRect();
+            var mx = e.clientX - rect.left;
+            var my = e.clientY - rect.top;
+            var gridX = Math.floor((mx - panX) / pixelDisplaySize);
+            var gridY = Math.floor((my - panY) / pixelDisplaySize);
+
+            if (gridX < 0 || gridX >= GRID_SIZE || gridY < 0 || gridY >= GRID_SIZE) return;
+
+            var key = gridX + ',' + gridY;
+            var prevPixel = pixels[key];
+            pixels[key] = { color: selectedColor, owner_id: 'self' };
+            render();
+            renderMinimap();
+
+            fetch('/pixelforge/api/pixels.php?action=place', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ x: gridX, y: gridY, color: selectedColor })
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data.success) {
+                    document.getElementById('nav-balance').textContent = data.new_balance;
+                    document.getElementById('pixel-balance').textContent = data.new_balance;
+                } else {
+                    if (prevPixel) {
+                        pixels[key] = prevPixel;
+                    } else {
+                        delete pixels[key];
+                    }
+                    render();
+                    renderMinimap();
+                    alert(data.message || 'Failed to place pixel');
+                }
+            })
+            .catch(function() {
+                if (prevPixel) {
+                    pixels[key] = prevPixel;
+                } else {
+                    delete pixels[key];
+                }
+                render();
+                renderMinimap();
+            });
+        }
+
+        function setupZoomControls() {
+            document.getElementById('zoom-in').addEventListener('click', function() {
+                zoom = Utils.clamp(zoom + 0.3, 0.3, 5);
+                pixelDisplaySize = Math.max(2, Math.min(20, Math.floor(Math.min(canvas.width, canvas.height) / GRID_SIZE * zoom)));
+                document.getElementById('zoom-level').textContent = Math.round(zoom * 100) + '%';
+                render();
+                updateMinimapViewport();
+            });
+
+            document.getElementById('zoom-out').addEventListener('click', function() {
+                zoom = Utils.clamp(zoom - 0.3, 0.3, 5);
+                pixelDisplaySize = Math.max(2, Math.min(20, Math.floor(Math.min(canvas.width, canvas.height) / GRID_SIZE * zoom)));
+                document.getElementById('zoom-level').textContent = Math.round(zoom * 100) + '%';
+                render();
+                updateMinimapViewport();
+            });
+
+            document.getElementById('zoom-fit').addEventListener('click', function() {
+                zoom = 1;
+                pixelDisplaySize = Math.floor(Math.min(canvas.width, canvas.height) / GRID_SIZE);
+                panX = (canvas.width - GRID_SIZE * pixelDisplaySize) / 2;
+                panY = (canvas.height - GRID_SIZE * pixelDisplaySize) / 2;
+                document.getElementById('zoom-level').textContent = '100%';
+                render();
+                updateMinimapViewport();
+            });
+        }
+
+        function setupToggleButtons() {
+            document.getElementById('toggle-ownership').addEventListener('click', function() {
+                showOwnership = !showOwnership;
+                this.classList.toggle('active', showOwnership);
+                render();
+            });
+
+            document.getElementById('toggle-grid').addEventListener('click', function() {
+                showGrid = !showGrid;
+                this.classList.toggle('active', showGrid);
+                render();
+            });
+        }
+
+        function updateStats() {
+            document.getElementById('pixel-count').textContent = Object.keys(pixels).length;
+        }
+
+        function getCookie(name) {
+            var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+            return match ? match[2] : '';
+        }
+
+        function loadUserData() {
+            fetch('/pixelforge/api/auth.php?action=me')
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (data.success) {
+                        document.getElementById('nav-balance').textContent = data.user.balance;
+                        document.getElementById('nav-level').textContent = data.user.level;
+                        document.getElementById('pixel-balance').textContent = data.user.balance;
+                    }
+                })
+                .catch(function() {});
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            init();
+            loadUserData();
+        });
+    })();
+    </script>
+</body>
+</html>
