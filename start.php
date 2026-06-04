@@ -159,7 +159,6 @@ $files = [
     'assets/js/game-renderer.js',
     'assets/js/game-animations.js',
     'assets/js/game-powerups.js',
-    'assets/js/canvas.js',
     'index.html',
     'game.html',
     'canvas.html',
