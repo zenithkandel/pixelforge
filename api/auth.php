@@ -22,6 +22,12 @@ switch ($action) {
     case 'logout':
         handleLogout();
         break;
+    case 'profile':
+        handleProfile();
+        break;
+    case 'leaderboard':
+        handleLeaderboard();
+        break;
     default:
         http_response_code(400);
         echo json_encode(['success' => false, 'message' => 'Invalid action']);
@@ -89,7 +95,7 @@ function handleLogin()
         $stmt->execute([$identifier, $identifier]);
         $user = $stmt->fetch();
 
-        if (!$user || !password_verify($password, $user['password'])) {
+        if (!$user || !password_verify($password, $user['password_hash'])) {
             jsonResponse(['success' => false, 'message' => 'Invalid username or password'], 401);
         }
 
@@ -120,7 +126,7 @@ function handleLogin()
         foreach ($streakAchievements as $achKey => $requiredDays) {
             if ($newStreak >= $requiredDays) {
                 $stmt = $pdo->prepare(
-                    "INSERT IGNORE INTO user_achievements (user_id, achievement_key) VALUES (?, ?)"
+                    "INSERT IGNORE INTO user_achievements (user_id, achievement_id) SELECT ?, id FROM achievements WHERE slug = ?"
                 );
                 $stmt->execute([$user['id'], $achKey]);
             }
@@ -204,7 +210,7 @@ function handleRegister()
         $hashedPassword = password_hash($password, defined('PASSWORD_ARGON2ID') ? PASSWORD_ARGON2ID : PASSWORD_BCRYPT);
 
         $stmt = $pdo->prepare(
-            "INSERT INTO users (username, email, password, balance, avatar_color) VALUES (?, ?, ?, ?, ?)"
+            "INSERT INTO users (username, email, password_hash, balance, avatar_color) VALUES (?, ?, ?, ?, ?)"
         );
         $stmt->execute([$username, $email, $hashedPassword, STARTING_BALANCE, $avatarColor]);
         $userId = $pdo->lastInsertId();
@@ -212,7 +218,7 @@ function handleRegister()
         login_user($userId, $username);
 
         $stmt = $pdo->prepare(
-            "INSERT IGNORE INTO user_achievements (user_id, achievement_key) VALUES (?, 'first_match')"
+            "INSERT IGNORE INTO user_achievements (user_id, achievement_id) SELECT ?, id FROM achievements WHERE slug = 'first_match'"
         );
         $stmt->execute([$userId]);
 
@@ -275,4 +281,98 @@ function handleLogout()
         'success' => true,
         'redirect' => '/'
     ]);
+}
+
+function handleProfile()
+{
+    $userId = requireAuth();
+
+    try {
+        $pdo = db();
+
+        $stmt = $pdo->prepare(
+            "SELECT id, username, balance, xp, level, avatar_color, total_pixels_placed, total_games_played, total_score, created_at FROM users WHERE id = ?"
+        );
+        $stmt->execute([$userId]);
+        $user = $stmt->fetch();
+
+        if (!$user) {
+            jsonResponse(['success' => false, 'message' => 'User not found'], 404);
+        }
+
+        $stmt = $pdo->prepare(
+            "SELECT a.slug, a.name, a.description, a.icon, a.reward FROM achievements a JOIN user_achievements ua ON a.id = ua.achievement_id WHERE ua.user_id = ?"
+        );
+        $stmt->execute([$userId]);
+        $achievements = $stmt->fetchAll();
+
+        $stmt = $pdo->prepare(
+            "SELECT score, combo_max, currency_earned, played_at FROM score_log WHERE user_id = ? ORDER BY played_at DESC LIMIT 10"
+        );
+        $stmt->execute([$userId]);
+        $recentGames = $stmt->fetchAll();
+
+        jsonResponse([
+            'success' => true,
+            'user' => [
+                'id' => (int) $user['id'],
+                'username' => $user['username'],
+                'balance' => (int) $user['balance'],
+                'xp' => (int) $user['xp'],
+                'level' => (int) $user['level'],
+                'avatar_color' => $user['avatar_color'],
+                'total_pixels_placed' => (int) $user['total_pixels_placed'],
+                'total_games_played' => (int) $user['total_games_played'],
+                'total_score' => (int) $user['total_score'],
+                'created_at' => $user['created_at']
+            ],
+            'achievements' => $achievements,
+            'recent_games' => $recentGames
+        ]);
+    } catch (PDOException $e) {
+        jsonResponse(['success' => false, 'message' => 'Failed to load profile'], 500);
+    }
+}
+
+function handleLeaderboard()
+{
+    $tab = $_GET['tab'] ?? 'score';
+    $pdo = db();
+
+    try {
+        switch ($tab) {
+            case 'pixels':
+                $stmt = $pdo->query(
+                    "SELECT id, username, avatar_color, total_pixels_placed as value FROM users WHERE total_pixels_placed > 0 ORDER BY total_pixels_placed DESC LIMIT 50"
+                );
+                break;
+            case 'level':
+                $stmt = $pdo->query(
+                    "SELECT id, username, avatar_color, level as value FROM users ORDER BY level DESC, xp DESC LIMIT 50"
+                );
+                break;
+            case 'score':
+            default:
+                $stmt = $pdo->query(
+                    "SELECT id, username, avatar_color, total_score as value FROM users WHERE total_score > 0 ORDER BY total_score DESC LIMIT 50"
+                );
+                break;
+        }
+
+        $leaderboard = $stmt->fetchAll();
+
+        jsonResponse([
+            'success' => true,
+            'leaderboard' => array_map(function ($row) {
+                return [
+                    'id' => (int) $row['id'],
+                    'username' => $row['username'],
+                    'avatar_color' => $row['avatar_color'],
+                    'value' => (int) $row['value']
+                ];
+            }, $leaderboard)
+        ]);
+    } catch (PDOException $e) {
+        jsonResponse(['success' => false, 'message' => 'Failed to load leaderboard'], 500);
+    }
 }
