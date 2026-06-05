@@ -358,6 +358,7 @@
             session_id: sessionId,
             score: result.score,
             max_combo: result.maxCombo,
+            penalized: !!result.penalized
           });
 
           // Update gems display
@@ -452,7 +453,13 @@
       }
 
       async function useBooster(type) {
+        if (game.isProcessing) return;
         try {
+          if (type === 'hint') {
+            renderer.showHint();
+            loadBoosters();
+            return;
+          }
           await API.post('game.php?action=use_booster', { booster_type: type });
           powerups.activateBooster(type);
           loadBoosters();
