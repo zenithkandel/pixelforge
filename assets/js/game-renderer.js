@@ -30,6 +30,8 @@ class GameRenderer {
 
         this.shake = { x: 0, y: 0, intensity: 0, decay: 0.9 };
 
+        this.swapAnimation = null;
+
         this._setupEvents();
         this._resize();
         window.addEventListener('resize', () => this._resize());

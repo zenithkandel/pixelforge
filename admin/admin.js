@@ -436,9 +436,29 @@
         return;
       }
 
+      var achievementIcons = {
+        spark: 'fa-wand-magic-sparkles',
+        chain: 'fa-link',
+        flame: 'fa-fire',
+        trophy: 'fa-trophy',
+        crown: 'fa-crown',
+        diamond: 'fa-gem',
+        gamepad: 'fa-gamepad',
+        star: 'fa-star',
+        lightning: 'fa-bolt',
+        brush: 'fa-paintbrush',
+        palette: 'fa-palette',
+        art: 'fa-pen-nib',
+        canvas: 'fa-table-cells-large',
+        fire: 'fa-fire',
+        calendar: 'fa-calendar',
+        'arrow-up': 'fa-arrow-up'
+      };
+
       document.getElementById('achievementsList').innerHTML = data.achievements.map(function(a) {
+        var iconClass = achievementIcons[a.icon] || 'fa-circle-question';
         return '<div class="admin-achievement-card">' +
-          '<div class="admin-achievement-icon">' + esc(a.icon || '?') + '</div>' +
+          '<div class="admin-achievement-icon"><i class="fa-duotone fa-light ' + iconClass + '"></i></div>' +
           '<div class="admin-achievement-info">' +
             '<div class="admin-achievement-name">' + esc(a.name) + '</div>' +
             '<div class="admin-achievement-desc">' + esc(a.description || '') + '</div>' +
