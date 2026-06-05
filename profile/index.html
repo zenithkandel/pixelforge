@@ -91,22 +91,22 @@
       Layout.init('profile');
 
       const ACHIEVEMENTS = {
-        first_match: { icon: '🎯', name: 'First Match' },
-        combo_5: { icon: '🔗', name: 'Chain Reaction' },
-        combo_10: { icon: '⛓️', name: 'Unstoppable' },
-        score_1000: { icon: '🔥', name: 'On Fire' },
-        score_5000: { icon: '💎', name: 'Diamond Score' },
-        score_10000: { icon: '🏆', name: 'Champion' },
-        pixels_100: { icon: '🎨', name: 'Artist' },
-        pixels_500: { icon: '🖌️', name: 'Painter' },
-        pixels_1000: { icon: '🏛️', name: 'Architect' },
-        level_5: { icon: '⭐', name: 'Rising Star' },
-        level_10: { icon: '🌟', name: 'All-Star' },
-        level_20: { icon: '💫', name: 'Legend' },
-        streak_3: { icon: '📅', name: 'Dedicated' },
-        streak_7: { icon: '🗓️', name: 'Devoted' },
-        streak_30: { icon: '👑', name: 'Royalty' },
-        first_pixel: { icon: '✨', name: 'First Step' },
+        first_match:   { icon: 'fa-solid fa-wand-magic-sparkles', name: 'First Spark',       desc: 'Complete your first match' },
+        combo_5:       { icon: 'fa-solid fa-link',               name: 'Chain Reaction',    desc: 'Reach a 5x combo' },
+        combo_10:      { icon: 'fa-solid fa-fire',               name: 'Unstoppable',       desc: 'Reach a 10x combo' },
+        score_1000:    { icon: 'fa-solid fa-trophy',             name: 'Thousand Points',   desc: 'Score 1000+ in a single game' },
+        score_5000:    { icon: 'fa-solid fa-crown',              name: 'Gem Master',        desc: 'Score 5000+ in a single game' },
+        score_10000:   { icon: 'fa-solid fa-diamond',            name: 'Legendary',         desc: 'Score 10000+ in a single game' },
+        games_10:      { icon: 'fa-solid fa-gamepad',            name: 'Regular Player',    desc: 'Play 10 games' },
+        games_100:     { icon: 'fa-solid fa-star',               name: 'Dedicated',         desc: 'Play 100 games' },
+        special_gem:   { icon: 'fa-solid fa-bolt',               name: 'Power Up!',         desc: 'Create your first special gem' },
+        first_pixel:   { icon: 'fa-solid fa-paintbrush',         name: 'First Stroke',      desc: 'Place your first pixel' },
+        pixels_50:     { icon: 'fa-solid fa-palette',            name: 'Painter',           desc: 'Place 50 pixels' },
+        pixels_500:    { icon: 'fa-solid fa-paint-roller',       name: 'Artist',            desc: 'Place 500 pixels' },
+        pixels_2000:   { icon: 'fa-solid fa-image',              name: 'Masterpiece Creator', desc: 'Place 2000 pixels' },
+        streak_3:      { icon: 'fa-solid fa-fire-flame-curved',  name: 'On Fire',           desc: 'Login 3 days in a row' },
+        streak_7:      { icon: 'fa-solid fa-calendar-check',     name: 'Weekly Warrior',    desc: 'Login 7 days in a row' },
+        level_5:       { icon: 'fa-solid fa-arrow-trend-up',     name: 'Rising Star',       desc: 'Reach level 5' },
       };
 
       Events.on('user:loaded', async (user) => {
@@ -182,8 +182,9 @@
           const earned = earnedSlugs.has(slug);
           return `
             <div class="achievement-card${earned ? '' : ' locked'}">
-              <div class="achievement-icon">${def.icon}</div>
+              <div class="achievement-icon"><i class="${def.icon}"></i></div>
               <div class="achievement-name">${def.name}</div>
+              <div class="achievement-desc">${def.desc}</div>
             </div>
           `;
         }).join('');

@@ -84,7 +84,7 @@
 
 .profile-achievements-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: var(--space-3);
 }
 
@@ -118,10 +118,12 @@
   align-items: center;
   justify-content: center;
   font-size: var(--text-xl);
+  color: var(--text-muted);
 }
 
 .achievement-card:not(.locked) .achievement-icon {
   background-color: var(--accent-light);
+  color: var(--accent);
 }
 
 .achievement-name {

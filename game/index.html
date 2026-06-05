@@ -405,23 +405,25 @@
                   '<div class="booster-name">' + b.name + '</div>' +
                   '<div class="booster-count">' + count + ' available</div>' +
                 '</div>' +
+                '<button class="btn btn-primary btn-sm booster-use-btn" data-booster="' + b.key + '">Use</button>' +
               '</div>';
             } else {
               var canAfford = userBalance >= b.cost;
-              return '<div class="booster-item booster-item-shop' + (canAfford ? '' : ' disabled') + '" data-booster="' + b.key + '" data-cost="' + b.cost + '">' +
+              return '<div class="booster-item booster-item-shop' + (canAfford ? '' : ' disabled') + '" data-booster="' + b.key + '">' +
                 '<div class="booster-icon">' + b.icon + '</div>' +
                 '<div class="booster-info">' +
                   '<div class="booster-name">' + b.name + '</div>' +
                   '<div class="booster-count booster-price"><i class="fa-duotone fa-light fa-gem"></i> ' + b.cost + '</div>' +
                 '</div>' +
-                '<button class="btn btn-primary btn-sm booster-buy-btn" data-booster="' + b.key + '"' + (canAfford ? '' : ' disabled') + '>Buy</button>' +
+                '<button class="btn btn-secondary btn-sm booster-buy-btn" data-booster="' + b.key + '"' + (canAfford ? '' : ' disabled') + '>Buy</button>' +
               '</div>';
             }
           }).join('');
 
-          list.querySelectorAll('.booster-item:not(.booster-item-shop)').forEach(function(el) {
-            el.addEventListener('click', function() {
-              useBooster(el.dataset.booster);
+          list.querySelectorAll('.booster-use-btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+              e.stopPropagation();
+              useBooster(btn.dataset.booster);
             });
           });
 
@@ -455,13 +457,12 @@
       async function useBooster(type) {
         if (game.isProcessing) return;
         try {
+          await API.post('game.php?action=use_booster', { booster_type: type });
           if (type === 'hint') {
             renderer.showHint();
-            loadBoosters();
-            return;
+          } else {
+            powerups.activateBooster(type);
           }
-          await API.post('game.php?action=use_booster', { booster_type: type });
-          powerups.activateBooster(type);
           loadBoosters();
         } catch (err) {
           Toast.error('Booster failed', err.message);

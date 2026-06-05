@@ -176,6 +176,12 @@
   font-size: var(--text-xs);
 }
 
+.booster-use-btn {
+  flex-shrink: 0;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+}
+
 .booster-icon {
   width: 36px;
   height: 36px;

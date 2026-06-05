@@ -106,6 +106,16 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   CONSTRAINT `fk_transactions_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE IF NOT EXISTS `user_boosters` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `booster_type` ENUM('hint','hammer','shuffle','extraMoves','colorBurst','lightning') NOT NULL,
+  `quantity` INT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_user_booster` (`user_id`, `booster_type`),
+  CONSTRAINT `fk_user_boosters_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- Seed achievements
 
 INSERT INTO `achievements` (`slug`, `name`, `description`, `icon`, `reward`, `category`) VALUES

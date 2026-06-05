@@ -210,30 +210,29 @@ function handleSubmitScore()
     }
 }
 
+function getUserBoosters($userId)
+{
+    $pdo = db();
+    $stmt = $pdo->prepare("SELECT booster_type, quantity FROM user_boosters WHERE user_id = ?");
+    $stmt->execute([$userId]);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $boosters = [
+        'hint' => 0, 'hammer' => 0, 'shuffle' => 0,
+        'extraMoves' => 0, 'colorBurst' => 0, 'lightning' => 0
+    ];
+    foreach ($rows as $row) {
+        $boosters[$row['booster_type']] = (int) $row['quantity'];
+    }
+    return $boosters;
+}
+
 function handleGetBoosters()
 {
     $userId = requireAuth();
 
     try {
-        $user = current_user();
-        if (!$user) {
-            jsonResponse(['success' => false, 'message' => 'User not found'], 404);
-        }
-
-        $level = $user['level'] ?? 1;
-        $boosters = [
-            'hint' => min(5, max(0, (int) floor($level / 1))),
-            'hammer' => min(5, max(0, (int) floor($level / 2))),
-            'shuffle' => min(3, max(0, (int) floor($level / 3))),
-            'extraMoves' => min(2, max(0, (int) floor($level / 4))),
-            'colorBurst' => $level >= 5 ? min(1, (int) floor($level / 8)) : 0,
-            'lightning' => $level >= 10 ? min(1, (int) floor($level / 12)) : 0
-        ];
-
-        jsonResponse([
-            'success' => true,
-            'boosters' => $boosters
-        ]);
+        $boosters = getUserBoosters($userId);
+        jsonResponse(['success' => true, 'boosters' => $boosters]);
     } catch (PDOException $e) {
         jsonResponse(['success' => false, 'message' => 'Failed to load boosters'], 500);
     }
@@ -271,7 +270,6 @@ function handleBuyBooster()
 
     try {
         $pdo = db();
-
         $pdo->beginTransaction();
 
         $stmt = $pdo->prepare("SELECT balance FROM users WHERE id = ? FOR UPDATE");
@@ -293,22 +291,15 @@ function handleBuyBooster()
         $stmt = $pdo->prepare("UPDATE users SET balance = ? WHERE id = ?");
         $stmt->execute([$newBalance, $userId]);
 
+        $stmt = $pdo->prepare("INSERT INTO user_boosters (user_id, booster_type, quantity) VALUES (?, ?, 1) ON DUPLICATE KEY UPDATE quantity = quantity + 1");
+        $stmt->execute([$userId, $boosterType]);
+
         $stmt = $pdo->prepare("INSERT INTO transactions (user_id, amount, type, description) VALUES (?, ?, 'spend', ?)");
         $stmt->execute([$userId, $cost, "Purchased {$boosterType} booster"]);
 
         $pdo->commit();
 
-        $user = current_user();
-        $level = $user['level'] ?? 1;
-        $boosters = [
-            'hint' => min(5, max(0, (int) floor($level / 1))),
-            'hammer' => min(5, max(0, (int) floor($level / 2))),
-            'shuffle' => min(3, max(0, (int) floor($level / 3))),
-            'extraMoves' => min(2, max(0, (int) floor($level / 4))),
-            'colorBurst' => $level >= 5 ? min(1, (int) floor($level / 8)) : 0,
-            'lightning' => $level >= 10 ? min(1, (int) floor($level / 12)) : 0
-        ];
-
+        $boosters = getUserBoosters($userId);
         jsonResponse([
             'success' => true,
             'new_balance' => $newBalance,
@@ -342,30 +333,27 @@ function handleUseBooster()
     }
 
     try {
-        $user = current_user();
-        if (!$user) {
-            jsonResponse(['success' => false, 'message' => 'User not found'], 404);
-        }
+        $pdo = db();
+        $pdo->beginTransaction();
 
-        $level = $user['level'] ?? 1;
-        $boosters = [
-            'hint' => min(5, max(0, (int) floor($level / 1))),
-            'hammer' => min(5, max(0, (int) floor($level / 2))),
-            'shuffle' => min(3, max(0, (int) floor($level / 3))),
-            'extraMoves' => min(2, max(0, (int) floor($level / 4))),
-            'colorBurst' => $level >= 5 ? min(1, (int) floor($level / 8)) : 0,
-            'lightning' => $level >= 10 ? min(1, (int) floor($level / 12)) : 0
-        ];
+        $stmt = $pdo->prepare("SELECT quantity FROM user_boosters WHERE user_id = ? AND booster_type = ? FOR UPDATE");
+        $stmt->execute([$userId, $boosterType]);
+        $row = $stmt->fetch();
 
-        if (!isset($boosters[$boosterType]) || $boosters[$boosterType] <= 0) {
+        if (!$row || $row['quantity'] <= 0) {
+            $pdo->rollBack();
             jsonResponse(['success' => false, 'message' => 'No boosters of this type available'], 400);
         }
 
-        jsonResponse([
-            'success' => true,
-            'boosters' => $boosters
-        ]);
+        $stmt = $pdo->prepare("UPDATE user_boosters SET quantity = quantity - 1 WHERE user_id = ? AND booster_type = ?");
+        $stmt->execute([$userId, $boosterType]);
+
+        $pdo->commit();
+
+        $boosters = getUserBoosters($userId);
+        jsonResponse(['success' => true, 'boosters' => $boosters]);
     } catch (PDOException $e) {
+        try { db()->rollBack(); } catch (\Exception $ignore) {}
         jsonResponse(['success' => false, 'message' => 'Failed to use booster'], 500);
     }
 }
