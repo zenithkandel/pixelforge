@@ -1,0 +1,60 @@
+/* ============================================
+   AVATAR COMPONENT
+   ============================================ */
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-inverse);
+  user-select: none;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.avatar-sm {
+  width: 32px;
+  height: 32px;
+  font-size: var(--text-xs);
+}
+
+.avatar-md {
+  width: 40px;
+  height: 40px;
+  font-size: var(--text-sm);
+}
+
+.avatar-lg {
+  width: 56px;
+  height: 56px;
+  font-size: var(--text-lg);
+}
+
+.avatar-xl {
+  width: 80px;
+  height: 80px;
+  font-size: var(--text-2xl);
+  border-radius: var(--radius-md);
+}
+
+.avatar-round {
+  border-radius: 50%;
+}
+
+/* Avatar group */
+.avatar-group {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.avatar-group .avatar {
+  border: 2px solid var(--bg-secondary);
+  margin-left: -8px;
+}
+
+.avatar-group .avatar:last-child {
+  margin-left: 0;
+}

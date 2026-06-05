@@ -19,13 +19,28 @@ RewriteRule ^database/ - [F,L]
 # Block access to logs/ directory
 RewriteRule ^logs/ - [F,L]
 
-# Redirect clean URLs
-RewriteRule ^game$ /game.html [L]
-RewriteRule ^canvas$ /canvas.html [L]
-RewriteRule ^login$ /index.html#login [L]
-RewriteRule ^register$ /index.html#register [L]
-RewriteRule ^leaderboard$ /leaderboard.html [L]
-RewriteRule ^profile$ /profile.html [L]
+# New folder-based routes (clean URLs)
+# / -> landing page (root index.html)
+# /home/ -> dashboard
+# /game/ -> match-3 play
+# /world/ -> canvas world
+# /rankings/ -> rankings
+# /profile/ -> player profile
+
+# Backward compatibility: old clean URLs redirect to new structure
+RewriteRule ^game$ /game/ [R=301,L]
+RewriteRule ^canvas$ /world/ [R=301,L]
+RewriteRule ^login$ / [R=301,L]
+RewriteRule ^register$ / [R=301,L]
+RewriteRule ^leaderboard$ /rankings/ [R=301,L]
+RewriteRule ^profile$ /profile/ [R=301,L]
+
+# Backward compatibility: old .html files redirect to new structure
+RewriteRule ^game\.html$ /game/ [R=301,L]
+RewriteRule ^canvas\.html$ /world/ [R=301,L]
+RewriteRule ^leaderboard\.html$ /rankings/ [R=301,L]
+RewriteRule ^profile\.html$ /profile/ [R=301,L]
+RewriteRule ^index\.html$ / [R=301,L]
 
 # Security headers
 Header set X-Content-Type-Options "nosniff"
