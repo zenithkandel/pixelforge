@@ -79,9 +79,12 @@
 
 .play-board-wrapper {
   position: relative;
+  width: 508px;
+  height: 508px;
+  flex-shrink: 0;
 }
 
-.play-board-canvas {
+#gameCanvas {
   display: block;
   border-radius: var(--radius-md);
   image-rendering: pixelated;

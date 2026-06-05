@@ -27,7 +27,7 @@
       <div class="play-topbar-right">
         <div class="play-stat">
           <span class="play-stat-label">Combo</span>
-          <span class="play-stat-value" id="hudCombo">1x</span>
+          <span class="play-stat-value" id="hudCombo">-</span>
         </div>
         <div class="play-stat">
           <span class="play-stat-label">Moves</span>
@@ -46,7 +46,7 @@
       <div class="play-board-area">
         <div class="play-board-wrapper">
           <div class="play-combo" id="comboDisplay"></div>
-          <canvas id="gameCanvas" width="480" height="480"></canvas>
+          <canvas id="gameCanvas"></canvas>
         </div>
       </div>
 
@@ -99,130 +99,224 @@
   <!-- Toast Container -->
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- Game Engine Scripts -->
-  <script src="/codes/pixelforge/assets/js/core/api.js"></script>
-  <script src="/codes/pixelforge/assets/js/core/auth.js"></script>
-  <script src="/codes/pixelforge/assets/js/core/events.js"></script>
-  <script src="/codes/pixelforge/assets/js/components/toast.js"></script>
+  <!-- Game Engine Scripts (order matters) -->
   <script src="/codes/pixelforge/assets/js/utils.js"></script>
   <script src="/codes/pixelforge/assets/js/game-animations.js"></script>
   <script src="/codes/pixelforge/assets/js/game-renderer.js"></script>
   <script src="/codes/pixelforge/assets/js/game.js"></script>
   <script src="/codes/pixelforge/assets/js/game-powerups.js"></script>
+  <script src="/codes/pixelforge/assets/js/core/api.js"></script>
+  <script src="/codes/pixelforge/assets/js/core/auth.js"></script>
+  <script src="/codes/pixelforge/assets/js/core/events.js"></script>
+  <script src="/codes/pixelforge/assets/js/components/toast.js"></script>
 
   <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      // Auth check
-      const user = await Auth.check();
-      if (!user) {
-        window.location.href = '/codes/pixelforge/';
-        return;
+    (function() {
+      'use strict';
+
+      var game, renderer, powerups;
+      var sessionId = null;
+      var maxCombo = 1;
+
+      // --- Auth ---
+      Auth.check().then(function(user) {
+        if (!user) {
+          window.location.href = '/codes/pixelforge/';
+          return;
+        }
+        document.getElementById('hudGems').textContent = user.balance;
+        startNewGame();
+      });
+
+      // --- Render loop ---
+      function gameLoop(timestamp) {
+        if (renderer) renderer.render(timestamp || 0);
+        requestAnimationFrame(gameLoop);
       }
 
-      // Update HUD gems
-      document.getElementById('hudGems').textContent = user.balance;
-
-      let game = null;
-      let renderer = null;
-      let powerups = null;
-      let sessionId = null;
-      let maxCombo = 1;
-
-      // Start game
-      async function startGame() {
+      // --- Start game ---
+      async function startNewGame() {
         try {
-          const data = await API.get('game.php?action=start_game');
+          var data = await API.get('game.php?action=start_game');
           sessionId = data.session_id;
           maxCombo = 1;
 
-          // Update HUD
-          document.getElementById('hudScore').textContent = '0';
-          document.getElementById('hudCombo').textContent = '1x';
-          document.getElementById('hudMoves').textContent = data.moves_left;
-
-          // Init game engine
+          // Init engine
           game = new GemForge(8, 8, 6);
           game.loadState({
             board: data.board,
-            score: data.score,
+            score: 0,
             movesLeft: data.moves_left,
             maxCombo: 0,
+            stats: { gemsMatched: 0, specialsCreated: 0, boostsUsed: 0, highestCombo: 0 }
           });
 
           renderer = new GameRenderer('gameCanvas', game);
           powerups = new PowerUpManager(game, renderer);
 
-          // Start render loop
-          function gameLoop(timestamp) {
-            if (renderer) renderer.render(timestamp || 0);
-            requestAnimationFrame(gameLoop);
-          }
-          gameLoop();
-
-          // Game events
-          game.events.on('score', (score) => {
-            document.getElementById('hudScore').textContent = score.toLocaleString();
-          });
-
-          game.events.on('combo', (combo) => {
-            if (combo > maxCombo) maxCombo = combo;
-            document.getElementById('hudCombo').textContent = `${combo}x`;
-            const display = document.getElementById('comboDisplay');
-            display.textContent = `${combo}x COMBO!`;
-            display.classList.add('visible');
-            setTimeout(() => display.classList.remove('visible'), 800);
-          });
-
-          game.events.on('moves', (moves) => {
-            document.getElementById('hudMoves').textContent = moves;
-          });
-
-          game.events.on('gameOver', async () => {
-            await submitScore();
-          });
-
-          game.events.on('noMoves', () => {
-            Toast.info('No moves available', 'The board will be shuffled.');
-          });
-
-          // Button handlers
-          document.getElementById('hintBtn').onclick = () => renderer.showHint();
-          document.getElementById('shuffleBtn').onclick = () => game._shuffleBoard();
-          document.getElementById('quitBtn').onclick = async () => {
-            if (confirm('Are you sure you want to quit? Your score will be submitted.')) {
-              await submitScore();
-            }
-          };
-
-          // Load boosters
+          setupGameEvents();
+          setupUIEvents();
+          updateHUD();
           loadBoosters();
+          hideGameOver();
 
+          // Start render loop (only once)
+          if (!window._gameLoopStarted) {
+            window._gameLoopStarted = true;
+            gameLoop();
+          }
         } catch (err) {
           Toast.error('Failed to start game', err.message);
         }
       }
 
-      async function submitScore() {
-        if (!sessionId) return;
-        try {
-          const data = await API.post('game.php?action=submit_score', {
-            session_id: sessionId,
-            score: game.score,
-            max_combo: maxCombo,
-          });
+      // --- Game events → HUD ---
+      function setupGameEvents() {
+        game.events.on('select', function(pos) {
+          renderer.selectedGem = pos;
+        });
 
-          document.getElementById('finalScore').textContent = game.score.toLocaleString();
-          document.getElementById('finalCombo').textContent = `${maxCombo}x`;
-          document.getElementById('finalGems').textContent = `+${data.currency_earned}`;
+        game.events.on('deselect', function() {
+          renderer.selectedGem = null;
+        });
 
-          // Update local user data
-          if (Auth.getUser()) {
-            Auth.getUser().balance = data.new_balance;
-            Auth.getUser().xp = data.new_xp;
-            Auth.getUser().level = data.new_level;
+        game.events.on('match', function(data) {
+          // Visual effects
+          renderer.particles.spawnRemovalParticles(data.matches, renderer.gemSize);
+          renderer.addScorePopup(data.score, renderer.canvas.width / 2, renderer.canvas.height / 2);
+
+          if (data.combo > 1) {
+            renderer.showCombo(data.combo);
+            renderer.triggerShake(data.combo * 2);
+            showComboBanner(data.combo);
           }
 
-          document.getElementById('gameOverOverlay').classList.add('active');
+          // Update HUD from live game state
+          updateHUD();
+        });
+
+        game.events.on('chainReaction', function(reactions) {
+          reactions.forEach(function(r) {
+            renderer.particles.spawnSpecialEffect(r.type, r.source.row, r.source.col, renderer.gemSize);
+          });
+          renderer.triggerShake(8);
+        });
+
+        game.events.on('stateChange', function() {
+          updateHUD();
+        });
+
+        game.events.on('gameOver', async function(result) {
+          await submitScore(result);
+          showGameOver(result);
+        });
+
+        game.events.on('noMoves', function() {
+          Toast.info('No moves available', 'The board will be shuffled.');
+        });
+
+        game.events.on('shuffle', function() {
+          renderer.particles.clear();
+        });
+
+        // PowerUp events
+        powerups.events.on('boostersUpdated', function() {
+          loadBoosters();
+        });
+
+        powerups.events.on('boosterUsed', function() {
+          updateHUD();
+          loadBoosters();
+        });
+      }
+
+      // --- Update HUD from game state ---
+      function updateHUD() {
+        document.getElementById('hudScore').textContent = game.score.toLocaleString();
+        document.getElementById('hudMoves').textContent = game.movesLeft;
+
+        // Combo display
+        var comboEl = document.getElementById('hudCombo');
+        if (game.combo > 0) {
+          comboEl.textContent = game.combo + 'x';
+        } else {
+          comboEl.textContent = '-';
+        }
+
+        // Moves color warning
+        var movesEl = document.getElementById('hudMoves');
+        if (game.movesLeft <= 5) {
+          movesEl.style.color = 'var(--danger)';
+        } else if (game.movesLeft <= 10) {
+          movesEl.style.color = 'var(--warning)';
+        } else {
+          movesEl.style.color = 'var(--accent)';
+        }
+      }
+
+      // --- Combo banner ---
+      function showComboBanner(combo) {
+        var el = document.getElementById('comboDisplay');
+        el.textContent = combo + 'x COMBO!';
+        el.classList.add('visible');
+        setTimeout(function() { el.classList.remove('visible'); }, 800);
+      }
+
+      // --- UI button events ---
+      function setupUIEvents() {
+        document.getElementById('hintBtn').onclick = function() {
+          renderer.showHint();
+        };
+
+        document.getElementById('shuffleBtn').onclick = async function() {
+          if (game.isProcessing) return;
+          await game._shuffleBoard();
+        };
+
+        document.getElementById('quitBtn').onclick = function() {
+          if (confirm('Are you sure you want to quit? Your score will be submitted.')) {
+            submitScore({ score: game.score, maxCombo: game.maxCombo, stats: game.stats });
+          }
+        };
+
+        document.getElementById('playAgainBtn').addEventListener('click', function() {
+          hideGameOver();
+          startNewGame();
+        });
+
+        // Booster clicks on canvas
+        renderer.canvas.addEventListener('click', function(e) {
+          if (!powerups || !powerups.activeBooster) return;
+          var rect = renderer.canvas.getBoundingClientRect();
+          var x = e.clientX - rect.left;
+          var y = e.clientY - rect.top;
+          var col = Math.floor(x / (renderer.gemSize + renderer.padding));
+          var row = Math.floor(y / (renderer.gemSize + renderer.padding));
+          if (row >= 0 && row < game.rows && col >= 0 && col < game.cols) {
+            powerups.handleBoosterClick(row, col);
+          }
+        });
+      }
+
+      // --- Submit score ---
+      async function submitScore(result) {
+        if (!sessionId) return;
+        try {
+          var data = await API.post('game.php?action=submit_score', {
+            session_id: sessionId,
+            score: result.score,
+            max_combo: result.maxCombo,
+          });
+
+          // Update gems display
+          if (data.success) {
+            document.getElementById('hudGems').textContent = data.new_balance;
+            if (Auth.getUser()) {
+              Auth.getUser().balance = data.new_balance;
+              Auth.getUser().xp = data.new_xp;
+              Auth.getUser().level = data.new_level;
+            }
+          }
           sessionId = null;
         } catch (err) {
           if (err.status === 429) {
@@ -233,35 +327,35 @@
         }
       }
 
+      // --- Load boosters ---
       async function loadBoosters() {
         try {
-          const data = await API.get('game.php?action=get_boosters');
-          const list = document.getElementById('boosterList');
-          const boosters = data.boosters;
-          const boosterDefs = [
-            { key: 'hammer', name: 'Hammer', icon: '🔨', desc: 'Destroy one gem' },
-            { key: 'shuffle', name: 'Shuffle', icon: '🔀', desc: 'Randomize board' },
-            { key: 'extraMoves', name: '+5 Moves', icon: '⚡', desc: 'Add 5 moves' },
-            { key: 'colorBurst', name: 'Color Burst', icon: '💥', desc: 'Destroy all of one color' },
-            { key: 'lightning', name: 'Lightning', icon: '⚡', desc: 'Clear row + column' },
+          var data = await API.get('game.php?action=get_boosters');
+          var list = document.getElementById('boosterList');
+          var boosters = data.boosters;
+          var boosterDefs = [
+            { key: 'hammer', name: 'Hammer', icon: '\uD83D\uDD28', desc: 'Destroy one gem' },
+            { key: 'shuffle', name: 'Shuffle', icon: '\uD83D\uDD00', desc: 'Randomize board' },
+            { key: 'extraMoves', name: '+5 Moves', icon: '\u26A1', desc: 'Add 5 moves' },
+            { key: 'colorBurst', name: 'Color Burst', icon: '\uD83D\uDCA5', desc: 'Destroy all of one color' },
+            { key: 'lightning', name: 'Lightning', icon: '\u26A1', desc: 'Clear row + column' },
           ];
 
-          list.innerHTML = boosterDefs.map(b => {
-            const count = boosters[b.key] || 0;
-            return `
-              <div class="booster-item${count === 0 ? ' disabled' : ''}" data-booster="${b.key}" ${count === 0 ? '' : 'tabindex="0"'}>
-                <div class="booster-icon">${b.icon}</div>
-                <div class="booster-info">
-                  <div class="booster-name">${b.name}</div>
-                  <div class="booster-count">${count} available</div>
-                </div>
-              </div>
-            `;
+          list.innerHTML = boosterDefs.map(function(b) {
+            var count = boosters[b.key] || 0;
+            return '<div class="booster-item' + (count === 0 ? ' disabled' : '') + '" data-booster="' + b.key + '">' +
+              '<div class="booster-icon">' + b.icon + '</div>' +
+              '<div class="booster-info">' +
+                '<div class="booster-name">' + b.name + '</div>' +
+                '<div class="booster-count">' + count + ' available</div>' +
+              '</div>' +
+            '</div>';
           }).join('');
 
-          // Booster click handlers
-          list.querySelectorAll('.booster-item:not(.disabled)').forEach(el => {
-            el.addEventListener('click', () => useBooster(el.dataset.booster));
+          list.querySelectorAll('.booster-item:not(.disabled)').forEach(function(el) {
+            el.addEventListener('click', function() {
+              useBooster(el.dataset.booster);
+            });
           });
         } catch (e) {
           // silently fail
@@ -278,15 +372,19 @@
         }
       }
 
-      // Play again
-      document.getElementById('playAgainBtn').addEventListener('click', () => {
-        document.getElementById('gameOverOverlay').classList.remove('active');
-        startGame();
-      });
+      // --- Game Over ---
+      function showGameOver(result) {
+        document.getElementById('finalScore').textContent = result.score.toLocaleString();
+        document.getElementById('finalCombo').textContent = result.maxCombo + 'x';
+        var gems = Math.max(1, Math.min(50, Math.floor(result.score / 100)));
+        document.getElementById('finalGems').textContent = '+' + gems;
+        document.getElementById('gameOverOverlay').classList.add('active');
+      }
 
-      // Start
-      startGame();
-    });
+      function hideGameOver() {
+        document.getElementById('gameOverOverlay').classList.remove('active');
+      }
+    })();
   </script>
 </body>
 </html>

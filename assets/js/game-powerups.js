@@ -49,7 +49,7 @@ class PowerUpManager {
             const response = await fetch('/codes/pixelforge/api/game.php?action=buy_booster', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ type })
+                body: JSON.stringify({ booster_type: type })
             });
             const data = await response.json();
 
@@ -135,7 +135,7 @@ class PowerUpManager {
             const response = await fetch('/codes/pixelforge/api/game.php?action=use_booster', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ type: 'hammer', target: { row, col } })
+                body: JSON.stringify({ booster_type: 'hammer', target: { row, col } })
             });
             const data = await response.json();
 
@@ -187,7 +187,7 @@ class PowerUpManager {
             const response = await fetch('/codes/pixelforge/api/game.php?action=use_booster', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ type: 'shuffle' })
+                body: JSON.stringify({ booster_type: 'shuffle' })
             });
             const data = await response.json();
 
@@ -243,7 +243,7 @@ class PowerUpManager {
             const response = await fetch('/codes/pixelforge/api/game.php?action=use_booster', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ type: 'extraMoves' })
+                body: JSON.stringify({ booster_type: 'extraMoves' })
             });
             const data = await response.json();
 
@@ -278,7 +278,7 @@ class PowerUpManager {
             const response = await fetch('/codes/pixelforge/api/game.php?action=use_booster', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ type: 'colorBurst', target: { type: targetType } })
+                body: JSON.stringify({ booster_type: 'colorBurst', target: { type: targetType } })
             });
             const data = await response.json();
 
