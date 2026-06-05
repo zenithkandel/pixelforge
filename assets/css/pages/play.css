@@ -157,6 +157,25 @@
   cursor: not-allowed;
 }
 
+.booster-item-shop {
+  border-style: dashed;
+}
+
+.booster-price {
+  color: var(--accent);
+  font-weight: var(--weight-semibold);
+}
+
+.booster-price i {
+  font-size: 0.7em;
+}
+
+.booster-buy-btn {
+  flex-shrink: 0;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+}
+
 .booster-icon {
   width: 36px;
   height: 36px;

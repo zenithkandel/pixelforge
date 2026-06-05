@@ -338,31 +338,67 @@
           var list = document.getElementById('boosterList');
           var boosters = data.boosters;
           var boosterDefs = [
-            { key: 'hammer', name: 'Hammer', icon: '\uD83D\uDD28', desc: 'Destroy one gem' },
-            { key: 'shuffle', name: 'Shuffle', icon: '\uD83D\uDD00', desc: 'Randomize board' },
-            { key: 'extraMoves', name: '+5 Moves', icon: '\u26A1', desc: 'Add 5 moves' },
-            { key: 'colorBurst', name: 'Color Burst', icon: '\uD83D\uDCA5', desc: 'Destroy all of one color' },
-            { key: 'lightning', name: 'Lightning', icon: '\u26A1', desc: 'Clear row + column' },
+            { key: 'hammer', name: 'Hammer', icon: '\uD83D\uDD28', desc: 'Destroy one gem', cost: 150 },
+            { key: 'shuffle', name: 'Shuffle', icon: '\uD83D\uDD00', desc: 'Randomize board', cost: 250 },
+            { key: 'extraMoves', name: '+5 Moves', icon: '\u26A1', desc: 'Add 5 moves', cost: 350 },
+            { key: 'colorBurst', name: 'Color Burst', icon: '\uD83D\uDCA5', desc: 'Destroy all of one color', cost: 500 },
+            { key: 'lightning', name: 'Lightning', icon: '\u26A1', desc: 'Clear row + column', cost: 750 },
           ];
+          var userBalance = Auth.getUser() ? Auth.getUser().balance : 0;
 
           list.innerHTML = boosterDefs.map(function(b) {
             var count = boosters[b.key] || 0;
-            return '<div class="booster-item' + (count === 0 ? ' disabled' : '') + '" data-booster="' + b.key + '">' +
-              '<div class="booster-icon">' + b.icon + '</div>' +
-              '<div class="booster-info">' +
-                '<div class="booster-name">' + b.name + '</div>' +
-                '<div class="booster-count">' + count + ' available</div>' +
-              '</div>' +
-            '</div>';
+            if (count > 0) {
+              return '<div class="booster-item" data-booster="' + b.key + '">' +
+                '<div class="booster-icon">' + b.icon + '</div>' +
+                '<div class="booster-info">' +
+                  '<div class="booster-name">' + b.name + '</div>' +
+                  '<div class="booster-count">' + count + ' available</div>' +
+                '</div>' +
+              '</div>';
+            } else {
+              var canAfford = userBalance >= b.cost;
+              return '<div class="booster-item booster-item-shop' + (canAfford ? '' : ' disabled') + '" data-booster="' + b.key + '" data-cost="' + b.cost + '">' +
+                '<div class="booster-icon">' + b.icon + '</div>' +
+                '<div class="booster-info">' +
+                  '<div class="booster-name">' + b.name + '</div>' +
+                  '<div class="booster-count booster-price"><i class="fa-duotone fa-light fa-gem"></i> ' + b.cost + '</div>' +
+                '</div>' +
+                '<button class="btn btn-primary btn-sm booster-buy-btn" data-booster="' + b.key + '"' + (canAfford ? '' : ' disabled') + '>Buy</button>' +
+              '</div>';
+            }
           }).join('');
 
-          list.querySelectorAll('.booster-item:not(.disabled)').forEach(function(el) {
+          list.querySelectorAll('.booster-item:not(.booster-item-shop)').forEach(function(el) {
             el.addEventListener('click', function() {
               useBooster(el.dataset.booster);
             });
           });
+
+          list.querySelectorAll('.booster-buy-btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+              e.stopPropagation();
+              buyBooster(btn.dataset.booster);
+            });
+          });
         } catch (e) {
           // silently fail
+        }
+      }
+
+      async function buyBooster(type) {
+        try {
+          var data = await API.post('game.php?action=buy_booster', { booster_type: type });
+          if (data.success) {
+            if (Auth.getUser()) {
+              Auth.getUser().balance = data.new_balance;
+              document.getElementById('hudGems').textContent = data.new_balance;
+            }
+            Toast.success('Purchased!', 'Booster added to your inventory.');
+            loadBoosters();
+          }
+        } catch (err) {
+          Toast.error('Purchase failed', err.message);
         }
       }
 

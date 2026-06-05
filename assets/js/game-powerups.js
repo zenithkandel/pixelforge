@@ -10,11 +10,11 @@ class PowerUpManager {
         this.renderer = renderer;
 
         this.boosters = {
-            hammer: { count: 0, cost: 50, name: 'Hammer', icon: '\u{1F528}', description: 'Destroy one gem' },
-            shuffle: { count: 0, cost: 30, name: 'Shuffle', icon: '\u{1F500}', description: 'Rearrange all gems' },
-            extraMoves: { count: 0, cost: 40, name: '+5 Moves', icon: '\u26A1', description: 'Add 5 extra moves' },
-            colorBurst: { count: 0, cost: 60, name: 'Color Burst', icon: '\u{1F308}', description: 'Clear all of one color' },
-            lightning: { count: 0, cost: 80, name: 'Lightning', icon: '\u26A1', description: 'Clear a row and column' }
+            hammer: { count: 0, cost: 150, name: 'Hammer', icon: '\u{1F528}', description: 'Destroy one gem' },
+            shuffle: { count: 0, cost: 250, name: 'Shuffle', icon: '\u{1F500}', description: 'Rearrange all gems' },
+            extraMoves: { count: 0, cost: 350, name: '+5 Moves', icon: '\u26A1', description: 'Add 5 extra moves' },
+            colorBurst: { count: 0, cost: 500, name: 'Color Burst', icon: '\u{1F308}', description: 'Clear all of one color' },
+            lightning: { count: 0, cost: 750, name: 'Lightning', icon: '\u26A1', description: 'Clear a row and column' }
         };
 
         this.activeBooster = null;

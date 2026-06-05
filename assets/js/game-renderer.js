@@ -115,7 +115,7 @@ class GameRenderer {
 
         this._drawBoardBackground();
 
-        const isSwapping = this.swapAnimation && this.swapAnimation.startTime !== null;
+        const isSwapping = !!this.swapAnimation;
         const swapKeys = isSwapping
             ? [`${this.swapAnimation.r1},${this.swapAnimation.c1}`, `${this.swapAnimation.r2},${this.swapAnimation.c2}`]
             : [];
