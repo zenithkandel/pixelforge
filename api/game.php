@@ -335,7 +335,7 @@ function handleUseBooster()
 
     $boosterType = $input['booster_type'] ?? null;
 
-    $validBoosters = ['hammer', 'shuffle', 'extraMoves', 'colorBurst', 'lightning'];
+    $validBoosters = ['hint', 'hammer', 'shuffle', 'extraMoves', 'colorBurst', 'lightning'];
 
     if (!$boosterType || !in_array($boosterType, $validBoosters)) {
         jsonResponse(['success' => false, 'message' => 'Invalid booster type'], 400);
@@ -349,6 +349,7 @@ function handleUseBooster()
 
         $level = $user['level'] ?? 1;
         $boosters = [
+            'hint' => min(5, max(0, (int) floor($level / 1))),
             'hammer' => min(5, max(0, (int) floor($level / 2))),
             'shuffle' => min(3, max(0, (int) floor($level / 3))),
             'extraMoves' => min(2, max(0, (int) floor($level / 4))),
