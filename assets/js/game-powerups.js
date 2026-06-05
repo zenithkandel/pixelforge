@@ -343,7 +343,7 @@ class PowerUpManager {
             const response = await fetch('/codes/pixelforge/api/game.php?action=use_booster', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ type: 'lightning' })
+                body: JSON.stringify({ booster_type: 'lightning' })
             });
             const data = await response.json();
 

@@ -121,6 +121,7 @@
       let offsetX = 0, offsetY = 0;
       let zoom = 1;
       let isDragging = false;
+      let didDrag = false;
       let dragStart = { x: 0, y: 0 };
       let selectedColor = '#E17B47';
       let showGrid = false;
@@ -259,11 +260,26 @@
       // Pan
       canvas.addEventListener('mousedown', (e) => {
         isDragging = true;
-        dragStart = { x: e.clientX - offsetX, y: e.clientY - offsetY };
+        didDrag = false;
+        dragStart = { x: e.clientX, y: e.clientY };
         canvas.style.cursor = 'grabbing';
       });
 
       window.addEventListener('mousemove', (e) => {
+        // Track drag
+        if (isDragging) {
+          const dx = e.clientX - dragStart.x;
+          const dy = e.clientY - dragStart.y;
+          if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+            didDrag = true;
+          }
+          offsetX += e.movementX;
+          offsetY += e.movementY;
+          render();
+          renderMinimap();
+          return;
+        }
+
         // Update coordinate display
         const rect = canvas.getBoundingClientRect();
         const mx = e.clientX - rect.left;
@@ -276,7 +292,13 @@
           document.getElementById('infoPos').textContent = `${gx}, ${gy}`;
           const key = `${gx},${gy}`;
           const px = pixels[key];
-          document.getElementById('infoOwner').textContent = px && px.owner_id ? `Player #${px.owner_id}` : 'Unclaimed';
+          if (!px || !px.owner_id) {
+            document.getElementById('infoOwner').textContent = 'Unclaimed';
+          } else if (user && px.owner_id === user.id) {
+            document.getElementById('infoOwner').textContent = 'You';
+          } else {
+            document.getElementById('infoOwner').textContent = `Player #${px.owner_id}`;
+          }
         }
 
         if (!isDragging) return;
@@ -289,10 +311,15 @@
       window.addEventListener('mouseup', () => {
         isDragging = false;
         canvas.style.cursor = 'crosshair';
+        // Reset didDrag after a tick so the click event can read it
+        setTimeout(() => { didDrag = false; }, 0);
       });
 
       // Place pixel
       canvas.addEventListener('click', async (e) => {
+        // Ignore if user was panning
+        if (didDrag) return;
+
         if (!user) {
           Toast.info('Login required', 'Please log in to place pixels.');
           return;
@@ -306,18 +333,26 @@
 
         if (gx < 0 || gx >= GRID || gy < 0 || gy >= GRID) return;
 
+        // Ownership check: can only paint empty cells or cells you own
+        const key = `${gx},${gy}`;
+        const existing = pixels[key];
+        if (existing && existing.owner_id && existing.owner_id !== user.id) {
+          Toast.warning('Cannot paint', 'This pixel belongs to another player.');
+          return;
+        }
+
         try {
           const data = await API.post('pixels.php?action=place', {
             x: gx, y: gy, color: selectedColor
           });
-          pixels[`${gx},${gy}`] = data.pixel;
+          pixels[key] = data.pixel;
           pixelList.push(data.pixel);
           document.getElementById('gemCount').textContent = data.new_balance;
-          if (user) user.balance = data.new_balance;
+          user.balance = data.new_balance;
           render();
           renderMinimap();
           if (data.free_repaint) {
-            Toast.info('Free repaint', 'You already own this pixel.');
+            Toast.info('Free repaint', 'You already own this pixel — no gems spent.');
           }
         } catch (err) {
           if (err.status === 429) {
