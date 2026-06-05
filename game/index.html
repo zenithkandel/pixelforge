@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/codes/pixelforge/assets/css/main.css">
   <link rel="stylesheet" href="/codes/pixelforge/assets/css/pages/play.css">
+  <script src="https://zenithkandel.com.np/fontawesome/zenith-icons.js"></script>
 </head>
 <body>
   <div class="play-layout">
@@ -16,7 +17,7 @@
     <div class="play-topbar">
       <div class="play-topbar-left">
         <a href="/codes/pixelforge/home/" class="btn btn-ghost btn-sm">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <i class="fa-duotone fa-light fa-arrow-left"></i>
           Home
         </a>
         <div class="play-stat">
@@ -34,7 +35,7 @@
           <span class="play-stat-value moves" id="hudMoves">30</span>
         </div>
         <div class="play-stat">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><polygon points="7,1 13,5 13,9 7,13 1,9 1,5" fill="var(--accent)"/></svg>
+          <i class="fa-duotone fa-light fa-gem"></i>
           <span class="play-stat-value" id="hudGems">0</span>
         </div>
       </div>
@@ -58,11 +59,11 @@
         </div>
         <div class="play-actions">
           <button class="btn btn-secondary btn-sm" id="hintBtn" style="width: 100%;">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 5.5a1.5 1.5 0 111.5 1.5c0 .8-.7 1-1.5 1.2V9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="7" cy="11" r=".7" fill="currentColor"/></svg>
+            <i class="fa-duotone fa-light fa-lightbulb"></i>
             Hint
           </button>
           <button class="btn btn-secondary btn-sm" id="shuffleBtn" style="width: 100%;">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 10l3-3 2 2 3-5 2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 3h3v3M10 11h3v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <i class="fa-duotone fa-light fa-shuffle"></i>
             Shuffle
           </button>
           <button class="btn btn-danger btn-sm" id="quitBtn" style="width: 100%;">

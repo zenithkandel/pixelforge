@@ -68,7 +68,7 @@
         '<div class="card" style="max-width:420px;width:100%;text-align:center;">' +
           '<div class="card-body" style="padding:var(--space-8);">' +
             '<div style="width:56px;height:56px;border-radius:50%;background-color:var(--accent-light,#fff3ed);color:var(--accent,#E17B47);display:flex;align-items:center;justify-content:center;margin:0 auto var(--space-5);">' +
-              '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M5 20c0-3.3 2.7-6 6-6h2c3.3 0 6 2.7 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' +
+              '<i class="fa-duotone fa-light fa-circle-user"></i>' +
             '</div>' +
             '<h2 class="h3 mb-2" style="color:var(--text-primary);">' + (reason === 'admin' ? 'Admin Access Required' : 'Not Logged In') + '</h2>' +
             '<p style="color:var(--text-secondary);margin-bottom:var(--space-6);">' + msg + '</p>' +

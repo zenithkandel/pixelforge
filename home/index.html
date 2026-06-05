@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/codes/pixelforge/assets/css/main.css">
   <link rel="stylesheet" href="/codes/pixelforge/assets/css/pages/home.css">
+  <script src="https://kit.fontawesome.com/2ec8e73167.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <div class="app-layout" id="app">
@@ -18,7 +19,7 @@
         <div class="page-header-inner">
           <div class="flex items-center gap-4">
             <button class="sidebar-toggle" id="sidebarToggle" aria-label="Open menu">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <i class="fa-duotone fa-light fa-bars"></i>
             </button>
             <div>
               <h1 class="page-title">Dashboard</h1>
@@ -38,15 +39,15 @@
         <!-- Quick Actions -->
         <div class="home-actions">
           <a href="/codes/pixelforge/game/" class="btn btn-primary btn-lg">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="currentColor"/></svg>
+            <i class="fa-duotone fa-light fa-play"></i>
             Play Match-3
           </a>
           <a href="/codes/pixelforge/world/" class="btn btn-secondary btn-lg">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M2 6.5h14M2 11.5h14M6.5 2v14M11.5 2v14" stroke="currentColor" stroke-width="0.75" opacity="0.4"/></svg>
+            <i class="fa-duotone fa-light fa-grip"></i>
             Open Canvas
           </a>
           <a href="/codes/pixelforge/admin/" class="btn btn-ghost btn-lg" id="adminLink" style="display: none;">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="10" y="2" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="2" y="10" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="10" y="10" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/></svg>
+            <i class="fa-duotone fa-light fa-shield-halved"></i>
             Admin Panel
           </a>
         </div>
@@ -55,7 +56,7 @@
         <div class="home-stats" id="statsGrid">
           <div class="stat-card">
             <div class="stat-card-icon accent">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,7 18,13 10,18 2,13 2,7" fill="currentColor"/></svg>
+              <i class="fa-duotone fa-light fa-gem"></i>
             </div>
             <div class="stat-card-label">Gems</div>
             <div class="stat-card-value" id="statGems">—</div>

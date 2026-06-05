@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/codes/pixelforge/assets/css/main.css">
   <link rel="stylesheet" href="/codes/pixelforge/assets/css/pages/world.css">
+  <script src="https://zenithkandel.com.np/fontawesome/zenith-icons.js"></script>
 </head>
 <body>
   <div class="world-layout">
@@ -23,11 +24,11 @@
       <div class="world-toolbar">
         <div class="world-toolbar-left">
           <a href="/codes/pixelforge/home/" class="btn btn-ghost btn-sm">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <i class="fa-duotone fa-light fa-arrow-left"></i>
             Home
           </a>
           <div class="world-search">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M9.5 9.5L13 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <i class="fa-duotone fa-light fa-magnifying-glass"></i>
             <input type="text" id="coordSearch" placeholder="x, y" aria-label="Search coordinates">
           </div>
         </div>
@@ -38,7 +39,7 @@
             <button class="world-overlay-btn" data-overlay="heatmap">Heat</button>
           </div>
           <div class="world-balance" id="balanceBadge">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><polygon points="7,1 13,4 13,10 7,13 1,10 1,4" fill="var(--accent)"/></svg>
+            <i class="fa-duotone fa-light fa-gem"></i>
             <span class="world-balance-value" id="gemCount">0</span>
             <span style="color: var(--text-muted); font-size: var(--text-xs);">gems</span>
           </div>
@@ -59,7 +60,7 @@
         <span class="world-zoom-level" id="zoomLevel">100%</span>
         <button class="world-zoom-btn" id="zoomIn" aria-label="Zoom in">+</button>
         <button class="world-zoom-btn" id="zoomReset" aria-label="Reset zoom">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1v4h4M13 13V9H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.5 5A5.5 5.5 0 003 3L1 5M2.5 9a5.5 5.5 0 008.5 2l2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <i class="fa-duotone fa-light fa-arrows-rotate"></i>
         </button>
       </div>
 
@@ -91,7 +92,7 @@
       </div>
       <div class="world-info-section mt-auto">
         <button class="btn btn-secondary btn-sm" id="toggleGrid" style="width: 100%;">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" stroke="currentColor" stroke-width="1.2"/><rect x="8" y="1" width="5" height="5" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="8" width="5" height="5" stroke="currentColor" stroke-width="1.2"/><rect x="8" y="8" width="5" height="5" stroke="currentColor" stroke-width="1.2"/></svg>
+          <i class="fa-duotone fa-light fa-grip"></i>
           Toggle Grid
         </button>
       </div>
