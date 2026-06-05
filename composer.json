@@ -1,8 +1,5 @@
 {
     "name": "pixelforge/app",
     "description": "PixelForge - Play Earn Create",
-    "type": "project",
-    "require": {
-        "cboden/ratchet": "^0.4.4"
-    }
+    "type": "project"
 }

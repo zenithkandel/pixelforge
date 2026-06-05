@@ -209,13 +209,6 @@
             <!-- Status bar -->
             <div class="canvas-status">
                 <div class="status-item">
-                    <span class="status-dot" id="ws-status"></span>
-                    <span id="ws-status-text">Connecting...</span>
-                </div>
-                <div class="status-item">
-                    👥 <span class="status-value" id="online-count">0</span> online
-                </div>
-                <div class="status-item">
                     🎨 <span class="status-value" id="pixel-count">0</span> pixels placed
                 </div>
                 <div class="status-item">
@@ -237,7 +230,6 @@
 
         var GRID_SIZE = 200;
         var PIXEL_COST = 1;
-        var WS_URL = 'ws://localhost:8080';
 
         var pixels = {};
         var selectedColor = '#ef4444';
@@ -247,9 +239,8 @@
         var isPanning = false;
         var showOwnership = true;
         var showGrid = false;
-        var ws = null;
-        var wsReconnectTimer = null;
         var lastMouse = { x: 0, y: 0 };
+        var pollTimer = null;
 
         var canvas = document.getElementById('pixel-canvas');
         var ctx = canvas.getContext('2d');
@@ -266,7 +257,7 @@
             setupZoomControls();
             setupToggleButtons();
             loadCanvas();
-            connectWebSocket();
+            startPolling();
             render();
 
             window.addEventListener('resize', Utils.debounce(resizeCanvas, 200));
@@ -299,57 +290,8 @@
                 });
         }
 
-        function connectWebSocket() {
-            if (ws && ws.readyState === WebSocket.OPEN) return;
-
-            try {
-                ws = new WebSocket(WS_URL);
-
-                ws.onopen = function() {
-                    document.getElementById('ws-status').className = 'status-dot connected';
-                    document.getElementById('ws-status-text').textContent = 'Connected';
-                    ws.send(JSON.stringify({ type: 'auth', token: getCookie('PHPSESSID') }));
-                };
-
-                ws.onmessage = function(e) {
-                    handleWSMessage(JSON.parse(e.data));
-                };
-
-                ws.onclose = function() {
-                    document.getElementById('ws-status').className = 'status-dot disconnected';
-                    document.getElementById('ws-status-text').textContent = 'Disconnected';
-                    wsReconnectTimer = setTimeout(connectWebSocket, 3000);
-                };
-
-                ws.onerror = function() {
-                    document.getElementById('ws-status-text').textContent = 'Connection error';
-                };
-            } catch (err) {
-                document.getElementById('ws-status-text').textContent = 'WebSocket unavailable';
-                setInterval(loadCanvas, 5000);
-            }
-        }
-
-        function handleWSMessage(data) {
-            switch (data.type) {
-                case 'pixel_placed':
-                    pixels[data.x + ',' + data.y] = { color: data.color, owner_id: data.owner_id };
-                    render();
-                    renderMinimap();
-                    updateStats();
-                    break;
-                case 'user_count':
-                    document.getElementById('online-count').textContent = data.count;
-                    break;
-                case 'canvas_sync':
-                    pixels = {};
-                    data.pixels.forEach(function(p) {
-                        pixels[p.x + ',' + p.y] = { color: p.color, owner_id: p.owner_id };
-                    });
-                    render();
-                    renderMinimap();
-                    break;
-            }
+        function startPolling() {
+            pollTimer = setInterval(loadCanvas, 5000);
         }
 
         function render() {
@@ -629,11 +571,6 @@
 
         function updateStats() {
             document.getElementById('pixel-count').textContent = Object.keys(pixels).length;
-        }
-
-        function getCookie(name) {
-            var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-            return match ? match[2] : '';
         }
 
         function loadUserData() {

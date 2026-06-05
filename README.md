@@ -2,7 +2,7 @@
 
 **Play. Earn. Create.**
 
-A collaborative pixel art canvas powered by a Match-3 puzzle game. Players earn gems by playing an addictive match-3 game with power-ups and boosters, then use those gems to place pixels on a shared 200x200 canvas. Real-time updates via WebSocket make pixels appear instantly.
+A collaborative pixel art canvas powered by a Match-3 puzzle game. Players earn gems by playing an addictive match-3 game with power-ups and boosters, then use those gems to place pixels on a shared 200x200 canvas.
 
 ## Features
 
@@ -10,17 +10,16 @@ A collaborative pixel art canvas powered by a Match-3 puzzle game. Players earn 
 - **5 Boosters** — Hammer, Shuffle, +5 Moves, Color Burst, Lightning
 - **4 Special Gems** — Rocket, Bomb, Color Blast, Nova
 - **Collaborative Canvas** — 200x200 pixel grid, draw with thousands of players
-- **Real-Time Updates** — WebSocket-powered instant pixel updates
 - **Achievement System** — 16 achievements across game, pixel, and social categories
 - **XP & Leveling** — Earn XP, level up, unlock rewards
 - **Leaderboard** — Compete for top scores
+- **Admin Panel** — Manage users, view stats, and moderate content
 
 ## Requirements
 
 - PHP 8.0 or higher
 - MySQL 8.0 or higher
 - Apache with mod_rewrite (XAMPP works great)
-- Composer (for WebSocket server)
 - Modern web browser
 
 ## Installation
@@ -54,26 +53,7 @@ define('DB_PASS', '');
 define('BASE_URL', 'http://localhost/pixelforge');
 ```
 
-### 4. Install WebSocket Dependencies (Optional)
-
-For real-time pixel updates:
-```bash
-cd api/websocket
-composer require cboden/ratchet
-```
-
-### 5. Start the WebSocket Server (Optional)
-
-```bash
-cd api/websocket
-php server.php
-```
-
-Or on Windows, double-click `start.bat`.
-
-The WebSocket server runs on port 8080.
-
-### 6. Set Permissions
+### 4. Set Permissions
 
 Make sure the `logs/` directory is writable:
 ```bash
@@ -121,13 +101,19 @@ pixelforge/
 ├── canvas.html             # Collaborative pixel canvas
 ├── leaderboard.html        # Player rankings
 ├── profile.html            # User profile
+├── start.php               # Dashboard & system verification
+├── admin/
+│   ├── index.html          # Admin panel
+│   ├── admin.css           # Admin styles
+│   ├── admin.js            # Admin logic
+│   └── api.php             # Admin API
 ├── api/
 │   ├── config.php          # Configuration
 │   ├── auth.php            # Authentication API
 │   ├── game.php            # Game score/booster API
 │   ├── pixels.php          # Pixel placement API
 │   ├── canvas.php          # Canvas state endpoint
-│   └── websocket/          # WebSocket server
+│   └── db-reset.php        # Database reset endpoint
 ├── includes/
 │   ├── db.php              # Database connection
 │   ├── auth.php            # Auth helpers
@@ -159,39 +145,12 @@ pixelforge/
 - `GET /api/pixels.php?action=get_all` — Get all pixels
 - `GET /api/canvas.php` — Get canvas state
 
-## WebSocket Protocol
-
-Connect to `ws://localhost:8080`:
-
-```javascript
-const ws = new WebSocket('ws://localhost:8080');
-
-// Authenticate
-ws.send(JSON.stringify({ type: 'auth', user_id: 1 }));
-
-// Place pixel
-ws.send(JSON.stringify({ type: 'place_pixel', x: 10, y: 20, color: '#ff0000' }));
-
-// Listen for updates
-ws.onmessage = (e) => {
-    const data = JSON.parse(e.data);
-    if (data.type === 'pixel_placed') {
-        // Update canvas
-    }
-};
-```
-
 ## Troubleshooting
 
 **Database connection failed**
 - Check `api/config.php` credentials
 - Make sure MySQL is running
 - Verify database `pixelforge` exists
-
-**WebSocket not connecting**
-- Check if port 8080 is available
-- Make sure Ratchet is installed: `composer require cboden/ratchet`
-- Check firewall settings
 
 **Canvas not loading**
 - Check browser console for errors
@@ -204,4 +163,4 @@ MIT License. Built with passion for pixel art.
 
 ---
 
-Built with HTML, CSS, JavaScript, PHP, MySQL, and Ratchet WebSocket.
+Built with HTML, CSS, JavaScript, PHP, and MySQL.

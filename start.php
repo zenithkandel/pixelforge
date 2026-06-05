@@ -38,14 +38,6 @@ if ($dbOk && in_array('achievements', $existingTables)) {
     $achievementCount = $pdo->query("SELECT COUNT(*) FROM achievements")->fetchColumn();
 }
 
-$wsRunning = false;
-$wsPid = '';
-$fp = @fsockopen('127.0.0.1', 8080, $errno, $errstr, 2);
-if ($fp) {
-    fclose($fp);
-    $wsRunning = true;
-}
-
 $phpVersion = PHP_VERSION;
 $extensions = [
     'pdo' => extension_loaded('pdo'),
@@ -57,17 +49,15 @@ $extensions = [
 
 $files = [
     'api/config.php', 'api/auth.php', 'api/game.php', 'api/pixels.php',
-    'api/canvas.php', 'api/websocket/server.php', 'api/websocket/ChatServer.php',
+    'api/canvas.php',
     'includes/db.php', 'includes/auth.php', 'includes/csrf.php',
     'assets/css/main.css', 'assets/css/game.css', 'assets/css/canvas.css',
     'assets/css/auth.css',
     'assets/js/utils.js', 'assets/js/game.js', 'assets/js/game-renderer.js',
     'assets/js/game-animations.js', 'assets/js/game-powerups.js',
     'index.html', 'game.html', 'canvas.html', 'leaderboard.html', 'profile.html',
-    '.htaccess', 'vendor/autoload.php',
+    '.htaccess',
 ];
-
-$ratchetAvailable = class_exists('Ratchet\Server\IoServer');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -258,43 +248,6 @@ $ratchetAvailable = class_exists('Ratchet\Server\IoServer');
             background: #6d28d9;
         }
 
-        .ws-status {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-            padding: 14px 16px;
-            border-radius: 12px;
-            font-weight: 600;
-        }
-
-        .ws-status.running {
-            background: rgba(34,197,94,0.1);
-            border: 1px solid rgba(34,197,94,0.3);
-            color: #22c55e;
-        }
-
-        .ws-status.stopped {
-            background: rgba(239,68,68,0.1);
-            border: 1px solid rgba(239,68,68,0.3);
-            color: #ef4444;
-        }
-
-        .ws-status .pulse {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        .ws-status.running .pulse { background: #22c55e; }
-        .ws-status.stopped .pulse { background: #ef4444; animation: none; }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.3); }
-        }
-
         .btn {
             display: inline-flex;
             align-items: center;
@@ -328,41 +281,10 @@ $ratchetAvailable = class_exists('Ratchet\Server\IoServer');
             background: rgba(239,68,68,0.25);
         }
 
-        .btn-success {
-            background: rgba(34,197,94,0.15);
-            color: #22c55e;
-            border: 1px solid rgba(34,197,94,0.3);
-        }
-
-        .btn-success:hover {
-            background: rgba(34,197,94,0.25);
-        }
-
         .btn:disabled {
             opacity: 0.4;
             cursor: not-allowed;
             transform: none !important;
-        }
-
-        .ws-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .log-box {
-            margin-top: 16px;
-            background: #000;
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 10px;
-            padding: 14px;
-            font-family: 'Cascadia Code', 'Fira Code', monospace;
-            font-size: 0.78rem;
-            color: #22c55e;
-            max-height: 200px;
-            overflow-y: auto;
-            line-height: 1.6;
-            white-space: pre-wrap;
         }
 
         .schema-sql {
@@ -444,12 +366,6 @@ $ratchetAvailable = class_exists('Ratchet\Server\IoServer');
                 ext-<?php echo $ext; ?>
             </li>
             <?php endforeach; ?>
-            <li>
-                <span class="icon <?php echo $ratchetAvailable ? 'ok' : 'fail'; ?>">
-                    <?php echo $ratchetAvailable ? '&#10003;' : '&#10007;'; ?>
-                </span>
-                Ratchet WebSocket
-            </li>
         </ul>
     </div>
 
@@ -514,28 +430,6 @@ $ratchetAvailable = class_exists('Ratchet\Server\IoServer');
         </ul>
     </div>
 
-    <!-- WebSocket Server -->
-    <div class="card">
-        <h2><span class="dot <?php echo $wsRunning ? 'green' : 'red'; ?>"></span> WebSocket Server</h2>
-        <div class="ws-status <?php echo $wsRunning ? 'running' : 'stopped'; ?>">
-            <div class="pulse"></div>
-            <?php echo $wsRunning ? 'Running on port 8080' : 'Not running'; ?>
-        </div>
-        <div class="ws-actions">
-            <button class="btn btn-primary" onclick="startWS()" id="btnStart" <?php echo $wsRunning ? 'disabled' : ''; ?>>
-                &#9654; Start Server
-            </button>
-            <button class="btn btn-danger" onclick="stopWS()" id="btnStop" <?php echo !$wsRunning ? 'disabled' : ''; ?>>
-                &#9632; Stop Server
-            </button>
-            <button class="btn btn-success" onclick="checkWS()" id="btnCheck">
-                &#8635; Refresh Status
-            </button>
-        </div>
-        <div class="log-box" id="wsLog">WebSocket server control panel ready.</div>
-        <span class="php-cmd">php api/websocket/server.php</span>
-    </div>
-
     <!-- Quick Links -->
     <div class="card">
         <h2><span class="dot green"></span> Quick Links</h2>
@@ -575,6 +469,13 @@ $ratchetAvailable = class_exists('Ratchet\Server\IoServer');
                 </div>
                 <a href="profile.html">Open</a>
             </div>
+            <div class="page-row">
+                <div>
+                    <div class="name">Admin Panel</div>
+                    <div class="desc">Manage users & data</div>
+                </div>
+                <a href="admin/">Open</a>
+            </div>
         </div>
     </div>
 
@@ -597,90 +498,25 @@ $ratchetAvailable = class_exists('Ratchet\Server\IoServer');
 </div>
 
 <script>
-const logEl = document.getElementById('wsLog');
-
-function log(msg) {
-    const time = new Date().toLocaleTimeString();
-    logEl.innerHTML += `\n[${time}] ${msg}`;
-    logEl.scrollTop = logEl.scrollHeight;
-}
-
-function startWS() {
-    document.getElementById('btnStart').disabled = true;
-    log('Sending start request...');
-
-    fetch('api/ws-control.php?action=start')
-        .then(r => r.json())
-        .then(data => {
-            log(data.message || 'Done');
-            setTimeout(checkWS, 1500);
-        })
-        .catch(e => {
-            log('Error: ' + e.message);
-            document.getElementById('btnStart').disabled = false;
-        });
-}
-
-function stopWS() {
-    document.getElementById('btnStop').disabled = true;
-    log('Sending stop request...');
-
-    fetch('api/ws-control.php?action=stop')
-        .then(r => r.json())
-        .then(data => {
-            log(data.message || 'Done');
-            setTimeout(checkWS, 1000);
-        })
-        .catch(e => {
-            log('Error: ' + e.message);
-            document.getElementById('btnStop').disabled = false;
-        });
-}
-
-function checkWS() {
-    fetch('api/ws-control.php?action=status')
-        .then(r => r.json())
-        .then(data => {
-            const statusEl = document.querySelector('.ws-status');
-            const dotEl = document.querySelector('.ws-status .pulse');
-            const btnStart = document.getElementById('btnStart');
-            const btnStop = document.getElementById('btnStop');
-
-            if (data.running) {
-                statusEl.className = 'ws-status running';
-                statusEl.innerHTML = '<div class="pulse"></div> Running on port ' + data.port;
-                btnStart.disabled = true;
-                btnStop.disabled = false;
-                log('Server is running on port ' + data.port);
-            } else {
-                statusEl.className = 'ws-status stopped';
-                statusEl.innerHTML = '<div class="pulse"></div> Not running';
-                btnStart.disabled = false;
-                btnStop.disabled = true;
-                log('Server is not running');
-            }
-        })
-        .catch(e => log('Status check failed: ' + e.message));
-}
-
 function resetDB() {
     if (!confirm('This will DROP all tables and re-import the schema. Are you sure?')) return;
 
-    log('Resetting database...');
+    const output = document.getElementById('resetOutput');
+    output.style.display = 'block';
+    output.textContent = 'Resetting database...';
 
-    fetch('api/ws-control.php?action=reset_db')
+    fetch('api/db-reset.php')
         .then(r => r.json())
         .then(data => {
-            log(data.message || 'Database reset');
+            output.textContent = data.message || 'Done';
             if (data.success) {
                 setTimeout(() => location.reload(), 1000);
             }
         })
-        .catch(e => log('Reset failed: ' + e.message));
+        .catch(e => {
+            output.textContent = 'Reset failed: ' + e.message;
+        });
 }
-
-// Auto-check status on load
-checkWS();
 </script>
 
 </body>
