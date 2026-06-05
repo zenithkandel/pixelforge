@@ -6,12 +6,13 @@
   'use strict';
 
   var API_BASE = '/codes/pixelforge/admin/api.php';
-  var PAGE_SIZE = { users: 20, pixels: 50, sessions: 30, transactions: 50 };
 
   var state = {
     currentSection: 'dashboard',
     pages: { users: 1, pixels: 1, sessions: 1, transactions: 1 },
-    searchTimeout: null
+    searchTimeout: null,
+    authChecked: false,
+    isAdmin: false
   };
 
   // --- API helper ---
@@ -32,12 +33,55 @@
       config.body = JSON.stringify(opts.body);
     }
 
-    return fetch(url, config).then(function(r) { return r.json(); });
+    return fetch(url, config).then(function(r) {
+      var contentType = r.headers.get('content-type') || '';
+      if (contentType.indexOf('application/json') === -1) {
+        throw new Error('Server returned non-JSON response (status ' + r.status + ')');
+      }
+      return r.json().then(function(data) {
+        if (r.status === 401) {
+          showAuthState('login');
+          throw new Error(data.message || 'Not logged in');
+        }
+        if (r.status === 403) {
+          showAuthState('admin');
+          throw new Error(data.message || 'Admin access required');
+        }
+        return data;
+      });
+    });
+  }
+
+  // --- Auth state display ---
+  function showAuthState(reason) {
+    var main = document.querySelector('.admin-main');
+    if (!main) return;
+
+    var msg = reason === 'admin'
+      ? 'You need admin access to view this panel. Log in with an admin account.'
+      : 'Please log in to access the admin panel.';
+
+    var loginUrl = '/codes/pixelforge/';
+
+    main.innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:center;min-height:60vh;padding:var(--space-8);">' +
+        '<div class="card" style="max-width:420px;width:100%;text-align:center;">' +
+          '<div class="card-body" style="padding:var(--space-8);">' +
+            '<div style="width:56px;height:56px;border-radius:50%;background-color:var(--accent-light,#fff3ed);color:var(--accent,#E17B47);display:flex;align-items:center;justify-content:center;margin:0 auto var(--space-5);">' +
+              '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M5 20c0-3.3 2.7-6 6-6h2c3.3 0 6 2.7 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' +
+            '</div>' +
+            '<h2 class="h3 mb-2" style="color:var(--text-primary);">' + (reason === 'admin' ? 'Admin Access Required' : 'Not Logged In') + '</h2>' +
+            '<p style="color:var(--text-secondary);margin-bottom:var(--space-6);">' + msg + '</p>' +
+            '<a href="' + loginUrl + '" class="btn btn-primary">Go to Login</a>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
   }
 
   // --- Toast ---
   function toast(message, type) {
     var container = document.getElementById('toastContainer');
+    if (!container) return;
     var el = document.createElement('div');
     el.className = 'toast toast-' + (type || 'info');
 
@@ -47,8 +91,9 @@
       info: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M9 8v5M9 5.5h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>'
     };
 
+    var colorVar = type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info';
     el.innerHTML =
-      '<span class="toast-icon" style="color: var(--' + (type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info') + ');">' + (icons[type] || icons.info) + '</span>' +
+      '<span class="toast-icon" style="color:var(--' + colorVar + ');">' + (icons[type] || icons.info) + '</span>' +
       '<div class="toast-content"><div class="toast-message">' + esc(message) + '</div></div>';
 
     container.appendChild(el);
@@ -57,7 +102,7 @@
       el.style.transform = 'translateX(100%)';
       el.style.transition = 'all 0.2s ease';
       setTimeout(function() { el.remove(); }, 200);
-    }, 3500);
+    }, 4000);
   }
 
   // --- Confirm dialog ---
@@ -137,23 +182,33 @@
 
   // --- Mobile ---
   function initMobile() {
-    document.getElementById('hamburgerBtn').addEventListener('click', function() {
-      document.getElementById('sidebar').classList.toggle('open');
-      document.getElementById('sidebarOverlay').classList.toggle('open');
-    });
-    document.getElementById('sidebarOverlay').addEventListener('click', closeMobileSidebar);
+    var hamburger = document.getElementById('hamburgerBtn');
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('sidebarOverlay');
+    if (hamburger && sidebar && overlay) {
+      hamburger.addEventListener('click', function() {
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('open');
+      });
+      overlay.addEventListener('click', closeMobileSidebar);
+    }
   }
 
   function closeMobileSidebar() {
-    document.getElementById('sidebar').classList.remove('open');
-    document.getElementById('sidebarOverlay').classList.remove('open');
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('sidebarOverlay');
+    if (sidebar) sidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('open');
   }
 
   // --- Dashboard ---
   async function loadDashboard() {
     try {
       var data = await api('dashboard');
-      if (!data.success) return;
+      if (!data.success) {
+        toast(data.message || 'Failed to load dashboard', 'error');
+        return;
+      }
 
       var stats = data.stats;
       var cards = [
@@ -200,10 +255,10 @@
       } else {
         data.recent_pixels.forEach(function(p) {
           pixHtml += '<tr>' +
-            '<td><code style="font-family: var(--font-mono, monospace); font-size: var(--text-xs);">(' + p.x + ', ' + p.y + ')</code></td>' +
+            '<td><code style="font-family:var(--font-mono,monospace);font-size:var(--text-xs);">(' + p.x + ', ' + p.y + ')</code></td>' +
             '<td><span class="admin-color-swatch" style="background-color:' + esc(p.color) + ';"></span>' + esc(p.color) + '</td>' +
             '<td>' + esc(p.username || 'Unknown') + '</td>' +
-            '<td style="color: var(--text-muted); font-size: var(--text-xs);">' + timeAgo(p.placed_at) + '</td>' +
+            '<td style="color:var(--text-muted);font-size:var(--text-xs);">' + timeAgo(p.placed_at) + '</td>' +
           '</tr>';
         });
       }
@@ -211,7 +266,8 @@
       document.getElementById('recentPixels').innerHTML = pixHtml;
 
     } catch (e) {
-      toast('Failed to load dashboard', 'error');
+      if (!state.authChecked) return;
+      toast(e.message || 'Failed to load dashboard', 'error');
     }
   }
 
@@ -221,7 +277,10 @@
     try {
       var search = (document.getElementById('userSearch') || {}).value || '';
       var data = await api('users', { params: { page: page, search: search } });
-      if (!data.success) return;
+      if (!data.success) {
+        toast(data.message || 'Failed to load users', 'error');
+        return;
+      }
 
       var html = '<table class="admin-table"><thead><tr><th>ID</th><th>User</th><th>Role</th><th>Gems</th><th>XP</th><th>Level</th><th>Pixels</th><th>Games</th><th>Score</th><th>Joined</th><th>Actions</th></tr></thead><tbody>';
       if (data.users.length === 0) {
@@ -229,7 +288,7 @@
       } else {
         data.users.forEach(function(u) {
           html += '<tr>' +
-            '<td style="color: var(--text-muted);">#' + u.id + '</td>' +
+            '<td style="color:var(--text-muted);">#' + u.id + '</td>' +
             '<td><div class="admin-user-cell"><div class="avatar avatar-sm" style="background-color:' + (u.avatar_color || 'var(--accent)') + ';">' + esc(u.username.charAt(0).toUpperCase()) + '</div><div><div class="admin-user-name">' + esc(u.username) + '</div><div class="admin-user-email">' + esc(u.email || '') + '</div></div></div></td>' +
             '<td><span class="badge ' + (u.role === 'admin' ? 'badge-admin' : 'badge-user') + '">' + u.role + '</span></td>' +
             '<td><span class="admin-gem-positive">' + u.balance.toLocaleString() + '</span></td>' +
@@ -238,7 +297,7 @@
             '<td>' + (u.total_pixels_placed || 0).toLocaleString() + '</td>' +
             '<td>' + (u.total_games_played || 0).toLocaleString() + '</td>' +
             '<td class="admin-score">' + (u.total_score || 0).toLocaleString() + '</td>' +
-            '<td style="font-size: var(--text-xs); color: var(--text-muted);">' + new Date(u.created_at).toLocaleDateString() + '</td>' +
+            '<td style="font-size:var(--text-xs);color:var(--text-muted);">' + new Date(u.created_at).toLocaleDateString() + '</td>' +
             '<td><div style="display:flex;gap:var(--space-1);">' +
               '<button class="admin-action-btn admin-action-edit" data-edit="' + u.id + '" data-role="' + u.role + '" data-balance="' + u.balance + '" data-level="' + u.level + '">Edit</button>' +
               (u.role !== 'admin' ? '<button class="admin-action-btn admin-action-delete" data-delete="' + u.id + '">Delete</button>' : '') +
@@ -250,7 +309,8 @@
       document.getElementById('usersTable').innerHTML = html;
       renderPagination('users', data.page, data.pages);
     } catch (e) {
-      toast('Failed to load users', 'error');
+      if (!state.authChecked) return;
+      toast(e.message || 'Failed to load users', 'error');
     }
   }
 
@@ -259,7 +319,10 @@
     state.pages.pixels = page;
     try {
       var data = await api('pixels', { params: { page: page } });
-      if (!data.success) return;
+      if (!data.success) {
+        toast(data.message || 'Failed to load pixels', 'error');
+        return;
+      }
 
       var html = '<table class="admin-table"><thead><tr><th>X</th><th>Y</th><th>Color</th><th>Preview</th><th>Placed By</th><th>When</th></tr></thead><tbody>';
       if (data.pixels.length === 0) {
@@ -272,7 +335,7 @@
             '<td><span class="admin-color-swatch" style="background-color:' + esc(p.color) + ';"></span>' + esc(p.color) + '</td>' +
             '<td><span class="admin-color-swatch admin-color-swatch-lg" style="background-color:' + esc(p.color) + ';"></span></td>' +
             '<td>' + esc(p.username || 'Unknown') + '</td>' +
-            '<td style="font-size: var(--text-xs); color: var(--text-muted);">' + timeAgo(p.placed_at) + '</td>' +
+            '<td style="font-size:var(--text-xs);color:var(--text-muted);">' + timeAgo(p.placed_at) + '</td>' +
           '</tr>';
         });
       }
@@ -280,7 +343,8 @@
       document.getElementById('pixelsTable').innerHTML = html;
       renderPagination('pixels', data.page, data.pages);
     } catch (e) {
-      toast('Failed to load pixels', 'error');
+      if (!state.authChecked) return;
+      toast(e.message || 'Failed to load pixels', 'error');
     }
   }
 
@@ -289,7 +353,10 @@
     state.pages.sessions = page;
     try {
       var data = await api('sessions', { params: { page: page } });
-      if (!data.success) return;
+      if (!data.success) {
+        toast(data.message || 'Failed to load sessions', 'error');
+        return;
+      }
 
       var html = '<table class="admin-table"><thead><tr><th>ID</th><th>Player</th><th>Score</th><th>Combo</th><th>Moves</th><th>Status</th><th>Started</th><th>Ended</th></tr></thead><tbody>';
       if (data.sessions.length === 0) {
@@ -298,14 +365,14 @@
         data.sessions.forEach(function(s) {
           var statusClass = s.status === 'completed' ? 'badge-completed' : s.status === 'active' ? 'badge-active' : 'badge-abandoned';
           html += '<tr>' +
-            '<td style="color: var(--text-muted);">#' + s.id + '</td>' +
+            '<td style="color:var(--text-muted);">#' + s.id + '</td>' +
             '<td>' + esc(s.username || 'Unknown') + '</td>' +
             '<td class="admin-score">' + (s.score || 0).toLocaleString() + '</td>' +
             '<td>' + (s.combo_max || 0) + 'x</td>' +
             '<td>' + (s.moves_left || 0) + '</td>' +
             '<td><span class="badge ' + statusClass + '">' + s.status + '</span></td>' +
-            '<td style="font-size: var(--text-xs); color: var(--text-muted);">' + timeAgo(s.started_at) + '</td>' +
-            '<td style="font-size: var(--text-xs); color: var(--text-muted);">' + (s.completed_at ? timeAgo(s.completed_at) : '—') + '</td>' +
+            '<td style="font-size:var(--text-xs);color:var(--text-muted);">' + timeAgo(s.started_at) + '</td>' +
+            '<td style="font-size:var(--text-xs);color:var(--text-muted);">' + (s.completed_at ? timeAgo(s.completed_at) : '\u2014') + '</td>' +
           '</tr>';
         });
       }
@@ -313,7 +380,8 @@
       document.getElementById('sessionsTable').innerHTML = html;
       renderPagination('sessions', data.page, data.pages);
     } catch (e) {
-      toast('Failed to load sessions', 'error');
+      if (!state.authChecked) return;
+      toast(e.message || 'Failed to load sessions', 'error');
     }
   }
 
@@ -322,7 +390,10 @@
     state.pages.transactions = page;
     try {
       var data = await api('transactions', { params: { page: page } });
-      if (!data.success) return;
+      if (!data.success) {
+        toast(data.message || 'Failed to load transactions', 'error');
+        return;
+      }
 
       var html = '<table class="admin-table"><thead><tr><th>ID</th><th>User</th><th>Amount</th><th>Type</th><th>Description</th><th>When</th></tr></thead><tbody>';
       if (data.transactions.length === 0) {
@@ -333,12 +404,12 @@
           var amtSign = t.amount >= 0 ? '+' : '';
           var typeClass = t.type === 'earn' ? 'badge-earn' : 'badge-spend';
           html += '<tr>' +
-            '<td style="color: var(--text-muted);">#' + t.id + '</td>' +
+            '<td style="color:var(--text-muted);">#' + t.id + '</td>' +
             '<td>' + esc(t.username || 'Unknown') + '</td>' +
             '<td class="' + amtClass + '">' + amtSign + t.amount + ' gem</td>' +
             '<td><span class="badge ' + typeClass + '">' + t.type + '</span></td>' +
-            '<td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + esc(t.description || '') + '</td>' +
-            '<td style="font-size: var(--text-xs); color: var(--text-muted);">' + timeAgo(t.created_at) + '</td>' +
+            '<td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + esc(t.description || '') + '</td>' +
+            '<td style="font-size:var(--text-xs);color:var(--text-muted);">' + timeAgo(t.created_at) + '</td>' +
           '</tr>';
         });
       }
@@ -346,7 +417,8 @@
       document.getElementById('transactionsTable').innerHTML = html;
       renderPagination('transactions', data.page, data.pages);
     } catch (e) {
-      toast('Failed to load transactions', 'error');
+      if (!state.authChecked) return;
+      toast(e.message || 'Failed to load transactions', 'error');
     }
   }
 
@@ -354,7 +426,10 @@
   async function loadAchievements() {
     try {
       var data = await api('achievements');
-      if (!data.success) return;
+      if (!data.success) {
+        toast(data.message || 'Failed to load achievements', 'error');
+        return;
+      }
 
       if (data.achievements.length === 0) {
         document.getElementById('achievementsList').innerHTML = '<div class="admin-table-empty">No achievements defined</div>';
@@ -375,7 +450,8 @@
         '</div>';
       }).join('');
     } catch (e) {
-      toast('Failed to load achievements', 'error');
+      if (!state.authChecked) return;
+      toast(e.message || 'Failed to load achievements', 'error');
     }
   }
 
@@ -390,7 +466,7 @@
     var range = getPageRange(page, pages);
     range.forEach(function(p) {
       if (p === '...') {
-        html += '<span style="color: var(--text-muted); padding: 0 4px;">...</span>';
+        html += '<span style="color:var(--text-muted);padding:0 4px;">...</span>';
       } else {
         html += '<button class="' + (p === page ? 'active-page' : '') + '" data-page-section="' + section + '" data-page-num="' + p + '">' + p + '</button>';
       }
@@ -449,7 +525,7 @@
         toast(data.message || 'Failed to update user', 'error');
       }
     } catch (e) {
-      toast('Failed to update user', 'error');
+      toast(e.message || 'Failed to update user', 'error');
     }
   }
 
@@ -466,17 +542,15 @@
         toast(data.message || 'Failed to delete user', 'error');
       }
     } catch (e) {
-      toast('Failed to delete user', 'error');
+      toast(e.message || 'Failed to delete user', 'error');
     }
   }
 
   // --- Events ---
   function initEvents() {
-    // Delegated click handler
     document.addEventListener('click', function(e) {
       var target = e.target;
 
-      // Edit user
       var editBtn = target.closest('[data-edit]');
       if (editBtn) {
         openEditModal(
@@ -488,26 +562,22 @@
         return;
       }
 
-      // Delete user
       var deleteBtn = target.closest('[data-delete]');
       if (deleteBtn) {
         handleDeleteUser(parseInt(deleteBtn.dataset.delete));
         return;
       }
 
-      // Modal close
       if (target.id === 'modalCloseBtn' || target.id === 'modalCancelBtn' || target.id === 'editModal') {
         closeEditModal();
         return;
       }
 
-      // Modal save
       if (target.id === 'modalSaveBtn') {
         handleSaveUser();
         return;
       }
 
-      // Pagination
       var pageBtn = target.closest('[data-page-section]');
       if (pageBtn && !pageBtn.disabled) {
         loadPage(pageBtn.dataset.pageSection, parseInt(pageBtn.dataset.pageNum));
@@ -515,7 +585,6 @@
       }
     });
 
-    // Search
     var searchInput = document.getElementById('userSearch');
     if (searchInput) {
       searchInput.addEventListener('input', function() {
@@ -526,11 +595,11 @@
       });
     }
 
-    // Keyboard
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         closeEditModal();
-        document.getElementById('confirmOverlay').classList.remove('active');
+        var confirmOverlay = document.getElementById('confirmOverlay');
+        if (confirmOverlay) confirmOverlay.classList.remove('active');
       }
     });
   }
@@ -544,19 +613,46 @@
   }
 
   function timeAgo(dateStr) {
-    if (!dateStr) return '—';
-    var diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
+    if (!dateStr) return '\u2014';
+    var d = new Date(dateStr);
+    if (isNaN(d.getTime())) return '\u2014';
+    var diff = Math.floor((Date.now() - d.getTime()) / 1000);
+    if (diff < 0) diff = 0;
     if (diff < 60) return 'just now';
     if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
     if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
-    return Math.floor(diff / 86400) + 'd ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return d.toLocaleDateString();
   }
 
   // --- Init ---
-  document.addEventListener('DOMContentLoaded', function() {
-    initNav();
+  document.addEventListener('DOMContentLoaded', async function() {
     initMobile();
     initEvents();
+
+    // Check auth first before loading anything
+    try {
+      var res = await fetch('/codes/pixelforge/api/auth.php?action=me', { credentials: 'same-origin' });
+      var ct = res.headers.get('content-type') || '';
+      if (ct.indexOf('application/json') === -1) {
+        showAuthState('login');
+        return;
+      }
+      var authData = await res.json();
+      if (!authData.success || !authData.user) {
+        showAuthState('login');
+        return;
+      }
+      if (authData.user.role !== 'admin') {
+        showAuthState('admin');
+        return;
+      }
+      state.authChecked = true;
+      state.isAdmin = true;
+      initNav();
+    } catch (e) {
+      showAuthState('login');
+    }
   });
 
 })();

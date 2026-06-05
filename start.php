@@ -49,13 +49,16 @@ $extensions = [
 
 $files = [
     'api/config.php', 'api/auth.php', 'api/game.php', 'api/pixels.php',
-    'api/canvas.php',
+    'api/canvas.php', 'admin/api.php',
     'includes/db.php', 'includes/auth.php', 'includes/csrf.php',
-    'assets/css/main.css', 'assets/css/game.css', 'assets/css/canvas.css',
-    'assets/css/auth.css',
+    'assets/css/main.css', 'assets/css/base/tokens.css',
+    'assets/css/pages/play.css', 'assets/css/pages/world.css',
+    'assets/css/pages/landing.css',
     'assets/js/utils.js', 'assets/js/game.js', 'assets/js/game-renderer.js',
     'assets/js/game-animations.js', 'assets/js/game-powerups.js',
-    'index.html', 'game.html', 'canvas.html', 'leaderboard.html', 'profile.html',
+    'assets/js/core/api.js', 'assets/js/core/auth.js', 'assets/js/core/events.js',
+    'index.html', 'game/index.html', 'world/index.html',
+    'rankings/index.html', 'profile/index.html', 'home/index.html',
     '.htaccess',
 ];
 ?>
@@ -446,28 +449,28 @@ $files = [
                     <div class="name">Gem Forge</div>
                     <div class="desc">Match-3 puzzle game</div>
                 </div>
-                <a href="game.html">Open</a>
+                <a href="game/">Open</a>
             </div>
             <div class="page-row">
                 <div>
                     <div class="name">Pixel Canvas</div>
                     <div class="desc">200x200 collaborative grid</div>
                 </div>
-                <a href="canvas.html">Open</a>
+                <a href="world/">Open</a>
             </div>
             <div class="page-row">
                 <div>
-                    <div class="name">Leaderboard</div>
+                    <div class="name">Rankings</div>
                     <div class="desc">Player rankings</div>
                 </div>
-                <a href="leaderboard.html">Open</a>
+                <a href="rankings/">Open</a>
             </div>
             <div class="page-row">
                 <div>
                     <div class="name">Profile</div>
                     <div class="desc">Your stats & achievements</div>
                 </div>
-                <a href="profile.html">Open</a>
+                <a href="profile/">Open</a>
             </div>
             <div class="page-row">
                 <div>

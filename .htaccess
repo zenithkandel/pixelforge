@@ -35,13 +35,6 @@ RewriteRule ^register$ / [R=301,L]
 RewriteRule ^leaderboard$ /rankings/ [R=301,L]
 RewriteRule ^profile$ /profile/ [R=301,L]
 
-# Backward compatibility: old .html files redirect to new structure
-RewriteRule ^game\.html$ /game/ [R=301,L]
-RewriteRule ^canvas\.html$ /world/ [R=301,L]
-RewriteRule ^leaderboard\.html$ /rankings/ [R=301,L]
-RewriteRule ^profile\.html$ /profile/ [R=301,L]
-RewriteRule ^index\.html$ / [R=301,L]
-
 # Security headers
 Header set X-Content-Type-Options "nosniff"
 Header set X-Frame-Options "SAMEORIGIN"
