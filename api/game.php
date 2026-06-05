@@ -254,12 +254,12 @@ function handleBuyBooster()
     $boosterType = $input['booster_type'] ?? null;
 
     $validBoosters = [
-        'hint' => 100,
-        'hammer' => 150,
-        'shuffle' => 250,
-        'extraMoves' => 350,
-        'colorBurst' => 500,
-        'lightning' => 750
+        'hint' => 10,
+        'hammer' => 25,
+        'shuffle' => 40,
+        'extraMoves' => 60,
+        'colorBurst' => 100,
+        'lightning' => 150
     ];
 
     if (!$boosterType || !isset($validBoosters[$boosterType])) {

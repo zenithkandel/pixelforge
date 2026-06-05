@@ -24,6 +24,14 @@
           <span class="play-stat-label">Score</span>
           <span class="play-stat-value score" id="hudScore">0</span>
         </div>
+        <div class="play-stat">
+          <span class="play-stat-label">Target</span>
+          <span class="play-stat-value" id="hudTarget" style="color: var(--text-muted);">500</span>
+        </div>
+        <div class="play-stat" id="hudGemsEarnedWrap" style="display: none;">
+          <i class="fa-duotone fa-light fa-gem" style="color: var(--success);"></i>
+          <span class="play-stat-value" id="hudGemsEarned" style="color: var(--success);">+0</span>
+        </div>
       </div>
       <div class="play-topbar-right">
         <div class="play-stat">
@@ -69,8 +77,10 @@
   <!-- Game Over Overlay -->
   <div class="play-gameover-overlay" id="gameOverOverlay">
     <div class="play-gameover-card">
-      <h2 class="play-gameover-title">Game Over</h2>
+      <div class="play-gameover-stars" id="gameOverStars"></div>
+      <h2 class="play-gameover-title" id="gameOverTitle">Game Over</h2>
       <div class="play-gameover-score" id="finalScore">0</div>
+      <div class="play-gameover-target" id="finalTarget"></div>
       <div class="play-gameover-stats">
         <div class="play-gameover-stat">
           <div class="play-gameover-stat-value" id="finalCombo">1x</div>
@@ -208,6 +218,7 @@
           setupGameEvents();
           setupUIEvents();
           updateHUD();
+          powerups.loadBoosters();
           loadBoosters();
           hideGameOver();
 
@@ -284,10 +295,52 @@
         });
       }
 
+      // --- Score targets based on level ---
+      function getScoreTarget() {
+        var user = Auth.getUser();
+        var level = user ? user.level : 1;
+        return 300 + (level - 1) * 200;
+      }
+
+      function getStars(score, target) {
+        if (score >= target * 2) return 3;
+        if (score >= target) return 2;
+        if (score >= target * 0.5) return 1;
+        return 0;
+      }
+
+      function getGemReward(score) {
+        return Math.max(1, Math.min(50, Math.floor(score / 100)));
+      }
+
       // --- Update HUD from game state ---
       function updateHUD() {
-        document.getElementById('hudScore').textContent = game.score.toLocaleString();
+        var score = game.score;
+        var target = getScoreTarget();
+        var gems = getGemReward(score);
+
+        document.getElementById('hudScore').textContent = score.toLocaleString();
         document.getElementById('hudMoves').textContent = game.movesLeft;
+        document.getElementById('hudTarget').textContent = target.toLocaleString();
+
+        var gemsEarnedWrap = document.getElementById('hudGemsEarnedWrap');
+        var gemsEarnedEl = document.getElementById('hudGemsEarned');
+        if (score > 0) {
+          gemsEarnedWrap.style.display = '';
+          gemsEarnedEl.textContent = '+' + gems;
+        } else {
+          gemsEarnedWrap.style.display = 'none';
+        }
+
+        // Score color: red if below 50% target, yellow if below target, green if at/above
+        var scoreEl = document.getElementById('hudScore');
+        if (score >= target) {
+          scoreEl.style.color = 'var(--success)';
+        } else if (score >= target * 0.5) {
+          scoreEl.style.color = 'var(--warning)';
+        } else {
+          scoreEl.style.color = 'var(--text-primary)';
+        }
 
         // Combo display
         var comboEl = document.getElementById('hudCombo');
@@ -387,12 +440,12 @@
           var list = document.getElementById('boosterList');
           var boosters = data.boosters;
           var boosterDefs = [
-            { key: 'hint', name: 'Hint', icon: '\uD83D\uDCA1', desc: 'Show a valid move', cost: 100 },
-            { key: 'hammer', name: 'Hammer', icon: '\uD83D\uDD28', desc: 'Destroy one gem', cost: 150 },
-            { key: 'shuffle', name: 'Shuffle', icon: '\uD83D\uDD00', desc: 'Randomize board', cost: 250 },
-            { key: 'extraMoves', name: '+5 Moves', icon: '\u26A1', desc: 'Add 5 moves', cost: 350 },
-            { key: 'colorBurst', name: 'Color Burst', icon: '\uD83D\uDCA5', desc: 'Destroy all of one color', cost: 500 },
-            { key: 'lightning', name: 'Lightning', icon: '\u26A1', desc: 'Clear row + column', cost: 750 },
+            { key: 'hint', name: 'Hint', icon: '\uD83D\uDCA1', desc: 'Show a valid move', cost: 10 },
+            { key: 'hammer', name: 'Hammer', icon: '\uD83D\uDD28', desc: 'Destroy one gem', cost: 25 },
+            { key: 'shuffle', name: 'Shuffle', icon: '\uD83D\uDD00', desc: 'Randomize board', cost: 40 },
+            { key: 'extraMoves', name: '+5 Moves', icon: '\u26A1', desc: 'Add 5 moves', cost: 60 },
+            { key: 'colorBurst', name: 'Color Burst', icon: '\uD83D\uDCA5', desc: 'Destroy all of one color', cost: 100 },
+            { key: 'lightning', name: 'Lightning', icon: '\u26A1', desc: 'Clear row + column', cost: 150 },
           ];
           var userBalance = Auth.getUser() ? Auth.getUser().balance : 0;
 
@@ -446,6 +499,11 @@
               Auth.getUser().balance = data.new_balance;
               document.getElementById('hudGems').textContent = data.new_balance;
             }
+            if (data.boosters) {
+              Object.keys(data.boosters).forEach(function(key) {
+                if (powerups.boosters[key]) powerups.boosters[key].count = data.boosters[key];
+              });
+            }
             Toast.success('Purchased!', 'Booster added to your inventory.');
             loadBoosters();
           }
@@ -457,12 +515,16 @@
       async function useBooster(type) {
         if (game.isProcessing) return;
         try {
-          await API.post('game.php?action=use_booster', { booster_type: type });
           if (type === 'hint') {
+            await API.post('game.php?action=use_booster', { booster_type: type });
             renderer.showHint();
-          } else {
-            powerups.activateBooster(type);
+            powerups.loadBoosters();
+            loadBoosters();
+            return;
           }
+          powerups.activateBooster(type);
+          await API.post('game.php?action=use_booster', { booster_type: type });
+          powerups.loadBoosters();
           loadBoosters();
         } catch (err) {
           Toast.error('Booster failed', err.message);
@@ -471,14 +533,40 @@
 
       // --- Game Over ---
       function showGameOver(result) {
+        var target = getScoreTarget();
+        var stars = getStars(result.score, target);
+        var gems = getGemReward(result.score);
+
         document.getElementById('finalScore').textContent = result.score.toLocaleString();
         document.getElementById('finalCombo').textContent = result.maxCombo + 'x';
-        var gems = Math.max(1, Math.min(50, Math.floor(result.score / 100)));
         document.getElementById('finalGems').textContent = '+' + gems;
 
-        var title = document.querySelector('.play-gameover-title');
+        var targetEl = document.getElementById('finalTarget');
         if (result.penalized) {
-          title.textContent = 'Game Quit (-' + QUIT_PENALTY + ' penalty)';
+          targetEl.innerHTML = '<span style="color: var(--danger);">-' + QUIT_PENALTY + ' quit penalty</span>';
+        } else if (stars >= 2) {
+          targetEl.innerHTML = '<span style="color: var(--success);">Target: ' + target.toLocaleString() + ' &mdash; Reached!</span>';
+        } else {
+          targetEl.innerHTML = 'Target: ' + target.toLocaleString();
+        }
+
+        var starsEl = document.getElementById('gameOverStars');
+        starsEl.innerHTML = '';
+        for (var i = 0; i < 3; i++) {
+          var star = document.createElement('i');
+          star.className = i < stars ? 'fa-solid fa-star game-star earned' : 'fa-solid fa-star game-star';
+          starsEl.appendChild(star);
+        }
+
+        var title = document.getElementById('gameOverTitle');
+        if (result.penalized) {
+          title.textContent = 'Game Quit';
+        } else if (stars === 3) {
+          title.textContent = 'Perfect!';
+        } else if (stars === 2) {
+          title.textContent = 'Great Job!';
+        } else if (stars === 1) {
+          title.textContent = 'Not Bad!';
         } else {
           title.textContent = 'Game Over';
         }
