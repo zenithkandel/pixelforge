@@ -243,7 +243,7 @@ function handleMe()
 
     try {
         $stmt = db()->prepare(
-            "SELECT id, username, email, balance, xp, level, avatar_color, total_pixels_placed, total_games_played, created_at FROM users WHERE id = ?"
+            "SELECT id, username, email, balance, xp, level, role, avatar_color, total_pixels_placed, total_games_played, created_at FROM users WHERE id = ?"
         );
         $stmt->execute([$userId]);
         $user = $stmt->fetch();
@@ -261,6 +261,7 @@ function handleMe()
                 'balance' => (int) $user['balance'],
                 'xp' => (int) $user['xp'],
                 'level' => (int) $user['level'],
+                'role' => $user['role'],
                 'avatar_color' => $user['avatar_color'],
                 'total_pixels_placed' => (int) $user['total_pixels_placed'],
                 'total_games_played' => (int) $user['total_games_played'],

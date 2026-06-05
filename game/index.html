@@ -117,6 +117,7 @@
       var game, renderer, powerups;
       var sessionId = null;
       var maxCombo = 1;
+      var scoreSubmitted = false;
 
       // --- Auth ---
       Auth.check().then(function(user) {
@@ -140,6 +141,7 @@
           var data = await API.get('game.php?action=start_game');
           sessionId = data.session_id;
           maxCombo = 1;
+          scoreSubmitted = false;
 
           // Init engine
           game = new GemForge(8, 8, 6);
@@ -300,7 +302,8 @@
 
       // --- Submit score ---
       async function submitScore(result) {
-        if (!sessionId) return;
+        if (!sessionId || scoreSubmitted) return;
+        scoreSubmitted = true;
         try {
           var data = await API.post('game.php?action=submit_score', {
             session_id: sessionId,

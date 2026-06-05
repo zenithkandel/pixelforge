@@ -23,7 +23,7 @@ const Layout = (() => {
 
     const navItems = items.map(item => `
       <a href="${item.href}" class="sidebar-nav-item${item.key === activePage ? ' active' : ''}" aria-current="${item.key === activePage ? 'page' : 'false'}">
-        <span class="sidebar-nav-icon">${icons[item.key]}</span>
+        <span class="sidebar-nav-icon">${icons[item.icon]}</span>
         <span class="sidebar-nav-label">${item.label}</span>
       </a>
     `).join('');
@@ -79,7 +79,7 @@ const Layout = (() => {
 
     const navItems = items.map(item => `
       <a href="${item.href}" class="mobile-nav-item${item.key === activePage ? ' active' : ''}" aria-current="${item.key === activePage ? 'page' : 'false'}">
-        <span class="mobile-nav-icon">${icons[item.key]}</span>
+        <span class="mobile-nav-icon">${icons[item.icon]}</span>
         <span class="mobile-nav-label">${item.label}</span>
       </a>
     `).join('');

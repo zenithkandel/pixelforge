@@ -162,7 +162,7 @@ function handleSubmitScore()
         $stmt->execute([$sessionId]);
         $game = $stmt->fetch();
         $elapsed = time() - strtotime($game['started_at']);
-        if ($elapsed < 30) {
+        if ($elapsed < 5) {
             jsonResponse(['success' => false, 'message' => 'Please wait before submitting another score'], 429);
         }
 
