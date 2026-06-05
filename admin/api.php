@@ -97,7 +97,7 @@ function handleUsers() {
     $total->execute($params);
     $total = $total->fetchColumn();
 
-    $stmt = $pdo->prepare("SELECT id, username, email, role, balance, xp, level, total_pixels_placed, total_games_played, total_score, created_at, last_login_date FROM users $where ORDER BY id ASC LIMIT $limit OFFSET $offset");
+    $stmt = $pdo->prepare("SELECT id, username, email, role, balance, xp, level, avatar_color, total_pixels_placed, total_games_played, total_score, created_at, last_login_date FROM users $where ORDER BY id ASC LIMIT $limit OFFSET $offset");
     $stmt->execute($params);
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

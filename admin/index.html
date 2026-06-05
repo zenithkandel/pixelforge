@@ -6,431 +6,33 @@
     <title>PixelForge - Admin Panel</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/codes/pixelforge/assets/css/main.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: #0a0a0f;
-            color: #e2e8f0;
-            min-height: 100vh;
-        }
-
-        /* ── Layout ── */
-        .admin-layout {
-            display: grid;
-            grid-template-columns: 240px 1fr;
-            min-height: 100vh;
-        }
-
-        /* ── Sidebar ── */
-        .sidebar {
-            background: rgba(255,255,255,0.02);
-            border-right: 1px solid rgba(255,255,255,0.06);
-            padding: 24px 0;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            overflow-y: auto;
-        }
-
-        .sidebar-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 0 20px 24px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            margin-bottom: 16px;
-            text-decoration: none;
-            color: #e2e8f0;
-            font-weight: 800;
-            font-size: 1.1rem;
-        }
-
-        .sidebar-logo .badge {
-            font-size: 0.6rem;
-            background: #7c3aed;
-            color: #fff;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .sidebar-nav { list-style: none; }
-
-        .sidebar-nav li a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 20px;
-            color: #64748b;
-            text-decoration: none;
-            font-size: 0.88rem;
-            font-weight: 500;
-            transition: all 0.15s;
-            border-left: 3px solid transparent;
-        }
-
-        .sidebar-nav li a:hover {
-            color: #e2e8f0;
-            background: rgba(255,255,255,0.03);
-        }
-
-        .sidebar-nav li a.active {
-            color: #7c3aed;
-            background: rgba(124,58,237,0.08);
-            border-left-color: #7c3aed;
-        }
-
-        .sidebar-nav li a svg {
-            width: 18px;
-            height: 18px;
-            flex-shrink: 0;
-        }
-
-        .sidebar-footer {
-            position: absolute;
-            bottom: 16px;
-            left: 0;
-            right: 0;
-            padding: 0 20px;
-        }
-
-        .sidebar-footer a {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #64748b;
-            text-decoration: none;
-            font-size: 0.82rem;
-            padding: 8px 0;
-            transition: color 0.15s;
-        }
-
-        .sidebar-footer a:hover { color: #e2e8f0; }
-
-        /* ── Main Content ── */
-        .admin-main {
-            padding: 28px 32px;
-            max-width: 1200px;
-        }
-
-        .page-header {
-            margin-bottom: 28px;
-        }
-
-        .page-header h1 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 4px;
-        }
-
-        .page-header p {
-            color: #64748b;
-            font-size: 0.88rem;
-        }
-
-        /* ── Stats Grid ── */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-            margin-bottom: 28px;
-        }
-
-        .stat-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 14px;
-            padding: 20px;
-        }
-
-        .stat-card .label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #64748b;
-            margin-bottom: 8px;
-        }
-
-        .stat-card .value {
-            font-size: 1.6rem;
-            font-weight: 800;
-        }
-
-        .stat-card .value.purple { color: #7c3aed; }
-        .stat-card .value.green { color: #22c55e; }
-        .stat-card .value.amber { color: #f59e0b; }
-        .stat-card .value.blue { color: #3b82f6; }
-        .stat-card .value.pink { color: #ec4899; }
-        .stat-card .value.cyan { color: #06b6d4; }
-
-        /* ── Tables ── */
-        .table-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 14px;
-            overflow: hidden;
-            margin-bottom: 24px;
-        }
-
-        .table-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
-
-        .table-header h2 {
-            font-size: 0.95rem;
-            font-weight: 700;
-        }
-
-        .table-header .search-input {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            padding: 6px 12px;
-            color: #e2e8f0;
-            font-size: 0.82rem;
-            outline: none;
-            width: 200px;
-        }
-
-        .table-header .search-input:focus {
-            border-color: #7c3aed;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            text-align: left;
-            padding: 10px 16px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #64748b;
-            font-weight: 600;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
-
-        td {
-            padding: 10px 16px;
-            font-size: 0.85rem;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-        }
-
-        tr:hover { background: rgba(255,255,255,0.02); }
-
-        .role-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 0.72rem;
-            font-weight: 600;
-        }
-
-        .role-badge.admin { background: rgba(124,58,237,0.2); color: #a78bfa; }
-        .role-badge.user { background: rgba(100,116,139,0.2); color: #94a3b8; }
-
-        .status-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 0.72rem;
-            font-weight: 600;
-        }
-
-        .status-badge.completed { background: rgba(34,197,94,0.15); color: #22c55e; }
-        .status-badge.active { background: rgba(59,130,246,0.15); color: #3b82f6; }
-        .status-badge.abandoned { background: rgba(239,68,68,0.15); color: #ef4444; }
-
-        .type-badge.earn { background: rgba(34,197,94,0.15); color: #22c55e; }
-        .type-badge.spend { background: rgba(239,68,68,0.15); color: #ef4444; }
-
-        .btn-sm {
-            padding: 4px 10px;
-            font-size: 0.75rem;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.15s;
-        }
-
-        .btn-edit {
-            background: rgba(59,130,246,0.15);
-            color: #3b82f6;
-        }
-
-        .btn-edit:hover { background: rgba(59,130,246,0.25); }
-
-        .btn-delete {
-            background: rgba(239,68,68,0.15);
-            color: #ef4444;
-        }
-
-        .btn-delete:hover { background: rgba(239,68,68,0.25); }
-
-        .btn-admin {
-            background: rgba(124,58,237,0.15);
-            color: #a78bfa;
-        }
-
-        .btn-admin:hover { background: rgba(124,58,237,0.25); }
-
-        .btn-danger {
-            background: rgba(239,68,68,0.15);
-            color: #ef4444;
-            border: 1px solid rgba(239,68,68,0.3);
-        }
-
-        .btn-danger:hover { background: rgba(239,68,68,0.25); }
-
-        /* ── Pagination ── */
-        .pagination {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 16px;
-        }
-
-        .pagination button {
-            padding: 6px 14px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: transparent;
-            color: #e2e8f0;
-            font-size: 0.82rem;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-
-        .pagination button:hover { background: rgba(124,58,237,0.15); border-color: #7c3aed; }
-        .pagination button:disabled { opacity: 0.3; cursor: not-allowed; }
-        .pagination .page-info { color: #64748b; font-size: 0.82rem; }
-
-        /* ── Pixel Grid Mini ── */
-        .pixel-grid-mini {
-            display: inline-grid;
-            gap: 1px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 6px;
-            padding: 2px;
-        }
-
-        /* ── Sections (hidden by default) ── */
-        .admin-section { display: none; }
-        .admin-section.active { display: block; }
-
-        /* ── Modal ── */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(6px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-
-        .modal-card {
-            background: #1a1a24;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 28px;
-            width: 400px;
-            max-width: 92%;
-        }
-
-        .modal-card h3 {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-        }
-
-        .form-group {
-            margin-bottom: 14px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.78rem;
-            color: #64748b;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 8px 12px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            color: #e2e8f0;
-            font-size: 0.88rem;
-            outline: none;
-        }
-
-        .form-group input:focus, .form-group select:focus {
-            border-color: #7c3aed;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-            margin-top: 20px;
-        }
-
-        .modal-actions button {
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            transition: all 0.15s;
-        }
-
-        .btn-cancel {
-            background: rgba(255,255,255,0.05);
-            color: #94a3b8;
-        }
-
-        .btn-cancel:hover { background: rgba(255,255,255,0.08); }
-
-        .btn-save {
-            background: #7c3aed;
-            color: #fff;
-        }
-
-        .btn-save:hover { background: #6d28d9; }
-
-        @media (max-width: 768px) {
-            .admin-layout { grid-template-columns: 1fr; }
-            .sidebar { display: none; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
     <div class="admin-layout">
+
+        <!-- Mobile Header -->
+        <div class="mobile-header">
+            <button class="hamburger" id="hamburger-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <span class="logo-text">PixelForge Admin</span>
+            <div style="width:34px;"></div>
+        </div>
+
+        <!-- Sidebar Overlay (mobile) -->
+        <div class="sidebar-overlay"></div>
+
         <!-- Sidebar -->
         <aside class="sidebar">
-            <a href="/codes/pixelforge/admin/" class="sidebar-logo">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 9L12 22L22 9L12 2Z"/><path d="M12 2L7 9H17L12 2Z"/></svg>
-                PixelForge <span class="badge">ADMIN</span>
-            </a>
+            <div class="sidebar-header">
+                <a href="/codes/pixelforge/admin/" class="sidebar-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 9L12 22L22 9L12 2Z"/><path d="M12 2L7 9H17L12 2Z"/></svg>
+                    PixelForge <span class="admin-badge">Admin</span>
+                </a>
+            </div>
+
             <ul class="sidebar-nav">
                 <li><a href="#dashboard" class="active" data-section="dashboard">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
@@ -441,7 +43,7 @@
                     Users
                 </a></li>
                 <li><a href="#pixels" data-section="pixels">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
                     Pixels
                 </a></li>
                 <li><a href="#sessions" data-section="sessions">
@@ -457,13 +59,14 @@
                     Achievements
                 </a></li>
             </ul>
+
             <div class="sidebar-footer">
                 <a href="/codes/pixelforge/game.html">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
                     Back to App
                 </a>
-                <a href="/codes/pixelforge/" id="btn-logout">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                <a href="/codes/pixelforge/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                     Logout
                 </a>
             </div>
@@ -475,41 +78,76 @@
             <!-- ═══ DASHBOARD ═══ -->
             <section class="admin-section active" id="section-dashboard">
                 <div class="page-header">
-                    <h1>Dashboard</h1>
-                    <p>Overview of PixelForge</p>
+                    <div class="page-header-left">
+                        <h1>Dashboard</h1>
+                        <p>Overview of PixelForge activity</p>
+                    </div>
                 </div>
                 <div class="stats-grid" id="dashboard-stats"></div>
-                <div class="table-card">
-                    <div class="table-header"><h2>Top Players</h2></div>
-                    <table>
-                        <thead><tr><th>#</th><th>Player</th><th>Score</th><th>Level</th><th>Gems</th></tr></thead>
-                        <tbody id="top-players"></tbody>
-                    </table>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Top Players</h2>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>#</th><th>Player</th><th>Score</th><th>Level</th><th>Gems</th></tr></thead>
+                            <tbody id="top-players"></tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="table-card">
-                    <div class="table-header"><h2>Recent Pixels</h2></div>
-                    <table>
-                        <thead><tr><th>XY</th><th>Color</th><th>By</th><th>When</th></tr></thead>
-                        <tbody id="recent-pixels"></tbody>
-                    </table>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Recent Pixels</h2>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>Position</th><th>Color</th><th>By</th><th>When</th></tr></thead>
+                            <tbody id="recent-pixels"></tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
             <!-- ═══ USERS ═══ -->
             <section class="admin-section" id="section-users">
                 <div class="page-header">
-                    <h1>Users</h1>
-                    <p>Manage registered users</p>
-                </div>
-                <div class="table-card">
-                    <div class="table-header">
-                        <h2>All Users</h2>
-                        <input type="text" class="search-input" id="user-search" placeholder="Search users...">
+                    <div class="page-header-left">
+                        <h1>Users</h1>
+                        <p>Manage registered users</p>
                     </div>
-                    <table>
-                        <thead><tr><th>ID</th><th>Username</th><th>Email</th><th>Role</th><th>Gems</th><th>XP</th><th>Lv</th><th>Pixels</th><th>Games</th><th>Score</th><th>Joined</th><th>Actions</th></tr></thead>
-                        <tbody id="users-list"></tbody>
-                    </table>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2>All Users</h2>
+                        <div class="card-header-actions">
+                            <div class="search-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                <input type="text" id="user-search" placeholder="Search users...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>User</th>
+                                    <th>Role</th>
+                                    <th>Gems</th>
+                                    <th>XP</th>
+                                    <th>Level</th>
+                                    <th>Pixels</th>
+                                    <th>Games</th>
+                                    <th>Score</th>
+                                    <th>Joined</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-list"></tbody>
+                        </table>
+                    </div>
                     <div class="pagination" id="users-pagination"></div>
                 </div>
             </section>
@@ -517,15 +155,21 @@
             <!-- ═══ PIXELS ═══ -->
             <section class="admin-section" id="section-pixels">
                 <div class="page-header">
-                    <h1>Pixel Canvas</h1>
-                    <p>All placed pixels</p>
+                    <div class="page-header-left">
+                        <h1>Pixel Canvas</h1>
+                        <p>All placed pixels across the canvas</p>
+                    </div>
                 </div>
-                <div class="table-card">
-                    <div class="table-header"><h2>Pixel Log</h2></div>
-                    <table>
-                        <thead><tr><th>X</th><th>Y</th><th>Color</th><th>Preview</th><th>Placed By</th><th>When</th></tr></thead>
-                        <tbody id="pixels-list"></tbody>
-                    </table>
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Pixel Log</h2>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>X</th><th>Y</th><th>Color</th><th>Preview</th><th>Placed By</th><th>When</th></tr></thead>
+                            <tbody id="pixels-list"></tbody>
+                        </table>
+                    </div>
                     <div class="pagination" id="pixels-pagination"></div>
                 </div>
             </section>
@@ -533,15 +177,21 @@
             <!-- ═══ SESSIONS ═══ -->
             <section class="admin-section" id="section-sessions">
                 <div class="page-header">
-                    <h1>Game Sessions</h1>
-                    <p>All game sessions</p>
+                    <div class="page-header-left">
+                        <h1>Game Sessions</h1>
+                        <p>All match-3 game sessions</p>
+                    </div>
                 </div>
-                <div class="table-card">
-                    <div class="table-header"><h2>Sessions</h2></div>
-                    <table>
-                        <thead><tr><th>ID</th><th>Player</th><th>Score</th><th>Combo</th><th>Moves Left</th><th>Status</th><th>Started</th><th>Ended</th></tr></thead>
-                        <tbody id="sessions-list"></tbody>
-                    </table>
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Sessions</h2>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>ID</th><th>Player</th><th>Score</th><th>Combo</th><th>Moves Left</th><th>Status</th><th>Started</th><th>Ended</th></tr></thead>
+                            <tbody id="sessions-list"></tbody>
+                        </table>
+                    </div>
                     <div class="pagination" id="sessions-pagination"></div>
                 </div>
             </section>
@@ -549,15 +199,21 @@
             <!-- ═══ TRANSACTIONS ═══ -->
             <section class="admin-section" id="section-transactions">
                 <div class="page-header">
-                    <h1>Transactions</h1>
-                    <p>All gem earn/spend activity</p>
+                    <div class="page-header-left">
+                        <h1>Transactions</h1>
+                        <p>Gem earn and spend activity</p>
+                    </div>
                 </div>
-                <div class="table-card">
-                    <div class="table-header"><h2>Transaction Log</h2></div>
-                    <table>
-                        <thead><tr><th>ID</th><th>User</th><th>Amount</th><th>Type</th><th>Description</th><th>When</th></tr></thead>
-                        <tbody id="transactions-list"></tbody>
-                    </table>
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Transaction Log</h2>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>ID</th><th>User</th><th>Amount</th><th>Type</th><th>Description</th><th>When</th></tr></thead>
+                            <tbody id="transactions-list"></tbody>
+                        </table>
+                    </div>
                     <div class="pagination" id="transactions-pagination"></div>
                 </div>
             </section>
@@ -565,15 +221,16 @@
             <!-- ═══ ACHIEVEMENTS ═══ -->
             <section class="admin-section" id="section-achievements">
                 <div class="page-header">
-                    <h1>Achievements</h1>
-                    <p>All achievements and who earned them</p>
+                    <div class="page-header-left">
+                        <h1>Achievements</h1>
+                        <p>All achievements and their unlock stats</p>
+                    </div>
                 </div>
-                <div class="table-card">
-                    <div class="table-header"><h2>Achievement List</h2></div>
-                    <table>
-                        <thead><tr><th>Icon</th><th>Name</th><th>Description</th><th>Reward</th><th>Earned By</th></tr></thead>
-                        <tbody id="achievements-list"></tbody>
-                    </table>
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Achievement List</h2>
+                    </div>
+                    <div class="achievements-grid" id="achievements-list"></div>
                 </div>
             </section>
 
@@ -581,304 +238,55 @@
     </div>
 
     <!-- Edit User Modal -->
-    <div class="modal-overlay hidden" id="edit-modal">
+    <div class="modal-overlay" id="edit-modal">
         <div class="modal-card">
-            <h3>Edit User</h3>
+            <div class="modal-header">
+                <h3>Edit User</h3>
+                <button class="modal-close" id="modal-close-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
             <input type="hidden" id="edit-user-id">
             <div class="form-group">
                 <label>Role</label>
-                <select id="edit-role">
+                <select id="edit-role" class="form-select">
                     <option value="user">User</option>
                     <option value="admin">Admin</option>
                 </select>
             </div>
             <div class="form-group">
                 <label>Gems (Balance)</label>
-                <input type="number" id="edit-balance" min="0">
+                <input type="number" id="edit-balance" class="form-input" min="0">
             </div>
             <div class="form-group">
                 <label>Level</label>
-                <input type="number" id="edit-level" min="1">
+                <input type="number" id="edit-level" class="form-input" min="1">
             </div>
             <div class="modal-actions">
-                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-                <button class="btn-save" onclick="saveUser()">Save Changes</button>
+                <button class="btn btn-ghost modal-close-btn">Cancel</button>
+                <button class="btn btn-primary" id="modal-save-btn">Save Changes</button>
             </div>
         </div>
     </div>
 
-    <script>
-    (function() {
-        'use strict';
+    <!-- Confirm Dialog -->
+    <div class="confirm-overlay" id="confirm-overlay">
+        <div class="confirm-card">
+            <div class="confirm-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <h3>Are you sure?</h3>
+            <p>This action cannot be undone.</p>
+            <div class="confirm-actions">
+                <button class="btn btn-ghost confirm-no">Cancel</button>
+                <button class="btn btn-danger confirm-yes">Delete</button>
+            </div>
+        </div>
+    </div>
 
-        const API = '/codes/pixelforge/admin/api.php';
-        let currentPage = { users: 1, pixels: 1, sessions: 1, transactions: 1 };
-        let searchTimeout = null;
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
 
-        // ── Navigation ──
-        document.querySelectorAll('[data-section]').forEach(function(link) {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                var section = this.dataset.section;
-                switchSection(section);
-            });
-        });
-
-        function switchSection(name) {
-            document.querySelectorAll('.admin-section').forEach(function(s) { s.classList.remove('active'); });
-            document.querySelectorAll('[data-section]').forEach(function(a) { a.classList.remove('active'); });
-
-            var section = document.getElementById('section-' + name);
-            if (section) section.classList.add('active');
-            var link = document.querySelector('[data-section="' + name + '"]');
-            if (link) link.classList.add('active');
-
-            if (name === 'dashboard') loadDashboard();
-            if (name === 'users') loadUsers();
-            if (name === 'pixels') loadPixels();
-            if (name === 'sessions') loadSessions();
-            if (name === 'transactions') loadTransactions();
-            if (name === 'achievements') loadAchievements();
-        }
-
-        // ── Fetch Helper ──
-        async function api(action, opts) {
-            var url = API + '?action=' + action;
-            if (opts && opts.params) {
-                Object.keys(opts.params).forEach(function(k) { url += '&' + k + '=' + encodeURIComponent(opts.params[k]); });
-            }
-            var fetchOpts = { credentials: 'same-origin' };
-            if (opts && opts.method === 'POST') {
-                fetchOpts.method = 'POST';
-                fetchOpts.headers = { 'Content-Type': 'application/json' };
-                fetchOpts.body = JSON.stringify(opts.body || {});
-            }
-            var res = await fetch(url, fetchOpts);
-            return await res.json();
-        }
-
-        // ── Dashboard ──
-        async function loadDashboard() {
-            var data = await api('dashboard');
-            if (!data.success) return;
-
-            var s = data.stats;
-            document.getElementById('dashboard-stats').innerHTML =
-                statCard('Users', s.total_users, 'purple') +
-                statCard('Pixels', s.total_pixels, 'green') +
-                statCard('Games', s.total_games, 'blue') +
-                statCard('Total Score', s.total_score.toLocaleString(), 'amber') +
-                statCard('Gems in Circ.', s.total_balance.toLocaleString(), 'cyan') +
-                statCard('Users Today', s.users_today, 'pink') +
-                statCard('Games Today', s.games_today, 'blue') +
-                statCard('Pixels Today', s.pixels_today, 'green');
-
-            var topHtml = '';
-            data.top_players.forEach(function(p, i) {
-                topHtml += '<tr><td>' + (i+1) + '</td><td><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:' + (p.avatar_color||'#7c3aed') + ';vertical-align:middle;margin-right:6px;"></span>' + esc(p.username) + '</td><td>' + p.total_score.toLocaleString() + '</td><td>Lv.' + p.level + '</td><td>💎 ' + p.balance + '</td></tr>';
-            });
-            document.getElementById('top-players').innerHTML = topHtml || '<tr><td colspan="5" style="text-align:center;color:#64748b;">No players yet</td></tr>';
-
-            var pixHtml = '';
-            data.recent_pixels.forEach(function(p) {
-                pixHtml += '<tr><td>(' + p.x + ',' + p.y + ')</td><td><span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:' + esc(p.color) + ';vertical-align:middle;"></span> ' + esc(p.color) + '</td><td>' + esc(p.username || '?') + '</td><td>' + timeAgo(p.placed_at) + '</td></tr>';
-            });
-            document.getElementById('recent-pixels').innerHTML = pixHtml || '<tr><td colspan="4" style="text-align:center;color:#64748b;">No pixels placed yet</td></tr>';
-        }
-
-        function statCard(label, value, color) {
-            return '<div class="stat-card"><div class="label">' + label + '</div><div class="value ' + color + '">' + value + '</div></div>';
-        }
-
-        // ── Users ──
-        async function loadUsers(page) {
-            page = page || currentPage.users;
-            currentPage.users = page;
-            var search = document.getElementById('user-search').value;
-            var data = await api('users', { params: { page: page, search: search } });
-            if (!data.success) return;
-
-            var html = '';
-            data.users.forEach(function(u) {
-                html += '<tr>';
-                html += '<td>' + u.id + '</td>';
-                html += '<td><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:' + (u.avatar_color||'#7c3aed') + ';vertical-align:middle;margin-right:4px;"></span>' + esc(u.username) + '</td>';
-                html += '<td>' + esc(u.email) + '</td>';
-                html += '<td><span class="role-badge ' + u.role + '">' + u.role + '</span></td>';
-                html += '<td>💎 ' + u.balance + '</td>';
-                html += '<td>' + u.xp + '</td>';
-                html += '<td>Lv.' + u.level + '</td>';
-                html += '<td>' + u.total_pixels_placed + '</td>';
-                html += '<td>' + u.total_games_played + '</td>';
-                html += '<td>' + u.total_score.toLocaleString() + '</td>';
-                html += '<td>' + (u.created_at || '').split(' ')[0] + '</td>';
-                html += '<td><button class="btn-sm btn-edit" onclick="editUser(' + u.id + ',\'' + u.role + '\',' + u.balance + ',' + u.level + ')">Edit</button> ';
-                if (u.role !== 'admin') {
-                    html += '<button class="btn-sm btn-delete" onclick="deleteUser(' + u.id + ')">Del</button>';
-                }
-                html += '</td></tr>';
-            });
-            document.getElementById('users-list').innerHTML = html || '<tr><td colspan="12" style="text-align:center;color:#64748b;">No users found</td></tr>';
-            renderPagination('users', data.page, data.pages);
-        }
-
-        document.getElementById('user-search').addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(function() { loadUsers(1); }, 300);
-        });
-
-        // ── Pixels ──
-        async function loadPixels(page) {
-            page = page || currentPage.pixels;
-            currentPage.pixels = page;
-            var data = await api('pixels', { params: { page: page } });
-            if (!data.success) return;
-
-            var html = '';
-            data.pixels.forEach(function(p) {
-                html += '<tr>';
-                html += '<td>' + p.x + '</td><td>' + p.y + '</td>';
-                html += '<td>' + esc(p.color) + '</td>';
-                html += '<td><span style="display:inline-block;width:24px;height:24px;border-radius:4px;background:' + esc(p.color) + ';border:1px solid rgba(255,255,255,0.1);"></span></td>';
-                html += '<td>' + esc(p.username || '?') + '</td>';
-                html += '<td>' + timeAgo(p.placed_at) + '</td></tr>';
-            });
-            document.getElementById('pixels-list').innerHTML = html || '<tr><td colspan="6" style="text-align:center;color:#64748b;">No pixels yet</td></tr>';
-            renderPagination('pixels', data.page, data.pages);
-        }
-
-        // ── Sessions ──
-        async function loadSessions(page) {
-            page = page || currentPage.sessions;
-            currentPage.sessions = page;
-            var data = await api('sessions', { params: { page: page } });
-            if (!data.success) return;
-
-            var html = '';
-            data.sessions.forEach(function(s) {
-                html += '<tr>';
-                html += '<td>#' + s.id + '</td>';
-                html += '<td>' + esc(s.username || '?') + '</td>';
-                html += '<td>' + (s.score || 0).toLocaleString() + '</td>';
-                html += '<td>' + (s.combo_max || 0) + 'x</td>';
-                html += '<td>' + s.moves_left + '</td>';
-                html += '<td><span class="status-badge ' + s.status + '">' + s.status + '</span></td>';
-                html += '<td>' + timeAgo(s.started_at) + '</td>';
-                html += '<td>' + (s.completed_at ? timeAgo(s.completed_at) : '-') + '</td></tr>';
-            });
-            document.getElementById('sessions-list').innerHTML = html || '<tr><td colspan="8" style="text-align:center;color:#64748b;">No sessions yet</td></tr>';
-            renderPagination('sessions', data.page, data.pages);
-        }
-
-        // ── Transactions ──
-        async function loadTransactions(page) {
-            page = page || currentPage.transactions;
-            currentPage.transactions = page;
-            var data = await api('transactions', { params: { page: page } });
-            if (!data.success) return;
-
-            var html = '';
-            data.transactions.forEach(function(t) {
-                html += '<tr>';
-                html += '<td>#' + t.id + '</td>';
-                html += '<td>' + esc(t.username || '?') + '</td>';
-                html += '<td>' + (t.type === 'earn' ? '+' : '-') + t.amount + ' 💎</td>';
-                html += '<td><span class="type-badge ' + t.type + '">' + t.type + '</span></td>';
-                html += '<td>' + esc(t.description || '') + '</td>';
-                html += '<td>' + timeAgo(t.created_at) + '</td></tr>';
-            });
-            document.getElementById('transactions-list').innerHTML = html || '<tr><td colspan="6" style="text-align:center;color:#64748b;">No transactions yet</td></tr>';
-            renderPagination('transactions', data.page, data.pages);
-        }
-
-        // ── Achievements ──
-        async function loadAchievements() {
-            var data = await api('achievements');
-            if (!data.success) return;
-
-            var html = '';
-            data.achievements.forEach(function(a) {
-                html += '<tr>';
-                html += '<td style="font-size:1.3rem;">' + esc(a.icon || '?') + '</td>';
-                html += '<td><strong>' + esc(a.name) + '</strong></td>';
-                html += '<td>' + esc(a.description) + '</td>';
-                html += '<td>+' + a.reward + ' 💎</td>';
-                html += '<td>' + a.earned_count + ' player(s)</td></tr>';
-            });
-            document.getElementById('achievements-list').innerHTML = html || '<tr><td colspan="5" style="text-align:center;color:#64748b;">No achievements</td></tr>';
-        }
-
-        // ── Pagination ──
-        function renderPagination(section, page, pages) {
-            var el = document.getElementById(section + '-pagination');
-            if (!el || pages <= 1) { if (el) el.innerHTML = ''; return; }
-            el.innerHTML =
-                '<button onclick="loadPage(\'' + section + '\',' + (page-1) + ')" ' + (page<=1?'disabled':'') + '>&laquo;</button>' +
-                '<span class="page-info">Page ' + page + ' of ' + pages + '</span>' +
-                '<button onclick="loadPage(\'' + section + '\',' + (page+1) + ')" ' + (page>=pages?'disabled':'') + '>&raquo;</button>';
-        }
-
-        window.loadPage = function(section, page) {
-            if (section === 'users') loadUsers(page);
-            if (section === 'pixels') loadPixels(page);
-            if (section === 'sessions') loadSessions(page);
-            if (section === 'transactions') loadTransactions(page);
-        };
-
-        // ── Edit / Delete User ──
-        window.editUser = function(id, role, balance, level) {
-            document.getElementById('edit-user-id').value = id;
-            document.getElementById('edit-role').value = role;
-            document.getElementById('edit-balance').value = balance;
-            document.getElementById('edit-level').value = level;
-            document.getElementById('edit-modal').classList.remove('hidden');
-        };
-
-        window.closeModal = function() {
-            document.getElementById('edit-modal').classList.add('hidden');
-        };
-
-        window.saveUser = async function() {
-            var id = parseInt(document.getElementById('edit-user-id').value);
-            var data = await api('user_update', {
-                method: 'POST',
-                body: {
-                    id: id,
-                    role: document.getElementById('edit-role').value,
-                    balance: parseInt(document.getElementById('edit-balance').value),
-                    level: parseInt(document.getElementById('edit-level').value)
-                }
-            });
-            if (data.success) {
-                closeModal();
-                loadUsers();
-            } else {
-                alert(data.message || 'Update failed');
-            }
-        };
-
-        window.deleteUser = async function(id) {
-            if (!confirm('Delete this user? This cannot be undone.')) return;
-            var data = await api('user_delete', { method: 'POST', body: { id: id } });
-            if (data.success) loadUsers();
-            else alert(data.message || 'Delete failed');
-        };
-
-        // ── Helpers ──
-        function esc(s) { var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
-
-        function timeAgo(dateStr) {
-            if (!dateStr) return '';
-            var diff = (Date.now() - new Date(dateStr).getTime()) / 1000;
-            if (diff < 60) return 'just now';
-            if (diff < 3600) return Math.floor(diff/60) + 'm ago';
-            if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
-            return Math.floor(diff/86400) + 'd ago';
-        }
-
-        // ── Init ──
-        loadDashboard();
-    })();
-    </script>
+    <script src="admin.js"></script>
 </body>
 </html>
