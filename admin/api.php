@@ -117,9 +117,14 @@ function handleUserUpdate() {
 
     $input = json_decode(file_get_contents('php://input'), true);
     $targetId = (int)($input['id'] ?? 0);
+    $username = $input['username'] ?? null;
+    $email = $input['email'] ?? null;
     $role = $input['role'] ?? null;
     $balance = $input['balance'] ?? null;
+    $xp = $input['xp'] ?? null;
     $level = $input['level'] ?? null;
+    $avatarColor = $input['avatar_color'] ?? null;
+    $streakDays = $input['streak_days'] ?? null;
 
     if (!$targetId) {
         jsonResponse(['success' => false, 'message' => 'Invalid user ID'], 400);
@@ -129,6 +134,14 @@ function handleUserUpdate() {
     $fields = [];
     $params = [];
 
+    if ($username !== null && is_string($username) && trim($username) !== '') {
+        $fields[] = "username = ?";
+        $params[] = trim($username);
+    }
+    if ($email !== null && is_string($email) && trim($email) !== '') {
+        $fields[] = "email = ?";
+        $params[] = trim($email);
+    }
     if ($role !== null && in_array($role, ['user', 'admin'])) {
         $fields[] = "role = ?";
         $params[] = $role;
@@ -137,9 +150,21 @@ function handleUserUpdate() {
         $fields[] = "balance = ?";
         $params[] = max(0, (int)$balance);
     }
+    if ($xp !== null) {
+        $fields[] = "xp = ?";
+        $params[] = max(0, (int)$xp);
+    }
     if ($level !== null) {
         $fields[] = "level = ?";
         $params[] = max(1, (int)$level);
+    }
+    if ($avatarColor !== null && is_string($avatarColor)) {
+        $fields[] = "avatar_color = ?";
+        $params[] = $avatarColor;
+    }
+    if ($streakDays !== null) {
+        $fields[] = "streak_days = ?";
+        $params[] = max(0, (int)$streakDays);
     }
 
     if (empty($fields)) {
