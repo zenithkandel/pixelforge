@@ -50,7 +50,7 @@ class GameRenderer {
 
     _setupEvents() {
         this.canvas.addEventListener('click', (e) => {
-            if (this.game.isProcessing) return;
+            if (this.game.isProcessing || this.swapAnimation) return;
 
             const rect = this.canvas.getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -84,6 +84,19 @@ class GameRenderer {
         this.canvas.addEventListener('mouseleave', () => {
             this.hoverGem = null;
         });
+
+        this.game.events.on('swap', (data) => {
+            this._startSwapAnimation(data.r1, data.c1, data.r2, data.c2, data.valid);
+        });
+    }
+
+    _startSwapAnimation(r1, c1, r2, c2, valid) {
+        this.swapAnimation = {
+            r1, c1, r2, c2, valid,
+            progress: 0,
+            duration: valid ? 200 : 300,
+            startTime: null
+        };
     }
 
     render(timestamp) {
@@ -102,8 +115,14 @@ class GameRenderer {
 
         this._drawBoardBackground();
 
+        const isSwapping = this.swapAnimation && this.swapAnimation.startTime !== null;
+        const swapKeys = isSwapping
+            ? [`${this.swapAnimation.r1},${this.swapAnimation.c1}`, `${this.swapAnimation.r2},${this.swapAnimation.c2}`]
+            : [];
+
         for (let r = 0; r < this.game.rows; r++) {
             for (let c = 0; c < this.game.cols; c++) {
+                if (swapKeys.includes(`${r},${c}`)) continue;
                 const gem = this.game.board[r][c];
                 if (gem) {
                     const x = c * (this.gemSize + this.padding);
@@ -116,7 +135,11 @@ class GameRenderer {
             }
         }
 
-        if (this.game.selected) {
+        if (isSwapping) {
+            this._renderSwapAnimation(ctx, timestamp);
+        }
+
+        if (this.game.selected && !isSwapping) {
             this._drawSelection(ctx, timestamp);
         }
 
@@ -137,6 +160,77 @@ class GameRenderer {
             if (this.hintTimer === 0) {
                 this.hintGems = null;
             }
+        }
+    }
+
+    _renderSwapAnimation(ctx, timestamp) {
+        if (!this.swapAnimation) return;
+
+        const sa = this.swapAnimation;
+        if (sa.startTime === null) sa.startTime = timestamp;
+
+        const elapsed = timestamp - sa.startTime;
+        let t = Math.min(elapsed / sa.duration, 1);
+
+        if (sa.valid) {
+            t = t * t * (3 - 2 * t);
+
+            const gemA = this.game.board[sa.r1][sa.c1];
+            const gemB = this.game.board[sa.r2][sa.c2];
+
+            if (gemA) {
+                const fromX = sa.c2 * (this.gemSize + this.padding);
+                const fromY = sa.r2 * (this.gemSize + this.padding);
+                const toX = sa.c1 * (this.gemSize + this.padding);
+                const toY = sa.r1 * (this.gemSize + this.padding);
+                const x = fromX + (toX - fromX) * t;
+                const y = fromY + (toY - fromY) * t;
+                this._drawGem(ctx, gemA, x, y, timestamp);
+            }
+            if (gemB) {
+                const fromX = sa.c1 * (this.gemSize + this.padding);
+                const fromY = sa.r1 * (this.gemSize + this.padding);
+                const toX = sa.c2 * (this.gemSize + this.padding);
+                const toY = sa.r2 * (this.gemSize + this.padding);
+                const x = fromX + (toX - fromX) * t;
+                const y = fromY + (toY - fromY) * t;
+                this._drawGem(ctx, gemB, x, y, timestamp);
+            }
+        } else {
+            let moveT;
+            if (t < 0.5) {
+                moveT = t * 2;
+                moveT = moveT * moveT * (3 - 2 * moveT);
+            } else {
+                moveT = 1 - (t - 0.5) * 2;
+                moveT = moveT * moveT * (3 - 2 * moveT);
+            }
+
+            const gemA = this.game.board[sa.r1][sa.c1];
+            const gemB = this.game.board[sa.r2][sa.c2];
+
+            if (gemA) {
+                const fromX = sa.c1 * (this.gemSize + this.padding);
+                const fromY = sa.r1 * (this.gemSize + this.padding);
+                const toX = sa.c2 * (this.gemSize + this.padding);
+                const toY = sa.r2 * (this.gemSize + this.padding);
+                const x = fromX + (toX - fromX) * moveT;
+                const y = fromY + (toY - fromY) * moveT;
+                this._drawGem(ctx, gemA, x, y, timestamp);
+            }
+            if (gemB) {
+                const fromX = sa.c2 * (this.gemSize + this.padding);
+                const fromY = sa.r2 * (this.gemSize + this.padding);
+                const toX = sa.c1 * (this.gemSize + this.padding);
+                const toY = sa.r1 * (this.gemSize + this.padding);
+                const x = fromX + (toX - fromX) * moveT;
+                const y = fromY + (toY - fromY) * moveT;
+                this._drawGem(ctx, gemB, x, y, timestamp);
+            }
+        }
+
+        if (t >= 1) {
+            this.swapAnimation = null;
         }
     }
 
@@ -280,17 +374,17 @@ class GameRenderer {
         const { row, col } = this.game.selected;
         const x = col * (this.gemSize + this.padding);
         const y = row * (this.gemSize + this.padding);
-        const pulse = Math.sin(timestamp / 200) * 0.1 + 1.0;
+        const pulse = Math.sin(timestamp / 200) * 0.15 + 0.85;
 
         ctx.save();
-        ctx.strokeStyle = '#ffffff';
+        ctx.strokeStyle = '#E17B47';
         ctx.lineWidth = 3;
-        ctx.shadowColor = '#ffffff';
-        ctx.shadowBlur = 10;
-        ctx.globalAlpha = 0.8;
+        ctx.shadowColor = '#E17B47';
+        ctx.shadowBlur = 12;
+        ctx.globalAlpha = pulse;
 
         ctx.beginPath();
-        ctx.roundRect(x - 2, y - 2, this.gemSize + 4, this.gemSize + 4, 12);
+        ctx.roundRect(x - 3, y - 3, this.gemSize + 6, this.gemSize + 6, 12);
         ctx.stroke();
 
         ctx.restore();
