@@ -1,0 +1,207 @@
+/* ============================================
+   PROFILE PAGE
+   ============================================ */
+
+/* Profile header */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-8);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-6);
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
+  color: var(--text-inverse);
+  flex-shrink: 0;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-name {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  letter-spacing: var(--tracking-tight);
+}
+
+.profile-meta {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-top: var(--space-1);
+}
+
+.profile-xp {
+  margin-top: var(--space-3);
+  max-width: 300px;
+}
+
+.profile-xp-label {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin-bottom: var(--space-1);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Stats grid */
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+/* Achievements */
+.profile-achievements {
+  margin-bottom: var(--space-6);
+}
+
+.profile-achievements-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.profile-achievements-count {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.profile-achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-3);
+}
+
+.achievement-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  text-align: center;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.achievement-card:hover {
+  border-color: var(--border-strong);
+}
+
+.achievement-card.locked {
+  opacity: 0.4;
+}
+
+.achievement-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-xl);
+}
+
+.achievement-card:not(.locked) .achievement-icon {
+  background-color: var(--accent-light);
+}
+
+.achievement-name {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.achievement-desc {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  line-height: var(--leading-normal);
+}
+
+/* Recent games */
+.profile-games {
+  margin-bottom: var(--space-6);
+}
+
+.profile-games-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-game-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: var(--text-sm);
+}
+
+.profile-game-row:last-child {
+  border-bottom: none;
+}
+
+.profile-game-row:hover {
+  background-color: var(--bg-hover);
+}
+
+.profile-game-score {
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  min-width: 60px;
+}
+
+.profile-game-combo {
+  color: var(--accent);
+  min-width: 40px;
+}
+
+.profile-game-gems {
+  color: var(--success);
+  min-width: 50px;
+}
+
+.profile-game-date {
+  color: var(--text-muted);
+  margin-left: auto;
+  font-size: var(--text-xs);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+    padding: var(--space-6);
+  }
+
+  .profile-xp {
+    max-width: none;
+  }
+
+  .profile-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .profile-achievements-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}

@@ -1,0 +1,121 @@
+/* ============================================
+   RANKINGS PAGE
+   ============================================ */
+
+.rankings-header {
+  margin-bottom: var(--space-6);
+}
+
+.rankings-title {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  letter-spacing: var(--tracking-tight);
+}
+
+.rankings-subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-top: var(--space-1);
+}
+
+/* Rankings list */
+.rankings-list {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* Top 3 podium */
+.rankings-podium {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.rankings-podium-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-4);
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.rankings-podium-item.first {
+  background: linear-gradient(180deg, #FFF8E1 0%, var(--bg-tertiary) 100%);
+  border: 1px solid #FFE082;
+}
+
+.rankings-podium-item.second {
+  background: linear-gradient(180deg, #F5F5F5 0%, var(--bg-tertiary) 100%);
+  border: 1px solid #E0E0E0;
+}
+
+.rankings-podium-item.third {
+  background: linear-gradient(180deg, #FBE9E7 0%, var(--bg-tertiary) 100%);
+  border: 1px solid #FFCCBC;
+}
+
+.rankings-podium-rank {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+}
+
+.rankings-podium-item.first .rankings-podium-rank { color: #FFD700; }
+.rankings-podium-item.second .rankings-podium-rank { color: #9E9E9E; }
+.rankings-podium-item.third .rankings-podium-rank { color: #CD7F32; }
+
+.rankings-podium-name {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+}
+
+.rankings-podium-value {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+/* Search */
+.rankings-search {
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Self rank bar */
+.rankings-self {
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--accent-light);
+  border-top: 1px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rankings-self-label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.rankings-self-rank {
+  font-weight: var(--weight-bold);
+  color: var(--accent);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .rankings-podium {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .rankings-podium-item {
+    flex-direction: row;
+    padding: var(--space-4);
+  }
+}

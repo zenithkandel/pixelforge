@@ -1,0 +1,76 @@
+/* ============================================
+   TABS COMPONENT
+   ============================================ */
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.tabs-list {
+  display: flex;
+  gap: var(--space-1);
+  border-bottom: 1px solid var(--border-default);
+  padding-bottom: 0;
+}
+
+.tab {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all var(--duration-fast) var(--ease-out);
+  cursor: pointer;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.tab:hover {
+  color: var(--text-primary);
+}
+
+.tab.active {
+  color: var(--text-primary);
+  border-bottom-color: var(--accent);
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+  animation: tab-fade-in var(--duration-slow) var(--ease-out);
+}
+
+@keyframes tab-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Pill variant */
+.tabs-pills .tabs-list {
+  border-bottom: none;
+  gap: var(--space-2);
+  background-color: var(--bg-tertiary);
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+}
+
+.tabs-pills .tab {
+  border-bottom: none;
+  border-radius: var(--radius-sm);
+  margin-bottom: 0;
+  padding: var(--space-2) var(--space-4);
+}
+
+.tabs-pills .tab.active {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-xs);
+}
