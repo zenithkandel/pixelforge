@@ -86,9 +86,9 @@
     el.className = 'toast toast-' + (type || 'info');
 
     var icons = {
-      success: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 9l2.5 2.5L12.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-      error: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M6 6l6 6M12 6l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
-      info: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M9 8v5M9 5.5h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>'
+      success: '<i class="fa-duotone fa-light fa-circle-check"></i>',
+      error: '<i class="fa-duotone fa-light fa-circle-xmark"></i>',
+      info: '<i class="fa-duotone fa-light fa-circle-info"></i>'
     };
 
     var colorVar = type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info';
@@ -212,14 +212,14 @@
 
       var stats = data.stats;
       var cards = [
-        { label: 'Total Users', value: stats.total_users, color: 'accent', icon: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M3 13c0-1.7 1.3-3 3-3s3 1.3 3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>' },
-        { label: 'Total Pixels', value: stats.total_pixels, color: 'success', icon: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/></svg>' },
-        { label: 'Games Played', value: stats.total_games, color: 'info', icon: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><polygon points="6,3 13,8 6,13" fill="currentColor"/></svg>' },
-        { label: 'Total Score', value: stats.total_score.toLocaleString(), color: 'warning', icon: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l1.5 3 3.5.5-2.5 2.5.6 3.5L8 9.5 4.9 11.5l.6-3.5L3 5.5l3.5-.5z" fill="currentColor"/></svg>' },
-        { label: 'Gems in Circulation', value: stats.total_balance.toLocaleString(), color: 'info', icon: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><polygon points="8,1 15,5 15,11 8,15 1,11 1,5" stroke="currentColor" stroke-width="1.3"/></svg>' },
-        { label: 'Users Today', value: stats.users_today, color: 'accent', icon: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 14c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>' },
-        { label: 'Games Today', value: stats.games_today, color: 'info', icon: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><polygon points="6,3 13,8 6,13" fill="currentColor"/></svg>' },
-        { label: 'Pixels Today', value: stats.pixels_today, color: 'success', icon: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/></svg>' }
+        { label: 'Total Users', value: stats.total_users, color: 'accent', icon: '<i class="fa-duotone fa-light fa-users"></i>' },
+        { label: 'Total Pixels', value: stats.total_pixels, color: 'success', icon: '<i class="fa-duotone fa-light fa-puzzle-piece"></i>' },
+        { label: 'Games Played', value: stats.total_games, color: 'info', icon: '<i class="fa-duotone fa-light fa-gamepad"></i>' },
+        { label: 'Total Score', value: stats.total_score.toLocaleString(), color: 'warning', icon: '<i class="fa-duotone fa-light fa-star"></i>' },
+        { label: 'Gems in Circulation', value: stats.total_balance.toLocaleString(), color: 'info', icon: '<i class="fa-duotone fa-light fa-gem"></i>' },
+        { label: 'Users Today', value: stats.users_today, color: 'accent', icon: '<i class="fa-duotone fa-light fa-user-plus"></i>' },
+        { label: 'Games Today', value: stats.games_today, color: 'info', icon: '<i class="fa-duotone fa-light fa-gamepad"></i>' },
+        { label: 'Pixels Today', value: stats.pixels_today, color: 'success', icon: '<i class="fa-duotone fa-light fa-puzzle-piece"></i>' }
       ];
 
       document.getElementById('dashboardStats').innerHTML = cards.map(function(c) {
@@ -282,7 +282,7 @@
         return;
       }
 
-      var html = '<table class="admin-table"><thead><tr><th>ID</th><th>User</th><th>Role</th><th>Gems</th><th>XP</th><th>Level</th><th>Pixels</th><th>Games</th><th>Score</th><th>Joined</th><th>Actions</th></tr></thead><tbody>';
+      var html = '<table class="admin-table"><thead><tr><th>ID</th><th>User</th><th>Role</th><th>Gems</th><th>XP</th><th>Level</th><th>Pixels</th><th>Games</th><th>Score</th><th>Last Login</th><th>Actions</th></tr></thead><tbody>';
       if (data.users.length === 0) {
         html += '<tr><td colspan="11" class="admin-table-empty">No users found</td></tr>';
       } else {
@@ -297,9 +297,9 @@
             '<td>' + (u.total_pixels_placed || 0).toLocaleString() + '</td>' +
             '<td>' + (u.total_games_played || 0).toLocaleString() + '</td>' +
             '<td class="admin-score">' + (u.total_score || 0).toLocaleString() + '</td>' +
-            '<td style="font-size:var(--text-xs);color:var(--text-muted);">' + new Date(u.created_at).toLocaleDateString() + '</td>' +
+            '<td style="font-size:var(--text-xs);color:var(--text-muted);">' + (u.last_login_date ? new Date(u.last_login_date).toLocaleDateString() : '\u2014') + '</td>' +
             '<td><div style="display:flex;gap:var(--space-1);">' +
-              '<button class="admin-action-btn admin-action-edit" data-edit="' + u.id + '" data-role="' + u.role + '" data-balance="' + u.balance + '" data-level="' + u.level + '">Edit</button>' +
+              '<button class="admin-action-btn admin-action-edit" data-edit="' + u.id + '" data-username="' + esc(u.username) + '" data-email="' + esc(u.email || '') + '" data-role="' + u.role + '" data-balance="' + u.balance + '" data-xp="' + u.xp + '" data-level="' + u.level + '" data-avatar-color="' + (u.avatar_color || '#7c3aed') + '" data-streak-days="' + (u.streak_days || 0) + '">Edit</button>' +
               (u.role !== 'admin' ? '<button class="admin-action-btn admin-action-delete" data-delete="' + u.id + '">Delete</button>' : '') +
             '</div></td>' +
           '</tr>';
@@ -497,11 +497,16 @@
   }
 
   // --- Edit modal ---
-  function openEditModal(id, role, balance, level) {
+  function openEditModal(id, username, email, role, balance, xp, level, avatarColor, streakDays) {
     document.getElementById('editUserId').value = id;
+    document.getElementById('editUsername').value = username || '';
+    document.getElementById('editEmail').value = email || '';
     document.getElementById('editRole').value = role;
     document.getElementById('editBalance').value = balance;
+    document.getElementById('editXp').value = xp || 0;
     document.getElementById('editLevel').value = level;
+    document.getElementById('editAvatarColor').value = avatarColor || '#7c3aed';
+    document.getElementById('editStreakDays').value = streakDays || 0;
     document.getElementById('editModal').classList.add('active');
   }
 
@@ -511,12 +516,16 @@
 
   async function handleSaveUser() {
     var id = parseInt(document.getElementById('editUserId').value);
+    var email = document.getElementById('editEmail').value;
     var role = document.getElementById('editRole').value;
     var balance = parseInt(document.getElementById('editBalance').value) || 0;
+    var xp = parseInt(document.getElementById('editXp').value) || 0;
     var level = parseInt(document.getElementById('editLevel').value) || 1;
+    var avatarColor = document.getElementById('editAvatarColor').value;
+    var streakDays = parseInt(document.getElementById('editStreakDays').value) || 0;
 
     try {
-      var data = await api('user_update', { body: { id: id, role: role, balance: balance, level: level } });
+      var data = await api('user_update', { body: { id: id, email: email, role: role, balance: balance, xp: xp, level: level, avatar_color: avatarColor, streak_days: streakDays } });
       if (data.success) {
         toast('User updated successfully', 'success');
         closeEditModal();
@@ -555,9 +564,14 @@
       if (editBtn) {
         openEditModal(
           editBtn.dataset.edit,
+          editBtn.dataset.username,
+          editBtn.dataset.email,
           editBtn.dataset.role,
           editBtn.dataset.balance,
-          editBtn.dataset.level
+          editBtn.dataset.xp,
+          editBtn.dataset.level,
+          editBtn.dataset.avatarColor,
+          editBtn.dataset.streakDays
         );
         return;
       }

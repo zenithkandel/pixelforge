@@ -68,7 +68,7 @@
 
           <div class="stat-card">
             <div class="stat-card-icon info">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2l2.5 5 5.5.8-4 3.9.9 5.3-4.9-2.6L5.1 17l.9-5.3-4-3.9 5.5-.8z" fill="currentColor"/></svg>
+              <i class="fa-duotone fa-light fa-star"></i>
             </div>
             <div class="stat-card-label">Level</div>
             <div class="stat-card-value" id="statLevel">—</div>
@@ -79,7 +79,7 @@
 
           <div class="stat-card">
             <div class="stat-card-icon success">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="6" y="6" width="3" height="3" fill="currentColor" opacity="0.6"/><rect x="11" y="6" width="3" height="3" fill="currentColor" opacity="0.4"/><rect x="6" y="11" width="3" height="3" fill="currentColor" opacity="0.3"/><rect x="11" y="11" width="3" height="3" fill="currentColor" opacity="0.5"/></svg>
+              <i class="fa-duotone fa-light fa-grip"></i>
             </div>
             <div class="stat-card-label">Territory</div>
             <div class="stat-card-value" id="statPixels">—</div>
@@ -195,7 +195,7 @@
           feed.innerHTML = games.slice(0, 5).map(g => `
             <div class="activity-item">
               <div class="activity-icon game">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><polygon points="5,3 13,8 5,13" fill="currentColor"/></svg>
+                <i class="fa-duotone fa-light fa-gamepad"></i>
               </div>
               <div>
                 <div class="activity-text">Scored ${g.score.toLocaleString()} pts and earned ${g.currency_earned} gems</div>
