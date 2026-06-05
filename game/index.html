@@ -58,14 +58,6 @@
           <!-- Populated by JS -->
         </div>
         <div class="play-actions">
-          <button class="btn btn-secondary btn-sm" id="hintBtn" style="width: 100%;">
-            <i class="fa-duotone fa-light fa-lightbulb"></i>
-            Hint
-          </button>
-          <button class="btn btn-secondary btn-sm" id="shuffleBtn" style="width: 100%;">
-            <i class="fa-duotone fa-light fa-shuffle"></i>
-            Shuffle
-          </button>
           <button class="btn btn-danger btn-sm" id="quitBtn" style="width: 100%;">
             Quit Game
           </button>
@@ -119,6 +111,44 @@
       var sessionId = null;
       var maxCombo = 1;
       var scoreSubmitted = false;
+      var SAVE_KEY = 'pixelforge_game_state';
+      var QUIT_PENALTY = 100;
+
+      // --- LocalStorage persistence ---
+      function saveGameState() {
+        if (!game || !sessionId) return;
+        try {
+          var state = {
+            sessionId: sessionId,
+            board: game.board.map(function(row) {
+              return row.map(function(gem) {
+                return gem ? { type: gem.type, special: gem.special || null } : null;
+              });
+            }),
+            score: game.score,
+            movesLeft: game.movesLeft,
+            maxCombo: game.maxCombo,
+            stats: game.stats
+          };
+          localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+        } catch (e) { /* quota or private browsing */ }
+      }
+
+      function loadGameState() {
+        try {
+          var raw = localStorage.getItem(SAVE_KEY);
+          if (!raw) return null;
+          var state = JSON.parse(raw);
+          if (!state || !state.sessionId || !state.board) return null;
+          return state;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function clearGameState() {
+        localStorage.removeItem(SAVE_KEY);
+      }
 
       // --- Auth ---
       Auth.check().then(function(user) {
@@ -139,20 +169,38 @@
       // --- Start game ---
       async function startNewGame() {
         try {
-          var data = await API.get('game.php?action=start_game');
-          sessionId = data.session_id;
-          maxCombo = 1;
-          scoreSubmitted = false;
+          var saved = loadGameState();
 
-          // Init engine
-          game = new GemForge(8, 8, 6);
-          game.loadState({
-            board: data.board,
-            score: 0,
-            movesLeft: data.moves_left,
-            maxCombo: 0,
-            stats: { gemsMatched: 0, specialsCreated: 0, boostsUsed: 0, highestCombo: 0 }
-          });
+          if (saved) {
+            sessionId = saved.sessionId;
+            maxCombo = saved.maxCombo;
+            scoreSubmitted = false;
+
+            game = new GemForge(8, 8, 6);
+            game.loadState({
+              board: saved.board,
+              score: saved.score,
+              movesLeft: saved.movesLeft,
+              maxCombo: saved.maxCombo,
+              stats: saved.stats
+            });
+
+            Toast.info('Game restored', 'Continuing from where you left off.');
+          } else {
+            var data = await API.get('game.php?action=start_game');
+            sessionId = data.session_id;
+            maxCombo = 1;
+            scoreSubmitted = false;
+
+            game = new GemForge(8, 8, 6);
+            game.loadState({
+              board: data.board,
+              score: 0,
+              movesLeft: data.moves_left,
+              maxCombo: 0,
+              stats: { gemsMatched: 0, specialsCreated: 0, boostsUsed: 0, highestCombo: 0 }
+            });
+          }
 
           renderer = new GameRenderer('gameCanvas', game);
           powerups = new PowerUpManager(game, renderer);
@@ -196,6 +244,7 @@
 
           // Update HUD from live game state
           updateHUD();
+          saveGameState();
         });
 
         game.events.on('chainReaction', function(reactions) {
@@ -207,9 +256,11 @@
 
         game.events.on('stateChange', function() {
           updateHUD();
+          saveGameState();
         });
 
         game.events.on('gameOver', async function(result) {
+          clearGameState();
           await submitScore(result);
           showGameOver(result);
         });
@@ -267,22 +318,19 @@
 
       // --- UI button events ---
       function setupUIEvents() {
-        document.getElementById('hintBtn').onclick = function() {
-          renderer.showHint();
-        };
-
-        document.getElementById('shuffleBtn').onclick = async function() {
-          if (game.isProcessing) return;
-          await game._shuffleBoard();
-        };
-
         document.getElementById('quitBtn').onclick = function() {
-          if (confirm('Are you sure you want to quit? Your score will be submitted.')) {
-            submitScore({ score: game.score, maxCombo: game.maxCombo, stats: game.stats });
+          if (game.isProcessing) return;
+          var penaltyScore = Math.max(0, game.score - QUIT_PENALTY);
+          var msg = 'Quit early? -' + QUIT_PENALTY + ' score penalty.\nYour score: ' + game.score + ' → ' + penaltyScore;
+          if (confirm(msg)) {
+            clearGameState();
+            submitScore({ score: penaltyScore, maxCombo: game.maxCombo, stats: game.stats, penalized: true });
+            showGameOver({ score: penaltyScore, maxCombo: game.maxCombo, penalized: true });
           }
         };
 
         document.getElementById('playAgainBtn').addEventListener('click', function() {
+          clearGameState();
           hideGameOver();
           startNewGame();
         });
@@ -418,6 +466,14 @@
         document.getElementById('finalCombo').textContent = result.maxCombo + 'x';
         var gems = Math.max(1, Math.min(50, Math.floor(result.score / 100)));
         document.getElementById('finalGems').textContent = '+' + gems;
+
+        var title = document.querySelector('.play-gameover-title');
+        if (result.penalized) {
+          title.textContent = 'Game Quit (-' + QUIT_PENALTY + ' penalty)';
+        } else {
+          title.textContent = 'Game Over';
+        }
+
         document.getElementById('gameOverOverlay').classList.add('active');
       }
 

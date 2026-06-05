@@ -162,7 +162,8 @@ function handleSubmitScore()
         $stmt->execute([$sessionId]);
         $game = $stmt->fetch();
         $elapsed = time() - strtotime($game['started_at']);
-        if ($elapsed < 5) {
+        $isQuit = ($input['penalized'] ?? false) || $score === 0;
+        if (!$isQuit && $elapsed < 5) {
             jsonResponse(['success' => false, 'message' => 'Please wait before submitting another score'], 429);
         }
 
@@ -221,6 +222,7 @@ function handleGetBoosters()
 
         $level = $user['level'] ?? 1;
         $boosters = [
+            'hint' => min(5, max(0, (int) floor($level / 1))),
             'hammer' => min(5, max(0, (int) floor($level / 2))),
             'shuffle' => min(3, max(0, (int) floor($level / 3))),
             'extraMoves' => min(2, max(0, (int) floor($level / 4))),
@@ -253,6 +255,7 @@ function handleBuyBooster()
     $boosterType = $input['booster_type'] ?? null;
 
     $validBoosters = [
+        'hint' => 100,
         'hammer' => 150,
         'shuffle' => 250,
         'extraMoves' => 350,
@@ -298,6 +301,7 @@ function handleBuyBooster()
         $user = current_user();
         $level = $user['level'] ?? 1;
         $boosters = [
+            'hint' => min(5, max(0, (int) floor($level / 1))),
             'hammer' => min(5, max(0, (int) floor($level / 2))),
             'shuffle' => min(3, max(0, (int) floor($level / 3))),
             'extraMoves' => min(2, max(0, (int) floor($level / 4))),
