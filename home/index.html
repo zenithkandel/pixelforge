@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home — PixelForge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/codes/pixelforge/assets/css/main.css">
+  <link rel="stylesheet" href="/codes/pixelforge/assets/css/pages/home.css">
+</head>
+<body>
+  <div class="app-layout" id="app">
+    <!-- Sidebar injected by Layout.init() -->
+    <main class="page" id="mainContent">
+      <header class="page-header">
+        <div class="page-header-inner">
+          <div class="flex items-center gap-4">
+            <button class="sidebar-toggle" id="sidebarToggle" aria-label="Open menu">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+            <div>
+              <h1 class="page-title">Dashboard</h1>
+              <p class="page-subtitle" id="greeting">Welcome back</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <!-- Greeting -->
+        <div class="home-greeting mb-6">
+          <h2 class="home-greeting-text" id="greetingText">Good morning</h2>
+          <p class="home-greeting-sub" id="greetingSub">Welcome back to your territory.</p>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="home-actions">
+          <a href="/codes/pixelforge/game/" class="btn btn-primary btn-lg">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="currentColor"/></svg>
+            Play Match-3
+          </a>
+          <a href="/codes/pixelforge/world/" class="btn btn-secondary btn-lg">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M2 6.5h14M2 11.5h14M6.5 2v14M11.5 2v14" stroke="currentColor" stroke-width="0.75" opacity="0.4"/></svg>
+            Open Canvas
+          </a>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="home-stats" id="statsGrid">
+          <div class="stat-card">
+            <div class="stat-card-icon accent">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,7 18,13 10,18 2,13 2,7" fill="currentColor"/></svg>
+            </div>
+            <div class="stat-card-label">Gems</div>
+            <div class="stat-card-value" id="statGems">—</div>
+            <div class="stat-card-trend up" id="statGemsTrend" style="display: none;">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 9V3M3 5l3-3 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span id="statGemsTrendValue"></span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-icon info">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2l2.5 5 5.5.8-4 3.9.9 5.3-4.9-2.6L5.1 17l.9-5.3-4-3.9 5.5-.8z" fill="currentColor"/></svg>
+            </div>
+            <div class="stat-card-label">Level</div>
+            <div class="stat-card-value" id="statLevel">—</div>
+            <div class="progress progress-sm mt-2">
+              <div class="progress-bar" id="statXpBar" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-icon success">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="6" y="6" width="3" height="3" fill="currentColor" opacity="0.6"/><rect x="11" y="6" width="3" height="3" fill="currentColor" opacity="0.4"/><rect x="6" y="11" width="3" height="3" fill="currentColor" opacity="0.3"/><rect x="11" y="11" width="3" height="3" fill="currentColor" opacity="0.5"/></svg>
+            </div>
+            <div class="stat-card-label">Territory</div>
+            <div class="stat-card-value" id="statPixels">—</div>
+          </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="home-content">
+          <!-- Recent Activity -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="h5">Recent Activity</h3>
+            </div>
+            <div class="card-body" id="activityFeed">
+              <div class="stack-2">
+                <div class="skeleton skeleton-row"><div class="skeleton skeleton-avatar" style="width:32px;height:32px"></div><div style="flex:1"><div class="skeleton skeleton-text" style="width:80%"></div><div class="skeleton skeleton-text" style="width:40%"></div></div></div>
+                <div class="skeleton skeleton-row"><div class="skeleton skeleton-avatar" style="width:32px;height:32px"></div><div style="flex:1"><div class="skeleton skeleton-text" style="width:70%"></div><div class="skeleton skeleton-text" style="width:35%"></div></div></div>
+                <div class="skeleton skeleton-row"><div class="skeleton skeleton-avatar" style="width:32px;height:32px"></div><div style="flex:1"><div class="skeleton skeleton-text" style="width:90%"></div><div class="skeleton skeleton-text" style="width:45%"></div></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Leaderboard Snapshot -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="h5">Top Players</h3>
+              <a href="/codes/pixelforge/rankings/" class="btn btn-ghost btn-sm">View all</a>
+            </div>
+            <div class="card-body" style="padding: 0;" id="leaderboardSnapshot">
+              <div class="stack-2" style="padding: var(--space-4);">
+                <div class="skeleton skeleton-row"><div class="skeleton skeleton-avatar" style="width:32px;height:32px"></div><div style="flex:1"><div class="skeleton skeleton-text" style="width:60%"></div></div></div>
+                <div class="skeleton skeleton-row"><div class="skeleton skeleton-avatar" style="width:32px;height:32px"></div><div style="flex:1"><div class="skeleton skeleton-text" style="width:55%"></div></div></div>
+                <div class="skeleton skeleton-row"><div class="skeleton skeleton-avatar" style="width:32px;height:32px"></div><div style="flex:1"><div class="skeleton skeleton-text" style="width:65%"></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="/codes/pixelforge/assets/js/core/api.js"></script>
+  <script src="/codes/pixelforge/assets/js/core/auth.js"></script>
+  <script src="/codes/pixelforge/assets/js/core/events.js"></script>
+  <script src="/codes/pixelforge/assets/js/components/toast.js"></script>
+  <script src="/codes/pixelforge/assets/js/components/sidebar.js"></script>
+  <script src="/codes/pixelforge/assets/js/components/layout.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Layout.init('home');
+
+      function getGreeting() {
+        const h = new Date().getHours();
+        if (h < 12) return 'Good morning';
+        if (h < 18) return 'Good afternoon';
+        return 'Good evening';
+      }
+
+      function timeAgo(dateStr) {
+        const now = Date.now();
+        const then = new Date(dateStr).getTime();
+        const diff = Math.floor((now - then) / 1000);
+        if (diff < 60) return 'just now';
+        if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+        if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+        return `${Math.floor(diff / 86400)}d ago`;
+      }
+
+      Events.on('user:loaded', async (user) => {
+        // Greeting
+        document.getElementById('greetingText').textContent = `${getGreeting()}, ${user.username}.`;
+        document.getElementById('greetingSub').textContent = `You're level ${user.level} with ${user.xp} XP.`;
+
+        // Stats
+        document.getElementById('statGems').textContent = user.balance.toLocaleString();
+        document.getElementById('statLevel').textContent = user.level;
+        document.getElementById('statPixels').textContent = (user.total_pixels_placed || 0).toLocaleString();
+
+        // XP bar
+        const currentLevelXp = Math.pow((user.level - 1), 2) * 50;
+        const nextLevelXp = Math.pow(user.level, 2) * 50;
+        const progress = nextLevelXp > currentLevelXp ? ((user.xp - currentLevelXp) / (nextLevelXp - currentLevelXp)) * 100 : 0;
+        document.getElementById('statXpBar').style.width = `${Math.min(100, progress)}%`;
+
+        // Load activity and leaderboard
+        loadActivity(user);
+        loadLeaderboard();
+      });
+
+      async function loadActivity(user) {
+        const feed = document.getElementById('activityFeed');
+        try {
+          const profileData = await API.get('auth.php?action=profile');
+          const games = profileData.recent_games || [];
+          if (games.length === 0) {
+            feed.innerHTML = `
+              <div style="text-align: center; padding: var(--space-8); color: var(--text-muted);">
+                <p>No activity yet.</p>
+                <a href="/codes/pixelforge/game/" class="btn btn-primary btn-sm mt-4">Play your first game</a>
+              </div>
+            `;
+            return;
+          }
+          feed.innerHTML = games.slice(0, 5).map(g => `
+            <div class="activity-item">
+              <div class="activity-icon game">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><polygon points="5,3 13,8 5,13" fill="currentColor"/></svg>
+              </div>
+              <div>
+                <div class="activity-text">Scored ${g.score.toLocaleString()} pts and earned ${g.currency_earned} gems</div>
+                <div class="activity-time">${timeAgo(g.played_at)}</div>
+              </div>
+            </div>
+          `).join('');
+        } catch (e) {
+          feed.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: var(--space-6);">Could not load activity.</p>';
+        }
+      }
+
+      async function loadLeaderboard() {
+        const container = document.getElementById('leaderboardSnapshot');
+        try {
+          const data = await API.get('auth.php?action=leaderboard&tab=score');
+          const leaders = (data.leaderboard || []).slice(0, 5);
+          if (leaders.length === 0) {
+            container.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: var(--space-6);">No players yet.</p>';
+            return;
+          }
+          container.innerHTML = leaders.map((p, i) => `
+            <div class="ranking-row${p.id === Auth.getUser()?.id ? ' me' : ''}">
+              <span class="ranking-rank${i === 0 ? ' top-1' : i === 1 ? ' top-2' : i === 2 ? ' top-3' : ''}">${i + 1}</span>
+              <div class="ranking-player">
+                <div class="avatar avatar-sm" style="background-color: ${p.avatar_color || 'var(--accent)'};">${p.username.charAt(0).toUpperCase()}</div>
+                <div>
+                  <div class="ranking-name">${p.username}</div>
+                </div>
+              </div>
+              <div class="ranking-value">${p.value.toLocaleString()}</div>
+            </div>
+          `).join('');
+        } catch (e) {
+          container.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: var(--space-6);">Could not load rankings.</p>';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

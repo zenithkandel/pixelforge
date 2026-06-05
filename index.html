@@ -1,1014 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="">
-    <title>PixelForge - Play. Earn. Create.</title>
-
-    <meta property="og:title" content="PixelForge - Play. Earn. Create.">
-    <meta property="og:description" content="Match gems in a puzzle game to earn currency, then place pixels on a massive collaborative canvas. Create art with thousands of players.">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="PixelForge">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/codes/pixelforge/assets/css/main.css">
-    <link rel="stylesheet" href="/codes/pixelforge/assets/css/auth.css">
-
-    <style>
-        /* ==========================================
-           Base Reset & Landing Page Layout
-           ========================================== */
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #08080d;
-            color: #e2e8f0;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        a { color: inherit; text-decoration: none; }
-        img { max-width: 100%; display: block; }
-        button { font-family: inherit; cursor: pointer; }
-
-        .hidden { display: none !important; }
-
-        /* ==========================================
-           Navigation
-           ========================================== */
-        .site-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            padding: 16px 32px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(8, 8, 13, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            transition: background 0.3s ease;
-        }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 20px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #a855f7, #3b82f6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-logo svg {
-            width: 28px;
-            height: 28px;
-            flex-shrink: 0;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            font-size: 14px;
-            font-weight: 500;
-            color: #94a3b8;
-            transition: color 0.2s ease;
-        }
-
-        .nav-links a:hover { color: #e2e8f0; }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .nav-user {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            color: #94a3b8;
-        }
-
-        .nav-user .user-name {
-            font-weight: 600;
-            color: #e2e8f0;
-        }
-
-        .nav-dashboard {
-            padding: 8px 18px;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #fff;
-            background: linear-gradient(135deg, #7c3aed, #3b82f6);
-            border: none;
-            transition: opacity 0.2s ease;
-        }
-
-        .nav-dashboard:hover { opacity: 0.9; }
-
-        .nav-mobile-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: #e2e8f0;
-            padding: 4px;
-        }
-
-        /* ==========================================
-           Hero Section
-           ========================================== */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 120px 48px 80px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 420px;
-            gap: 80px;
-            align-items: center;
-        }
-
-        .hero-left { max-width: 640px; }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(124, 58, 237, 0.1);
-            border: 1px solid rgba(124, 58, 237, 0.25);
-            color: #a78bfa;
-            font-size: 13px;
-            font-weight: 600;
-            padding: 6px 16px;
-            border-radius: 999px;
-            margin-bottom: 28px;
-            letter-spacing: 0.3px;
-        }
-
-        .hero-badge svg {
-            width: 14px;
-            height: 14px;
-            animation: sparkle 2s ease-in-out infinite;
-        }
-
-        @keyframes sparkle {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(0.85); }
-        }
-
-        .hero-title {
-            font-size: 56px;
-            font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -1.5px;
-            margin-bottom: 24px;
-        }
-
-        .hero-title .gradient {
-            background: linear-gradient(135deg, #a855f7, #3b82f6, #06b6d4);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-desc {
-            font-size: 18px;
-            line-height: 1.7;
-            color: #94a3b8;
-            margin-bottom: 40px;
-            max-width: 540px;
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 40px;
-        }
-
-        .hero-stat {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .hero-stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: #e2e8f0;
-        }
-
-        .hero-stat-label {
-            font-size: 13px;
-            color: #64748b;
-            margin-top: 2px;
-        }
-
-        .hero-right {
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        /* ==========================================
-           Auth Card Integration
-           ========================================== */
-        .auth-card {
-            width: 100%;
-            max-width: 420px;
-        }
-
-        .auth-card .form-label {
-            font-size: 13px;
-            font-weight: 500;
-            color: #94a3b8;
-            margin-bottom: 6px;
-            display: block;
-        }
-
-        .auth-card .form-input {
-            width: 100%;
-            height: 48px;
-            padding: 0 16px;
-            background: #0a0a0f;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            color: #e2e8f0;
-            font-size: 14px;
-            font-family: inherit;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-            outline: none;
-        }
-
-        .auth-card .form-input::placeholder { color: #475569; }
-
-        .auth-card .form-input:focus {
-            border-color: rgba(124, 58, 237, 0.5);
-            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
-        }
-
-        .auth-card .auth-submit {
-            background: linear-gradient(135deg, #7c3aed, #3b82f6);
-            color: #ffffff;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .auth-card .auth-submit:hover {
-            opacity: 0.95;
-        }
-
-        /* ==========================================
-           Canvas Preview Section
-           ========================================== */
-        .canvas-preview {
-            padding: 100px 48px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .canvas-preview-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .section-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #7c3aed;
-            margin-bottom: 16px;
-        }
-
-        .section-title {
-            font-size: 42px;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 16px;
-        }
-
-        .section-desc {
-            font-size: 17px;
-            color: #94a3b8;
-            max-width: 520px;
-            margin: 0 auto 60px;
-        }
-
-        .pixel-grid-wrap {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 40px;
-        }
-
-        .pixel-grid {
-            display: grid;
-            grid-template-columns: repeat(8, 1fr);
-            gap: 3px;
-            padding: 16px;
-            background: rgba(18, 18, 26, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-        }
-
-        .pixel-cell {
-            width: 48px;
-            height: 48px;
-            border-radius: 6px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            cursor: crosshair;
-            position: relative;
-        }
-
-        .pixel-cell:hover {
-            transform: scale(1.2);
-            z-index: 2;
-            box-shadow: 0 0 16px rgba(124, 58, 237, 0.5);
-        }
-
-        .canvas-preview-note {
-            font-size: 15px;
-            color: #64748b;
-            max-width: 480px;
-            margin: 0 auto;
-        }
-
-        .canvas-preview-note strong {
-            color: #a78bfa;
-            font-weight: 600;
-        }
-
-        /* ==========================================
-           Features Grid
-           ========================================== */
-        .features {
-            padding: 100px 48px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .features-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-top: 60px;
-        }
-
-        .feature-card {
-            background: rgba(18, 18, 26, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
-            padding: 40px 32px;
-            text-align: left;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(124, 58, 237, 0.25);
-        }
-
-        .feature-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-        }
-
-        .feature-icon svg {
-            width: 28px;
-            height: 28px;
-            color: #fff;
-        }
-
-        .feature-icon.purple { background: linear-gradient(135deg, #7c3aed, #6d28d9); }
-        .feature-icon.blue { background: linear-gradient(135deg, #3b82f6, #2563eb); }
-        .feature-icon.cyan { background: linear-gradient(135deg, #06b6d4, #0891b2); }
-
-        .feature-card h3 {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: #f1f5f9;
-        }
-
-        .feature-card p {
-            font-size: 15px;
-            line-height: 1.7;
-            color: #94a3b8;
-        }
-
-        /* ==========================================
-           How It Works
-           ========================================== */
-        .how-it-works {
-            padding: 100px 48px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .how-it-works-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-            margin-top: 60px;
-            position: relative;
-        }
-
-        .steps-grid::before {
-            content: '';
-            position: absolute;
-            top: 44px;
-            left: calc(16.67% + 16px);
-            right: calc(16.67% + 16px);
-            height: 2px;
-            background: linear-gradient(90deg, rgba(124, 58, 237, 0.4), rgba(59, 130, 246, 0.4), rgba(6, 182, 212, 0.4));
-        }
-
-        .step-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .step-number {
-            width: 88px;
-            height: 88px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 24px;
-            position: relative;
-            z-index: 1;
-            border: 2px solid rgba(124, 58, 237, 0.3);
-            background: #08080d;
-        }
-
-        .step-card:nth-child(1) .step-number { color: #a855f7; border-color: rgba(168, 85, 247, 0.3); }
-        .step-card:nth-child(2) .step-number { color: #3b82f6; border-color: rgba(59, 130, 246, 0.3); }
-        .step-card:nth-child(3) .step-number { color: #06b6d4; border-color: rgba(6, 182, 212, 0.3); }
-
-        .step-card h3 {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #f1f5f9;
-        }
-
-        .step-card p {
-            font-size: 15px;
-            color: #94a3b8;
-            max-width: 280px;
-            line-height: 1.6;
-        }
-
-        /* ==========================================
-           Footer
-           ========================================== */
-        .site-footer {
-            padding: 60px 48px 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            z-index: 1;
-        }
-
-        .footer-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .footer-brand {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .footer-brand .footer-logo {
-            font-size: 18px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #a855f7, #3b82f6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .footer-brand .footer-tagline {
-            font-size: 13px;
-            color: #64748b;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 28px;
-            list-style: none;
-        }
-
-        .footer-links a {
-            font-size: 14px;
-            color: #64748b;
-            transition: color 0.2s ease;
-        }
-
-        .footer-links a:hover { color: #e2e8f0; }
-
-        .footer-copy {
-            font-size: 13px;
-            color: #475569;
-        }
-
-        /* ==========================================
-           Responsive
-           ========================================== */
-        @media (max-width: 1024px) {
-            .hero-inner {
-                grid-template-columns: 1fr;
-                gap: 60px;
-            }
-
-            .hero-left { max-width: 100%; }
-
-            .hero-right {
-                justify-content: center;
-            }
-
-            .hero-title { font-size: 44px; }
-        }
-
-        @media (max-width: 768px) {
-            .site-nav { padding: 14px 20px; }
-
-            .nav-links { display: none; }
-
-            .nav-mobile-toggle { display: block; }
-
-            .hero { padding: 100px 20px 60px; }
-
-            .hero-title { font-size: 36px; letter-spacing: -0.5px; }
-
-            .hero-desc { font-size: 16px; }
-
-            .hero-stats {
-                flex-wrap: wrap;
-                gap: 24px;
-            }
-
-            .canvas-preview,
-            .features,
-            .how-it-works {
-                padding: 60px 20px;
-            }
-
-            .section-title { font-size: 32px; }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-
-            .steps-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .steps-grid::before { display: none; }
-
-            .pixel-cell {
-                width: 36px;
-                height: 36px;
-            }
-
-            .footer-inner {
-                flex-direction: column;
-                gap: 24px;
-                text-align: center;
-            }
-
-            .footer-links { flex-wrap: wrap; justify-content: center; }
-        }
-
-        @media (max-width: 480px) {
-            .hero-title { font-size: 30px; }
-
-            .hero-stat-value { font-size: 20px; }
-
-            .pixel-cell {
-                width: 28px;
-                height: 28px;
-            }
-
-            .pixel-grid { gap: 2px; padding: 10px; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PixelForge — Build Your Territory</title>
+  <meta name="description" content="A collaborative territory-building game powered by a match-3 economy. Play, earn gems, claim pixels.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/pages/landing.css">
 </head>
-<body>
+<body class="landing">
 
-    <!-- Background Animation -->
-    <div class="auth-bg" aria-hidden="true">
-        <div class="orb"></div>
-        <div class="orb"></div>
-        <div class="orb"></div>
+  <!-- Navigation -->
+  <nav class="landing-nav" role="navigation" aria-label="Main navigation">
+    <a href="/" class="landing-nav-logo">
+      <div class="landing-nav-logo-icon" aria-hidden="true">P</div>
+      <span class="landing-nav-logo-text">PixelForge</span>
+    </a>
+    <div class="landing-nav-actions">
+      <a href="#login" class="btn btn-ghost btn-sm" id="navLoginBtn">Log in</a>
+      <a href="#register" class="btn btn-primary btn-sm" id="navRegisterBtn">Play Now</a>
     </div>
+  </nav>
 
-    <!-- Navigation -->
-    <nav class="site-nav" role="navigation" aria-label="Main navigation">
-        <a href="/codes/pixelforge/" class="nav-logo" aria-label="PixelForge Home">
-            <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <rect x="2" y="2" width="24" height="24" rx="6" fill="url(#logo-grad)"/>
-                <path d="M14 7l5 4.5v7L14 23l-5-4.5v-7L14 7z" fill="#fff" fill-opacity="0.9"/>
-                <path d="M14 7v6.5L9 18" stroke="#fff" stroke-width="1.5" stroke-opacity="0.5"/>
-                <defs>
-                    <linearGradient id="logo-grad" x1="2" y1="2" x2="26" y2="26" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#7c3aed"/>
-                        <stop offset="1" stop-color="#3b82f6"/>
-                    </linearGradient>
-                </defs>
-            </svg>
-            PixelForge
-        </a>
-
-        <ul class="nav-links">
-            <li><a href="/codes/pixelforge/">Home</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#how-it-works">How It Works</a></li>
-        </ul>
-
-        <div class="nav-right">
-            <div class="nav-user" id="nav-user-section" style="display: none;">
-                <span class="user-name" id="nav-username"></span>
-                <a href="/codes/pixelforge/game/" class="nav-dashboard">Dashboard</a>
-            </div>
+  <!-- Hero Section -->
+  <section class="landing-hero">
+    <div class="landing-hero-inner">
+      <div class="landing-hero-content">
+        <div class="landing-hero-badge">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polygon points="6,0 12,4 12,8 6,12 0,8 0,4" fill="currentColor"/></svg>
+          Collaborative Territory Game
         </div>
-
-        <button class="nav-mobile-toggle" aria-label="Toggle menu">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                <line x1="3" y1="6" x2="21" y2="6"/>
-                <line x1="3" y1="12" x2="21" y2="12"/>
-                <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-        </button>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero" aria-label="Hero">
-        <div class="hero-inner">
-            <div class="hero-left">
-                <div class="hero-badge">
-                    <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path d="M7 0l1.76 5.42H14l-4.12 3 1.56 4.78L7 10.2l-4.44 3 1.56-4.78L0 5.42h5.24L7 0z" fill="currentColor"/>
-                    </svg>
-                    Free to Play
-                </div>
-
-                <h1 class="hero-title">
-                    Play Games.<br>
-                    <span class="gradient">Earn Gems.</span><br>
-                    Build Art.
-                </h1>
-
-                <p class="hero-desc">
-                    Match gems in our puzzle game to earn currency, then place pixels on a massive collaborative canvas. Create art with thousands of players.
-                </p>
-
-                <div class="hero-stats">
-                    <div class="hero-stat">
-                        <span class="hero-stat-value">10,000+</span>
-                        <span class="hero-stat-label">Pixels Placed</span>
-                    </div>
-                    <div class="hero-stat">
-                        <span class="hero-stat-value">500+</span>
-                        <span class="hero-stat-label">Artists</span>
-                    </div>
-                    <div class="hero-stat">
-                        <span class="hero-stat-value">1 Match = 1 Gem</span>
-                        <span class="hero-stat-label">Simple Rewards</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="hero-right">
-                <div class="auth-card">
-                    <div class="auth-logo">
-                        <div class="logo-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#fff"/>
-                            </svg>
-                        </div>
-                        <h1>PixelForge</h1>
-                        <p>Join the creative community</p>
-                    </div>
-
-                    <div class="auth-tabs" role="tablist">
-                        <button class="auth-tab active" id="login-tab" role="tab" aria-selected="true" aria-controls="login-form" type="button">Login</button>
-                        <button class="auth-tab" id="register-tab" role="tab" aria-selected="false" aria-controls="register-form" type="button">Register</button>
-                    </div>
-
-                    <!-- Login Form -->
-                    <form class="auth-form" id="login-form" role="tabpanel" aria-labelledby="login-tab" novalidate>
-                        <div class="form-group">
-                            <label class="form-label" for="login-identifier">Username or Email</label>
-                            <input class="form-input" type="text" id="login-identifier" name="identifier" placeholder="Enter username or email" autocomplete="username" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="login-password">Password</label>
-                            <div class="password-wrapper">
-                                <input class="form-input" type="password" id="login-password" name="password" placeholder="Enter password" autocomplete="current-password" required>
-                                <button type="button" class="password-toggle" aria-label="Toggle password visibility">
-                                    <svg class="icon icon-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                        <circle cx="12" cy="12" r="3"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div id="login-error" class="flash-error" style="display: none;" role="alert"></div>
-
-                        <button type="submit" class="auth-submit" id="login-submit">Sign In</button>
-
-                        <div class="auth-footer">
-                            Don't have an account? <a href="#register" id="login-to-register">Register</a>
-                        </div>
-                    </form>
-
-                    <!-- Register Form -->
-                    <form class="auth-form hidden" id="register-form" role="tabpanel" aria-labelledby="register-tab" novalidate>
-                        <div class="form-group">
-                            <label class="form-label" for="register-username">Username</label>
-                            <input class="form-input" type="text" id="register-username" name="username" placeholder="Choose a username" autocomplete="username" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="register-email">Email</label>
-                            <input class="form-input" type="email" id="register-email" name="email" placeholder="Enter your email" autocomplete="email" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="register-password">Password</label>
-                            <div class="password-wrapper">
-                                <input class="form-input" type="password" id="register-password" name="password" placeholder="Create a password" autocomplete="new-password" required>
-                                <button type="button" class="password-toggle" aria-label="Toggle password visibility">
-                                    <svg class="icon icon-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                        <circle cx="12" cy="12" r="3"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="register-confirm-password">Confirm Password</label>
-                            <div class="password-wrapper">
-                                <input class="form-input" type="password" id="register-confirm-password" name="confirm_password" placeholder="Confirm your password" autocomplete="new-password" required>
-                                <button type="button" class="password-toggle" aria-label="Toggle password visibility">
-                                    <svg class="icon icon-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                        <circle cx="12" cy="12" r="3"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div id="register-error" class="flash-error" style="display: none;" role="alert"></div>
-
-                        <button type="submit" class="auth-submit" id="register-submit">Create Account</button>
-
-                        <div class="auth-footer">
-                            Already have an account? <a href="#login" id="register-to-login">Sign In</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <h1 class="landing-hero-title">
+          Build your territory.<br>
+          <span>One pixel at a time.</span>
+        </h1>
+        <p class="landing-hero-desc">
+          Play match-3 to earn gems. Spend gems to claim pixels on a shared 200x200 canvas. Compete with other players to build the biggest territory.
+        </p>
+        <div class="landing-hero-actions">
+          <a href="#register" class="btn btn-primary btn-lg" id="heroRegisterBtn">Start Playing</a>
+          <a href="#login" class="btn btn-secondary btn-lg" id="heroLoginBtn">I have an account</a>
         </div>
-    </section>
+      </div>
 
-    <!-- Canvas Preview Section -->
-    <section class="canvas-preview" id="canvas-preview" aria-label="Canvas Preview">
-        <div class="canvas-preview-inner">
-            <div class="section-tag">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <rect x="3" y="3" width="7" height="7"/>
-                    <rect x="14" y="3" width="7" height="7"/>
-                    <rect x="14" y="14" width="7" height="7"/>
-                    <rect x="3" y="14" width="7" height="7"/>
-                </svg>
-                The Living Canvas
-            </div>
-            <h2 class="section-title">A 200x200 pixel grid where every pixel tells a story</h2>
-            <p class="section-desc">Every pixel is placed by real players. Watch the canvas evolve in real-time.</p>
+      <!-- Auth Card -->
+      <div class="landing-auth" id="authCard">
+        <div class="tabs">
+          <div class="tabs-list" role="tablist">
+            <button class="tab active" role="tab" aria-selected="true" aria-controls="loginPanel" id="loginTab">Log in</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="registerPanel" id="registerTab">Register</button>
+          </div>
 
-            <div class="pixel-grid-wrap">
-                <div class="pixel-grid" role="img" aria-label="Interactive pixel canvas preview with colored squares">
+          <!-- Login Form -->
+          <div class="tab-panel active" role="tabpanel" id="loginPanel" aria-labelledby="loginTab">
+            <form id="loginForm" novalidate>
+              <div class="stack-4 mt-6">
+                <div class="form-group">
+                  <label class="form-label" for="loginIdentifier">Username or email</label>
+                  <input class="form-input" type="text" id="loginIdentifier" name="identifier" autocomplete="username" required placeholder="Enter your username or email">
                 </div>
-            </div>
-
-            <p class="canvas-preview-note">
-                Every pixel is placed by real players. Watch the canvas evolve in <strong>real-time</strong>.
-            </p>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features" id="features" aria-label="Features">
-        <div class="features-inner">
-            <div class="section-tag">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                </svg>
-                Features
-            </div>
-            <h2 class="section-title">Everything you need to play and create</h2>
-            <p class="section-desc">A unique blend of competitive gaming and collaborative art</p>
-
-            <div class="features-grid">
-                <article class="feature-card">
-                    <div class="feature-icon purple">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-                        </svg>
-                    </div>
-                    <h3>Match-3 Gem Forge</h3>
-                    <p>Swap and match gems to score points. Discover special gems, chain combos, and master boosters.</p>
-                </article>
-
-                <article class="feature-card">
-                    <div class="feature-icon blue">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                            <path d="M2 17l10 5 10-5"/>
-                            <path d="M2 12l10 5 10-5"/>
-                        </svg>
-                    </div>
-                    <h3>Earn &amp; Create</h3>
-                    <p>Every game earns you gems. Spend them to place pixels on the shared canvas and create art.</p>
-                </article>
-
-                <article class="feature-card">
-                    <div class="feature-icon cyan">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-                        </svg>
-                    </div>
-                    <h3>Collaborative Canvas</h3>
-                    <p>Place pixels on a shared 200x200 canvas. Collaborate with players worldwide to create art.</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section class="how-it-works" id="how-it-works" aria-label="How It Works">
-        <div class="how-it-works-inner">
-            <div class="section-tag">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"/>
-                    <polyline points="12 6 12 12 16 14"/>
-                </svg>
-                How It Works
-            </div>
-            <h2 class="section-title">Three steps to your masterpiece</h2>
-            <p class="section-desc">Start playing in seconds, create art in minutes</p>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Play the Game</h3>
-                    <p>Match gems, score points, earn gems</p>
+                <div class="form-group">
+                  <label class="form-label" for="loginPassword">Password</label>
+                  <input class="form-input" type="password" id="loginPassword" name="password" autocomplete="current-password" required placeholder="Enter your password">
                 </div>
+                <div id="loginError" class="form-error" role="alert" style="display: none;"></div>
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;" id="loginSubmit">
+                  <span class="btn-text">Log in</span>
+                </button>
+              </div>
+            </form>
+          </div>
 
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Collect Currency</h3>
-                    <p>Use boosters for higher scores and bigger rewards</p>
+          <!-- Register Form -->
+          <div class="tab-panel" role="tabpanel" id="registerPanel" aria-labelledby="registerTab">
+            <form id="registerForm" novalidate>
+              <div class="stack-4 mt-6">
+                <div class="form-group">
+                  <label class="form-label" for="regUsername">Username</label>
+                  <input class="form-input" type="text" id="regUsername" name="username" autocomplete="username" required placeholder="Choose a username" minlength="3" maxlength="30" pattern="[a-zA-Z0-9_]+">
                 </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>Build Art</h3>
-                    <p>Place pixels on the 200x200 canvas to create your masterpiece</p>
+                <div class="form-group">
+                  <label class="form-label" for="regEmail">Email</label>
+                  <input class="form-input" type="email" id="regEmail" name="email" autocomplete="email" required placeholder="Enter your email">
                 </div>
-            </div>
+                <div class="form-group">
+                  <label class="form-label" for="regPassword">Password</label>
+                  <input class="form-input" type="password" id="regPassword" name="password" autocomplete="new-password" required placeholder="8+ chars, letter and number" minlength="8">
+                </div>
+                <div id="registerError" class="form-error" role="alert" style="display: none;"></div>
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;" id="registerSubmit">
+                  <span class="btn-text">Create Account</span>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Footer -->
-    <footer class="site-footer" role="contentinfo">
-        <div class="footer-inner">
-            <div class="footer-brand">
-                <span class="footer-logo">PixelForge</span>
-                <span class="footer-tagline">Made with passion for pixel art</span>
-            </div>
-
-            <ul class="footer-links">
-                <li><a href="/codes/pixelforge/">Home</a></li>
-                <li><a href="/codes/pixelforge/game/">Game</a></li>
-                <li><a href="/codes/pixelforge/canvas/">Canvas</a></li>
-                <li><a href="/codes/pixelforge/game/#leaderboard">Leaderboard</a></li>
-            </ul>
-
-            <span class="footer-copy">&copy; 2026 PixelForge</span>
+  <!-- How It Works -->
+  <section class="landing-steps">
+    <div class="landing-steps-inner">
+      <div class="landing-steps-header">
+        <h2 class="h2">How it works</h2>
+        <p class="mt-2" style="color: var(--text-secondary);">Three steps to start building your territory.</p>
+      </div>
+      <div class="landing-steps-grid">
+        <div class="landing-step">
+          <div class="landing-step-number">1</div>
+          <h3 class="landing-step-title">Play Match-3</h3>
+          <p class="landing-step-desc">Swap gems to create matches. Chain combos for bigger rewards. Use boosters to clear tough boards.</p>
         </div>
-    </footer>
+        <div class="landing-step">
+          <div class="landing-step-number">2</div>
+          <h3 class="landing-step-title">Earn Gems</h3>
+          <p class="landing-step-desc">Every game earns you gems based on your score. Higher scores mean more gems to spend on pixels.</p>
+        </div>
+        <div class="landing-step">
+          <div class="landing-step-number">3</div>
+          <h3 class="landing-step-title">Claim Territory</h3>
+          <p class="landing-step-desc">Spend gems to place pixels on the shared canvas. Build your territory and compete with other players.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <script src="/codes/pixelforge/assets/js/auth.js"></script>
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <p class="landing-footer-text">&copy; 2024 PixelForge. A collaborative territory game.</p>
+  </footer>
 
-    <!-- Pixel Grid Preview Generation -->
-    <script>
-        (function () {
-            var grid = document.querySelector('.pixel-grid');
-            if (!grid) return;
+  <!-- Scripts -->
+  <script src="assets/js/core/api.js"></script>
+  <script src="assets/js/core/auth.js"></script>
+  <script src="assets/js/components/toast.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // If already logged in, redirect to home
+      Auth.check().then(user => {
+        if (user) window.location.href = '/codes/pixelforge/home/';
+      });
 
-            var colors = [
-                '#7c3aed', '#6d28d9', '#3b82f6', '#2563eb', '#06b6d4',
-                '#0891b2', '#ec4899', '#d946ef', '#f59e0b', '#10b981',
-                '#ef4444', '#8b5cf6', '#14b8a6', '#f97316', '#84cc16',
-                '#e879f9', '#22d3ee', '#fbbf24', '#34d399', '#fb7185',
-                '#a78bfa', '#2dd4bf', '#fb923c', '#a3e635', '#f472b6',
-                '#818cf8', '#38bdf8', '#facc15', '#4ade80', '#f87171',
-                '#c084fc', '#67e8f9'
-            ];
+      // Tab switching
+      const loginTab = document.getElementById('loginTab');
+      const registerTab = document.getElementById('registerTab');
+      const loginPanel = document.getElementById('loginPanel');
+      const registerPanel = document.getElementById('registerPanel');
 
-            var fragment = document.createDocumentFragment();
-            for (var i = 0; i < 64; i++) {
-                var cell = document.createElement('div');
-                cell.className = 'pixel-cell';
-                cell.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                cell.setAttribute('aria-hidden', 'true');
-                fragment.appendChild(cell);
-            }
-            grid.appendChild(fragment);
+      function switchTab(tab) {
+        const isLogin = tab === 'login';
+        loginTab.classList.toggle('active', isLogin);
+        registerTab.classList.toggle('active', !isLogin);
+        loginTab.setAttribute('aria-selected', isLogin);
+        registerTab.setAttribute('aria-selected', !isLogin);
+        loginPanel.classList.toggle('active', isLogin);
+        registerPanel.classList.toggle('active', !isLogin);
+      }
 
-            grid.addEventListener('click', function (e) {
-                var cell = e.target;
-                if (!cell.classList.contains('pixel-cell')) return;
-                cell.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                cell.style.transform = 'scale(1.3)';
-                cell.style.boxShadow = '0 0 20px rgba(124, 58, 237, 0.7)';
-                setTimeout(function () {
-                    cell.style.transform = '';
-                    cell.style.boxShadow = '';
-                }, 200);
-            });
-        })();
-    </script>
+      loginTab.addEventListener('click', () => switchTab('login'));
+      registerTab.addEventListener('click', () => switchTab('register'));
 
+      // Handle hash navigation
+      if (window.location.hash === '#register') switchTab('register');
+      if (window.location.hash === '#login') switchTab('login');
+
+      // Nav button links
+      document.getElementById('navLoginBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        switchTab('login');
+        document.getElementById('authCard').scrollIntoView({ behavior: 'smooth' });
+      });
+      document.getElementById('navRegisterBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        switchTab('register');
+        document.getElementById('authCard').scrollIntoView({ behavior: 'smooth' });
+      });
+      document.getElementById('heroLoginBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        switchTab('login');
+        document.getElementById('authCard').scrollIntoView({ behavior: 'smooth' });
+      });
+      document.getElementById('heroRegisterBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        switchTab('register');
+        document.getElementById('authCard').scrollIntoView({ behavior: 'smooth' });
+      });
+
+      // Login form
+      document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('loginSubmit');
+        const errorEl = document.getElementById('loginError');
+        errorEl.style.display = 'none';
+
+        const identifier = document.getElementById('loginIdentifier').value.trim();
+        const password = document.getElementById('loginPassword').value;
+
+        if (!identifier || !password) {
+          errorEl.textContent = 'Please fill in all fields.';
+          errorEl.style.display = 'block';
+          return;
+        }
+
+        btn.classList.add('btn-loading');
+        btn.disabled = true;
+
+        try {
+          await Auth.login(identifier, password);
+          Toast.success('Welcome back!', 'Redirecting to dashboard...');
+          setTimeout(() => window.location.href = Auth.getRedirect(), 500);
+        } catch (err) {
+          errorEl.textContent = err.message || 'Login failed. Please try again.';
+          errorEl.style.display = 'block';
+        } finally {
+          btn.classList.remove('btn-loading');
+          btn.disabled = false;
+        }
+      });
+
+      // Register form
+      document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('registerSubmit');
+        const errorEl = document.getElementById('registerError');
+        errorEl.style.display = 'none';
+
+        const username = document.getElementById('regUsername').value.trim();
+        const email = document.getElementById('regEmail').value.trim();
+        const password = document.getElementById('regPassword').value;
+
+        if (!username || !email || !password) {
+          errorEl.textContent = 'Please fill in all fields.';
+          errorEl.style.display = 'block';
+          return;
+        }
+
+        if (username.length < 3) {
+          errorEl.textContent = 'Username must be at least 3 characters.';
+          errorEl.style.display = 'block';
+          return;
+        }
+
+        if (password.length < 8) {
+          errorEl.textContent = 'Password must be at least 8 characters.';
+          errorEl.style.display = 'block';
+          return;
+        }
+
+        btn.classList.add('btn-loading');
+        btn.disabled = true;
+
+        try {
+          await Auth.register(username, email, password);
+          Toast.success('Account created!', 'Redirecting to dashboard...');
+          setTimeout(() => window.location.href = Auth.getRedirect(), 500);
+        } catch (err) {
+          errorEl.textContent = err.message || 'Registration failed. Please try again.';
+          errorEl.style.display = 'block';
+        } finally {
+          btn.classList.remove('btn-loading');
+          btn.disabled = false;
+        }
+      });
+    });
+  </script>
 </body>
 </html>

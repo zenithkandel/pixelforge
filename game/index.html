@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Play — PixelForge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/codes/pixelforge/assets/css/main.css">
+  <link rel="stylesheet" href="/codes/pixelforge/assets/css/pages/play.css">
+</head>
+<body>
+  <div class="play-layout">
+    <!-- Top bar -->
+    <div class="play-topbar">
+      <div class="play-topbar-left">
+        <a href="/codes/pixelforge/home/" class="btn btn-ghost btn-sm">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Home
+        </a>
+        <div class="play-stat">
+          <span class="play-stat-label">Score</span>
+          <span class="play-stat-value score" id="hudScore">0</span>
+        </div>
+      </div>
+      <div class="play-topbar-right">
+        <div class="play-stat">
+          <span class="play-stat-label">Combo</span>
+          <span class="play-stat-value" id="hudCombo">1x</span>
+        </div>
+        <div class="play-stat">
+          <span class="play-stat-label">Moves</span>
+          <span class="play-stat-value moves" id="hudMoves">30</span>
+        </div>
+        <div class="play-stat">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><polygon points="7,1 13,5 13,9 7,13 1,9 1,5" fill="var(--accent)"/></svg>
+          <span class="play-stat-value" id="hudGems">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game body -->
+    <div class="play-body">
+      <!-- Board area -->
+      <div class="play-board-area">
+        <div class="play-board-wrapper">
+          <div class="play-combo" id="comboDisplay"></div>
+          <canvas id="gameCanvas" width="480" height="480"></canvas>
+        </div>
+      </div>
+
+      <!-- Booster sidebar -->
+      <div class="play-boosters">
+        <div class="play-boosters-title">Boosters</div>
+        <div id="boosterList" class="stack-2">
+          <!-- Populated by JS -->
+        </div>
+        <div class="play-actions">
+          <button class="btn btn-secondary btn-sm" id="hintBtn" style="width: 100%;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 5.5a1.5 1.5 0 111.5 1.5c0 .8-.7 1-1.5 1.2V9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="7" cy="11" r=".7" fill="currentColor"/></svg>
+            Hint
+          </button>
+          <button class="btn btn-secondary btn-sm" id="shuffleBtn" style="width: 100%;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 10l3-3 2 2 3-5 2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 3h3v3M10 11h3v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Shuffle
+          </button>
+          <button class="btn btn-danger btn-sm" id="quitBtn" style="width: 100%;">
+            Quit Game
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Over Overlay -->
+  <div class="play-gameover-overlay" id="gameOverOverlay">
+    <div class="play-gameover-card">
+      <h2 class="play-gameover-title">Game Over</h2>
+      <div class="play-gameover-score" id="finalScore">0</div>
+      <div class="play-gameover-stats">
+        <div class="play-gameover-stat">
+          <div class="play-gameover-stat-value" id="finalCombo">1x</div>
+          <div class="play-gameover-stat-label">Max Combo</div>
+        </div>
+        <div class="play-gameover-stat">
+          <div class="play-gameover-stat-value" id="finalGems" style="color: var(--accent);">+0</div>
+          <div class="play-gameover-stat-label">Gems Earned</div>
+        </div>
+      </div>
+      <div class="play-gameover-actions">
+        <button class="btn btn-primary btn-lg" id="playAgainBtn" style="width: 100%;">Play Again</button>
+        <a href="/codes/pixelforge/world/" class="btn btn-secondary btn-lg" style="width: 100%;">Open Canvas</a>
+        <a href="/codes/pixelforge/home/" class="btn btn-ghost btn-sm">Back to Home</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Game Engine Scripts -->
+  <script src="/codes/pixelforge/assets/js/core/api.js"></script>
+  <script src="/codes/pixelforge/assets/js/core/auth.js"></script>
+  <script src="/codes/pixelforge/assets/js/core/events.js"></script>
+  <script src="/codes/pixelforge/assets/js/components/toast.js"></script>
+  <script src="/codes/pixelforge/assets/game/utils.js"></script>
+  <script src="/codes/pixelforge/assets/game/game-animations.js"></script>
+  <script src="/codes/pixelforge/assets/game/game-renderer.js"></script>
+  <script src="/codes/pixelforge/assets/game/game.js"></script>
+  <script src="/codes/pixelforge/assets/game/game-powerups.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Auth check
+      const user = await Auth.check();
+      if (!user) {
+        window.location.href = '/codes/pixelforge/';
+        return;
+      }
+
+      // Update HUD gems
+      document.getElementById('hudGems').textContent = user.balance;
+
+      let game = null;
+      let renderer = null;
+      let powerups = null;
+      let sessionId = null;
+      let maxCombo = 1;
+
+      // Start game
+      async function startGame() {
+        try {
+          const data = await API.get('game.php?action=start_game');
+          sessionId = data.session_id;
+          maxCombo = 1;
+
+          // Update HUD
+          document.getElementById('hudScore').textContent = '0';
+          document.getElementById('hudCombo').textContent = '1x';
+          document.getElementById('hudMoves').textContent = data.moves_left;
+
+          // Init game engine
+          const canvas = document.getElementById('gameCanvas');
+          game = new GemForge(data.board, data.moves_left, data.score);
+
+          renderer = new GameRenderer(canvas, game);
+          powerups = new PowerUpManager(game, renderer);
+
+          // Game events
+          game.events.on('score', (score) => {
+            document.getElementById('hudScore').textContent = score.toLocaleString();
+          });
+
+          game.events.on('combo', (combo) => {
+            if (combo > maxCombo) maxCombo = combo;
+            document.getElementById('hudCombo').textContent = `${combo}x`;
+            const display = document.getElementById('comboDisplay');
+            display.textContent = `${combo}x COMBO!`;
+            display.classList.add('visible');
+            setTimeout(() => display.classList.remove('visible'), 800);
+          });
+
+          game.events.on('moves', (moves) => {
+            document.getElementById('hudMoves').textContent = moves;
+          });
+
+          game.events.on('gameOver', async () => {
+            await submitScore();
+          });
+
+          game.events.on('noMoves', () => {
+            Toast.info('No moves available', 'The board will be shuffled.');
+          });
+
+          // Button handlers
+          document.getElementById('hintBtn').onclick = () => game.showHint();
+          document.getElementById('shuffleBtn').onclick = () => game.shuffleBoard();
+          document.getElementById('quitBtn').onclick = async () => {
+            if (confirm('Are you sure you want to quit? Your score will be submitted.')) {
+              await submitScore();
+            }
+          };
+
+          // Load boosters
+          loadBoosters();
+
+        } catch (err) {
+          Toast.error('Failed to start game', err.message);
+        }
+      }
+
+      async function submitScore() {
+        if (!sessionId) return;
+        try {
+          const data = await API.post('game.php?action=submit_score', {
+            session_id: sessionId,
+            score: game.score,
+            max_combo: maxCombo,
+          });
+
+          document.getElementById('finalScore').textContent = game.score.toLocaleString();
+          document.getElementById('finalCombo').textContent = `${maxCombo}x`;
+          document.getElementById('finalGems').textContent = `+${data.currency_earned}`;
+
+          // Update local user data
+          if (Auth.getUser()) {
+            Auth.getUser().balance = data.new_balance;
+            Auth.getUser().xp = data.new_xp;
+            Auth.getUser().level = data.new_level;
+          }
+
+          document.getElementById('gameOverOverlay').classList.add('active');
+          sessionId = null;
+        } catch (err) {
+          if (err.status === 429) {
+            Toast.warning('Submitted too fast', 'Please wait before submitting.');
+          } else {
+            Toast.error('Submit failed', err.message);
+          }
+        }
+      }
+
+      async function loadBoosters() {
+        try {
+          const data = await API.get('game.php?action=get_boosters');
+          const list = document.getElementById('boosterList');
+          const boosters = data.boosters;
+          const boosterDefs = [
+            { key: 'hammer', name: 'Hammer', icon: '🔨', desc: 'Destroy one gem' },
+            { key: 'shuffle', name: 'Shuffle', icon: '🔀', desc: 'Randomize board' },
+            { key: 'extraMoves', name: '+5 Moves', icon: '⚡', desc: 'Add 5 moves' },
+            { key: 'colorBurst', name: 'Color Burst', icon: '💥', desc: 'Destroy all of one color' },
+            { key: 'lightning', name: 'Lightning', icon: '⚡', desc: 'Clear row + column' },
+          ];
+
+          list.innerHTML = boosterDefs.map(b => {
+            const count = boosters[b.key] || 0;
+            return `
+              <div class="booster-item${count === 0 ? ' disabled' : ''}" data-booster="${b.key}" ${count === 0 ? '' : 'tabindex="0"'}>
+                <div class="booster-icon">${b.icon}</div>
+                <div class="booster-info">
+                  <div class="booster-name">${b.name}</div>
+                  <div class="booster-count">${count} available</div>
+                </div>
+              </div>
+            `;
+          }).join('');
+
+          // Booster click handlers
+          list.querySelectorAll('.booster-item:not(.disabled)').forEach(el => {
+            el.addEventListener('click', () => useBooster(el.dataset.booster));
+          });
+        } catch (e) {
+          // silently fail
+        }
+      }
+
+      async function useBooster(type) {
+        try {
+          await API.post('game.php?action=use_booster', { booster_type: type });
+          powerups.activate(type);
+          loadBoosters();
+        } catch (err) {
+          Toast.error('Booster failed', err.message);
+        }
+      }
+
+      // Play again
+      document.getElementById('playAgainBtn').addEventListener('click', () => {
+        document.getElementById('gameOverOverlay').classList.remove('active');
+        startGame();
+      });
+
+      // Start
+      startGame();
+    });
+  </script>
+</body>
+</html>
