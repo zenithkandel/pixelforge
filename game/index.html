@@ -104,11 +104,11 @@
   <script src="/codes/pixelforge/assets/js/core/auth.js"></script>
   <script src="/codes/pixelforge/assets/js/core/events.js"></script>
   <script src="/codes/pixelforge/assets/js/components/toast.js"></script>
-  <script src="/codes/pixelforge/assets/game/utils.js"></script>
-  <script src="/codes/pixelforge/assets/game/game-animations.js"></script>
-  <script src="/codes/pixelforge/assets/game/game-renderer.js"></script>
-  <script src="/codes/pixelforge/assets/game/game.js"></script>
-  <script src="/codes/pixelforge/assets/game/game-powerups.js"></script>
+  <script src="/codes/pixelforge/assets/js/utils.js"></script>
+  <script src="/codes/pixelforge/assets/js/game-animations.js"></script>
+  <script src="/codes/pixelforge/assets/js/game-renderer.js"></script>
+  <script src="/codes/pixelforge/assets/js/game.js"></script>
+  <script src="/codes/pixelforge/assets/js/game-powerups.js"></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
@@ -141,11 +141,23 @@
           document.getElementById('hudMoves').textContent = data.moves_left;
 
           // Init game engine
-          const canvas = document.getElementById('gameCanvas');
-          game = new GemForge(data.board, data.moves_left, data.score);
+          game = new GemForge(8, 8, 6);
+          game.loadState({
+            board: data.board,
+            score: data.score,
+            movesLeft: data.moves_left,
+            maxCombo: 0,
+          });
 
-          renderer = new GameRenderer(canvas, game);
+          renderer = new GameRenderer('gameCanvas', game);
           powerups = new PowerUpManager(game, renderer);
+
+          // Start render loop
+          function gameLoop(timestamp) {
+            if (renderer) renderer.render(timestamp || 0);
+            requestAnimationFrame(gameLoop);
+          }
+          gameLoop();
 
           // Game events
           game.events.on('score', (score) => {
@@ -174,8 +186,8 @@
           });
 
           // Button handlers
-          document.getElementById('hintBtn').onclick = () => game.showHint();
-          document.getElementById('shuffleBtn').onclick = () => game.shuffleBoard();
+          document.getElementById('hintBtn').onclick = () => renderer.showHint();
+          document.getElementById('shuffleBtn').onclick = () => game._shuffleBoard();
           document.getElementById('quitBtn').onclick = async () => {
             if (confirm('Are you sure you want to quit? Your score will be submitted.')) {
               await submitScore();
@@ -259,7 +271,7 @@
       async function useBooster(type) {
         try {
           await API.post('game.php?action=use_booster', { booster_type: type });
-          powerups.activate(type);
+          powerups.activateBooster(type);
           loadBoosters();
         } catch (err) {
           Toast.error('Booster failed', err.message);

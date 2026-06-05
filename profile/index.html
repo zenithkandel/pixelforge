@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile — PixelForge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/codes/pixelforge/assets/css/main.css">
+  <link rel="stylesheet" href="/codes/pixelforge/assets/css/pages/profile.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar injected by Layout -->
+    <main class="page" id="mainContent">
+      <header class="page-header">
+        <div class="page-header-inner">
+          <div class="flex items-center gap-4">
+            <button class="sidebar-toggle" id="sidebarToggle" aria-label="Open menu">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+            <div>
+              <h1 class="page-title">Profile</h1>
+              <p class="page-subtitle">Your player identity</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content container-narrow">
+        <!-- Profile Header -->
+        <div class="profile-header" id="profileHeader">
+          <div class="skeleton skeleton-avatar avatar-xl" id="profileAvatarSkeleton"></div>
+          <div class="profile-info" style="flex: 1;">
+            <div class="skeleton skeleton-heading"></div>
+            <div class="skeleton skeleton-text" style="width: 40%;"></div>
+          </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="profile-stats" id="profileStats">
+          <div class="stat-card"><div class="skeleton skeleton-card"></div></div>
+          <div class="stat-card"><div class="skeleton skeleton-card"></div></div>
+          <div class="stat-card"><div class="skeleton skeleton-card"></div></div>
+          <div class="stat-card"><div class="skeleton skeleton-card"></div></div>
+        </div>
+
+        <!-- Achievements -->
+        <div class="profile-achievements">
+          <div class="profile-achievements-header">
+            <h3 class="h4">Achievements</h3>
+            <span class="profile-achievements-count" id="achievementCount">—</span>
+          </div>
+          <div class="profile-achievements-grid" id="achievementsGrid">
+            <div class="skeleton skeleton-card" style="height: 120px;"></div>
+            <div class="skeleton skeleton-card" style="height: 120px;"></div>
+            <div class="skeleton skeleton-card" style="height: 120px;"></div>
+            <div class="skeleton skeleton-card" style="height: 120px;"></div>
+          </div>
+        </div>
+
+        <!-- Recent Games -->
+        <div class="profile-games">
+          <h3 class="h4 mb-4">Recent Games</h3>
+          <div class="card">
+            <div class="card-body" id="recentGames">
+              <div class="stack-2">
+                <div class="skeleton skeleton-row"></div>
+                <div class="skeleton skeleton-row"></div>
+                <div class="skeleton skeleton-row"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/codes/pixelforge/assets/js/core/api.js"></script>
+  <script src="/codes/pixelforge/assets/js/core/auth.js"></script>
+  <script src="/codes/pixelforge/assets/js/core/events.js"></script>
+  <script src="/codes/pixelforge/assets/js/components/toast.js"></script>
+  <script src="/codes/pixelforge/assets/js/components/sidebar.js"></script>
+  <script src="/codes/pixelforge/assets/js/components/layout.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Layout.init('profile');
+        first_match: { icon: '🎯', name: 'First Match' },
+        combo_5: { icon: '🔗', name: 'Chain Reaction' },
+        combo_10: { icon: '⛓️', name: 'Unstoppable' },
+        score_1000: { icon: '🔥', name: 'On Fire' },
+        score_5000: { icon: '💎', name: 'Diamond Score' },
+        score_10000: { icon: '🏆', name: 'Champion' },
+        pixels_100: { icon: '🎨', name: 'Artist' },
+        pixels_500: { icon: '🖌️', name: 'Painter' },
+        pixels_1000: { icon: '🏛️', name: 'Architect' },
+        level_5: { icon: '⭐', name: 'Rising Star' },
+        level_10: { icon: '🌟', name: 'All-Star' },
+        level_20: { icon: '💫', name: 'Legend' },
+        streak_3: { icon: '📅', name: 'Dedicated' },
+        streak_7: { icon: '🗓️', name: 'Devoted' },
+        streak_30: { icon: '👑', name: 'Royalty' },
+        first_pixel: { icon: '✨', name: 'First Step' },
+      };
+
+      Events.on('user:loaded', async (user) => {
+        try {
+          const data = await API.get('auth.php?action=profile');
+          renderProfile(data.user, data.achievements, data.recent_games);
+        } catch (e) {
+          Toast.error('Failed to load profile', e.message);
+        }
+      });
+
+      function renderProfile(user, achievements, recentGames) {
+        // Header
+        const header = document.getElementById('profileHeader');
+        header.innerHTML = `
+          <div class="profile-avatar" style="background-color: ${user.avatar_color || 'var(--accent)'};">
+            ${user.username.charAt(0).toUpperCase()}
+          </div>
+          <div class="profile-info">
+            <h2 class="profile-name">${user.username}</h2>
+            <p class="profile-meta">Member since ${new Date(user.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+            <div class="profile-xp mt-3">
+              <div class="profile-xp-label">
+                <span>Level ${user.level}</span>
+                <span>${user.xp} XP</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" style="width: ${getXpProgress(user)}%"></div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Stats
+        document.getElementById('profileStats').innerHTML = `
+          <div class="stat-card">
+            <div class="stat-card-icon accent">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="10,2 18,7 18,13 10,18 2,13 2,7" fill="currentColor"/></svg>
+            </div>
+            <div class="stat-card-label">Gems Earned</div>
+            <div class="stat-card-value">${(user.total_score || 0).toLocaleString()}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon info">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polygon points="7,3 17,10 7,17" fill="currentColor"/></svg>
+            </div>
+            <div class="stat-card-label">Games Played</div>
+            <div class="stat-card-value">${(user.total_games_played || 0).toLocaleString()}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon success">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <div class="stat-card-label">Pixels Placed</div>
+            <div class="stat-card-value">${(user.total_pixels_placed || 0).toLocaleString()}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon warning">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2l2.5 5 5.5.8-4 3.9.9 5.3-4.9-2.6L5.1 17l.9-5.3-4-3.9 5.5-.8z" fill="currentColor"/></svg>
+            </div>
+            <div class="stat-card-label">Current Level</div>
+            <div class="stat-card-value">${user.level}</div>
+          </div>
+        `;
+
+        // Achievements
+        const earnedSlugs = new Set((achievements || []).map(a => a.slug));
+        const allAchievements = Object.entries(ACHIEVEMENTS);
+        const earnedCount = allAchievements.filter(([slug]) => earnedSlugs.has(slug)).length;
+
+        document.getElementById('achievementCount').textContent = `${earnedCount}/${allAchievements.length}`;
+        document.getElementById('achievementsGrid').innerHTML = allAchievements.map(([slug, def]) => {
+          const earned = earnedSlugs.has(slug);
+          return `
+            <div class="achievement-card${earned ? '' : ' locked'}">
+              <div class="achievement-icon">${def.icon}</div>
+              <div class="achievement-name">${def.name}</div>
+            </div>
+          `;
+        }).join('');
+
+        // Recent games
+        const gamesContainer = document.getElementById('recentGames');
+        if (!recentGames || recentGames.length === 0) {
+          gamesContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: var(--space-6);">No games played yet.</p>';
+        } else {
+          gamesContainer.innerHTML = `
+            <div class="profile-games-list">
+              ${recentGames.map(g => `
+                <div class="profile-game-row">
+                  <span class="profile-game-score">${g.score.toLocaleString()}</span>
+                  <span class="profile-game-combo">${g.combo_max}x combo</span>
+                  <span class="profile-game-gems">+${g.currency_earned} gems</span>
+                  <span class="profile-game-date">${timeAgo(g.played_at)}</span>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        }
+      }
+
+      function getXpProgress(user) {
+        const currentLevelXp = Math.pow((user.level - 1), 2) * 50;
+        const nextLevelXp = Math.pow(user.level, 2) * 50;
+        return nextLevelXp > currentLevelXp ? Math.min(100, ((user.xp - currentLevelXp) / (nextLevelXp - currentLevelXp)) * 100) : 100;
+      }
+
+      function timeAgo(dateStr) {
+        const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
+        if (diff < 60) return 'just now';
+        if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+        if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+        return `${Math.floor(diff / 86400)}d ago`;
+      }
+    });
+  </script>
+</body>
+</html>

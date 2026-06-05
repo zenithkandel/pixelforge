@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World — PixelForge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/codes/pixelforge/assets/css/main.css">
+  <link rel="stylesheet" href="/codes/pixelforge/assets/css/pages/world.css">
+</head>
+<body>
+  <div class="world-layout">
+    <!-- Color Panel -->
+    <div class="world-color-panel" id="colorPanel">
+      <!-- Populated by JS -->
+    </div>
+
+    <!-- Main Viewport -->
+    <div class="world-viewport" id="viewport">
+      <!-- Top Toolbar -->
+      <div class="world-toolbar">
+        <div class="world-toolbar-left">
+          <a href="/codes/pixelforge/home/" class="btn btn-ghost btn-sm">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Home
+          </a>
+          <div class="world-search">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M9.5 9.5L13 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <input type="text" id="coordSearch" placeholder="x, y" aria-label="Search coordinates">
+          </div>
+        </div>
+        <div class="world-toolbar-right">
+          <div class="world-overlays">
+            <button class="world-overlay-btn active" data-overlay="none">Default</button>
+            <button class="world-overlay-btn" data-overlay="ownership">Owners</button>
+            <button class="world-overlay-btn" data-overlay="heatmap">Heat</button>
+          </div>
+          <div class="world-balance" id="balanceBadge">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><polygon points="7,1 13,4 13,10 7,13 1,10 1,4" fill="var(--accent)"/></svg>
+            <span class="world-balance-value" id="gemCount">0</span>
+            <span style="color: var(--text-muted); font-size: var(--text-xs);">gems</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Canvas -->
+      <canvas id="worldCanvas"></canvas>
+
+      <!-- Minimap -->
+      <div class="world-minimap" id="minimapContainer">
+        <canvas id="minimapCanvas" width="160" height="160"></canvas>
+      </div>
+
+      <!-- Zoom Controls -->
+      <div class="world-zoom">
+        <button class="world-zoom-btn" id="zoomOut" aria-label="Zoom out">−</button>
+        <span class="world-zoom-level" id="zoomLevel">100%</span>
+        <button class="world-zoom-btn" id="zoomIn" aria-label="Zoom in">+</button>
+        <button class="world-zoom-btn" id="zoomReset" aria-label="Reset zoom">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1v4h4M13 13V9H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.5 5A5.5 5.5 0 003 3L1 5M2.5 9a5.5 5.5 0 008.5 2l2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <!-- Coordinates -->
+      <div class="world-coords">
+        <div class="world-coord-label" id="coordDisplay">0, 0</div>
+      </div>
+    </div>
+
+    <!-- Info Panel -->
+    <div class="world-info-panel" id="infoPanel">
+      <div class="world-info-section">
+        <div class="world-info-label">Position</div>
+        <div class="world-info-value mono" id="infoPos">—</div>
+      </div>
+      <div class="world-info-section">
+        <div class="world-info-label">Owner</div>
+        <div class="world-info-value" id="infoOwner">—</div>
+      </div>
+      <div class="world-info-section">
+        <div class="world-info-label">Canvas Stats</div>
+        <div class="world-info-value" id="infoStats">Loading...</div>
+      </div>
+      <div class="world-info-section">
+        <div class="world-info-label">Recent Placements</div>
+        <div class="world-activity" id="recentPlacements">
+          <p style="font-size: var(--text-xs); color: var(--text-muted);">Loading...</p>
+        </div>
+      </div>
+      <div class="world-info-section mt-auto">
+        <button class="btn btn-secondary btn-sm" id="toggleGrid" style="width: 100%;">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" stroke="currentColor" stroke-width="1.2"/><rect x="8" y="1" width="5" height="5" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="8" width="5" height="5" stroke="currentColor" stroke-width="1.2"/><rect x="8" y="8" width="5" height="5" stroke="currentColor" stroke-width="1.2"/></svg>
+          Toggle Grid
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/codes/pixelforge/assets/js/core/api.js"></script>
+  <script src="/codes/pixelforge/assets/js/core/auth.js"></script>
+  <script src="/codes/pixelforge/assets/js/core/events.js"></script>
+  <script src="/codes/pixelforge/assets/js/components/toast.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Toast.init();
+
+      const GRID = 200;
+      const canvas = document.getElementById('worldCanvas');
+      const ctx = canvas.getContext('2d');
+      const minimapCanvas = document.getElementById('minimapCanvas');
+      const minimapCtx = minimapCanvas.getContext('2d');
+
+      let pixels = {};
+      let pixelList = [];
+      let cellSize = 4;
+      let offsetX = 0, offsetY = 0;
+      let zoom = 1;
+      let isDragging = false;
+      let dragStart = { x: 0, y: 0 };
+      let selectedColor = '#E17B47';
+      let showGrid = false;
+      let overlay = 'none';
+      let user = null;
+
+      const COLORS = [
+        '#E17B47', '#5B8DEF', '#4D9B6D', '#DDAA45', '#9B6BDF', '#DF6B9B',
+        '#E74C3C', '#3498DB', '#2ECC71', '#F39C12', '#8E44AD', '#E91E63',
+        '#1ABC9C', '#D35400', '#2C3E50', '#95A5A6',
+      ];
+
+      // Build color panel
+      const colorPanel = document.getElementById('colorPanel');
+      colorPanel.innerHTML = COLORS.map(c =>
+        `<div class="world-color-swatch${c === selectedColor ? ' active' : ''}" style="background-color: ${c};" data-color="${c}"></div>`
+      ).join('') + '<div class="world-color-divider"></div><input type="color" id="customColor" value="#E17B47" style="width:36px;height:36px;border:none;padding:0;cursor:pointer;border-radius:var(--radius-sm);">';
+
+      colorPanel.querySelectorAll('.world-color-swatch').forEach(el => {
+        el.addEventListener('click', () => {
+          selectedColor = el.dataset.color;
+          colorPanel.querySelectorAll('.world-color-swatch').forEach(s => s.classList.remove('active'));
+          el.classList.add('active');
+        });
+      });
+
+      document.getElementById('customColor').addEventListener('input', (e) => {
+        selectedColor = e.target.value;
+        colorPanel.querySelectorAll('.world-color-swatch').forEach(s => s.classList.remove('active'));
+      });
+
+      // Resize canvas
+      function resize() {
+        const viewport = document.getElementById('viewport');
+        canvas.width = viewport.clientWidth;
+        canvas.height = viewport.clientHeight;
+        cellSize = Math.max(1, Math.floor(Math.min(canvas.width, canvas.height) / GRID * zoom));
+        render();
+      }
+
+      window.addEventListener('resize', resize);
+
+      // Load canvas data
+      async function loadCanvas() {
+        try {
+          const data = await API.get('canvas.php');
+          pixelList = data.pixels || [];
+          pixels = {};
+          pixelList.forEach(p => {
+            pixels[`${p.x},${p.y}`] = p;
+          });
+
+          document.getElementById('infoStats').innerHTML = `
+            ${data.stats.total_pixels.toLocaleString()} pixels<br>
+            ${data.stats.total_artists} artists
+          `;
+
+          // Recent placements
+          const recent = pixelList.slice(-5).reverse();
+          document.getElementById('recentPlacements').innerHTML = recent.map(p =>
+            `<div class="world-activity-item">
+              <span class="world-activity-dot" style="background-color: ${p.color};"></span>
+              <span>(${p.x}, ${p.y})</span>
+            </div>`
+          ).join('');
+
+          render();
+          renderMinimap();
+        } catch (e) {
+          Toast.error('Failed to load canvas', e.message);
+        }
+      }
+
+      // Render
+      function render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#F0F0ED';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const startX = Math.max(0, Math.floor(-offsetX / cellSize));
+        const startY = Math.max(0, Math.floor(-offsetY / cellSize));
+        const endX = Math.min(GRID, Math.ceil((canvas.width - offsetX) / cellSize));
+        const endY = Math.min(GRID, Math.ceil((canvas.height - offsetY) / cellSize));
+
+        // Draw pixels
+        for (let y = startY; y < endY; y++) {
+          for (let x = startX; x < endX; x++) {
+            const key = `${x},${y}`;
+            const px = pixels[key];
+            const sx = offsetX + x * cellSize;
+            const sy = offsetY + y * cellSize;
+
+            if (px) {
+              if (overlay === 'ownership' && px.owner_id) {
+                const hue = (px.owner_id * 37) % 360;
+                ctx.fillStyle = `hsl(${hue}, 50%, 60%)`;
+              } else if (overlay === 'heatmap') {
+                ctx.fillStyle = px.color;
+                ctx.globalAlpha = 0.7;
+              } else {
+                ctx.fillStyle = px.color;
+              }
+              ctx.fillRect(sx, sy, cellSize, cellSize);
+              ctx.globalAlpha = 1;
+            } else if (showGrid) {
+              ctx.strokeStyle = '#E7E7E4';
+              ctx.lineWidth = 0.5;
+              ctx.strokeRect(sx, sy, cellSize, cellSize);
+            }
+          }
+        }
+      }
+
+      // Render minimap
+      function renderMinimap() {
+        minimapCtx.clearRect(0, 0, 160, 160);
+        minimapCtx.fillStyle = '#F0F0ED';
+        minimapCtx.fillRect(0, 0, 160, 160);
+
+        const scale = 160 / GRID;
+        pixelList.forEach(p => {
+          minimapCtx.fillStyle = p.color;
+          minimapCtx.fillRect(p.x * scale, p.y * scale, Math.max(1, scale), Math.max(1, scale));
+        });
+
+        // Viewport rectangle
+        const vw = (canvas.width / cellSize) * scale;
+        const vh = (canvas.height / cellSize) * scale;
+        const vx = (-offsetX / cellSize) * scale;
+        const vy = (-offsetY / cellSize) * scale;
+        minimapCtx.strokeStyle = '#E17B47';
+        minimapCtx.lineWidth = 1.5;
+        minimapCtx.strokeRect(vx, vy, vw, vh);
+      }
+
+      // Pan
+      canvas.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        dragStart = { x: e.clientX - offsetX, y: e.clientY - offsetY };
+        canvas.style.cursor = 'grabbing';
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        // Update coordinate display
+        const rect = canvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        const gx = Math.floor((mx - offsetX) / cellSize);
+        const gy = Math.floor((my - offsetY) / cellSize);
+
+        if (gx >= 0 && gx < GRID && gy >= 0 && gy < GRID) {
+          document.getElementById('coordDisplay').textContent = `${gx}, ${gy}`;
+          document.getElementById('infoPos').textContent = `${gx}, ${gy}`;
+          const key = `${gx},${gy}`;
+          const px = pixels[key];
+          document.getElementById('infoOwner').textContent = px && px.owner_id ? `Player #${px.owner_id}` : 'Unclaimed';
+        }
+
+        if (!isDragging) return;
+        offsetX = e.clientX - dragStart.x;
+        offsetY = e.clientY - dragStart.y;
+        render();
+        renderMinimap();
+      });
+
+      window.addEventListener('mouseup', () => {
+        isDragging = false;
+        canvas.style.cursor = 'crosshair';
+      });
+
+      // Place pixel
+      canvas.addEventListener('click', async (e) => {
+        if (!user) {
+          Toast.info('Login required', 'Please log in to place pixels.');
+          return;
+        }
+
+        const rect = canvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        const gx = Math.floor((mx - offsetX) / cellSize);
+        const gy = Math.floor((my - offsetY) / cellSize);
+
+        if (gx < 0 || gx >= GRID || gy < 0 || gy >= GRID) return;
+
+        try {
+          const data = await API.post('pixels.php?action=place', {
+            x: gx, y: gy, color: selectedColor
+          });
+          pixels[`${gx},${gy}`] = data.pixel;
+          pixelList.push(data.pixel);
+          document.getElementById('gemCount').textContent = data.new_balance;
+          if (user) user.balance = data.new_balance;
+          render();
+          renderMinimap();
+          if (data.free_repaint) {
+            Toast.info('Free repaint', 'You already own this pixel.');
+          }
+        } catch (err) {
+          if (err.status === 429) {
+            Toast.warning('Rate limited', `Wait ${err.data?.retry_after || ''}s`);
+          } else {
+            Toast.error('Failed', err.message);
+          }
+        }
+      });
+
+      // Zoom
+      function setZoom(newZoom) {
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const gx = (centerX - offsetX) / cellSize;
+        const gy = (centerY - offsetY) / cellSize;
+
+        zoom = Math.max(0.25, Math.min(4, newZoom));
+        cellSize = Math.max(1, Math.floor(Math.min(canvas.width, canvas.height) / GRID * zoom));
+
+        offsetX = centerX - gx * cellSize;
+        offsetY = centerY - gy * cellSize;
+
+        document.getElementById('zoomLevel').textContent = `${Math.round(zoom * 100)}%`;
+        render();
+        renderMinimap();
+      }
+
+      document.getElementById('zoomIn').addEventListener('click', () => setZoom(zoom + 0.25));
+      document.getElementById('zoomOut').addEventListener('click', () => setZoom(zoom - 0.25));
+      document.getElementById('zoomReset').addEventListener('click', () => setZoom(1));
+
+      // Scroll zoom
+      canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        setZoom(zoom + (e.deltaY > 0 ? -0.1 : 0.1));
+      }, { passive: false });
+
+      // Grid toggle
+      document.getElementById('toggleGrid').addEventListener('click', () => {
+        showGrid = !showGrid;
+        render();
+      });
+
+      // Overlay toggles
+      document.querySelectorAll('.world-overlay-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          overlay = btn.dataset.overlay;
+          document.querySelectorAll('.world-overlay-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          render();
+        });
+      });
+
+      // Coordinate search
+      document.getElementById('coordSearch').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const parts = e.target.value.split(',').map(s => parseInt(s.trim()));
+          if (parts.length === 2 && parts[0] >= 0 && parts[0] < GRID && parts[1] >= 0 && parts[1] < GRID) {
+            const targetX = parts[0] * cellSize + offsetX;
+            const targetY = parts[1] * cellSize + offsetY;
+            offsetX += canvas.width / 2 - targetX;
+            offsetY += canvas.height / 2 - targetY;
+            render();
+            renderMinimap();
+          }
+        }
+      });
+
+      // Init
+      Auth.check().then(u => {
+        user = u;
+        if (u) {
+          document.getElementById('gemCount').textContent = u.balance;
+        }
+        loadCanvas();
+        resize();
+      });
+
+      // Poll for updates every 10s
+      setInterval(loadCanvas, 10000);
+    });
+  </script>
+</body>
+</html>
